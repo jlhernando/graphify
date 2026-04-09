@@ -1,0 +1,298 @@
+[
+  {
+    "id": "doj:justice-gov-exhibits-2020",
+    "title": "U.S. and Plaintiff States v. Google LLC [2020] - Trial Exhibits",
+    "url": "https://www.justice.gov/atr/us-and-plaintiff-states-v-google-llc-2020-trial-exhibits",
+    "type": "exhibit-archive",
+    "date": "2023-09",
+    "summary": "Official DOJ archive of all trial exhibits from the 2020 search antitrust case. Contains internal Google presentations, emails, strategy memos, and technical documents about search ranking."
+  },
+  {
+    "id": "doj:justice-gov-remedies-2020",
+    "title": "U.S. and Plaintiff States v. Google LLC [2020] - Remedies Hearing Exhibits",
+    "url": "https://www.justice.gov/atr/us-and-plaintiff-states-v-google-llc-2020-remedies-hearing-exhibits",
+    "type": "exhibit-archive",
+    "date": "2025-04",
+    "summary": "Remedies phase exhibits including data-sharing mandates and proposed structural changes. Reveals Google's defense of data moats and competitive advantages."
+  },
+  {
+    "id": "doj:hobo-how-google-works",
+    "title": "How Google Works in 2025 - DOJ Antitrust Trial Disclosures",
+    "url": "https://www.hobo-web.co.uk/how-google-works/",
+    "type": "analysis",
+    "date": "2025-01",
+    "summary": "Comprehensive technical breakdown of Google's ranking architecture from trial disclosures. Covers Q*/P*/T* framework, NavBoost, Glue, RankBrain, BERT, MUM, and the modular pipeline architecture."
+  },
+  {
+    "id": "doj:hobo-google-vs-doj",
+    "title": "Key Strategic SEO Insights from the U.S. D.O.J. v. Google Antitrust Trial",
+    "url": "https://www.hobo-web.co.uk/google-vs-doj/",
+    "type": "analysis",
+    "date": "2025-01",
+    "summary": "Strategic SEO analysis of trial revelations. Details Q* quality scoring (0-1 scale), P* popularity metrics, NavBoost Chrome integration, QBST memorization system, Twiddlers, and Tangram SERP assembly."
+  },
+  {
+    "id": "doj:hobo-navboost",
+    "title": "NavBoost: How User Interactions Rank Websites in Google",
+    "url": "https://www.hobo-web.co.uk/navboost-how-google-uses-large-scale-user-interaction-data-to-rank-websites/",
+    "type": "analysis",
+    "date": "2024-11",
+    "summary": "Deep technical analysis of NavBoost system. Covers Craps protocol buffer, click types (good/bad/lastLongest/unsquashed/squashed), Firefly site signals, 13-month data window, Instant Glue real-time variant."
+  },
+  {
+    "id": "doj:hobo-mapping-updates",
+    "title": "Evidence-Based Mapping of Google Updates to Leaked Internal Ranking Signals",
+    "url": "https://www.hobo-web.co.uk/evidence-based-mapping-of-google-updates-to-leaked-internal-ranking-signals/",
+    "type": "analysis",
+    "date": "2025-02",
+    "summary": "Cross-reference of 84+ named signals from API leak and DOJ trial mapped to historical algorithm updates. Covers Mustang retrieval system, CRAPS click processing, Panda/Penguin signal names, YMYL scores, product review signals, and experimental Q* signals."
+  },
+  {
+    "id": "doj:sel-7-must-see",
+    "title": "7 Must-See Google Search Ranking Documents in Antitrust Trial Exhibits",
+    "url": "https://searchengineland.com/google-search-ranking-documents-434141",
+    "type": "analysis",
+    "date": "2023-10",
+    "summary": "Analysis of seven key trial exhibit documents revealing Google's 3 Pillars of Ranking (Body/Anchors/User-interactions), 18 search quality aspects, and admission that Google 'does not understand documents' but memorizes user reactions."
+  },
+  {
+    "id": "doj:sel-abc-signals",
+    "title": "The ABCs of Google Ranking Signals: What Top Search Engineers Revealed",
+    "url": "https://searchengineland.com/google-abc-ranking-signals-455360",
+    "type": "analysis",
+    "date": "2024-06",
+    "summary": "Detailed breakdown of ABC signals (Anchors/Body/Clicks) feeding T* topicality. Covers RankEmbed dual encoder, DeepRank/eDeepRank BERT decomposition, NavBoost as 'giant table', BR Chrome popularity signal, and 100+ raw signals combining into top-level signals via Twiddlers."
+  },
+  {
+    "id": "doj:sel-pandu-nayak",
+    "title": "How Google Search and Ranking Works, According to Google's Pandu Nayak",
+    "url": "https://searchengineland.com/how-google-search-ranking-works-pandu-nayak-435395",
+    "type": "testimony",
+    "date": "2023-11",
+    "summary": "Pandu Nayak's (VP Search) sworn testimony on 100+ ranking signals, NavBoost/Glue system, RankBrain training on IS scores, DeepRank BERT integration, QBST memorization, 400B document index, and why Google avoids end-to-end deep learning."
+  },
+  {
+    "id": "doj:kopp-doj-and-leak",
+    "title": "What We Can Learn from DOJ Trial and API Leak for SEO",
+    "url": "https://www.kopp-online-marketing.com/what-we-can-learn-from-doj-trial-and-api-leak-for-seo",
+    "type": "cross-reference",
+    "date": "2024-12",
+    "summary": "Cross-reference analysis connecting DOJ trial revelations with API leak data. Maps NavBoost to Craps module, identifies unicornClicks, details Mustang/SuperRoot/Alexandria/TeraGoogle infrastructure, MAGIT AI Overview system, and IS score training pipeline."
+  },
+  {
+    "id": "doj:sel-antitrust-overview",
+    "title": "U.S. vs. Google Antitrust Trial: Everything You Need to Know",
+    "url": "https://searchengineland.com/google-search-antirust-trial-hearing-updates-431977",
+    "type": "overview",
+    "date": "2023-09",
+    "summary": "Comprehensive timeline and coverage of the trial proceedings, key witnesses (Pandu Nayak, Jerry Dischler, HJ Kim), major revelations about click data usage, and the monopoly finding."
+  },
+  {
+    "id": "doj:judge-mehta-opinion",
+    "title": "Judge Mehta's Memorandum Opinion on Liability (286 pages)",
+    "url": "https://www.documentcloud.org/documents/25032745-045110819896/",
+    "type": "ruling",
+    "date": "2024-08",
+    "summary": "286-page ruling finding Google holds illegal monopoly on search. Contains detailed analysis of Google's data advantages, distribution agreements, search quality metrics, scale effects, AI overview, and the legal foundation for all technical revelations. Downloaded and extracted to data/doj/exhibits/mehta-liability-opinion.txt"
+  },
+  {
+    "id": "doj:exhibit-upx0192",
+    "title": "UPX0192 - Unified Click Prediction (Eric Lehman, Jun 2016)",
+    "url": "https://www.justice.gov/d9/2023-10/417240.pdf",
+    "type": "trial-exhibit",
+    "date": "2016-06",
+    "summary": "Lehman presentation revealing ~1B new behavior examples/day, ~100B click training corpus, click prediction as core ranking strategy ('predict clicks, boost, patch'), multiple overlapping click systems ('Predictionosaurus Clickus'), RankLab tuning tool, 'train on past predict future' evaluation."
+  },
+  {
+    "id": "doj:exhibit-upx0197",
+    "title": "UPX0197 - Grushetsky Email: Thought for the Holidays (Jan 2019)",
+    "url": "https://www.justice.gov/d9/2023-10/417245.pdf",
+    "type": "trial-exhibit",
+    "date": "2019-01",
+    "summary": "Email thread among senior ranking leaders. Grushetsky: NavBoost alone more powerful than rest of ranking. BERT 'abruptly subsumed' WebAnswers. Pre-BERT 'memorization systems much larger than any ML model'. Search used 'artisanal' systems while Ads had end-to-end deep learning."
+  },
+  {
+    "id": "doj:exhibit-upx0203",
+    "title": "UPX0203 - Q4 Search All Hands (Eric Lehman, Dec 2016)",
+    "url": "https://www.justice.gov/d9/2023-10/417251.pdf",
+    "type": "trial-exhibit",
+    "date": "2016-12",
+    "summary": "Lehman: 'We do not understand documents. We fake it. We hardly look at documents. We look at people.' 'Sustain the illusion that we understand.' 'SERVING the user is NOT ENOUGH. We have to design interactions that allow us to LEARN from users.'"
+  },
+  {
+    "id": "doj:exhibit-upx0204",
+    "title": "UPX0204 - Ranking for Research (Nov 2018)",
+    "url": "https://www.justice.gov/d9/2023-10/417252.pdf",
+    "type": "trial-exhibit",
+    "date": "2018-11",
+    "summary": "Internal access-restricted doc: 'Do not discuss the use of clicks in search. Google has a public position. It is debatable.' Lists 18 search quality aspects. 'Association between observed user behavior and search result quality is tenuous.' SEC-sensitive topics."
+  },
+  {
+    "id": "doj:exhibit-upx0219",
+    "title": "UPX0219 - Logging & Ranking (Eric Lehman, May 2020)",
+    "url": "https://www.justice.gov/d9/2023-10/417267.pdf",
+    "type": "trial-exhibit",
+    "date": "2020-05",
+    "summary": "Lehman: 'Value judgments are the foundation of Google search.' 'Learning from logs is the main mechanism behind ranking.' 'A slight improvement in value judgments pays off a billion-fold the very next day.' RankBrain, RankEmbed, DeepRank all built on logs."
+  },
+  {
+    "id": "doj:exhibit-pxr0356",
+    "title": "PXR0356 - HJ Kim Interview Notes (Feb 2025, Remedies Phase)",
+    "url": "https://www.justice.gov/d9/2025-04/PXR0356.pdf",
+    "type": "remedies-exhibit",
+    "date": "2025-02",
+    "summary": "Kim created NavBoost, page quality team (~2008), and Tangram (fka Tetris). T* stabilized ~2020. Q* can be query-dependent. Hand-crafting philosophy: 'if anything breaks Google knows what to fix.' Acknowledged API leak: 'documents named components but don't go into curves/thresholds.'"
+  },
+  {
+    "id": "doj:exhibit-pxr0357",
+    "title": "PXR0357 - Pandu Nayak Interview Notes (Jan 2025, Remedies Phase)",
+    "url": "https://www.justice.gov/d9/2025-04/PXR0357.pdf",
+    "type": "remedies-exhibit",
+    "date": "2025-01",
+    "summary": "NavBoost is 'QD table used in both directions.' Top-level signals: 'linear combination of log of individual raw signals' with monotonicity constraint. BM25 baseline. RankEmbed 'performs poorly for tail queries.' FastSearch (RankEmbed-only) for Gemini RAG. Google 're-thinking search stack from ground-up with LLM.' Training windows shrinking."
+  },
+  {
+    "id": "doj:hj-kim-deposition",
+    "title": "HJ Kim Deposition - Google Engineer on Ranking Architecture",
+    "url": "https://www.justice.gov/atr/media/1398871/dl",
+    "type": "deposition",
+    "date": "2025-02",
+    "summary": "Remedies-phase deposition of Google engineer Hyung-Jin Kim. Reveals ABC signals feeding T*, confirms vast majority of signals are hand-crafted, explains sigmoid functions and threshold engineering, describes eDeepRank as decomposable BERT system, confirms RankBrain and DeepRank as the only LLM-based signals."
+  },
+  {
+    "id": "doj:reid-affidavit",
+    "title": "Elizabeth Reid Affidavit on Data Sharing Risks",
+    "url": "https://searchengineland.com/google-elizabeth-reid-affidavit-antitrust-467838",
+    "type": "court-filing",
+    "date": "2026-01",
+    "summary": "Google's Head of Search warns data sharing would expose full ranking output, enable algorithm reverse-engineering, and invite spam exploitation. Confirms Glue and RankEmbed model training data as core ranking components."
+  },
+  {
+    "id": "doj:reid-remedies-testimony",
+    "title": "Elizabeth Reid Remedies Testimony - Search Architecture",
+    "url": "https://www.cnbc.com/2025/05/09/google-search-remedies-trial-wraps.html",
+    "type": "testimony",
+    "date": "2025-05",
+    "summary": "Google's Head of Search testified remedies would require 1,000-2,000 employees (~20% of search org). Explained search systems architecture under oath. Reveals operational scale of ranking infrastructure."
+  },
+  {
+    "id": "doj:pichai-testimony",
+    "title": "Sundar Pichai CEO Testimony - Default Agreements",
+    "url": "https://www.cnbc.com/2023/10/30/google-ceo-sundar-pichai-testifies-in-us-antitrust-trial.html",
+    "type": "testimony",
+    "date": "2023-10",
+    "summary": "Pichai conceded default status boosts market share. Revealed $26.3B paid in 2021 for default agreements. In remedies phase testified data sharing would be 'de facto divestiture', confirming click data and user interaction logs are core competitive moat."
+  },
+  {
+    "id": "doj:varian-testimony",
+    "title": "Hal Varian Testimony - Search Quality vs Data Scale",
+    "url": "https://www.thedrum.com/news/2023/10/03/what-we-ve-learned-so-far-google-s-landmark-antitrust-trial",
+    "type": "testimony",
+    "date": "2023-09",
+    "summary": "Google's chief economist argued dominance comes from quality of search recipes not data volume. A Varian memo instructed staff to avoid terms like 'market share' and 'bundle'. Contradicts other trial evidence about NavBoost's data dependency."
+  },
+  {
+    "id": "doj:giannandrea-testimony",
+    "title": "John Giannandrea Testimony (Apple SVP, ex-Google Search)",
+    "url": "https://searchengineland.com/google-search-antirust-trial-hearing-updates-431977",
+    "type": "testimony",
+    "date": "2023-10",
+    "summary": "Former Google Search head (now Apple SVP ML) testified only 10 min publicly; rest sealed. Stated Apple partners with Google because 'they have tested and verified its results are the best'. Reveals data scale role in maintaining ranking superiority."
+  },
+  {
+    "id": "doj:schmalbach-qstar",
+    "title": "Is Q-Star the Next PageRank? What Google's Trial Revealed",
+    "url": "https://www.vincentschmalbach.com/is-q-star-the-next-pagerank-what-googles-antitrust-trial-revealed/",
+    "type": "analysis",
+    "date": "2025-06",
+    "summary": "Deep Q* analysis: domain-level trustworthiness metric (0-1 scale). Contrasts Q* with PageRank. Documents Google's denial of 'domain authority' (2016-2019) while internal docs confirm both Q* and siteAuthority existed. Q* is hand-crafted, works alongside computed siteAuthority."
+  },
+  {
+    "id": "doj:sistrix-ranking-details",
+    "title": "Google Antitrust Process: New Ranking Details Uncovered",
+    "url": "https://www.sistrix.com/blog/google-antitrust-process-new-ranking-details-uncovered/",
+    "type": "analysis",
+    "date": "2025-05",
+    "summary": "Technical breakdown of ABC signals architecture, Q* trust metric, NavBoost 13-month click window. Google admitted sharing click data/URLs/queries with competitors makes algorithm reconstruction feasible. Only RankBrain and DeepRank use LLM technologies."
+  },
+  {
+    "id": "doj:growthmarketing-5-lies",
+    "title": "5 Ranking Lies Google Told, And How the DOJ Trial Proved Them Wrong",
+    "url": "https://growthmarketing.ai/ranking-lies-google-told/",
+    "type": "analysis",
+    "date": "2025-08",
+    "summary": "Five contradictions: domain authority denial vs Q* 0.4 cutoff for featured snippets, clicks as 'noisy' vs NavBoost 91% accuracy, Chrome data denial vs chrome_trans_clicks, no sandbox vs hostAge 3-6 month sandbox, AI rankings vs hand-crafted signal dominance."
+  },
+  {
+    "id": "doj:searchengineworld-doc-dump",
+    "title": "Fresh Doc Dump: PageRank, Navboost, and RankEmbed",
+    "url": "https://www.searchengineworld.com/fresh-doc-dump-pagerank-navboost-and-rankembed-doj-papers-outline-googles-stack",
+    "type": "analysis",
+    "date": "2025-05",
+    "summary": "Details full processing pipeline: GoogleBot acquisition, Multiverse structured feeds, indexing into Knowledge Graph, QUS query understanding, GWS serving. 100+ raw signals combined via linear weighted formulas. NavBoost is 'just a big table' (not ML). 8.3B daily queries."
+  },
+  {
+    "id": "doj:grumpyseo-twiddlers",
+    "title": "Twiddlers: How Google's Secret Re-ranking System Works",
+    "url": "https://grumpy-old-seo.com/twiddlers-how-googles-secret-re-ranking-system-works/",
+    "type": "analysis",
+    "date": "2025-02",
+    "summary": "Comprehensive Twiddler breakdown within Superroot framework. Predoc Twiddlers process hundreds of URLs with lightweight heuristics. Lazy Twiddlers do granular adjustments on top 20-30 results. Names: YouTubeDensityTwiddler, BlogCategorizer, BadURLsCategorizer, OfficialPageTwiddler, DMCAFilter, SocialLikesAnnotator, FreshnessTwiddler, QualityBoost."
+  },
+  {
+    "id": "doj:sketchweb-hjkim",
+    "title": "Inside Google's Ranking Systems: What a DOJ Deposition Revealed",
+    "url": "https://micro.sketchweb.net/2025/05/16/inside-googles-ranking-systems-what.html",
+    "type": "analysis",
+    "date": "2025-05",
+    "summary": "HJ Kim deposition analysis: page quality is mostly static (site-wide trustworthiness), PageRank as distance from trusted seed sites, Chrome-based popularity feeds rankings, eDeepRank uses BERT/Transformers for decomposable analysis, user data determines crawl frequency."
+  },
+  {
+    "id": "doj:xpert-chrome-data",
+    "title": "Google Ranking Through User Signals, Chrome Data, and Popularity",
+    "url": "https://xpert.digital/en/newly-revealed-google-ranking/",
+    "type": "analysis",
+    "date": "2025-09",
+    "summary": "Chrome data in rankings: visit frequency, engagement, form submissions, scrolling intensity, purchase activity. NavBoost: long clicks positive, short clicks negative. Glue logs queries, location/device, SERP interactions, mouseover, dwell time. PageRank as single signal re distance from good source."
+  },
+  {
+    "id": "doj:seroundtable-3-pillars",
+    "title": "Google Search's 3 Pillars of Ranking Via DOJ Documents",
+    "url": "https://www.seroundtable.com/google-3-pillars-of-ranking-36340.html",
+    "type": "analysis",
+    "date": "2023-11",
+    "summary": "2016 trial exhibits reveal ranking framework: Body (document content), Anchors (web mentions), User-interactions (attention, hover, clicks, scrolls, new queries). User interactions influence future algorithmic modifications rather than real-time ranking."
+  },
+  {
+    "id": "doj:ppcland-rankembed",
+    "title": "Google's RankEmbed System Forced to Share Secrets",
+    "url": "https://ppc.land/googles-rankembed-system-forced-to-share-secrets-in-antitrust-remedy/",
+    "type": "analysis",
+    "date": "2025-09",
+    "summary": "RankEmbed dual encoder architecture: embeds queries and documents into semantic space using dot product. Trained on 70 days of search logs + human rater scores. Court mandated sharing user-side training data and Glue model data, excluded actual RankEmbed models."
+  },
+  {
+    "id": "doj:seositecheckup-nayak",
+    "title": "Unraveling Google Search: Insights from Pandu Nayak's Testimony",
+    "url": "https://seositecheckup.com/articles/unraveling-the-mysteries-of-google-search-insights-from-pandu-nayaks-testimony",
+    "type": "analysis",
+    "date": "2023-12",
+    "summary": "Nayak testimony details: NavBoost culls documents, Glue aggregates clicks/hovers/scrolls/swipes. DeepRank = BERT for ranking. RankBrain interprets long-tail queries. Priors algorithm scores based on popularity/selection frequency. 400B document index. Older click data sometimes more valuable than fresh."
+  },
+  {
+    "id": "doj:ppcland-quality-signals",
+    "title": "Court Ruling Reveals Quality Signals from Webpage Content",
+    "url": "https://ppc.land/google-court-ruling-reveals-quality-signals-derived-from-webpage-content/",
+    "type": "analysis",
+    "date": "2025-06",
+    "summary": "Most of Google's quality signal derived from webpage itself. Body (B) signal as content-derived metric feeding Quality score. Static page quality scores at domain level. Content quality assessment differs from link-based authority."
+  },
+  {
+    "id": "exploit:candour-google-exploit",
+    "title": "Mark Williams-Cook Google Exploit (Candour Agency)",
+    "url": "https://www.youtube.com/watch?v=_AQ9UDqES80",
+    "type": "google-exploit",
+    "date": "2024",
+    "summary": "Google API endpoint exploit by Candour Agency. 2TB of data across 90M queries. Found consensus scoring (passage agreement), 8 refined query semantic classes, per-result click probability predictions, site quality 0.4 threshold for rich results, and phrase-model-based site quality prediction for new domains. Submitted to Google VRP ($3,337 bounty, high exploitation risk)."
+  }
+]

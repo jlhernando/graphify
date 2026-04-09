@@ -1,0 +1,93 @@
+Search (incl SGE)
+Publisher Controls
+Updated April 12, 2024
+
+Ex. No.
+PXR0026
+(NTK) Proprietary & oonfident1al March 2024 Product POCs· cbindra@ chips@ msleem@ Legal: rile@
+
+1:20-cv-03010-apm
+I 1:20-cv-03715-APM
+
+GOOG-DOJ-33825264
+
+Recap of options: How granular should the control functionality on Search be for publishers?
+
+NO new controls
+
+Option #1: No new controls on Search. No change to how existing controls work.
+Pubs can opt-out of or limit display of their content. If not satisfied, they can choose to opt out of indexing.
+:::i
+
+NO new controls
+
+Option #2: No new controls BUT reposition publicly that no snippet impacts more than display
+Pubs can use no snippet to impose a limit on how much content is used for grounding & display Today, positioned as display only
+
+Create NEW SRP wide controls
+c:
+0
+
+'iii
+
+Option #3: Introduce granularity at content level for publishers to opt out of indexing
+Pubs can choose to have sections of their content excluded from indexing, training, and display. (div level no index)
+
+u,
+
+:I
+CJ
+
+.!!!
+
+1:1
+
+~
+
+Create NEW SRP wide controls
+
+Option #4: Introduce granularity at display level for publishers to opt out. NEW! Variation Op,tion '#4A
+Pubs can choose to have their content excluded from answer-forward features (i.e. Web Answers}, but not from Web Snippets or ranking.
+SGE-only opt-outs
+
+Option #5: Introduce a separation of SGE display and SRP display
+Pubs can choose to opt their content out of being displayed within SGE features Data would still be used for training purposes
+
+SGE-only opt-outs
+
+Option #6: Introduce a separation of grounding vs training for SGE
+Pubs can choose to opt out of their data being used for grounding - Their content on't be used for any retrieval augmented generation
+
+GOOG-DOJ-33825286
+
+NEW: Aligned product recommendation
+At the minimum, we should have our current product holding position be Option 2 - do what we say, say what we do,
+but carefully
+1.
+
+Silently update, no public announcement
+
+2.
+
+Make it clear that no-snippet enables pubs to opt out of more than just display.
+
+3.
+
+Do not say this opts them out of training, as we don't want to get into the details of distinction between Gemini
+training and SGE training , and KITE/MUM, etc.
+
+4.
+
+Recommend not saying this opts them out of grounding, as this is evolving into a space for monetization . Note:
+Post meeting, there might be flexibility here.
+
+5.
+
+Instead lean into something closer to saying it opts them out display that includes corroboration, and will also opt
+them out of having snippets shown for blue links.
+
+If aligned, as a next step, we will work on actual language and get this out before 1/0
+
+GOOG-DOJ-33825290
+
+

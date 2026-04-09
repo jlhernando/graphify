@@ -1,0 +1,184 @@
+                                         Google is magical.
+
+
+
+
+ Google is sort of magical.
+ For exam ple, my coworker got a new TV. But it looked weird.
+
+
+
+
+                                                                                         Ex. No.
+                                                                                       UPX0228
+                                                                                      1:20-cv-03010-APM
+
+
+Redacted                                      REDACTED FOR PUBLIC FILING & ABRIDGED
+                                                                                      GOOG-DOJ-22859493
+                                     This is NOT how search works.
+
+
+                 Scorin,g                                          ux
+
+
+
+
+ Let's start with how search does NOT work.
+ We get a query. Various scoring systems emit data, we slap on a UX, and ship it to the user.
+ This is not fa lse, just incomplete. So incomplete that a search engine built this way won't work very wel l. No magic.
+
+
+
+
+Redacted                                        REDACTED FOR PUBLIC FILING & ABRIDGED
+                                                                                                                GOOG-DOJ-22859499
+                                          How search DOES work.
+
+
+
+
+                                                                                       teraction
+
+
+
+
+ The key is a second flow of information in the reverse direction.
+ As people interact with search, their actions teach us about the world.
+ For example, a click might tell us that an image was better than a web result. Or a long look might mean a KP was interest ing.
+ We log these actions, and t hen scoring teams extract both narrow and general patterns.
+
+
+
+
+Redacted                                       REDACTED FOR PUBLIC FILING & ABRIDGED
+                                                                                                             GOOG-DOJ-22859502
+                               This dialogue is the source of magic.
+
+
+
+
+                                                                                      teraction
+
+
+
+
+ The source of Google's magic is this two-way dialogue with users.
+ With every query, we give a some knowledge, and get a little back. Then we give some more, and get a little more back.
+ These bits add up. After a few hundred billion rounds, we start lookin' pretty smart!
+ Th is isn't the only way we learn, but the most effective.
+
+
+
+
+Redacted                                      REDACTED FOR PUBLIC FILING & ABRIDGED
+                                                                                                           GOOG-DOJ-22859503
+                              How can we learn more from users?
+
+                •   Users ask, Google answers. This is our core function. Can't screw this up.
+
+                •   We must unobtrusively turn the tables. One good strategy:
+                     0 Implicitly pose a question to the user.
+                     0   Provide background.
+                     0   Give the user a way to answer.
+
+
+
+
+ So how do we lea rn more from users?
+ On the surface, users ask questions and Google answers. That's our basic business. We can't screw that up.
+ But we have to quietly turn the tables. One way is to:
+ 1. ask the user a question implicitly
+ 2. provide necessary background information
+ 3. give the user some way to tell us the answer
+
+
+
+
+Redacted                                      REDACTED FOR PUBLIC FILING & ABRIDGED
+                                                                                                          GOOG-DOJ-22859509
+                                                                                10 blue links
+
+                                                                              "Whic h result is best?"
+
+                                                                   Tit les and snippet s provide background.
+
+                                                                                  Answ er is a click.
+
+
+
+
+ For example, the ten blue links implicitly pose the question, 'Which result is best?"
+ Result previews give background. And the answer is a click.
+ This is a great UX for learning . For years, Google was mocked for great search results in a bland UL
+ But this bland UI made the search results great.
+
+
+
+
+Redacted                                        REDACTED FOR PUBLIC FILING & ABRIDGED
+                                                                                                         GOOG-DOJ-22859510
+                               runied houses
+
+
+
+                                                                              Image search
+             late Yictonan 0
+
+
+                                                                             "Which result is best?»
+
+                                                                      Thumbnails provide background.
+
+                                                                          Answer is a hover, click, etc.
+
+
+
+
+ Image search poses a similar question-- which do you like best? Thumbnails provide background information, and the users
+ answer is logged as a hover, click, or further interaction.
+
+
+
+
+Redacted                                       REDACTED FOR PUBLIC FILING & ABRIDGED
+                                                                                                           GOOG-DOJ-22859511
+                   -                G o gle                                                            Go gle
+                                                     Alligators are        mostly                      parasites of mammals and birds, they live
+                   alligators       for their skin, but also they are hunted           fleas           by consuming the blood of their hosts.
+                                    their meat. umlch.edu                                              Adults are up to about 3 mm long and
+                                                                                                       usually brown. Wil<ipedia
+
+                                    Videos from the web                                                Scientific na~ ~ Siphonaplera
+
+
+                                                                                                       Lower classifications
+
+
+
+
+                                      Hurricane Harvey warning:                ALLI
+                                      Beware of alligators                     CHA
+                                                                                                        Ceratophyllida     Ctenocephalid
+                                      YouTube Fox                              YouT                     e                  es
+                   An alligator            25,                                 Jun 1   Fleas are sm
+                   Alligator of t                                                      the order Sip
+
+
+                                                                                                                    More about Ffea
+
+
+
+
+ For example, some knowledge cards need an extra tap to fully open.
+ On the left, an extra tap means the user wants lower classifications and an overview.
+ on the right, the user has too little background information.
+ More what? How is tapping here different from scrolling down? Users can't make a good decision, so
+ Taps and clicks are such distinctive events in logs; we should endow every one with meaning.
+
+
+
+
+Redacted                                                       REDACTED FOR PUBLIC FILING & ABRIDGED
+                                                                                                                                                   GOOG-DOJ-22859517
+

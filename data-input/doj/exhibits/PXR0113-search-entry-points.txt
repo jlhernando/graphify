@@ -1,0 +1,127 @@
+Executive Summary: Review Overview
+Review Type
+
+Decision /Approval
+
+Requested Update
+
+Steer
+
+(Please highlight the appropriate type)
+
+Context
+
+•
+
+The Search landscape is changing:
+o
+
+New Al access points are rapidly expanding (e.g. chatbots LLM)
+
+o
+
+Search intent continues to shift off the web and into mobile apps (>90% of user time)
+
+o
+
+iOS continues to introduce 1P search experiences on device
+
+•
+
+To continue to drive Search growth & diversification in this new environment, we must introduce new user
+access points , meeting users where they are.
+
+•
+
+Al igned with Search Journeys Growth OKRs (015 KR1, KR2)- drive topline Info Needs & cSUNs
+
+•
+
+Proposal:
+o
+
+•
+
+Pilot an embedded Search experience for 2 partner segments: Browsers/Search Engines (alongside Al
+chatbots) and Mobile Apps (Al/non-Al)
+
+Leadership approval:
+o
+
+Seeking leads approval due to potential risks to disruption of Google.com and partner sensitivities
+
+o
+
+Already reviewed with VP Search International & Growth
+
+@, supportive of approach
+
+Problem Statement
+
+•
+
+The introduction of Al is creating new access points, allowing other providers to reach users rapidly; in order to
+continue delivering value to users, Google must expand access points, meeting users where they are.
+
+Review End Goals
+
+•
+
+Approval to pilot embedded Google Search with up to 15 Apps and Browsers in 2023 to vaHdate hypotheses
+and refine offering
+Ex. No.
+PXR0113
+1:20-cv--03010-APM
+
+1:20-cv-03715-APM
+
+GOOG-DOJ-34233844
+
+REDACTED PUBLIC VERSION
+
+ATTORNEY CLIENT PRIVILEGED AND CONFIDENTIAL
+
+Go gle
+
+earch entry oints
+May 2023
+For xSRB
+
+GOOG-DOJ-34233845
+
+REDACTED PUBLIC VERSION
+
+Confidential / Need-To-Know
+
+Executive summary
+Tl;dr: The introduction of Al is creating new access points, allowing other providers to reach
+users rapidly; Google should meet users where they are or risk ceding a new ecosystem
+Context: A changing Search landscape
+•
+New Al access points are rapidly expanding (e.g . chatbots LLM)
+•
+Search intent continues to shift off the web and into mobile apps (>90% of user time)
+•
+iOS continue.s to introduce 1 P search experiences on device
+Response: Explore new Google access points (in Al, in apps), by testing an embedded Search experience for 2 partner
+segments: Browsers/Search Engines (Al) and Mobile Apps (Al/non-Al)
+Op portunity: Significantly advance our global strategy to ...
+1
+
+Integrate with new GenAI experiences from LLM-based conversational Al providers
+
+2
+
+Address shifting search intent (particularly within GloYo and APAC); TAM= 1808+ annual queries
+
+3
+
+Diversify Google Search pathways on iOS + boost iGA engagement
+
+Ask: Approval to p ilot embedded Google Search with up to 15 artners in 2023 to validate hypotheses and refine offerin
+
+GOOG-DOJ-34233846
+
+REDACTED PUBLIC VERSION
+
+

@@ -1,0 +1,195 @@
+Go gle
+
+(NTK/ACP)
+
+Anthropic grounding proposal
+For GDM and Gemini app review
+
+Oct 2024
+
+Ex. No.
+PXR0153
+1:20-cv-03010-APM
+1:20-cv-03715-APM
+
+GOOG-DOJ-34846476
+
+REDACTED PUBLIC VERSION
+
+Context: Grounding with Google Search was launched in May'24
+on Cloud Vertex Al APls for Gemini models.
+•
+
+Vertex/ Cloud
+
+•
+
+1s
+
+Grounded
+response
+
+Ye, T;,y!o<Swift rti11l0urin~
+cl6T1:flt toiw. cd led
+Eras Tour.•
+65
+
+When tS Ille next one?
+
+IOuring. • H9t
+
+Yes. T ~
+
+cv,A)nt tOUt. called 'Tho £,03 Tov:
+
+cona!rb !o<ht!dt"9d
+
+aooss 14 countries.
+
+-
+
+Must show to user
+without modifications
+
+Vertex translates
+prompt into
+Search Query
+
+User mossago and
+all chat history
+
+...
+
+Vert _ _. . . 1
+
+\..
+
+Search Entry
+Points
+
+..
+
+i-- 65
+aCIOIS140Qllf11rles.
+
+Search Query
+
+Search
+
+Search retrieves
+results, passes back
+URLs + snippets"
+Vertex prompts
+model with URLs +
+snippets to get
+grounded
+LLMresponse
+
+Whcnls the I\CXI Oll07
+
+May show to user
+i
+
+:
+
+.......................
+Recitation
+checking
+
+..
+
+:
+(
+
+l3)-torS."'ft' snext aincertwllbeon
+May 9. 2024. in Paris La Defence Alea
+
+In Nlll'lle«e. 1 >
+
+•... ···(':::: :::::::::: .-·······.
+
+:: Corroboratio I.
+: n checking :
+
+Google
+
+........................................
+Eras IOl,I' dlHH and IOcalions
+
+Q
+
+ReWt'11ed to customt!I'.
+Reccmmf!flded. but oot
+r equired to display to end t,.1$81"
+
+• The web resu Its quality offered to Vertex is lower than what's offered to the Gemini app.
+
+REDACTED PUBLIC VERSION
+GOOG-DOJ-3484647 8
+
+NC PRIVllEGE:OANDCONflOEt,
+
+Gemini app mitigat ions in place: The web resu Its quality offered to Vertex is lower than
+what's offered to the Gemini app
+
+Risk for Gem ini app: Reduced differentiation for Gemini app relative t o Claud e.ai.
+
+Mitigations:
+1. Gemini app will continue to get much richer Search results {with KG, oneboxes and RelQ) than w hat's offered
+2.
+
+to Vertex (web results only). Anthropic will continue to only have access to what Vertex has access to (if not
+less).
+Additionally, unclear if the q uality gap between products changes significantly given Claude.ai could also rely
+on an alternate w eb grounding source.
+
+Gemini app: Are you comfortable with a similar level of differentiation loss with Anthropic as
+Vertex grounded Gemrni API?
+
+Today snippet length is 160 chars
+Product angle
+Original position : make sure Bard is the best product on the market.
+Today: make both Bard (serch companion) and Vertex (llm api) the best products.
+Infra/Complexity angle ➔ same configuration
+
+GOOG-DOJ-34846481
+
+REDACTED PUBLIC VERSION
+
+Grounding with Google Search adoption
+
+of enterprise customers (API only),
+200
+
+7d avg
+
+,,~
+
+t
+
+...,---
+
+..,_,..,_
+10-0 ___ ,..,_,,-.,.~·-__..._
+
+,,
+
+,....... __.
+
+,-----..--'
+
+.50
+
+0
+
+Ju!
+
+Aug
+
+Google
+
+GOOG-DOJ-34846488
+
+REDACTED PUBLIC VERSION
+
+

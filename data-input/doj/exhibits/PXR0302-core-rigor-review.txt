@@ -1,0 +1,242 @@
+.
+
+'
+
+f
+
+'
+
+..
+
+..
+
+'
+
+.. .
+
+.
+
+'
+
+..
+
+'
+
+'
+
+.
+
+.
+
+''
+
+'
+
+r
+
+Core RiGoR Review
+1
+
+Q 1 25 Cybersecurity Update
+January 27, 2025 | Core Risk Governance Review program
+
+Heather Adkins, VP Security Engineering
+
+Ex. No.
+PXR0302
+1:20-cv-03010-APM
+1:20-cv-03715-APM
+
+GOOG-DOJ-34940297
+
+REDACTED PUBLIC VERSION
+
+Focus for Today
+
+Top Cybersecurity Risks Overview
+nsider Risks
+
+Third-Party Risks
+
+Infrastructure Risks
+
+Intellectual Property (IP)
+
+Third-Party Saas (3P)
+High Risk
+• On Track
+Use of third-party Software as a Service
+solutions.
+
+Physical Infrastructure Controls
+Systems
+
+Very High Risk 'On Track
+Insider access to Intellectual Property
+including Al Models.
+
+User Data Protection
+Very High Risk • On Track
+Insider access to user data in storage
+repositories.
+Access Controls in First-Party Tools (1 P)
+High Risk
+. On Track
+Insider access to user data via 1P
+Enterprise Tools.
+
+Contract Manufacturing {CM)
+High Risk
+. On Track
+Third-party Contract Manufacturing facilities
+that make Google's servers and consumer
+devices.
+
+Very High Risk
+
+'On Track
+
+Physical Infrastructure Controls Systems
+that manage water, power, cooling, etc., in
+data centers.
+
+Developer Endpoints
+High Risk
+
+'On Track
+
+Highly-privileged engineering workflows.
+
+Software Supply Chain
+High Risk
+. On Track
+Software creation, maintenance, and
+deployment.
+
+Alphabet's Use of Cloud
+High Risk
+
+'Off Track
+
+Use of next-gen Cloud platforms.
+
+Trusted Identity Risk
+
+Data Center Regionalization
+
+Identity Verification & Deepfakes (IdV)
+Very High Risk . On Track
+Threat actors impersonating employees and
+members of the extended workforce.
+
+High Risk
+
+'On Track
+
+Expanded data center locations and
+services.
+
+GOOG-DOJ-34940304
+
+HIGHLY CONFIDENTIAL
+
+REDACTED PUBLIC VERSION
+
+Additional Context
+
+Third-Party Risk: Software Supply Chain
+Current Risk Level
+
+Hi h Risk,
+
+Trend
+
+.,i
+
+.
+
+On track
+
+Google relies on thousands of third-party produced software, both open source and
+commercial. Use of third-party software increases developer velocity but also introduces risk
+by incorporating unverifiable components. In recent years, th reat actors have leveraged the
+unverified trust in the ecosystem by placing malicious code into components used by
+companies all over the world (e.g., SolarWinds), and vulnerabilities in popular components
+have made attacks-at-scale possible.
+Headlines
+
+Risk
+Reduction
+Update
+
+• Deployed
+planned automated security checks ("enforcement gates") in
+the SDLC to measure supply chain risk.
+• Pilot in place to auto-update open-source software dependencies in Cloud.
+% software with controls that prevent
+unilateral tampering .
+
+% of 3P open source consumed by
+Google that meets the vulnerability
+remediation requirements.
+Milestone(s)
+
+Google has historically mandated code
+tampering controls, such as requiring two
+person review on all code. Our work on
+additional controls will continue to drive
+down risk.
+2026 Risk Target
+
+Medium Risk
+
+Our focus is on updated automation, control
+development, and increased control
+adoption, with broad take-up in 2026.
+Control Maturity
+
+Ad Hoc
+
+We have not yet developed all
+the solutions we need to scale
+control enforcement. We may
+not have a complete inventory
+of assets to be protected.
+
+Q4'24:2025+:-
+
+GOOG-DOJ-34940327
+
+HIGHLY CONFIDENTIAL
+
+REDACTED PUBLIC VERSION
+
+Third-Party Risk Software Supply Chain
+Overview
+
+Third-party dependency management is fundamental to Google's software supply chain. We have obligations to Google and our Customers to
+protect and be transparent about our software supply chain.
+Challenge(s)
+
+• Shared fate: The Core-administered third-party google3 directory is shared across Google.
+• Federated ownership of shared third-party dependencies in google3 does not scale. Central remediation continues to have the largest ROI
+on safety and security.
+Path Forward
+
+Pursuant to the Core Pillar Request and Internal Audit findings.
+Automation: Build infrastructure to automate maintenance of dependencies.
+2. Pay down accumulated risk debt: Remediation of select dependencies and moving them onto well-lit paths with automated maintenance.
+Prioritize Trusted Core Access (TCA) C++ dependencies going forward.
+1
+
+Core Pillar Request
+
+Support for Beyond Security funding to relevant Core teams (Core Dev, PSS) and TRR (in progress).
+
+GOOG-DOJ-34940328
+
+HIGHLY CONFIDENTIAL
+
+REDACTED PUBLIC VERSION
+
+

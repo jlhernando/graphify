@@ -1,0 +1,1386 @@
+Google vs Bing
+
+Summary of Findings
+Looking specifically at mobile queries on browsers, Bing consistently serves search results
+faster than Google today:
+1. Bing results arrive ~300ms faster
+Not Including differences due to SSL, Bing search results start to arrive and render
+~300ms faster than Google search results.
+
+2. Google has a larger latency penalty for logging-in than Bing
+Results for logged-in user queries on Google arrive ~350ms lat er than queries by loggedout users. Logged-i n queries on Bing are only~100ms slower.
+3. Bino is faster in part due to our seryer-side latency increasing since 03 2016
+
+Latency trends show that. while user connections are gradually Improving, server-side
+latency is getting worse at a faster rate. Roughly 1SOms of the gain comes from
+Confidential and ~80ms from confidential itself
+4. "Bing has more granular streaming
+The Google SRP comes down in four distinct chunks (header, body, footer, late footer).
+Bing delivers their SRP in many more granular chunks.
+s. Bing has asmaller payload size
+On average, the Bing /search page is half the size of Google a google /search page
+(~200Kb vs ~l00kb uncompressed, excluding external resources).
+6. Bing and Google's client-side rendering limes are comparable
+
+~150
+
+While there may be room for optimization, the client-side rendering times for both Bing
+and Google are roughly the same.
+
+7. Bing does not use SSL by default
+Using SSL incurs an amortized ~26ms loss per query relative to Bing without SSL.
+8. Bing does not support HTTP/2 and OUIC
+
+This may cause a higher response time on high-latency networks for Bing due to the TLS
+negotiation process on every query.
+9. Bing is more adversely affected by poor networks
+Under poor network conditions, Google is actually faster than Bing.
+10. Google's mobile traffic incurs more server-side latency than desktop traffic
+The latency is spread evenly between Confidential and differs by ~50ms.
+
+Ex. No.
+UPX2022
+1:20-cv-03010-APM
+G OOG-DOJ-0468 1590
+
+REDACTED FOR PUBLIC FILING & ABRIDGED
+
+looking at the Bing App on Android and iOS:
+11 . Bing uses native rendering
+The SRP is implemented with native widgets on Android and (most likely) on iOS as well
+and shows approximately the same ~300ms difference in performance.
+12. Bing implements infinite scrolling
+The Bing App implements tap-for-more-results infinite scrolling.
+Furthermore, ramiroguerra@ has done an analysis of Bing
+
+Mobile web
+
+Background
+As part of the Folly effort, it was observed that today Bing appears to serve search results faster
+than Google. In one of the worst cases found, the query ·san diego to lax train" takes 3.69s for
+content download on Google versus only 565ms for Bing (see t r a n s
+query
+port
+discussion). We
+set out to quantify the difference and try to drill down into possible reasons as to why this could
+be.
+
+2014 Latency Lab study
+This question has come up before. In 2014 latency lab studies, Bing was faster than Google
+mainly due to its lack of SSL. However, in 31 of the 100 queries, Google was also slower than
+Bing with SSL. The reasons identified are listed here. It is possible that since then Bing has
+made even more performance gains (e.g. Windows Server 2016 and improved NET yielded 16%
+Bing search latency reduction).
+
+Comment [1] : Are there lessons to be learned
+
+if we look at specifically the queries of• sloth?
+Com~nt [2]: You .,,:;11 llkely.fir,_d pages \\1lere:
+Google r,.,. ooe- of moo; flea..y feawres ~hd·
+•Silg has s teature,llght P'-'9• I donl 1hil'li< the
+B~•VS-00()!Jle <:Onie)(\ is addr,g. m()ffl f!>sighl •
+ralher IMOius.t lOQk!ng at Googl& Sloth quer.,,s
+
+lndependemly. • •
+
+·,
+
+~
+
+•
+
+~oinment'rlf: W<liJ\dth~ be • ~sell.ii°~=~
+
+· mefrfc totract.ror SRP.? •·. •
+
+,- .
+
+.
+
+,
+
+Comme11t (:4]: M3ybe but af\Yga,,sheie wil ·1
+
+';":~!-~~!.~~~~
+
+Findings
+
+.Corrlffliint [S): I wonder} th/?re'$ some useful.
+1analysis to t>e dooe on.the·gi,p between TTFB
+
+For more details, see the additional information in the Appendix.
+
+·au·d TIFR 1h8 pag~ 'tS\pef'Ceiv~d as fa$fGr
+\ wti.;,, the lrol result cvrrn!si,, more quickly. bot
+AFAIK we dooH,avo quanmaliv'! data im the
+
+effects If we re golng IO e,pend effo<t Cl<>:iklQ
+
+Bing results arrive ~300ms faster
+Using 1000 random queries to get a more realistic sample of what real traffic would look like
+rather than using "sloth" queries or common queries) and an automated query tool we gathered
+latency data for both search engines on different networks. Both search engines return the first
+byte quickly and at about relatively the same time (chart).
+However, we see a large difference when we look at the time t hat the first byte of the search
+results arrives.
+
+the TTFR gap. this m,ght g'M ! us oome idea of
+lll<t !teadroom.
+.
+
+go/1'<l8;chlliferi_cypniner
+
+.seems:;;;
+
+indi¢8te that
+we oOH-~cf.chuoki boun~ Jtnetric.$: bvt the doc
+rere{8n?')d 1$ r,om 2013 • •
+dO.we slll ecllool these?
+httpsif/doc,;.gc-Qgle.corri/docun\ent/dl1Rf7nQ'fl.
+~5e007U38ZdKlcGOl 13\IK4~QQAAT\\'_IXU!
+
+~ ~ le - . l~ te,00f)1
+
+\. : _ ~oog~ ~~-..;.:.",_. '
+. ~ nt[6J: l can~ f,nd·the
+• IMtromeot~lo,nS(lfvl<.» IJ'l. our oo·cteb ase·
+anymo!e. Not t.ure how drffio.~t if would be to
+,· 1mp1:1rient ~/41166371. in.our currenl .state ... _.
+
+Redacted
+
+G OOG-DOJ-04681591
+
+REDACTED FOR PUBLIC FILING & ABRIDGED
+
+Msec, first byte to first search result
+
+When the connection is fast, Bing results arrive 120·3 ?Oms earlier depending on the region. This
+effect is more easily seen when looking at the difference between the time of the first byte
+{"header chunk") and the fi rst byte of the search results ("body chunk"):
+
+Msec, first byte to first search result
+Google
+
+Bing
+
+Rec1actec1
+
+GOOG-DOJ-0468 1592
+
+REDACTED FOR PUBLIC FILING & ABRIDGED
+
+Thelargest single source of server latency appears to be from
+
+Confidential
+
+Confidential
+particular, rather in
+than within confidential
+itself. Full data is available here.
+
+Comment [7]: I don't getto this conclusion
+from the chart and your earlier
+
+The Google header is 9.5kb compressed on Tier 1 and renders in under 100ms on even the
+slowest devices. The time between the header and the first byte of the results is a particularly
+pernicious place to have a latency gap because even the slowest of client devices will be sitting
+idle while waiting for the search results bytes to arrive.
+
+words. It seems
+
+like you're saying that there's a X00ms latency
+gap between first byte and first search result.
+
+But, what's happening during that time? Is it
+
+waiting on confidential
+some other
+or server? Is it
+possiblythat we'retransmitting a lot of bytes
+
+between these points (ie. that it just takes more
+time to reach the firstbyte)? Could it bethat the
+browser
+
+doin
+something
+g
+with those earlier
+
+bytes (eg, perhaps there's InlineJavascriptthat's
+
+Bing is faster in part due to our server-side latency increasing since
+Q32106
+The server-side latency difference between Bing and Google is quite significant and this
+difference seems to be a recent development. Much of t he latency that Google lags behind Bing
+has been gained over the previoustwo quarters. Looking at mobile traffic, roughly ~ l SOms from
+Confidential and ~80ms from confidential time itself:
+
+I
+
+being executed)?
+Comment [8]: Redacted @google.comYes.
+
+the charts show a X00ms gapbetween first byte
+and first result,
+confidential
+. C o n f i d e n t i a lthese queries
+were done with an automatedquery tool that
+has no browser and looks for a particular string
+in the network response.
+Comment [9]: To answer all of Corey's
+questions directly:
+
+1.Yes,the browsersits idle.
+2. Yes, it is waitingon bytes from confidential
+
+Confidential Time
+(weekly)
+United States mobile
+
+900
+
+Confidential
+
+850
+800
+
+Comment [10]:
+
+Michael,
+do you want to add
+
+additional conclusions to the text here?
+
+750
+700
+
+600
+
+02
+
+03
+
+04
+
+Q1 2017
+
+Redacted
+
+GOOG-DOJ-0468 1593
+
+REDACTED FOR PUBLIC FILING & ABRIDGED
+
+Confidential (weekly)
+
+United States,
+
+mobile
+
+700
+650
+600
+
+500
+
+450
+
+02
+
+03
+
+04
+
+012017
+
+Much of these losses have been masked by increasingly fast user corrections.
+
+Google has a significant logged in penalty that Bing does not have
+On Google, for logged-in user queries, the first byte of the header arrives ~100ms later than for
+logged-out users. Additionally, the first byte of the results will arrive ~240ms later. This gap is
+server-side processing. Not clear what exactly but this latency shows up on the end-user latency
+dashboards split between Confidential Response size is about the same. For Bing, no
+significant difference between logged-in and logged-out queries was observed.
+
+Redacted
+
+GOOG-DOJ-0468 1594
+
+REDACTED FOR PUBLIC FILING & ABRIDGED
+
+Msec, MTV logged-in/out, first byte and first byte to first result
+■
+
+Google
+
+logged-in/out
+
+Bing
+
+These delays show up in our end-user latency dashboards and appear to affect Confidential
+and even header time. See the appendix for more data..
+
+Bing has more granular streaming
+We investigated the loading behavior of both Google and Bing search and noticed differences in
+how results are streamed to the c lient. Using a tool to analyze the time that bytes arrive, the
+Google SRP comes down in four distinct response chunks (header, body, footer, late footer).
+However, Bing delivers their SRP in many more granular c hunks.
+Bing's streaming approach may allow better latency with poor network connectivity but do_
+es
+not appear to impact latency on good corinections. Duringtesting using the corp network and
+with a home cable connection, the average time between the first result byte and the last byte of
+the SRP was ~30ms for both search engines.
+
+Bing has a smaller payload size
+Bing's /search pages are significantly smaller in size than Google's. We captured byte-size and
+page-load times for some of the suggested queries from the project slides as well as byte-size
+breakdowns
+for a set of 1000 random Queries. For the /search page, Bing loads much fewer
+bytes than Google does. On average, the Bing /search page is half the size of Google a googl e
+/search page ( ~207kb vs ~ 112kb uncompressed, ~66kb vs ~35kb compressed).
+
+Comment [11]: Why else might Bing have
+finer granularity?Did you observe that the
+chunks lined up withany particular boundaries?
+. How do browsers treat chunks - is there
+
+something to be gained, related to browser
+processing, by using finer or more coarse
+chunks?
+
+.
+
+.
+.
+
+seem
+to be any logical segmentation
+doesn't
+eyOnd being 8kb chunks. • • •
+
+'·
+
+anything else to add
+
+•
+
+comment [13]:
+It didn't seem like explicit
+boundaries to me and the amountof chunks
+varies quite a bit.Browsers will render earlier
+data they receive earlier. Beyond that there is
+no effect.
+
+Redacted
+
+GOO G -DOJ-0468 15 95
+
+REDACTED FOR PUBLIC FILING & ABRIDGED
+
+A byte-breakdown comparison between Bing and Google further shows that Bing SERPs are
+much smaller in most byte categories, Of the roughly -95kb difference going from Google to
+Bing, about -33kb comes from HTML markup, +19kb comes from HTML text (quite a bit of this
+Is In fact CDATA containing JS), -19kb comes from style blocks, and -62kb comes from script
+blocks, Of the difference due to script blocks. -31kb comes from JS inlined images. Of the
+difference due to style blocks, -2kb comes from CSS inllned images.
+Bing loads fewer bytes of externat resources t han Google: 168kb versus 403kb of XJSand 16kb
+versus 37kb of external images. However, Google does much fewer XJS fetches (exactly one)
+than Bing, which does about 15.8 XJS fetches on average.
+
+Bing and Google's client-side rendering times are comparable
+Although it depends on the device used, t he client-side rendering latency of Google and Bing are
+largely comparable, We gathered aggregate data on overall latency using Latency Lab by
+running 1000 random queries on both Google and Bing on a slower Nexus 5 phone and a fast
+Pixel phone and recording the time that each search page reached 99% visual completion above
+the fold .
+The following graph plots the latency difference distribution for each phone:
+
+Each blue point in the graph plots the difference in time to 99% visually complete minus time to
+first byte (to control for network effects) between Google and Bing for a particular query run on
+a Nexus 5. The red line plots the same for a Pixel phone. Points above the horiz.ontal axis
+indicate that Google is slower and points below indicate that Bing is slower. This graph shows
+that today 25% of queries in this set are faster on Google on a Nexus 5 and 35% are faster on a
+Pixel phone.
+
+Redacted
+
+GOOG-DOJ-0468 1596
+
+REDACTED FOR PUBLIC FILING & ABRIDGED
+
+The orange line highlights the median server-side latency gap (as measured in MTV) to highlight
+the fact that. had the search results reached the client at the same time for both Google and
+Bing, Google latency would actually be just slightly worse than Bing on a Nexus 5 (45% faster)
+and in fact better than Bing's on a Pixel (55% faster}.
+An in-depth look at client-side latency for ·auerjes of sloth" (queries specifically chosen because
+they are slow on Google) actually showed that the above-the-fold area rendered later for Bing in
+most cases.
+
+Bing uses more images
+This can likely be attributed to more prolific use of images on Bing above the fold. The following
+data is for ~600 random English queries:
+Bing
+Google
+Average images above the fold:
+4.82
+6.94
+Average number of image pixels above the fold:
+70k
+138k
+14.58
+Average total images: 24.54
+Note that this analysisincluded a doodle running on the day the data was collected which
+accounts for ~10kof above-the-fold pixels on Google.
+
+Bing does not use SSL by default
+Bing does not use SSL by default; Google does. SSL traditionally required one or two extra round
+trips, but protocols such as QUIC have sped up SSL, and in practice only 11% of HTTPS queries
+require a SSL handshake delaying the search
+by ~240ms 1
+when a handshake is required. This
+amortizes to 26ms per query.
+
+Comme11t [16): rd also like to inveltigato .
+: latency ii'npilCI. or ht1P·•~n(>$ "se<vei (8(Jlreets ,
+
+:w111c11 wouldnl beindtlded 11 these metrics.,
+Co~flt {'17): ~oogle.com do you ·
+
+Bing does not support HTTP/2 and QUIC
+Bing does not appearto support HTTP/2 (test) or use QUIC (as evidenced by lhe lack of UDP
+traffic at the packet level). This may cause a higher response time on high-latency
+networks due
+to the TLS negotiation process on every query. In contrast,
+Google's traffic uses
+HTTP/2, and confidential QUIC.
+For Google, using HTTP/2 appears to give only a m inor benefit to latency for new connections
+on a simulated 3G network:
+
+. have data fo, llOW frequent that is? t though v.e
+
+looked Into It.,..
+
+r·--- .. - r - ~ - - ~ ~ ~ - ~ a k • • - - ~ - ~ Commeflt {18): Volume with cur RDXTme~lc
+: (obtained as redirectEnd-redited Stan In
+' httpsll..-..w.w3.org/TR/navlgalion•
+1 bming/llp,ocessing-model) is very low, less than
+t ¾, f'm not suro though whother HTTP to
+
+HTTP$ redireds ai'c included since acco<dlng
+to that page, tl'le sou~ ano destinauon na-.;i to
+, ha.e the same origin.
+
+COfflllW!f1t(l!ll]: ·l think 8/110(11~09 arilllmetloJs
+.Getilrnental to our usert Interests. tt°I! be more
+•·corred'.Cosay that we had'tln' overall rec!Ul:tlon
+'SSL handSl)akos Wl\h QUIC, bOl gr, t,.orcase In •
+latency v.,riJ!bli\y QI 240m$ In t1% of queries:.
+
+As measured by the Navigation Timing API: connectEnd secureConnectionStan in
+https://www.w3.org/navigation-timing/processing-model
+
+Redacted
+
+GOOG-DOJ-0468 1597
+
+REDACTED FOR PUBLIC FILING & ABRIDGED
+
+Google HTTP/'1 . l '\!$ HTTP/2
+
+45f0
+
+It may however affect repeat connections and allow benefits,not measured In this test such_as
+server push.
+
+Bing is more adversely affected by poor networks
+Perhaps because Bing and Google use a different method of SSL negotiation, HTTP protocol.
+and a different number of images and other resources. the two search engines do not appear to
+be proportionately affected by increasing network latency, It seems that in general, Bing
+appears to be much more adversely affected by poor network connections in terms of both time
+to first byte and loading images. This effect can be seen in the QJJ::l2GJ.lm.~.J.O::firtl;W~IDU!~
+presented below.
+For illustration. the following film strips were taken with different amounts of network throttling:
+
+{philz coffee) with no network throttling
+
+Redacted
+
+GOOG-DOJ-04681598
+
+REDACTED FOR PUBLIC FILING & ABRIDGED
+
+(philz coffee) with simulated 3G
+
+-
+
+..
+
+' ~ --
+
+'
+
+•~a.-.
+
+~ ~~~., :~1 ;,; ··":;..
+
+.
+
+Google's mobile traffic incurs more server-side latency than desktop
+traffic
+Comm.erti:t2ii: H8v.e}'(X!d~-t1lowhythis
+
+~ erver side latency is ~-50ms l arger for mobile~
+
+mlght bo tho GBS:O?
+
+1
+
+GWS Time (weekly)
+750
+
+r Commel'lt [ l l ]: Uy gu~a-ia H~ i reat~ru:.
+
+i Server lalency is also mueh highe</gmwing
+
+"'J
+
+taster o~.- tast 2 quarters tor U S/LIK than IOI"
+
+■ desktop, Desktop OJ<R UserAgent
+
+. Lm_any othar !~!es_
+
+■ ADfntelface, Mobtlerfable! OKR UserAgent
+
+·comme•t {23): The.s1ra119e thing nere
+
+700
+
+8CI.Ually Is tnal tablet ls even slower than
+
+mobie. I Chink ~ may be due lo the que,y mix.
+:,s,r.-=-...,,,,,
+
+=-~~=
+
+•.Comrn_e ot ( 24}: IS the 5Qms llj[ency clif[llf<1nce
+seen wtlen lool<Jng al the same queiy on Mobile
+•hnd desktop?
+, • · ,.
+• ._ •
+
+650
+
+Co,.;;;,i!,;iYi s'i-;seems yoo ,;:;.,st defm~ely
+
+600
+
+earr. I jusl ran lhe·query 'lemons" 10 limes
+. using a mob~• and a Destkop UA (Illa curl.
+fogged out) and see - 200ms of dlffemnce kl
+time to frrs.t r'OaJII.
+
+550
+
+03
+
+Q4
+
+01 2017
+
+This latency i s ab out ™nty spread betweed Confidential j This difference can be
+measured when issuing the same query on mobile and Desktop which suggests that the latency
+has an infrastructure or feature source rather than a being due t o query mix.
+
+The Bing App uses native rendering
+The Bing App only uses WebViews for rendering results pages and using the Hierarchy
+Snapshot Viewer we can see that the Bing App SRP itself uses native widgets:
+
+GOOG-DOJ-0468 1599
+
+REDACTED FOR PUBLIC FILING & ABRIDGED
+
+!!'.iii
+
+,
+
+:
+
+90 •
+
+,.,
+
+0 1103
+
+• • . . ~ .". ·~ ',,;<',:=:
+l•:x
+t)(IW!Of movie-~ ::-> f !!)·'-~' ,i f-~i
+.,i
+
+'
+
+" ,
+
+~
+
+'
+
+:- ·(.•t ···~··-,.::,. ·],~'!a ···~:;;~·· :· .:·,;; ·,i:s-• i "
+
+,,~
+
+._. ,,. ,, • ' •
+
+' r
+
+\¥.i i::/~:.'.:::·.~·-.:·-~::"·/<:~~-~~:~::'~-~-~-~:"·:,:· :·:·1
+,. ~ ~i>U~t ~ ... , ., ..., ., • ,
+
+r
+
+W :
+
+1
+
+-
+
+u~•L.,.¢1.-i ••
+
+.." fd ~ ~
+
+,t.l('-"t'
+
+,,
+
+H
+
+<'
+
+....
+
+,.,
+
+, ,. "
+,
+
+"".,..
+
+·~
+
+,
+
+-
+
+._,,,.,,,
+
+~""' ,~, .~,;,.,,,,,. ,~ • ·, .-:.
+
+<
+
+..
+
+,,.,..
+
+i,;
+
+,.
+
+•
+
+,
+
+,.
+
+,.
+
+,
+
+,;,
+
+,
+
+:f f :=:::,; , . . . '•<• , ... '.,,,,, . ..,
+
+... , .
+
+,:-. -~· . '
+
+'
+
+~{~.~-'f i'f ,;' ·,·~,\-~•
+
+·~ ~ =
+
+,.l·,,.~f
+
+<,<f. :,,,
+
+-
+
+: ur... <1 1 i"I,>'~ " "
+
+n~ r♦
+
+A.c.t-t-~
+
+/(1,-1,,,;, f.,
+
+• •
+
+.l.
+
+, .. •... ,···:··
+
+,. ,
+
+t , ~"1.il'j'\-1ll . .c!,.~ ,~- . •,,.,, : .., ·. ~.,•. ;,, .~,:•.'>+(.<••~.-.-
+
+1 e:;Ji.,~~.,i;o.:t .,,:.· .,,, ..... .. . •·•
+NoCo!JQtl)'
+
+¢ i, ,l-.1t,,<i , ;,_,;,
+
+. . , ,: ~-·• ,, ',(, .,,., ,
+
+C•"l\"'.<1_.,,,:;;.,,.., .,, ·., · , • ,;, .-. .. .,•. . ,<.
+
+1 :
+
+Zoo1.:.p111
+
+· :. •:·_::~1·
+
+•••~•.•.•r1 •
+
+::.-: t'""'"''•'"'"'~ -f' E:)Sf.t(JV>~
+
+i, G ~tt ..,fJ:M :~·
+
+....,,,_.( ..
+
+,~. S •
+
+ft>r O!d M IN'!
+
+1;, :
+
+:;-:::n{, /..t,i,.~~d
+
+1cs1:.• ~ lif<'"."
+
+·!':''!~*
+
+~ - W~f.r;w: -,: ...
+
+,1<j;k·11¢'
+
+AN'lt"?t~tt C;v .,
+
+•' •* <, ,
+,,
+"-v
+
+{ ;-. . Jh>;.,t......,·...:., ~ ·A· ,·.,·~- ,,.,, .,
+,• -
+
+C~p1~lft
+
+..
+
+r.:r~ ~li.¥,."wf >".,!.·,:• •·.,.
+
+?
+
+, . ..- , ,(. ··, ·, ~.. ...."!~·
+
+~, •.:.-.•.,,· "''•'•"""' "
+
+,
+
+~ 1.•~ ;.v~,~r '.:-
+
+a ..,...._,,'¥I<
+~
+
+.
+
+a
+
+l(,•\/ww, •:.r, .•
+
+:· i ~':::;::,;:j
+
+= ~ ~ ·. .
+
+-
+
+~-
+
+It Is not as easy to do ti}iS kind of analysis on iOS but the visual and functional similarity
+between the two apps suggests that both are natively implemented. One confirmation that Bing
+does use native rendering on 10S is that they use Apple Maps in results, which is native only.
+The Bing app renders results faster than the GSA on Android and iOS by 300-400ms, which is
+about equal to the server-side latency difference, See the side-by-side videos on Arldr.Mi and
+~ for an example query (note the longer App startup time for Bing on both platforms).
+
+While the Web interface of Bing does not have infini1e scrolling. native scrolling is easier to
+implement with a native widget based interface so it's not surprisi.ng that this is a feature of the
+Bing App:
+
+Redacted
+
+GOOG-DOJ-0468 1600
+
+REDACTED FOR PUBLIC FILING & ABRIDGED
+
+• a
+
+·C> •
+
+Q 11 2e
+
+in~ididunt ut labore et dol.;,c mogna ahqua Ut
+enim ad mm,m vaniam. quis nostrud ...
+
+rt ll!ll
+
+D 11 30
+
+-0 •
+
+lr,cidld;,nt ut labore et doiOfe magna ahq1ta 1)1
+enim ad mimm vemam quit nostrud ...
+
+Dummy TelCt Generator I Lorem ipsum ...
+
+Dummy TeX1 Generator I Lorem ipsum ...
+
+www.blJndtextgenemor.com
+
+www. bfindtextoenerator.CQm
+
+A handy Loreen tpsum Generator that helps to
+creme dummy text for all layout needs
+
+A handy Lorem lpsum Geoerator tliat helps to
+create dummy text for all tayoul needs.
+
+S•emorn v
+
+Lor em lpsu.rn • All the facts • Upsum g..
+bg.lipsum.cnm
+Refererice site about Lorem lpsum, gMng
+information on us origins, as well as a random
+Llpsum gmerator.
+
+!!EU.TEil SEARCMES
+
+lorem lpsum copy paste
+lorem lpsum full te~t
+
+'Lorem lp11um Generator • Classic ipsu..
+
+lorem lpsum meaning
+
+slipsum.com/lp"um
+
+funny lorem ipsum
+
+Samuel L lpsum is a Lorem lpsum GMerator.
+,t uses quotes from films which Samuel L
+
+lorein ipsum engllsh
+
+Jackson has starred il1 place of the standard
+
+lore,n lpsum hipster
+
+,psum te)(t. (Classie lpsum).
+
+lorem ipsum paragraph
+lorein fpsum word generator
+
+<J
+
+O
+
+Bacon tpsum • A Meatier Lorem lp11um. .
+
+□
+
+<l
+
+O
+
+D
+
+The Bing App still requires the user to tap to see additional results rather than loading them as
+the user scrolls.
+
+Appendix
+Server-side latency analysis
+~ser connections are steadily Improving
+This chart shows SRT over non-GSA browsers as an approximation of time to first byte:
+
+'comrnei,t [28]:· The· ~rid,.is..31'1uaJllLe-.eo..
+_§Lf9£19J1l.0.illl..l®.L"1.9..t.<ilf\..Confldentlal j
+[
+Confidential __.l')creased 1s,ns .,
+ihe same penoo: - - -·
+
+Redacted
+
+GOOG-DOJ-0468 1601
+
+REDACTED FOR PUBLIC FILING & ABRIDGED
+
+MoblteJTab!el OKR SRT {weekly)
+'"'-
+
+<l~•·····'".,Moo~;rr,oo ~ LO\\ \,lt);tltr"' &'Olltt.e<S!Al',,l>()III CMu>llfliA
+
+J.lOO
+
+750
+
+03
+
+04
+
+012017
+
+SRT' is the time from query commit until javascript in the header chunk is executed. The chart
+excludes GSA because the WebView does not receive the header data (and record SRT} until the
+body chunk arrives.
+
+Largest source of latency
+The foliowing screenshot is from the LQIQ.{J.u.ce..~h for the query ' 22jump street release
+date" (which has an A.FT greater than 2s on the Google corp network!):
+
+~~fo.gw.":!-"<)m1\lOli:@J¼,11b.k~.R-e~r,,rlJlJ)'U..~Pi;iu,;~}.1oilllle'I!~~~~
+
+; ; C.c)t:::,4I;= : ~L ~ ,
+The same query is answered by Bing in ~SOOms.
+
+Time to first byte on various networks
+The tim e of the first. byte rs consistently about equal for both search engines across different
+networks:
+
+Redacted
+
+GOOG-DOJ-0468 1602
+
+REDACTED FOR PUBLIC FILING & ABRIDGED
+
+TTFB
+
+Msec, first byte
+
+a Google ■ 6lng
+300tl
+
+2000
+
+1000
+
+The only exception is the GIN•2G run. It's not clear whether Google is actually faster on slow
+networks or that this is an artifact of the GIN WiFi networks.
+
+Logged-in/out query analysis
+Looking at end-user latency dashboards we see that there is an overall ~70ms increase in
+server·side latency for logged-in qu~ries over logged·out queries:
+icon••••••• fime (weekly)
+"- ·- Mcibilelfablet OKR
+
+760
+
+■ S1gnooaut
+
+■ Slgned In
+
+720
+660
+640
+
+560
+
+520
+
+02
+
+03
+
+04
+
+01 2017
+
+This latency is divided about evenly between! Confidential ~
+
+Redacted
+
+GOOG-DOJ-0468 1603
+
+REDACTED FOR PUBLIC FILING & ABRIDGED
+
+r---1
+i0 •••u•••,..j rime [weekly)
+11.cl>ilel!ahtet OKR
+
+760
+720
+
+■ SJgneaOut
+
+■ Slgned In
+
+680
+
+640
+600
+560
+520
+
+02
+
+QJ
+
+04
+
+012017
+
+I Confidential !Time (ms) (weekly)
+225
+
+■ Oesklop OKR UserA9e111
+■ Mobi!o/Tabhit OKR \J110tAg,lnt
+
+200
+
+175
+
+150
+
+l2S Q2
+
+03
+
+Q4
+
+012017
+
+Additionally there is a ~25ms i ncrease in the time to render the header:
+
+GOOG-DOJ-0468 1604
+
+REDACTED FOR PUBLIC FILING & ABRIDGED
+
+i·' .... ··-·
+jto•fid•••;••~eader llme (weekly)
+~--'Uooile/Tablel OKR UP.e<Agent
+
+100
+
+■ NI Omwser, Signed Out
+
+90 /\;~rowserjMoblle/Tablet OKR Low Volume Bf'owsersfNKtrold ChromeliO
+
+60
+
+70
+60
+
+40
+
+02
+
+03
+
+04
+
+01 2017
+
+Note that this graph excludes AGSA since AGSA header time was severely affected by the
+native SRP QBT rollout.
+
+Using 1000 random queries in MTV and HOT datacenters:
+Google MTV m~dian of 1000 random queries
+-
+
+Logged-out
+
+-
+
+Google
+
+Logged·in
+
+900
+
+300
+
+Redacted
+
+GOOG-DOJ-0468 1605
+
+REDACTED FOR PUBLIC FILING & ABRIDGED
+
+B-ing MTV median of 1000 random q,ueries
+
+RI logged--0ut
+
+-
+
+Logged-in
+
+GoogJe HOT m11dlan of 100-0 randt>m queries
+
+a Loggoo-oul
+
+jj,00
+
+.
+
+Redacted
+
+GOOG-DOJ-0468 1606
+
+REDACTED FOR PUBLIC FILING & ABRIDGED
+
+Bing HOT m&dian of 1000 random q., i.iries
+
+a Logged-out
+
+•
+
+Logged-m
+
+Full data is available here.
+
+Bing uses more granular streaming
+Using a Python Script that records the time that bytes arrive, we can easily see the four Google
+SRP chunks (header, body, footer, late footer)
+$ curl -s "https://www.google.com/search?q=cassini+space+probe" -A "Mozilla/5.0
+(i.Phone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHML, like Gecko)
+Version/9.0 Mobile/13B137 Safari/601.1" | data_rate.py
+78ms; un■n---■a■nm...•------■--■■■■IIDJI•■■ 52 k
+564ms : - • - • • • - • •........- • • - • • • •-• • • n - - • -
+
+12Sk
+S7 Sms: • • • • • • - - • • • • • • • - • - • • • • • • • 40!<
+587ms: . . . . . . . . . . . . .•--••-■nnnDR.........■...._._ .. 65k
+
+Bing appears
+
+to streamresults in many more chunks than this:
+
+$ curl -s "https://www.bing.com/search?q=cassini+space+probe" -A "Mozilla/5.0
+(i.Phone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHML, like Gecko)
+Version/9.0 Mobile/13B137 Safari/601.1" | data_rate.py
+l3 il!11$! ,. . . . . . . . . . . . 12k
+
+( Cotltment(29]: ~ e-~
+
+,do ·· .:J
+
+l visva!Jy looks on me page? I thilK.thlit
+
+..
+
+1y0lJ thin~~ .Cs!n <!6' a llrell)(dOwn OQ .how,lh!s :·I
+,
+
+i \indi>rst,jndi\~ ihe,isei'.facin~ impactitiai . • :. '!
+f $1µiornJtig tn<>r<>'Cl\u1iks ll)aY .'/iald ~ any). '
+
+·, 1
+
+,. ~~~•.:.i=.=--:.~:-~•~,:,~...:x~·1:t,..~~~~~~~.:r,-~f('~~-::.-:,,~~"/<;d
+
+: c'omment'[30{: ieanlookinto ltbutmyhonch ]
+
+! _I$ tha1ll>e_~~unk at 407m~ hem for Bing w®ld . •!
+Loontsifi au ollll~ATI' oonlen1_11ftet lMheMer• .J
+
+157ms: ••■--■llll■--■m 20k
+180ms : _...._.. 8k
+407ms : ............... 16k
+
+Redacted
+
+GOOG-DOJ-0468 1607
+
+REDACTED FOR PUBLIC FILING & ABRIDGED
+
+Bing's streaming approach may allow better latency with poor network connectivity but does
+not appear to impact latency on good connections. During testing using the corp network and
+with a home cable connection, the average time between the first result byte and the last byte of
+the SRP was ~30ms for both search engines.
+
+Queries of "slothier than Bing"
+We can sort the list of 1000 queries by the most negative delta between Bing and Google firstbyte to first-result time to find the slowest queries in the query set relative to Bing:
+lata mangeshkar song
+
+-1452
+
+22 jump street release date
+
+-1173
+
+a3NR
+
+-1091
+
+Ghana news
+
+-1012
+
+james songs
+
+-1003
+
+chatham
+
+-943
+
+bj's
+
+-933
+
+Mobile vs Desktop server-side latency
+Graphs from the End-User Latency dashboard:
+
+GOOG-DOJ-04681608
+
+REDACTED FOR PUBLIC FILING & ABRIDGED
+
+,
+
+I
+
+IConfi dential I{week.ly)
+L-··---·--·'
+
+650
+
+■ Desktop OKR User~ot
+
+■ Mobile/Tablet OKR Use,Agent
+
+soo '
+450
+
+400
+
+3SO 02
+
+00
+
+04
+
+012017
+
+I
+
+Confidential Ilime (ms) (weekly)
+225
+
+■ Desktop 0KR u,erAgent
+
+■ Mobil&JTabl&t OKR User.Agent
+
+200
+
+176
+
+150
+
+125 '
+
+02
+
+aa
+
+04
+
+012017
+
+Bing does not appear to pre-compute SRPs
+Timings taken of randomly generated 7-word ta il queries (usually getting only one or two dozen
+results) did not show any significant difference from extremely head queries ("facebook"). If
+Bing does precompute any part of the SRP, the latency effect is t oo small t o make any
+difference.
+
+Bing has a smaller payload size
+
+Byte-size and page-load times for some of the suggested queries from the project slides - Bytebreakdown comparison between Bing and Google for 1000 random queries is available in this
+cwtool report. Bing seems to be much smaller in most byte categories excepting HTML t ext and
+
+Redacted
+
+GOOG-DOJ-0468 1609
+
+REDACTED FOR PUBLIC FILING & ABRIDGED
+
+inlined CSS images, and head JS. In particular. Bing loads a smaller amount of external
+resources (XJS and images) than Google. On average Bing does about 15 more XJS fetches,
+and about one less image fetch than Google.
+
+CDATA
+A Bing SERP has much more HTML text than a Google SE.RP (25.4kb versus 6.3kb). Much of
+Bing's HTML appears to come from embedding JS wrapped within a COAT A section and placed
+as a comment in a non-displaying div. For example:
+
+This seems to have something to do with XML parsing athough it's not clear what:
+
+Comment [34]: Maybe it helps the document
+
+Click tracking
+
+is-cdata-section-necessary-with-a-script-tag
+
+to parse as XML?
+
+http://stackoverflow.com/questions/66837/when-
+
+Google uses a combination of click tracking methods that take roughly 50 t o 100 compressed
+bytes per url. Bing's click tracking mechanism is much shorter than Google's and appears to
+take just a few bytes. It appears to rely on. JavaScript to pick up extra information stored in the
+"h" attribute. Below we compare the markup for the wikipedia link from the "trump" SRP.
+Bing on Desktop
+
+<a href="https://en.wikipedia.org/wiki/Donald_Trump" h:"ID=SERP,5138.1">
+<strong>Donald Trump</strong> - Wikipedia
+</a>
+
+https://screenshot.googleplex.com/akcGsh5rEH7)
+
+Google on Desktop (HREF rewrite clicktracking)
+<a href="https://en.wikipedia.org/wiki/Donald Trump"
+onmousedown="return rwt(this,'','','','12',
+'AFQ1CNHbjSG94byvo78Dafly1Q7_0Q1YKw',
+
+'CE3IvyV1DcUTuPjiYCjSQA',
+'0ahUKEwjxlqTGgMjTAHWpiFQKHS7sCPwQFgheMAs',
+
+'','',event)">
+
+Donald Trump - Wikipedia
+</a>
+https://screenshot.googleplex.com/pKcoEZ2QBLz)
+
+Bing on Mobile
+<a href="https://en.m.wikipedia.org/wiki/Donald_trump" h=" ID=SERP,5246.1">
+
+<strong>Donald Trump</strong> - Wikipedia
+</a>
+
+(https://screenshot.googleplex.com/i2rw3iLWsDW)
+
+Redacted
+
+GOOG-DOJ-0468 1610
+
+REDACTED FOR PUBLIC FILING & ABRIDGED
+
+

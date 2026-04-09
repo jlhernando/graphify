@@ -1,0 +1,122 @@
+G oogle
+
+■
+
+■
+
+■
+
+■
+
+Exec Review
+
+Ex. No.
+
+Confidential I Proprietary I NTK
+
+PXR0109
+1:20-cv-O30 10-APM
+1:20-cv-O3715-APM
+
+GOOG-DOJ-33954812
+
+REDACTED PUBLIC VERSION
+
+Project Goal
+Explore integration of conversational Gemini into Search
+to grow information retrieval and task completion with Al
+
+GOOG-DOJ-33954813
+
+REDACTED PUBLIC VERSION
+
+Overview of explorations
+
+Objectives
+
+Principles
+
+➔
+
+Best enable Search to use gen Al to meet
+growing info needs of people
+
+➔
+
+North star is a product users find valuable and
+delightful to use
+
+➔
+
+Drive daily active users of the Gemini app
+and Gemini advanced
+
+➔
+
+Grow the total pie for user needs
+
+➔
+
+Preserve a healthy ecosystem
+
+➔
+
+Regulatory compliance
+
+➔
+
+Preserve ads revenue
+
+GOOG-DOJ-33954817
+
+REDACTED PUBLIC VERSION
+
+Explorations
+
+♦
+
+How can Gemini help?
+
+Draft a text
+message to my
+nanny providing
+feedback.
+
+Brainstorm
+
+•••
+
+Rol,
+
+constructive
+nanny feedback
+
+All
+
+Gemini
+
+News
+
+Videos
+
+Gemini suggestions
+
+Search mode
+
+Persistent Gemini entry point
+
+Provide rankable Gemini
+suggestions depending on query
+
+Users explicitly switch between
+search and a Geminipowered conversational mode
+
+Provide persistent & deterministic
+access to conversational Gemini for
+deeper engagement
+
+GOOG-DOJ-33954819
+
+REDACTED PUBLIC VERSION
+
+

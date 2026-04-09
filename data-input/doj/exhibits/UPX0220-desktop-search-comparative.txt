@@ -1,0 +1,365 @@
+Google
+Desktop Search Comparative Research
+go/desktop-search-comparative-research-july2020
+Redacted
+
+@,
+
+Redacted @
+
+7.15.20
+1
+
+Colab analysis:
+https://colab.corp .google.com/drive/17ubghA60AFETdUG6sjulmd_rblT8SblT?usp=sh
+aring
+
+Ex. No.
+UPX0220
+REDACTED FOR PUBLIC FILING & ABRIDGED
+Redacted
+
+1:20-cv-03010-APM
+
+GOOG-DOJ-17645874
+
+Executive Summary
+•
+
+Bing and Google were compared on 500 popular US queries using two
+different methods of SxSs:
+Full page scrape (where Bing scrapes did not include user location)
+Live links SxS (where rate, s opened a dynamic link for the query in them own
+browser and rated their experiences)
+
+•
+
+The methodology of the SxS made a difference (·0.192 ± 0.060, p-value =
+8.398e·10)
+Full page scrapes were strongly positive (0.185 ± 0.055, Google> Bing)
+o live link SxS was neutral (-0.007 ± 0.035).
+
+•
+
+Both methodologies indicated that Google is stronger in ranking
+(authoritativeness, local context), while Bing is stronger in feature diversity
+and interactive results.
+
+•
+
+Next steps: deep dive into features and rerunning experiment monthly
+
+Google
+
+Confidential and proprietary
+
+REDACTED FOR PUBLIC FILING & ABRIDGED
+Redacted
+
+GOOG-DOJ-17645875
+
+dIJ
+Mot ivation & Previous Work
+Motivation
+
+Quantify quality and feature gap between Bing vs. Google.
+Previous Work
+In light of covid, Redacted@and Redacted&) looked at Bing
+• Bingcovid OSRP ( Redacted @)
+• Bing vs. Google full page scrape(Redacted@, Redacted@)
+- In-depth analysis of experiment , Redacted @. Redacted Redacted@)
+
+https://docs.google.com/presentation/d/1 ri7TlhDrQqbnncoROhuYGwOjELT _kd5pntn0R6i
+S-Jc/edit#slide=id.g82eb967944_0_416
+
+Google Confidential | Do not distribute
+
+REDACTED FOR PUBLIC FILING & ABRIDGED
+
+Redacted
+
+GOOG-DOJ-17645876
+
+Experiment Design
+Queries: -500 popular queries sampled from April-June 2020
+Methodology
+
+•
+
+Full pa~e scraRe (temg ate)
+No Ads on Google
+Ser aped content captures what raters saw
+Bing does not utilize user location
+Results not Interactive
+
+• .Dynamic live lmks (tem..Qlate)
+Bing shows results for the rater's locaC1on
+Results will be intei amve
+No s<ra11ed content (1.e. black box)
+
+1---
+
+-
+
+-
+
+-
+
+-
+
+-
+
+REDACTED FOR PUBLIC FILING & ABRIDGED
+Redacted
+
+GOOG-DOJ-17645877
+
+{
+
+Mean SxS Scores
+Over.all mean SxS score
+
+-·-
+
+Pos1uve (0.185 :t 0 055, Google > Bing).
+on lhe fuUpage S•S
+N~utr.al (-0.007
+
+dynamic s~s.
+Mean d ffc enc
+
+o C"'<; o tr-.
+•0.192
+
+n.Q6<!,ip
+
+value • 8.39~ 1
+
+Bing Is relatively stronger on
+features {feature d1versny and
+ntt'r ac 1~e I e!>ult )
+
+Google Is relatively stronger In ..
+ranking author 1.11 v, ·nes
+)( i
+lnterpreta11on)
+
+-
+
+--
+
+....................
+
+I.....,_.•.., ..,.
+-
+
+o., .. . .. . .
+
+IOOOl , H1ttc,.
+
+- ,................. .
+_
+
+, .. , oau.--
+
+.,,
+
+.,............
+
+-- ·--~~
+■ •m ••"'""'
+
+..
+
+1-- - -- - - - .....
+
+REDACTED FOR PUBLIC FILING & ABRIDGED
+
+Redacted
+
+GOOG-DOJ-17645881
+
+REDACTED FOR PUBLIC FILING & ABRIDGED
+
+Redacted
+
+GOOG-DOJ-17645882
+
+Live Links vs. Full Page: No user location in Full Page
+
+..- -----·-
+
+-----------
+
+--- ----------___.. - ·
+----
+
+_
+
+------------------ ------
+
+-
+
+-------
+
+In t he full.pas• scra pe. Bins hos no uHr location so Google Is
+
+much better. In live links SlCS, both search engines ut,hze user
+location, but Bing shows rich features (map, hsungs) while
+
+Google only shows blue links. 15/20 top differences between
+SxSs nffd tocatcontext.
+
+REDACTED FOR PUBLIC FILING & ABRIDGED
+
+Redacted
+
+GOOG-DOJ-17645883
+
+-
+
+Live Links vs. Full Page: Richer features trigger in Live Links
+Liw. , ~lnk t
+
+(l,81 : - 0 . t o>
+
+1lrullp,.119
+Sorapt t
+l . 671 •
+
+~* i
+
+=- • I • •
+
+....
+
+.. ..
+
+-
+
+1n tile full page scrape. raters prefer seeing tne stock graph anCI pnce at top (not seen In the same format 1n 8mg). In tl'le liVe
+links SxS. ieingJ h.lsspeclalstockprlcenews blockandonewlthquot~ lrom~t tt offe<smuchrroreVMII!' lnte,msol
+SCRSs show,ng hbtoricalprlees 100.• 4/20 top clifferences between SxSs sho-cl dlffe,ent renldng Ind/or features on Bing wtlffl
+vlewedll\'e.
+
+REDACTED FOR PUBLIC FILING & ABRIDGED
+
+Redacted
+
+GOOG-DOJ-17645884
+
+-
+
+Live Links vs. Full Page: Richer features trigger in Live Links
+u ... !Link o
+
+_PIS • :i . 00_1
+
+I
+
+..
+
+ru11- s..ra 1-, ,
+
+i.'i - ■ -
+
+-.
+
+na: , -- o . 301
+
+II ii
+
+.. .
+
+K llmill
+
+=
+= &!lllliil
+----
+
+■
+
+ialar.a
+0 0 1 .t
+
+'i
+
+I
+
+Broad/ambiguous QUl!f)' (mOV1e1greekgod/monItor1ng system). 8mg top result ts for the Greek god lnterprec.1t10n while In
+Google. top mterpretauon IS the monitoring system (minor lnterpret.lllon). In the Uve Links SxS. raters converge on the mOV1e
+being the domlnantlnterpretaoon. lnwhlch case they prefer Google RHSto Bmg RHS. 1120 top d,fferences beMeen SxSs were
+due to incons1Stenc~In raung (note: bing did show different content ranking between S"5s)
+
+REDACTED FOR PUBLIC FILING & ABRIDGED
+
+Redacted
+
+GOOG-DOJ-17645885
+
+{
+
+Mean SxS Scores
+Over.all mean SxS score
+
+-·-
+
+Pos1uve (0.185 :t O055, Google > Bing).
+on lhe fuUpage S•S
+N~utr.al (-0.007
+
+dynamic s~s.
+Mean d ffc enc
+
+o C"'<; o tr-.
+•0.192
+
+n.Q6<!,ip
+
+value • 8.39~ 1
+
+Bing Is relatively stronger on
+features {feature d1versny and
+ntt'r ac 1~e I e!>ult )
+
+Google Is relatively stronger In ..
+ranking author 1.11 v, ·1ws
+)( i
+lnterpreta11011, 10picahty)
+
+-
+
+--
+
+....................
+
+I.....,_.•.., ..,.
+-
+
+o., .. . .. . .
+
+IOOOl , H1ttc,.
+
+- ,................. .
+_
+
+, .. , oau.--
+
+.,,
+
+.,............
+
+-- ·--~~
+■ •m ••"'""'
+
+..
+
+1-- - -- - - - .....
+
+REDACTED FOR PUBLIC FILING & ABRIDGED
+
+Redacted
+
+GOOG-DOJ-17645886
+
+

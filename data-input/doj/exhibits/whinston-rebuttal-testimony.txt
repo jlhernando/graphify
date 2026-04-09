@@ -1,0 +1,695 @@
+Rebuttal Testimony of
+Prof. Michael D. Whinston
+U.S., et al. v. Google LLC
+United States District Court for the District of Columbia
+November 16, 2023
+
+REDACTED FOR PUBLIC FILING
+
+1
+
+Market Definition & Market Power
+
+REDACTED FOR PUBLIC FILING
+
+2
+
+Output growth occurs in monopolized markets
+Global Crude Oil Production
+(millions of barrels per year), 1900 to 1909
+
+Long-Distance Calls for US Common Carriers
+(millions of calls per year), 1935 to 1982
+
+Global PC Shipments
+(millions of PCs per year), 1977 to 2000
+
+The Shift Data Portal, citing Bouda Etemad and Jean Luciani, World Energy Production 1800–1985 (Switzerland, 1991), ISBN 2-600-56007-6; Federal Communications Commission, Statistics of
+Communications Common Carriers, 1939–2007; Nancy F. Koehn, “Michael Dell: Winning on the Demand Side of the Information Revolution,” Harvard Business School Case Study 9-801-363 (rev.
+January 28, 2004), at Exhibit 1; GartnerGroup/Dataquest. DXD29.045.
+REDACTED FOR PUBLIC FILING
+
+3
+
+Apple did not have a viable alternative to Google when negotiating the ISA
+
+Q. So, armed with all of this information we've just been talking about,
+at any point in your discussions in 2016 with Mr. Cook and Mr. Cue,
+did you communicate to them that they didn't really have any
+leverage in negotiating a revenue share percentage because
+Google was the only viable option?
+
+Sundar
+Pichai
+CEO
+
+A. I looked at it with a -- with a set of factors…. Our search usage had
+grown tremendously, so the deal was working well for us. Users
+were happy with their experience. It was a competitive dynamic.
+There was a lot of uncertainty about what Apple would do because
+Apple tends to, you know, design, control its own experience. . . .
+And by the way, yes, I did take what you're saying into account,
+which was why we didn't pay the share Apple wanted.
+Trial Testimony
+
+Testimony of Sundar Pichai (Google), Oct. 30, 2023, 7772:12–7773:10 (emphasis added).
+
+REDACTED FOR PUBLIC FILING
+
+4
+
+Prof. Murphy sees “a lot of headroom” above what Google pays for defaults
+
+Kevin Murphy
+
+Google Expert
+Professor of
+Economics, University
+of Chicago
+
+A. So the idea that we can infer they had a precise
+estimate, I think is incorrect, because the deals
+they were doing weren't conditional on that
+number being exactly right or even close to right,
+right? In other words, there’s a lot of
+headroom between those numbers and what
+the deal they were doing.
+
+Trial Testimony
+Testimony of Kevin Murphy, Nov. 13, 2023, 9786:3–8 (emphasis added).
+
+REDACTED FOR PUBLIC FILING
+
+5
+
+Google aimed to raise prices to extract all advertiser value
+
+Redacted
+
+Redacted
+
+UPX1068, at -217 (Nov. 30, 2018) (emphasis added).
+
+In 2019 we will continue the work of Holistic
+Pricing and tune for pricing curve stability.
+And, more ambitiously, we will build on this
+very strong foundation and try to move
+from keeping prices stable over time
+(Excess CPC based tuning), to actually
+understanding advertiser value at a fine
+grain level and making sure “the price is
+right” (i.e. prices reflect value). An effort
+we are calling Value Based Pricing (VBP).
+Holistic Pricing aimed to keep the cost-click
+curves stable over time, but VBP aims to
+create the right curves.
+2018
+REDACTED FOR PUBLIC FILING
+
+6
+
+Google aimed to set prices “1 penny less than the breaking point”
+
+Redacted
+
+Redacted
+Redacted
+
+Redacted
+
+2017
+UPX0036, at -063, -067 (June 8, 2017*).
+
+REDACTED FOR PUBLIC FILING
+
+7
+
+Dr. Israel agrees that Google raises prices when it improves quality
+A.
+
+So a lot of what the auction quality guys are doing is they’re in a separate
+room making the auction work better, making that number one click-through
+rate go up. And that’s having the effect, without any adjustment, of pushing
+CPC down. Prices are going down in response to that quality improvement.
+So lots of the discussions you see in Google documents are just
+grappling with that: We want to improve ad quality, but as a profit
+maximizing firm, we don't want that to drive our prices down, that
+doesn't make sense to us. So they're trying to deal with that.
+...
+
+Mark Israel, PhD
+Google Expert
+Compass Lexecon
+
+A.
+
+Google is a profit maximizing firm. You want it to have incentives to make
+it pCTR better. You need some mechanism to deal with this issue,
+which is the general one I talked about with knobs. Which is if pCTR
+gets better, you can end up driving the price way down. They’re not raising
+the price from $1.30, they’re implementing the better pCTR, but at least
+offsetting this effect.
+Trial Testimony
+
+Testimony of Mark Israel, Nov. 2, 2023, 8566:10–19, 8581:3–9 (emphasis added).
+
+REDACTED FOR PUBLIC FILING
+
+8
+
+Advertiser actions depend on “what their options are”
+
+Q. But my point is, sir, is that in considering whether they raise prices or
+whether they're going to launch an ads quality increase, there's no
+discussion of what competitors are doing, just in this paragraph that
+you cited; is that correct?
+
+Mark Israel, PhD
+Google Expert
+Compass Lexecon
+
+A. Not in this paragraph. There's lots and lots of consideration, in fact,
+on the part we can't see on the screen about how advertisers will
+react.
+Q. How advertisers will react?
+A. Advertiser reactions are where competition comes in because
+advertisers react given what their options are.
+
+Trial Testimony
+Testimony of Mark Israel, Nov. 6, 2023, 8858:16–8859:1 (emphasis added).
+
+REDACTED FOR PUBLIC FILING
+
+9
+
+Google experiments showed low advertiser responses to price increases
+
+2018
+UPX1054, at -057 (Aug. 20, 2018).
+
+REDACTED FOR PUBLIC FILING
+
+10
+
+The relevant markets are consistent with the circle principle
+
+REDACTED FOR PUBLIC FILING
+
+11
+
+Audience overlap is not necessary for two products to be substitutes
+
+Slide 89, Demonstrative Deck of Dr. Israel
+DXD-29.089.
+
+REDACTED FOR PUBLIC FILING
+
+12
+
+Dr. Israel’s analysis of the Nike Facebook boycott is flawed
+
+Redacted
+
+Slide 83, Demonstrative Deck of Dr. Israel
+DXD-29.083.
+
+REDACTED FOR PUBLIC FILING
+
+13
+
+Nike substituted largely to social and display ads, not search ads
+Nike’s monthly digital ad spend by format relative to spend in January 2020
+Search
+
+Display
+
+Non-Meta Social Media
+
+Ratio of monthly ad spend relative to January 2020
+
+24
+
+Meta
+
+Boycott Period
+
+22
+20
+18
+16
+14
+12
+10
+8
+6
+4
+2
+0
+
+Jan
+2020
+
+Feb
+2020
+
+Whinston Rebuttal Report, Fig. 13, at 55.
+
+Mar
+2020
+
+Apr
+2020
+
+May
+2020
+
+Jun
+2020
+
+Jul
+2020
+
+Aug
+2020
+
+Sep
+2020
+
+Oct
+2020
+
+Nov
+2020
+
+Dec
+2020
+
+REDACTED FOR PUBLIC FILING
+
+14
+
+Economists typically measure substitution using elasticities
+
+Q. And [your Nike study is] not a measure of
+elasticity of Facebook ads?
+Mark Israel, PhD
+Google Expert
+Compass Lexecon
+
+A. I agree with that. It's a measure of
+cross elasticity; given that [Nike] left, how
+did it divide up.
+
+Trial Testimony
+Testimony of Mark Israel, Nov. 6, 2023, 8843:17–20.
+
+REDACTED FOR PUBLIC FILING
+
+15
+
+Nike substituted largely to social and display ads, not search ads
+
+Redacted
+
+UPX2076, at -152 (Feb. 26, 2021).
+
+2021
+REDACTED FOR PUBLIC FILING
+
+16
+
+The Importance of Defaults
+
+REDACTED FOR PUBLIC FILING
+
+17
+
+Prof. Murphy’s estimates of default effects are incorrect
+
+Market evidence—including Windows and Mozilla Firefox—shows
+that a “weaker rival” would obtain between 15% and 20% of
+queries as the default even using a “coverage” approach
+Slide 65, Demonstrative Deck of Prof. Murphy
+
+DXD-37.065 (emphasis added).
+
+REDACTED FOR PUBLIC FILING
+
+18
+
+Google, Microsoft, and Apple all recognized significant default effects
+
+Mobile
+
+Desktop
+
+Google
+
+Redacted
+
+Redacted
+
+Microsoft
+
+Redacted
+
+Redacted
+
+Apple
+
+Redacted
+
+UPX0069, at -236, -241 (Sept. 2018); UPX0095, at -331 (Apr. 18, 2016); UPX0146, at -412 (Jan. 2020); UPX1050, at -886 (Jan. 14, 2016); Whinston Report ¶¶ 893,
+896, 897, 899; DXD-37.065.
+
+REDACTED FOR PUBLIC FILING
+
+19
+
+Prof. Murphy’s claim that default effects on mobile are small is flawed and
+unreliable
+
+Slide 58, Demonstrative Deck of Prof. Murphy
+
+DXD-37.058–059.
+
+Slide 59, Demonstrative Deck of Prof. Murphy
+
+REDACTED FOR PUBLIC FILING
+
+20
+
+Prof. Murphy’s claim that default effects on mobile are small is flawed and
+unreliable
+
+ No market participants relied on these numbers when
+estimating the impact of defaults
+
+ These estimates do not make economic sense
+
+REDACTED FOR PUBLIC FILING
+
+21
+
+Google’s exclusive defaults foreclose 33-50% of the general search services
+market
+
+Foreclosure is the share of the market that is "tied up" by Google's
+exclusive contracts
+The 50% is the share of US queries covered by Google's
+exclusive contracts
+The 33% captures the lower-bound proportion of people who
+will not change their default
+ There are no plausible investments rivals can make to
+win these people
+REDACTED FOR PUBLIC FILING
+
+22
+
+Prof. Murphy’s foreclosure estimate is misguided
+
+Q. Okay. So you are not offering a foreclosure number
+based on the test you describe in Slide 64?
+Kevin Murphy
+
+Google Expert
+Professor of
+Economics, University
+of Chicago
+
+A. I don't think there's any foreclosure so I would say
+foreclosure is zero in this case. So I wouldn't offer
+a foreclosure number.
+
+Trial Testimony
+Testimony of Kevin Murphy, Nov. 14, 2023, 10006:17–22 (emphasis added).
+
+REDACTED FOR PUBLIC FILING
+
+23
+
+Competition for the Contract
+
+REDACTED FOR PUBLIC FILING
+
+24
+
+Competition for the contract does not prevent competitive harm
+
+• A dominant firm and distributor can find it worthwhile to enter
+contracts that harm competition—competition is a public
+good
+• When bidding for an exclusive contract, a dominant firm can
+use the monopoly profits it protects to make sure it wins
+• When there is a dominant firm, competition for exclusives
+can make competition less intense
+
+REDACTED FOR PUBLIC FILING
+
+25
+
+Competition for the contract does not prevent competitive harm
+
+• A dominant firm and distributor can find it worthwhile to enter
+contracts that harm competition—competition is a public
+good
+• When bidding for an exclusive contract, a dominant firm can
+use the monopoly profits it protects to make sure it wins
+• When there is a dominant firm, competition for exclusives
+can make competition less intense
+
+REDACTED FOR PUBLIC FILING
+
+26
+
+Mozilla wanted to “level the playing field in search,” but could not do it alone
+
+• An agent for change
+
+• Does not promote competition for search
+
+• Independence from Google
+
+• Supports the continued dominance of Google
+
+• Opportunity to level the playing
+field in search
+
+• Dependency on Google
+
+UPX0315, at -903.005–903.006 (Oct. 2014).
+
+2014
+
+REDACTED FOR PUBLIC FILING
+
+27
+
+Competition for the contract does not prevent competitive harm
+
+• A dominant firm and distributor can find it worthwhile to enter
+contracts that harm competition—competition is a public
+good
+• When bidding for an exclusive contract, a dominant firm can
+use the monopoly profits it protects to make sure it wins
+• When there is a dominant firm, competition for exclusives
+can make competition less intense
+
+REDACTED FOR PUBLIC FILING
+
+28
+
+A dominant firm will outbid rivals for exclusives to maintain its dominance
+
+Satya Nadella
+CEO
+Microsoft
+
+A. . . . right now, there is basically status quo,
+right; the dominant player in search is
+paying a lot of money to maintain that share
+position.
+
+Trial Testimony
+Testimony of Satya Nadella (Microsoft), Oct. 2, 2023, 3504:15-17 (emphasis added).
+
+REDACTED FOR PUBLIC FILING
+
+29
+
+Competition for the contract does not prevent competitive harm
+
+• A dominant firm and distributor can find it worthwhile to enter
+contracts that harm competition—competition is a public
+good
+• When bidding for an exclusive contract, a dominant firm can
+use the monopoly profits it protects to make sure it wins
+• When there is a dominant firm, competition for exclusives
+can make competition less intense
+
+REDACTED FOR PUBLIC FILING
+
+30
+
+Procompetitive Justifications
+
+REDACTED FOR PUBLIC FILING
+
+31
+
+Google did not consider the claimed procompetitive benefits in its analysis of
+the Apple deal
+Current Economics
+Redacted
+
+Redacted
+
+(
+
+Recovery
+
+MacOS/
+
+iOS)
+
+Redacted
+*
+
+*
+
+*
+
+Redacted
+2016
+UPX1050, at -868 (Jan. 14, 2016).
+
+REDACTED FOR PUBLIC FILING
+
+32
+
+Prof. Murphy’s claims about the Android agreements are unpersuasive
+
+Contracts enhance competition between Android and iOS
+Contracts ensure consistent out-of-the-box Android experience
+MADA barter leads to lower-priced Android phones
+
+REDACTED FOR PUBLIC FILING
+
+33
+
+Investment Incentives
+
+REDACTED FOR PUBLIC FILING
+
+34
+
+Prof. Murphy’s assessment of the Microsoft/Yahoo deal is misleading
+
+Slide 124, Demonstrative Deck of Prof. Murphy
+DXD-37.124 (emphasis in original).
+
+REDACTED FOR PUBLIC FILING
+
+35
+
+Bing’s quality increased after its syndication deal with Yahoo
+Bing Precision Scores in the United States, February 2011 to October 2012
+61.0
+
+Bing precision score
+
+60.5
+
+60.0
+
+59.5
+
+59.0
+
+58.5
+
+Feb
+2011
+
+Mar
+2011
+
+Apr
+2011
+
+May
+2011
+
+Whinston Reply Report, Fig. 36, at 200.
+
+Jun
+2011
+
+Jul
+2011
+
+Aug
+2011
+
+Sep
+2011
+
+Oct
+2011
+
+Nov
+2011
+
+Dec
+2011
+
+Jan
+2012
+
+Feb
+2012
+
+Mar
+2012
+
+Apr
+2012
+
+May
+2012
+
+Jun
+2012
+
+Jul
+2012
+
+Aug
+2012
+
+Sep
+2012
+
+REDACTED FOR PUBLIC FILING
+
+Oct
+2012
+
+36
+
+Professor Murphy’s framework for economic analysis of the challenged
+agreements
+
+1. “Do the challenged agreements harm competition
+in search?”
+2. “If the challenged agreements harm competition,
+are there (i) offsetting procompetitive efficiencies
+that (ii) outweigh any competitive harm?”
+
+DXD-37.004.
+
+REDACTED FOR PUBLIC FILING
+
+37
+
+

@@ -1,0 +1,487 @@
+Ex. No.
+PXR0206
+1 20-GV-03010-APM
+
+1·20-cv-03715-APM
+
+GOOG-DOJ-34243476
+
+REDACTED FOR PUBLIC FILING
+
+Agenda
+1
+
+Mission, Vision, Platform & Product, Value Sources, External & Internal
+Assessments
+
+2
+
+Tangible Value, 2023 Highlights, 2024 Corp OKRs, Staples
+
+3
+
+Strengths & Principles, Multi-Year Priorities, 2024 Plans, Al@ 1/0, Roadmap
+
+4
+
+P&L
+
+5
+
+Resourcing, Org Chart, Workforce Strategy, Location Strategy, Org Health
+
+6
+
+Marketing & PR, Partnership & GTM, Legal & GAPP
+
+GOOG-DOJ-34243477
+
+REDACTED FOR PUBLIC FILING
+
+How Chrome creates value for Google
+Chrome drives revenue and/or efficiency gains for Google's top PAs. Highlights include:
+
+$ Impact
+
+Lever
+
+PA
+
+XL
+
+Chrome MAU * LTV per platform
+
+Search , Ads
+
+M
+
+Incremental revenue
+
+Search , Ads, YouTube
+
+M
+
+Signed-in Google users
+
+Search , Ads, YouTube
+
+M
+
+Web influence & 1P delivery enablement
+
+Search , Workspace, YouTube, P&E, Core
+
+M
+
+Google Payments FoP and GMV*
+
+Commerce
+
+M
+
+OpEx savings from Codecs & Widevine
+
+YouTube, Android
+
+s
+
+Chrome Enterprise Premium sales
+
+Cloud Security
+
+• Form of payments and gross merchandise value. See
+
+for more detail about how Chrome generates value.
+
+GOOG-DOJ-34243491
+
+REDACTED FOR PUBLIC FILING
+
+Slide 11 Notes
+Note: Chrome LTVs:
+•
+•
+
+Focus on the incremental revenue we obtain from the user being on Chrome (link) (vs. another browser)
+Factor TAC differential/savings from users moving to Chrome
+
+Put differently, Chrome LTVs are really "investment LTVs" that identify the incremental value above what would be acquired over an alternative
+browser anyway and therefore should be willing to invest against for user acquisition.
+Incremental revenue:
+•
+Search/Ads = Ch rome count = Confidential2 023
+reven ue for Ads by converting static assets to videos.
+•
+YouTube/Ads = Generated (:onfidential recurring
+•
+YouTube = Codecs encode r and optimization improvements helped to increase watch time by 7%, which results in revenue uplift
+Signed-in Google users:
+•
+Users that monetize better
+Web influence & 1P delivery enablement:
+E.g. helping YT with V8 needs vs. YT needing to bui ld their own V8 team. Ditto for graphics (e.g. Skia doing Wear work)
+•
+
+GOOG-DOJ-34243492
+
+REDACTED FOR PUBLIC FILING
+
+Internal Assessment
+Short vs Long­
+term
+
+Balance tipped toward optimizing for enabling in-year PA goals (e.g. Search) and near-term
+growth vs. disruptive user-focussed, cross-PA or ecosystem changes.
+
+Rising
+Cost of shipping Chrome has gone up due to proliferation of OS and devices, and the overhead
+Cost of Business from regulatory compliance (OMA, DSA, CMA) and Privacy Sandbox.
+
+Coordination
+Complexity
+
+Coordination costs are high and growing , given many PAs we partner with (e.g. K&I, P&D , Core,
+Cloud, YouTube) and growing strategic value of Chrome as an endpoint.
+
+Product
+Investments
+
+Strong marketing investments have fueled growth but it's now essential to grow underiunded
+Product teams (24% Chrome vs 96% Google HC growth over the past 5 years).
+
+GOOG-DOJ-34243497
+
+REDACTED FOR PUBLIC FILING
+
+Slide 15 Notes
+Balancing Short-Term and Long-Term Goals: While optimizing for cross-PA goals (like Search) is important, we must not lose sight of user growth
+and engagement, which are essential for long-term value.
+Rising Cost of Business:
+•
+Supporting more platforms/devices, and associated scale + ecosystem complexity (Android) has increased cost
+•
+Regulatory compliance (OMA, DSA, CMA) adds further overhead.
+•
+Privacy Sandbox implementation has also introduced additional costs.
+Increasing Coordination Costs: Chrome's strategic value as an endpoint has grown, leading to increased coordination with various cross-business
+partners. Th is requires significant investment to maintain and optimize colla boration.
+o
+P&O: Android+Play, ChromeOS, Unicorn
+::>
+K&I : Search, Ads, Commerce/Payments, Geo
+:::,
+Core: Identity, 1P Dev. PSS
+Cloud: Workspace, Security
+YouTube
+Marketing vs. Product & Partnerships:
+•
+Our strong marketing investments have fueled growth. but it's now essential to increase investments towards product development and
+reinvest in our partnership teams to drive future growth, innovation, and differentiation.
+•
+We've been ruthlessly rebalancing resources due to limited headcount growth over the past 5 years.
+
+GOOG-DOJ-34243498
+
+REDACTED FOR PUBLIC FILING
+
+GOOG-DOJ-34243499
+
+REDACTED FOR PUBLIC FILING
+
+Confidential
+or
+
+f Google's
+2023 Search &
+Display Revenue
+flowed through
+Chrome clients
+Confidential
+
+GOOG-DOJ-34243500
+
+REDACTED FOR PUBLIC FILING
+
+Slide 17 Notes
+Google: Of Google's Confidential
+Search+ Display Revenue,! Confidential !flowed through Chrome clients confidential not through Chrome).
+Search vs Display: confidential
+comes from
+revenue
+search and confidential from
+display
+
+GOOG-DOJ-34243501
+
+REDACTED FOR PUBLIC FILING
+
+Indirect Search Revenue
+via Chrome
+2023 Google Search Revenue
+Confidtntial
+
+---l[
+
+t°~:~~J
+
+r~
+
+: confldentb.1l
+
+I
+
+ff
+
+f--
+
+J
+
+1-•··---~•1
+
+'
+
+____.,I
+
+!
+
+~
+
+E]
+
+I
+
+Android
+
+iOS
+■ Chrome
+
+MAC
+
+Windows
+
+Other
+
+Tota l
+
+Confidential
+
+Confidential
+
+Confidential
+
+Confidential
+
+Non-Chrome
+
+GOOG-DOJ-34243502
+
+REDACTED FOR PUBLIC FILING
+
+Slide 18 Notes
+Digging into Search Revenue, we can see how this breaks down between Chrome and non-Chrome.
+Takeaways from left graphic:
+•
+Lots of headroom on iOS (where we only have ~13% share and Safari dominates)
+•
+Headroom on MacOS
+- --Takeaways_!~omtg_~_!_waphic, if we look into that confidential
+confidential or confidential
+flows through desktop: windows
+macos
+ChromeOS and Linux confidential
+or confidential
+f1ows through Mobile. Android confidential)
+10S (xonfidential)
+
+• confidential
+
+confidential
+
+confidential
+
+Of all Goo_gle Search revenue, Chrome represents:
+•
+(confidential)
+Desktop Search revenue (remainder mainly from Edge, Safari, Mozilla)
+of
+Mobile
+Search revenue, with rest coming through apps (i.e. AGA. iGA)
+•
+___Note: Growth
+Note: growth rates of indirect search revenue flowing through Chrome were comparable (Android confidential
+search,
+windows confidential
+Chrome vs confidential
+other
+vs confidential
+or exceeded (MacOS confidential
+vs
+! iOS
+J
+vs confidential
+Total )Search revenue on the same OS.
+confidential
+·-- confidential
+1
+.,__J
+~---~
+
+GOOG-DOJ-34243503
+
+REDACTED FOR PUBLIC FILING
+
+Chrome actives maintain
+steady growth
+Chrome Browser actives by platform
+DAU grew 5% YoY, exceeding forecasts despite competition, and
+DAU actuals are currently on track to Q2 targets.
+
+DAU (millions)
+
+MAU (m illions)
+
+Android DAU boosted by embedded web (Google News switched from
+
+Platform
+
+DAU
+
+Y/Y
+
+MAU
+
+Y/Y
+
+WebView
+CCT), and we've had DAU-positive Q2 launches (0&0
+promo, NTP on startup, Quick Delete).
+
+Android
+
+1,220
+
+5%
+
+2,665
+
+5%
+
+iOS
+
+108
+
+21%
+
+273
+
+21%
+
+iOS is the fastest growing platform with a 21% YoY increase in DAU,
+
+Windows
+
+426
+
+1%
+
+1,012
+
+0%
+
+driven by continued success with marketing, incremental product bets,
+and rollout of iOS choice screens in EU.
+
+macOS
+
+Windows continues to show modest growth, with a 1% YoY increase in
+DAU.
+
+Note: A bug impacting macOS was fixed recently. We anticipate
+
+data issue to be resolved soon
+
+cros
+
+37
+
+3%
+
+79
+
+4%
+
+Total
+
+1,848
+
+5%
+
+4,143
+
+5%
+
+7D AVG Period: 04-29-2023 to 04-28-2024
+
+actives to improve as users update to versions with the fix.
+
+GOOG-DOJ-34243511
+
+REDACTED FOR PUBLIC FILING
+
+Slide 23 Notes
+Our DAU actuals vs. targets are on track at this moment in time (in aggregate, and per platform). There's still risk to meeting our EOY targets.
+Mac: 53M DAU (slightly up y/y), 95M MAU (slightly down y/y). Omaha bug in final stages of recovery.
+
+GOOG-DOJ-34243512
+
+REDACTED FOR PUBLIC FILING
+
+Browser Market Share
+
+mac
+
+I I
+
+iOS
+
+80.0o/o
+
+12.9°/o
+
+68.4o/o
+
+59.9o/o
+
+Y/Y:Opp
+
+Y/Y: +1pp
+
+-2pp
+
+Y/Y: +1.5pp
+
+OS
+
+II
+
+GOOG-DOJ-34243513
+
+REDACTED FOR PUBLIC FILING
+
+Slide 24 Notes
+Browser share by platform and y/y
+Android: 80.0% (flat)
+•
+iOS: 12.9% (+ 1ppt)
+•
+Windows: 68.4% (-2ppt)
+Win10: 69.3% (-2ppt)
+Win11 : 63.4% (-0.Sppt)
+•
+MacOS: 59.9% (+ 1.5ppt)
+
+GOOG-DOJ-34243514
+
+REDACTED FOR PUBLIC FILING
+
+

@@ -1,0 +1,146 @@
+                        Ranking for Research
+             Access to this document is restricted to specific people in Research who are
+           working actively to improve search, not people with a general interest in the topic.
+
+
+
+
+                                                                                                     Ex. No.
+                                                                                                    UPX0204
+                                                                                                  1:20-cv-03010-APM
+
+
+Redacted      REDACTED FOR PUBLIC FILING & ABRIDGED                                               GOOG-DOJ-11334195
+                                            Purpose
+           •   People in Research are now making major contributions to Google search ,
+               delivering benefit to hundreds of millions of people around the world.
+
+           •   Deepening this collaboration would be awesome for everyone! This talk
+               provides some context around work on web ranking to further that goal.
+
+           •   Work on we ranking has involved hundreds of people over 20 years, so this
+               presentation is far from comprehensive . Please add comments on confusing
+               points or areas where more information would be useful.
+
+
+
+
+Redacted              REDACTED FOR PUBLIC FILING & ABRIDGED                             GOOG-DOJ-11334196
+                                                 Outline
+           •   Be careful in discussing search
+
+           •   Get a feel for search
+
+           •   Great search, not great metrics
+           •   The structure of ranking
+
+           •   Approaches to relevance
+
+
+
+
+Redacted              REDACTED FOR PUBLIC FILING & ABRIDGED   GOOG-DOJ-11334197
+               Be careful in discussing search.
+           Having a big, positive impact on the world is a joy of working on search .
+           But this impact makes our words and actions carry heavy consequences.
+                                 So we must tread carefully .. .
+
+
+
+
+Redacted         REDACTED FOR PUBLIC FILING & ABRIDGED                                  GOOG-DOJ-11334198
+                                                                                            Nov 25
+                       Be careful in discussing search.
+                                                                                            Nov 21
+
+
+       •   Attempts to manipulate search results are continuous,
+           sophisticated , and well-funded . Information about how search                   Nov 12
+
+           works should remain need-to-know.
+       •   We are sued often. All emails involving people in Search are likely               Nov 7
+
+           to be retained in connection with multiple, ongoing lawsuits.
+
+       •   Internal communications have been repeatedly leaked to the press                  Nov 6
+
+           and cast in a bad light. Around the world, we endure multiple                     Nov 3
+
+           negative press cycles weekly.
+
+                                                   Email threads involving search product    Nov 1
+
+                                                   counsel in my inbox this month.
+
+
+
+
+Redacted           REDACTED FOR PUBLIC FILING & ABRIDGED                                    GOOG-DOJ-11334199
+Redacted   REDACTED FOR PUBLIC FILING & ABRIDGED
+Redacted   REDACTED FOR PUBLIC FILING & ABRIDGED
+Redacted   REDACTED FOR PUBLIC FILING & ABRIDGED
+Redacted   REDACTED FOR PUBLIC FILING & ABRIDGED
+                              Particularly Sensitive Topics
+           •   Keep talk about how search works on a need-to-know basis. Everything we
+               leak will be used against us by SEOs, patent trolls, competitors, etc.
+
+           •   Discuss social fairness in search results with great caution. This is an
+               important topic that we must all take very seriously. But how will your email
+               read to reporters, regulators, and litigants?
+           •   Avoid statements that might be perceived as anticompetitive, e.g. why aren't
+               we ranking this Alphabet-related product higher? How can we knock down
+               such-and-such site? We do not do such things.
+
+
+
+
+Redacted              REDACTED FOR PUBLIC FILING & ABRIDGED                              GOOG-DOJ-11334207
+                                        Sensitive Topics
+           •   Do not discuss political bias in search in writing . This is an another important
+               topic that we take seriously, but is just too volatile for email.
+
+                                                 Postscript: Two weeks after this talk
+                                                 was initially given, Google's CEO
+                                                 was called to testify on this topic
+                                                 before Congress.
+
+
+
+
+           •   Do not discuss the use of clicks in search , except on a need-to-know basis
+               with people who understand not to talk about this topic externally. Google
+               has a public position . It is debatable. But please don't craft your own.
+
+
+
+
+Redacted               REDACTED FOR PUBLIC FILING & ABRIDGED
+                                                                                           GOOG-DOJ-11334208
+                 Search Quality Has Many Aspects
+           •   Relevance                      •   Web ecosystem
+           •   Page quality                   •   Mobile friendly
+           •   Popularity                     • Social fairness
+           •   Freshness                      •   Optionalization
+           •   Localization                   •   Porn demotion
+           •   Language                       •   Spam
+           •   Centrality                     •   Authority
+           •   Topical diversity              •   Privacy
+           •   Personalization                •   User control of spell correction
+
+                         Capturing everything in a metric is tough!
+
+
+
+
+Redacted       REDACTED FOR PUBLIC FILING & ABRIDGED                                 GOOG-DOJ-11334219
+               Some Known Shortcomings of Live Traffic Eval
+           •   The association between observed user behavior and search result quality is
+               tenuous. We need lots of traffic to draw conclusions, and individual examples
+               are difficult to interpret.
+
+
+
+
+Redacted                REDACTED FOR PUBLIC FILING & ABRIDGED                          GOOG-DOJ-11334227
+Redacted   REDACTED FOR PUBLIC FILING & ABRIDGED
+

@@ -1,0 +1,93 @@
+    Message
+
+
+    From:         Paul Haahr Redacted@google.com]
+    Sent:         6/8/2020 4:33:18 PM
+    To:           Berthier Ribeiro-Neto [ redacted@google.com]; Cody Kwok Redacted @google.com]; Hyung-Jin Ki m Redacted@google.com
+                                         1
+                  Pandu Nayak Redacted1@google.com]; Bruno Possas [ redacted @google.com]; Alexander Grushetsky
+                  Reaactea@google.com]; Eric Lehman Redacted@·google.com]; David Bailey redacted@google.com Reese Pecot
+                  Redacted@google.com Danny Sul livan Redacted @google.com]; Fab Caillette [Redacted@google.com]; Sophie Wang
+                   redacted@google.com       Abhinandan Das Redacted@google.com]; Dimitra Papachristou Redacted@googl e.com];
+                  M atthew Gray     Redacted @google.com
+    Subject:      Nayak Staff
+
+
+
+•   Paul Haahr,2020-06-0809 : 33 : 1 8
+
+    I agree from an honest results perspective, these are not the teams we&#39; re worried about. B11t, there can be
+    pressure via Ads to change the product to favor Ads in general more - not individual advertisers, but, say,
+    holding back Search changes that arc good for users but bad for revenue. I think Prabhakar, and Sridhar before
+    hin1, have both been very good on holding that line in appropriate places, so I&#39;1n not wo1Tied right now,
+    but relying on people rather than institutional stn1cturcs isn&#39;t necessarily a good idea for the long haul.
+
+•   Danny Sullivan,2020-08-08 09 : 38 : 29
+
+    From a newspaper perspective, the typical person in a newsroom wouldn&#39;t freak out because you have
+    someone who sits over ads and editorial. That&#39;s the publisher. It&#39;s normal. And if Search is
+    effectively a publication, then Prabhakar seems to fill that role (Sundar does potentially, as well -- but really,
+    he&#39;s the publisher for all of Google, which is n1ore than Search). A newsroom won&#39;t freak out
+    because there&#39;s going to be an editor-in-chief running what the newsroom does, and in particular
+    providing that protection against counterparts in ads pushing for things. One difficulty in all this, 1&#39;d
+    presume with the staff, is that we&#39;ve gone from Ben effectively being our editor-in-chief over all of Search
+    to multiple editors.
+
+•   PanduNayak, 2020 -0 6- 08 09 : 4 1 : 0 9
+
+    Eric: you started by talking about the skepticism that son1e people have expressed. Can you say 1nore about
+    what the concern is? As noted here, there are two things that we should be alert to. First, there&#39;s honest
+    results, which as you point out really has to do with GBO. Second, there&#39;s the search/ads wall where we
+    don&#39;t use ads signals in search and so forth (what Paul mentioned). It is entirely possible that this second
+    thing is also viewed as &quot;honest results&q uot;. In any case, both are important, and I believe Prabhakar
+    will continue to uphold both principles.
+
+•   Pandu Nayak~2020-06-0809 : 41 : 26
+
+    And, importantly, we all should be alert that these principles continue to be ·upheld.
+
+•   PanduNayak, 2020 -0 6- 08 09 : 42 : 34
+
+    BTW, can we tum history off by default in this chat room?
+
+•   Matthew Gray, 2020-06-08 0 9 : 44 : 16
+
+                                                                                                                     Ex. No.
+                                                                                                                    UPX0708
+                                                                                                                  1:20-cv-03010-APM
+
+
+                                                  REDACTED FOR PUBLIC FILING
+    Redacted                                                                                                      GOOG-DOJ-29870402
+     I have heard a couple different concerns similar to Eric&#39;s and agree the lack of aa single &quot;editor in
+     chief&quot; role is a lot of the concern. I think it would be worth rearticulating exactly what those principles
+     are, since a alot of the understanding of then1 is an oral history.
+
+•    Pandu Nayak,2020-06-08 09 : 46 : 29
+
+     Maybe not quite what you want, but after much effort, we published the following on our How Search Works
+     site
+
+•    Pandu Nayak,2020-06-0809 : 46 : 3 1
+
+     <a
+     href "https://www.google.com/search/howsearchworks/mission/"> https://www.google.com/search/howsearchw
+                 :/
+     orks/mission/</a>
+
+•    Reese Pecot, 2020-06-08 09:46:52
+
+     History off (today and prior as well)
+
+•    Matthew Gray, 2020 - 0 6- 08 0 9 : 4 7 : 08
+
+     In particular, I think the principle; of &quot;do what&#39;s right for the user&quot; (and essentially don&#39;t
+     worry about whether it&#39;s &quot;right for Google&quot; or &quot;right for advetiisers&quot;) is what
+     l&#39;ve heard people are worried is muddled by this reorg
+
+
+
+
+    Redacted                                 REDACTED FOR PUBLIC FILING
+                                                                                                     GOOG-DOJ-29870403
+

@@ -1,0 +1,90 @@
+Redacted
+On Dec 13, 2018, at 8:51 AM, Adrian Perica Redacted @apple.com> wrote:
+
+Redacted
+Redacted
+It's within this sub-segment, however,
+I'm testmg my logic smce the FY19 planning and this MSFT diligence has raised for me
+testmg
+the relative resource needs for this set of functional ity.
+I guess what I'm saying is that I'm getting more attracted to your idea of collaborating on a
+knowledge base with MSFT ... or even just outsourcing those queries to MSFT. For instance, in
+a perfect world, what are the pro's and con's of just moving a large majority of our
+Search/Knowledge OpEx spend to MSFT to let them surface Australian rugby scores or Indian
+cricket scores for us? Siri would retain traffic cop functionality that chooses whether its "a
+search we should return in our Ul and without ads". Thus, send it to MSFT to deliver the
+answer. Alternatively, it's a "search where we users have commercial intent or appears very
+long tail". Thus, send to Google. MSFT can carry the expense burden but also get the queries
+to improve their service. We build them up, create incremental negotiating leverage to keep the
+take rate high from Google, and further our optionality to replace Google down the line.
+
+Redacted
+Ex. No.
+UPX0240
+1:20-cv-03010-APM
+
+Redacted
+
+REDACTED FOR PUBLIC FILING
+
+APLGOOG DOJ-00576506
+
+Redacted
+On Dec 12, 2018, at 10:39 PM, John Giannandrea Redacted @apple.com> wrote:
+All good questions.
+Siri doesn't compete directly against Google search. Jt competes against Alexa and Google
+Assistant. The query mix is very different. It's more "sent a message to Adrian" than it is
+"how do l prune an Apple tree" There is overlap and googles strength in answering questions
+putsus at a disadvantage
+Redacted
+
+Redacted
+I don't think bing can do better than google search for the search use case unless it spends more
+
+on it or has a better mousetrap. Not having mobile queries at scale is a huge liability for them
+since the most important search signal is engagement. But it is not impossible. As we noted
+yesterday the reason a better search engine has not appeared is that it's not a VC fundable
+proposition even though it's a lucrative business.
+Can l imagine that Apple can build a search engine to compete. Yes but it's probably not the
+best way to differentiate our products.
+-jg
+
+On Dec 12, 20 I 8, at 5:36 AM, Adrian Perica Redacted@apple.com>
+
+wrote:
+
+John,
+I was reflecting on yesterday's discussions and got myself tripped up trying to think through the
+below logic. If you have moment to ponder it, here goes:
+
+lffolks believe that Bing can't compete with Google since Bing has - redacted engineers vs.
+GoogleRedacted I engineersthen how does Siricompete with Google?I presumethe answer is
+
+Redacted
+But if the above statement is true for Siri. then wouldn't Bing's path to success iust be a parallel
+effort ofmanv concatenated Siri efforts against Google? That is. many small teams working on
+specific parts of thequery head, torso and tail clickstream to directly compete against Google?
+Bing would need to invest in a large index. but it seems that Google's path to success has also
+been by assigning bunches of engineers to whittle awav the clickstream inef}iciencies. Sort of
+software engineering "by the yard·'' as you 've described before.
+
+I'm trying to push on how much data we have that objectively shows Bing is worse in areas
+where they've made an effort against Google, vs. the perception that Bing must be worse
+because Google is unassailable in this category.
+Thanks,
+
+Redacted
+
+REDACTED FOR PUBLIC FILING
+
+APLGO OG DOJ-0057650 7
+
+Adrian
+
+Redacted
+
+REDACTED FOR PUBLIC FILING
+
+APLGOOGDOJ-00576508
+
+

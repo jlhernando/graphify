@@ -1,0 +1,430 @@
+{
+  "case": "United States v. Google LLC, Case No. 1:20-cv-03010-APM (D.C. District Court, Judge Amit P. Mehta)",
+  "source": "justice.gov/atr/us-and-plaintiff-states-v-google-llc-2020-trial-exhibits",
+  "totalTrialExhibits": 388,
+  "totalRemediesExhibits": 68,
+  "downloaded": [
+    {
+      "id": "mehta-liability-opinion",
+      "type": "opinion",
+      "title": "Judge Mehta's Liability Opinion (286 pages)",
+      "date": "2024-08-05",
+      "pages": 286,
+      "source": "documentcloud.org/documents/25032745-045110819896",
+      "relevance": "critical",
+      "status": "downloaded+extracted+integrated",
+      "key_topics": ["monopoly finding", "data scale advantage", "default bias", "barriers to entry", "search quality", "AI", "NavBoost pre-2017 18 months", "13 months = 17.5 years Bing", "9x queries vs rivals (19x mobile)", "98.4% unique phrases Google-only", "99.8% tail queries unseen by Bing", "MUM human-level vs RankBERT weak", "generalization systems fill click data holes", "1 trillion vs 1 billion examples", "1 IS point = 0.66-0.99% revenue", "Wikipedia removal = 0.5 IS", "Project Folly latency", "$8.4B search + $11.1B search ads (2020)", "Microsoft $100B invested", "DRE experiment dismissed", "5-step network effects cycle", "2 dozen+ query classifications", "retrieval: millions → tens of thousands → hundreds → top 10", "LLMs did NOT replace NavBoost", "NavBoost beats LLMs on freshness", "LaMDA/PaLM/PaLM2 not built with user data"]
+    },
+    {
+      "id": "PXR0356",
+      "type": "remedies-exhibit",
+      "title": "HJ Kim Interview Notes (Feb 2025)",
+      "date": "2025-02",
+      "source": "justice.gov/d9/2025-04/PXR0356.pdf",
+      "relevance": "critical",
+      "status": "downloaded+extracted+integrated",
+      "key_topics": ["NavBoost creator", "page quality team", "Tangram", "T* stabilized ~2020", "Q* query-dependent", "hand-crafting philosophy", "API leak acknowledged"]
+    },
+    {
+      "id": "PXR0357",
+      "type": "remedies-exhibit",
+      "title": "Pandu Nayak Interview Notes (Jan 2025)",
+      "date": "2025-01",
+      "source": "justice.gov/d9/2025-04/PXR0357.pdf",
+      "relevance": "critical",
+      "status": "downloaded+extracted+integrated",
+      "key_topics": ["QD table", "linear combination of log signals", "monotonicity constraint", "BM25 baseline", "RankEmbed tail query weakness", "FastSearch for Gemini", "LLM stack rebuild", "training window shrinking"]
+    },
+    {
+      "id": "UPX0004",
+      "type": "trial-exhibit",
+      "title": "Life of a Click (Eric Lehman)",
+      "date": "unknown",
+      "source": "justice.gov/d9/2023-10/417197.pdf",
+      "relevance": "medium",
+      "status": "downloaded+extracted+integrated",
+      "key_topics": ["3 pillars", "user interactions definition", "heavily redacted"]
+    },
+    {
+      "id": "UPX0191",
+      "type": "trial-exhibit",
+      "title": "Lessons from the Deep",
+      "date": "unknown",
+      "source": "justice.gov/d9/2023-10/417239.pdf",
+      "relevance": "low",
+      "status": "downloaded+extracted",
+      "key_topics": ["deep learning in search retrospective", "heavily redacted", "spectrum: heuristics → simple ML → deep learning"]
+    },
+    {
+      "id": "UPX0192",
+      "type": "trial-exhibit",
+      "title": "Unified Click Prediction (Eric Lehman, Jun 2016)",
+      "date": "2016-06",
+      "source": "justice.gov/d9/2023-10/417240.pdf",
+      "relevance": "critical",
+      "status": "downloaded+extracted+integrated",
+      "key_topics": ["1B daily examples", "100B click corpus", "click prediction strategy", "Predictionosaurus Clickus", "RankLab", "train on past predict future", "DVM example"]
+    },
+    {
+      "id": "UPX0193",
+      "type": "trial-exhibit",
+      "title": "Bullet Points for Sundar (BERT)",
+      "date": "2018-2019",
+      "source": "justice.gov/d9/2023-10/417241.pdf",
+      "relevance": "high",
+      "status": "downloaded+extracted+integrated",
+      "key_topics": ["BERT architecture", "BERT in WebAnswers", "BERT in Web Ranking", "competitive moat from training data"]
+    },
+    {
+      "id": "UPX0197",
+      "type": "trial-exhibit",
+      "title": "Grushetsky Email: Thought for the Holidays (Jan 2019)",
+      "date": "2019-01",
+      "source": "justice.gov/d9/2023-10/417245.pdf",
+      "relevance": "critical",
+      "status": "downloaded+extracted+integrated",
+      "key_topics": ["NavBoost dominance quote", "BERT impact on search", "memorization systems", "artisanal vs end-to-end", "morale concerns"]
+    },
+    {
+      "id": "UPX0203",
+      "type": "trial-exhibit",
+      "title": "Q4 Search All Hands (Eric Lehman, Dec 2016)",
+      "date": "2016-12",
+      "source": "justice.gov/d9/2023-10/417251.pdf",
+      "relevance": "critical",
+      "status": "downloaded+extracted+integrated",
+      "key_topics": ["We do not understand documents. We fake it.", "We look at people", "sustain the illusion that we understand"]
+    },
+    {
+      "id": "UPX0204",
+      "type": "trial-exhibit",
+      "title": "Ranking for Research (Nov 2018)",
+      "date": "2018-11",
+      "source": "justice.gov/d9/2023-10/417252.pdf",
+      "relevance": "critical",
+      "status": "downloaded+extracted+integrated",
+      "key_topics": ["do not discuss clicks in search", "Google has a public position", "18 search quality aspects", "association between user behavior and quality is tenuous"]
+    },
+    {
+      "id": "UPX0219",
+      "type": "trial-exhibit",
+      "title": "Logging & Ranking (Eric Lehman, May 2020)",
+      "date": "2020-05",
+      "source": "justice.gov/d9/2023-10/417267.pdf",
+      "relevance": "critical",
+      "status": "downloaded+extracted+integrated",
+      "key_topics": ["value judgments foundation", "learning from logs is main mechanism", "ranking extreme outlier in business impact", "multi-click interpretation", "RankBrain RankEmbed DeepRank"]
+    },
+    {
+      "id": "UPX0228",
+      "type": "trial-exhibit",
+      "title": "Google is Magical",
+      "date": "unknown",
+      "source": "justice.gov/d9/2023-10/417276.pdf",
+      "relevance": "high",
+      "status": "downloaded+extracted+integrated",
+      "key_topics": ["two-way dialogue", "source of Google's magic", "every tap click given meaning", "10 blue links as learning mechanism"]
+    },
+    {
+      "id": "UPX0708",
+      "type": "trial-exhibit",
+      "title": "Haahr-Nayak Staff Chat on Search Independence (Jun 2020)",
+      "date": "2020-06",
+      "source": "justice.gov/d9/2023-10/417756.pdf",
+      "relevance": "high",
+      "status": "downloaded+extracted+integrated",
+      "key_topics": ["Search/Ads wall", "no ads signals in search", "pressure from Ads on Search changes", "protection relies on individuals not structures"]
+    },
+    {
+      "id": "UPX1044",
+      "type": "trial-exhibit",
+      "title": "Gomes Personalization (Danny Sullivan, Nov 2018)",
+      "date": "2018-11",
+      "source": "justice.gov/d9/2023-10/418092.pdf",
+      "relevance": "high",
+      "status": "downloaded+extracted+integrated",
+      "key_topics": ["personalization is rare and light", "query is dominant signal", "no demographic profiling", "Top Stories never personalized", "Sullivan paid ad-free search proposal"]
+    },
+    {
+      "id": "UPX1087",
+      "type": "trial-exhibit",
+      "title": "Mobile vs Desktop Ranking (Ranking Newsletter, Aug 2014)",
+      "date": "2014-08",
+      "source": "justice.gov/d9/2023-10/418135.pdf",
+      "relevance": "high",
+      "status": "downloaded+extracted+integrated",
+      "key_topics": ["Mobile NavBoost Q1 2014", "mobile intents diverge", "local business top mobile intent", "BScorer", "PorkyPig", "Jaccard similarity", "KL-divergence"]
+    },
+    {
+      "id": "UPX1115",
+      "type": "trial-exhibit",
+      "title": "Search Quality All Hands 2018",
+      "date": "2018",
+      "source": "justice.gov/d9/2023-10/418163.pdf",
+      "relevance": "medium",
+      "status": "downloaded+extracted+integrated",
+      "key_topics": ["better previews → better clicks → better ranking virtuous cycle"]
+    },
+    {
+      "id": "UPX0205",
+      "type": "trial-exhibit",
+      "title": "Research & MI All-Hands (Apr 2015)",
+      "date": "2015-04",
+      "source": "justice.gov/d9/2023-11/417722.pdf",
+      "relevance": "critical",
+      "status": "downloaded+extracted+integrated",
+      "key_topics": ["priors algorithm = click popularity", "one of the strongest signals for search and ads ranking", "behavioral similarity matching", "describe results by people who chose them", "not demographics"]
+    },
+    {
+      "id": "UPX0220",
+      "type": "trial-exhibit",
+      "title": "Desktop Search Comparative Research (Jul 2020)",
+      "date": "2020-07",
+      "source": "justice.gov/d9/2023-11/418083.pdf",
+      "relevance": "high",
+      "status": "downloaded+extracted+integrated",
+      "key_topics": ["Google vs Bing quality gap on 500 queries", "Google stronger on ranking authoritativeness local context interpretation topicality", "Bing stronger on feature diversity", "location data critical differentiator", "15 of 20 top differences needed local context"]
+    },
+    {
+      "id": "UPX0235",
+      "type": "trial-exhibit",
+      "title": "Giannandrea Email: Click Data Is Secret Sauce (Aug 2016)",
+      "date": "2016-08",
+      "source": "justice.gov/d9/2023-11/417520.pdf",
+      "relevance": "critical",
+      "status": "downloaded+extracted+integrated",
+      "key_topics": ["click data secret sauce", "Apple ISA negotiations", "refused to share click data", "JG would not share ranking signal", "click destination and dwell time confirmed as ranking signals"]
+    },
+    {
+      "id": "UPX0240",
+      "type": "trial-exhibit",
+      "title": "Apple Bing Evaluation (Perica to Giannandrea, Dec 2018)",
+      "date": "2018-12",
+      "source": "justice.gov/d9/2023-11/417830.pdf",
+      "relevance": "critical",
+      "status": "downloaded+extracted+integrated",
+      "key_topics": ["JG: most important search signal is engagement", "not having mobile queries at scale = huge liability", "not a VC fundable proposition", "Apple considering outsourcing queries to Bing for leverage", "clickstream inefficiencies engineering by the yard"]
+    },
+    {
+      "id": "UPX0241",
+      "type": "trial-exhibit",
+      "title": "JG Thoughts on Bing (Aug 2018, at Apple)",
+      "date": "2018-08",
+      "source": "justice.gov/d9/2023-11/417766.pdf",
+      "relevance": "high",
+      "status": "downloaded+extracted+integrated",
+      "key_topics": ["Bing traffic monthly vs Apple weekly vs Google daily", "Bing >1000 people investing", "Bing ad tech more than twice as bad", "Bing not launched in most countries"]
+    },
+    {
+      "id": "UPX0243",
+      "type": "trial-exhibit",
+      "title": "Varian: Data vs Analysis for Regulators (May 2020)",
+      "date": "2020-05",
+      "source": "justice.gov/d9/2023-11/417832.pdf",
+      "relevance": "critical",
+      "status": "downloaded+extracted+integrated",
+      "key_topics": ["quality depends on algorithmic tweaks not big data", "startups said problem was lack of analysts not data", "presentations to regulators", "Daniel Russell: data quality effect is real", "Peter Norvig has own version of story", "handing Bing billion queries would not help"]
+    },
+    {
+      "id": "UPX1083",
+      "type": "trial-exhibit",
+      "title": "FUDJE Search Summit 2020",
+      "date": "2020-01",
+      "source": "justice.gov/d9/2023-11/418009.pdf",
+      "relevance": "low",
+      "status": "downloaded+extracted",
+      "key_topics": ["almost entirely redacted", "no extractable content"]
+    },
+    {
+      "id": "UPX2022",
+      "type": "trial-exhibit",
+      "title": "Google vs Bing Serving Analysis (Jun 2017)",
+      "date": "2017-06",
+      "source": "justice.gov/atr/media/1323351/dl",
+      "relevance": "critical",
+      "status": "downloaded+extracted+integrated",
+      "key_topics": ["SRP 4 chunks header body footer late-footer", "Bing 300ms faster server-side", "logged-in +350ms penalty", "mobile +50ms", "SRP 207kb vs 112kb", "click tracking 50-100 bytes per URL rwt()", "Project Folly", "SRT metric"]
+    },
+    {
+      "id": "DX0099",
+      "type": "trial-exhibit",
+      "title": "SRP Latency Update / Friends of Low Latency (May 2017)",
+      "date": "2017-05",
+      "source": "justice.gov/atr/media/1322676/dl",
+      "relevance": "medium",
+      "status": "downloaded+extracted+integrated",
+      "key_topics": ["Project Folly roadmap", "Google vs Bing latency summary", "4 reasons Bing faster", "logged-in penalty", "image loading techniques", "first byte same but first result different"]
+    },
+    {
+      "id": "PXR0026",
+      "type": "remedies-exhibit",
+      "title": "Search (incl SGE) Publisher Controls (Apr 2024)",
+      "date": "2024-04",
+      "source": "justice.gov/atr/media/1399381/dl",
+      "relevance": "critical",
+      "status": "downloaded+extracted+integrated",
+      "key_topics": ["6 publisher control options for SGE", "architecture: indexing vs ranking vs display vs grounding vs training", "KITE and MUM distinct from Gemini training", "grounding as monetization space", "silently update no announcement", "nosnippet impacts more than display"]
+    },
+    {
+      "id": "PXR0034",
+      "type": "remedies-exhibit",
+      "title": "Evolution of Search and Assistant Experiences / Magi (Sep 2023)",
+      "date": "2023-09",
+      "source": "justice.gov/atr/media/1399386/dl",
+      "relevance": "high",
+      "status": "downloaded+extracted+integrated",
+      "key_topics": ["Magi LLM Superpowers for Search", "synthesis creation reliability breadth conversation", "Authoritative Voices as ranking value", "heavily redacted"]
+    },
+    {
+      "id": "PXR0037",
+      "type": "remedies-exhibit",
+      "title": "Search Board Update Q2 2024",
+      "date": "2024-Q2",
+      "source": "justice.gov/atr/media/1399391/dl",
+      "relevance": "critical",
+      "status": "downloaded+extracted+integrated",
+      "key_topics": ["AI Overviews 61M DAU 239M MAU", "multisearch 99M MAU", "1.4% inslice SUNs growth", "latency 1628ms to 1370ms", "v2-xs model doubled", "UGC satirical content demotion", "factuality gains", "search vision agentic projects"]
+    },
+    {
+      "id": "PXR0038",
+      "type": "remedies-exhibit",
+      "title": "AI Overviews Explainer",
+      "date": "2024",
+      "source": "justice.gov/atr/media/1399396/dl",
+      "relevance": "critical",
+      "status": "downloaded+extracted+integrated",
+      "key_topics": ["AIO uses customized Gemini + core ranking + Knowledge Graph", "core web ranking systems integrated", "AIO clicks higher quality more dwell time", "people who use AIO search more"]
+    },
+    {
+      "id": "PXR0095",
+      "type": "remedies-exhibit",
+      "title": "Search GenAI <> Gemini v3 (Aug 2024)",
+      "date": "2024-08",
+      "source": "justice.gov/media/1399041/dl",
+      "relevance": "critical",
+      "status": "downloaded+extracted+integrated",
+      "key_topics": ["NavBoost queries as LLM pre-training data", "MMLU increases from navboost queries", "80B/160B indie tokens filtered from GCC", "Sessions data as training input", "YouTube corpus for Search models", "v3-xs dedicated Search Gemini", "Magi perplexity bundle", "codistillation from v3-M"]
+    },
+    {
+      "id": "PXR0105",
+      "type": "remedies-exhibit",
+      "title": "Elizabeth Reid Email: Search as Corpus Business (May 2024)",
+      "date": "2024-05",
+      "source": "justice.gov/atr/media/1399401/dl",
+      "relevance": "critical",
+      "status": "downloaded+extracted+integrated",
+      "key_topics": ["we were also in the corpus business", "Search grounding = RAG via index", "Gemini treats Search as corpus", "unprecedented cross-PA effort", "1000+ enterprise customers", "Quora chatbot on Search grounding"]
+    },
+    {
+      "id": "PXR0109",
+      "type": "remedies-exhibit",
+      "title": "Exploring Gemini in Search (Exec Review)",
+      "date": "2024",
+      "source": "justice.gov/atr/media/1399406/dl",
+      "relevance": "critical",
+      "status": "downloaded+extracted+integrated",
+      "key_topics": ["rankable Gemini suggestions", "preserve ads revenue as design principle", "three exploration modes", "Gemini outputs as ranking candidates", "heavily redacted"]
+    },
+    {
+      "id": "PXR0113",
+      "type": "remedies-exhibit",
+      "title": "Search Entry Points (May 2023)",
+      "date": "2023-05",
+      "source": "justice.gov/atr/media/1399411/dl",
+      "relevance": "high",
+      "status": "downloaded+extracted+integrated",
+      "key_topics": ["3 existential threats from AI", "search intent shifting to apps >90% time", "iOS 1P search experiences", "embed Search in third-party apps and chatbots", "180B+ annual queries TAM", "pilot 15 partners"]
+    },
+    {
+      "id": "PXR0116",
+      "type": "remedies-exhibit",
+      "title": "Are LLMs Impacting Search Usage? (May 2024)",
+      "date": "2024-05",
+      "source": "justice.gov/media/1397786/dl",
+      "relevance": "critical",
+      "status": "downloaded+extracted+integrated",
+      "key_topics": ["no stat sig impact on Search from Gemini adoption", "non-significant lift in queries and SUNs", "query shift from AGA to Chrome", "heavily redacted numbers"]
+    },
+    {
+      "id": "PXR0153",
+      "type": "remedies-exhibit",
+      "title": "Anthropic Grounding Proposal (Oct 2024)",
+      "date": "2024-10",
+      "source": "justice.gov/atr/media/1399416/dl",
+      "relevance": "critical",
+      "status": "downloaded+extracted+integrated",
+      "key_topics": ["two-tier grounding quality", "Gemini app gets KG oneboxes RelQ", "Vertex gets web results only", "Anthropic gets same or less than Vertex", "160 char snippets", "1000+ enterprise customers", "reduced Gemini differentiation risk"]
+    },
+    {
+      "id": "PXR0176",
+      "type": "remedies-exhibit",
+      "title": "OpenAI: Why Are We Solving 'Search'?",
+      "date": "2024",
+      "source": "justice.gov/media/1397561/dl",
+      "relevance": "low",
+      "status": "downloaded+extracted",
+      "key_topics": ["almost entirely redacted", "SearchGPT positioning", "scatter plot ChatGPT vs Google Search vs Super assistant"]
+    },
+    {
+      "id": "PXR0182",
+      "type": "remedies-exhibit",
+      "title": "OpenAI: Search 2025 Product Vision + Strategy",
+      "date": "2025",
+      "source": "justice.gov/media/1397576/dl",
+      "relevance": "low",
+      "status": "downloaded+extracted",
+      "key_topics": ["completely redacted", "no extractable content"]
+    },
+    {
+      "id": "PXR0206",
+      "type": "remedies-exhibit",
+      "title": "Chrome Review 2024",
+      "date": "2024",
+      "source": "justice.gov/atr/media/1398076/dl",
+      "relevance": "high",
+      "status": "downloaded+extracted+integrated",
+      "key_topics": ["Chrome 1.848B DAU 4.143B MAU", "Android 80% share iOS 12.9%", "Chrome optimizing for Search PA goals", "signed-in users monetize better", "investment LTVs", "lots of headroom on iOS", "YouTube codec 7% watch time increase"]
+    },
+    {
+      "id": "PXR0302",
+      "type": "remedies-exhibit",
+      "title": "Core Rigor Review Q1 2025 (Cybersecurity)",
+      "date": "2025-Q1",
+      "source": "justice.gov/atr/media/1398411/dl",
+      "relevance": "low",
+      "status": "downloaded+extracted",
+      "key_topics": ["cybersecurity not ranking", "AI models IP Very High Risk", "google3 monorepo", "two person review on all code", "tangential to ranking"]
+    },
+    {
+      "id": "PXR0306",
+      "type": "remedies-exhibit",
+      "title": "Cybersecurity Risks",
+      "date": "2025",
+      "source": "justice.gov/atr/media/1398416/dl",
+      "relevance": "low",
+      "status": "downloaded",
+      "key_topics": ["cybersecurity not ranking", "not text-extracted"]
+    }
+  ],
+  "highPriorityNotYetDownloaded": [
+    "UPX0005 - Eric Lehman presentation (ranking overview) - NOT on public DOJ page",
+    "UPX0014 - Search quality metrics - NOT on public DOJ page",
+    "UPX0190 - NavBoost most powerful (cited in Mehta) - NOT on public DOJ page",
+    "UPX0195 - Lehman on search ranking - NOT on public DOJ page",
+    "UPX0196 - Lehman internal doc (NavBoost/Glue, cited in Mehta) - NOT on public DOJ page",
+    "UPX0198 - Haahr presentation - NOT on public DOJ page",
+    "UPX0199 - Nayak presentation - NOT on public DOJ page",
+    "UPX0213 - Query understanding (QBST, cited in Mehta) - NOT on public DOJ page",
+    "UPX0214 - NavBoost vs LLMs freshness (cited in Mehta) - NOT on public DOJ page",
+    "UPX0226 - User feedback central to ranking (cited in Mehta) - NOT on public DOJ page",
+    "UPX0255 - Ranking signals data volumes (cited 2x in Mehta) - NOT on public DOJ page",
+    "UPX0256 - NavBoost vs LLMs freshness (cited in Mehta) - NOT on public DOJ page",
+    "UPX0870 - Freshness and query understanding (cited 2x in Mehta) - NOT on public DOJ page",
+    "UPX1007 - QBST 13 months training (cited in Mehta) - NOT on public DOJ page",
+    "UPX1082 - Quality reduction experiment (cited 2x in Mehta) - NOT on public DOJ page",
+    "DX1737 - Google defense exhibit on search quality - NOT on public DOJ page",
+    "DX1738 - Google defense exhibit on competition - NOT on public DOJ page"
+  ],
+  "notes": "Many ranking-specific exhibits (UPX0190-0256 range) are not available on the public DOJ exhibits page. These were likely filed under seal or with restricted access. However, their content is extensively quoted in Judge Mehta's 286-page liability opinion, which we have fully extracted and integrated.",
+  "lastUpdated": "2025-04-05"
+}

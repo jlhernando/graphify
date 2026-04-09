@@ -1,0 +1,90 @@
+Ex. No.
+UPX0205
+1 :20-CV-03010-APM
+
+REDACTED FOR PUBLIC FILING & ABRIDGED
+Redacted
+
+GOOG-DOJ- 12363161
+
+ORG
+
+Many Research teams Q4 2014
+•
+•
+•
+•
+•
+•
+•
+•
+
+Aimee (Anna)
+Google Brain (Jeff)
+Descartes (Ray)
+DeepMind (Demis)
+Machine Intelligence (JG)
+Strategic Technologies (Andrei)
+Google Research (Alfred)
+Replicant Uames)
+
+RESEARCH - ALL HANDS APR 2015
+
+@Google 2015 - Confidential amd Proprietary
+
+REDACTED FOR PUBLIC FILING & ABRIDGED
+Redacted
+
+GOOG-DOJ- 12363164
+
+Principles
+Priors
+How many people followed each ?
+
+which door will she fol low?
+
+Google r
+Confidential and Propreitary
+
+A simple but powerful algorithm for "the choice problem" is the "Priors algorithm".
+
+The idea is to score the doors based on how many people took it.
+In other words, you rank the choices based on how popular it is.
+This is simple, yet very powerful: it is one of the strongest signals for much or Google's search and ads ranking !
+If we know nothing about the user, this is probably the best thing we can do.
+
+REDACTED FOR PUBLIC FILING & ABRIDGED
+Redacted
+
+GOOG-DOJ- 12363199
+
+Principles
+Priors
+How many people followed each ?
+
+Personalization: refined priors
+Our Twist
+who went through each door?
+what actions describe them?
+
+which door will she fol low?
+
+Google r
+Confidential and Propreitary
+
+We bring two twists to the traditional heuristic.
+Instead of attempting to describe -- through a noisy process -- what each door is about, we describe it based on the
+people who took it
+We can do this at Google, because at our scale, even the most obscure choice would have been exercised by thousands
+of people.
+When a new user walks in , we measure their similarity to the people behind each door.
+This brings us to the second twist, which is that
+while describing a user, we dont not use demographics or other stereotypical attributes.
+We simply use a user's past actions to describe them and match users based on their behavioral similarity.
+
+REDACTED FOR PUBLIC FILING & ABRIDGED
+Redacted
+
+GOOG-DOJ- 12363202
+
+

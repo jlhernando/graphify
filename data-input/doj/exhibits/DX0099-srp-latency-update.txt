@@ -1,0 +1,176 @@
+Go gle
+SRP Latency Update
+for Redacted@
+Friends of Low Latency
+
+2017-05-19
+
+REDACTED FOR PUBLIC FILING & ABRIDGED
+Redacted
+
+DX0099.001
+
+DX0099
+GOOG-DOJ-02702726
+
+Agenda
+• Google vs Bing findings
+• Measuring the Bing gap going forward
+• Projects under way that may help close the gap
+• Additional investigations
+
+REDACTED FOR PUBLIC FILING & ABRIDGED
+Redacted
+
+DX0099.002
+
+GOOG-DOJ-02702727
+
+Recap: Folly Workstreams
+g_o fo
+
+road
+t
+
+/ lfAl'HO
+
+HtA0
+
+TAL I_
+
+C_ _
+
+S
+2
+
+i O(tOO)
+
+O(l'OO)
+
+!
+
+!
+!
+
+i
+i 0(100-)
+
+1
+
+i
+
+!0(100)
+
+•
+
+i
+
+: Confidential ioc,oe, ~:
+, i
+
+0(10}
+
+;oc100)
+0(10001
+
+10
+
+.._.__
+
+M
+
+..
+
+I
+
+~~~---......
+
+_ _ _ _...,,,,_,_..,._ _
+
+' ,_,,,..~--
+
+·•--SAT•Al'ToolGSA_
+
+...
+
+_,,.
+
+0,.0...blflOOf~-----
+
+<I
+
+i
+
+There is lots of latency reduction work happening -- we are focusing on one part of it
+today.
+
+REDACTED FOR PUBLIC FILING & ABRIDGED
+Redacted
+
+DX0099.003
+
+GOOG-DOJ-02702728
+
+Bing is faster - why?
+
+2) Google has significant
+logged-in penalty
+
+Go gle
+
+g_ogg_ £>,- -b ng
+
+3) Bing serves slmilar
+content with fewer bytes
+
+4) Bing uses different Image
+loading techniques
+
+Bing loads more images externally so the page looks complete sooner and does not
+fade them in like Google does.
+
+REDACTED FOR PUBLIC FILING & ABRIDGED
+Redacted
+
+DX0099.004
+
+GOOG-DOJ-02702729
+
+1) Google results arrive later
+Google first results
+~ 300ms later
+SOOms
+
+1000ms
+
+[blue shark] (logged-out)
+1500ms
+
+2000ms
+
+Go gle
+...........
+
+iii:..:=;.::=;:;::ii:;;;:-=·
+
+First byte
+about the same
+
+,oooms
+
+1500ms
+
+On both search engines, the first byte returns at roughly the same time .
+
+However, server time spent before first result is rendered is -30Oms for Google.
+It's worth noting that GWSTime has increased (particularly since 03). Since results
+are in the body chunk and that depends on GWS, this probably contributes to the gap.
+
+REDACTED FOR PUBLIC FILING & ABRIDGED
+Redacted
+
+DX0099.005
+
+GOOG-DOJ-02702730
+
+

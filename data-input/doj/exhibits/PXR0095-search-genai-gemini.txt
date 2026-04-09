@@ -1,0 +1,128 @@
+Authors: ranka, stbake r, xiaodansong, adai,
+rohananil, nlintz, [please add your name]
+Date: Aug 26, 2024
+Status: Draft
+Reviewers: koray, vinyals, cheenu, jeff, noam
+
+Search GenAI <> Gemini v3
+
+Ex. No.
+PXR0095
+1:20-cv-03010-APM
+
+1:20-cv-03715-APM
+
+GOOG-DOJ-33963905
+
+REDACTED PUBLIC VERSION
+
+Commented [SJ: Decode latency would still bo
+
+expensive for MoEs. One thing I was chatting with Ema
+was to use different chips tor prefill /decode.
+@google.com
+
+8. Pre-training data:
+a. Significantly better pre-training data!can he!P us achieve quality obiectives. We can get high quality Search data,_if we build v3-xs dedicated to Search. Examples:
+i.
+Add data that was filtered out of GCC data (because of GE). Just for Indies, we estimate GCC filtering removed BOB out of 160B tokens.
+ii.
+Append anonymized NavBoost Queries for selected documents
+Sessions data
+iii.
+iv.
+Youtube videos - including potentially investigating access to large YT corpus that could be used in Search (but not in GeminiNertex).
+b. Addpretrainingdatathatdidn'tlaunchin2 .20. Gemini3LeaderboardBacklog
+C. Note: That codistillation from v3-M (bubbles etc.)+ adding new data can both -be done
+
+I took a pass, can we add anything bit points I missed
+
+Commented (8): I'm not very familiar with the details,
+@google.com
+but could you chat with
+pis?
+Commented (9):
+Feel free to
+link to any docs you might have, or any additional data.
+Commented (10): there's also the search-specific data
+in our backlog (e.g. anon navboosl queries, which
+could be huge, given we see mmlu increases from
+aquarium queries)
+
+,
+
+Commented (11): It would easiest to coordinate this
+I
+
+separately in the sense that we bundle Gemini backlog
+changes today (on lop of 2.20c which already indudes
+some of the search-specific changes); and similarly
+
+,1
+
+' ti '
+1
+
+bundle search-specdicdatasets (that cloud / other
+
+1
+
+, , customers cannot use), as we will likely train the model
+in two phases accordingly.
+Commented [12): These are realiable and correla tes
+well and downstream?
+google.oom
+1
+•
+~
+google.com, as we would aggressively
+1
+hillctimb and over-optimize for the target evals.
+Commented [13): Great question I am not that familiar
+
+with the magi perplexitybundle,
+~
+google.com. was the one who
+advised using this for PT quality verification, Namrata
+Nam,ata,
+can you weigh in on
+google.com's
+question above?
+
+II
+
+Commented [14): These are upgrade over lt1e rouge
+evals we used last time. So yes, but we have several
+
+,,
+
+,
+
+discussions over chais about this Including
+
+I
+I
+
+1- Updaling lhe evals themselves with new goldens,
+and new metrics {including query tanouts)
+
+' 2- Tesling these for v2-8b-maxall update, along with
+
+1
+'
+1
+
+, Magi postrain, and we'll get a good sense
+3- Using partial SFT if possible for v3-xs iteration ... [1]J
+Commented (15): Huge +1 Weekly closed loop and
+
+fast-SFT runs would be great!
+Commented [16): maybe worth repeating here, VLP
+
+option might significant change this
+
+GOOG-DOJ-33963905.004
+
+REDACTED PUBLIC VERSION
+
+

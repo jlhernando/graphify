@@ -1,0 +1,110 @@
+Message
+
+From:
+Sent:
+To:
+CC:
+
+Subject:
+
+Redacted
+John Giannandrea Redacted
+@google.com]
+8/23/2016 6:43:04 PM
+Daniel Alegre Redacted@google.com]
+Redacted
+Redacted
+Redacted @google.com] Joan Braddi Redacted
+@google.com]Liz Daly Redacted
+@google.com]
+Tamar Yehoshua Redacted
+Re : ISA - Working Draft from Today's Meeting
+
+what are they trying to learn exactly? they know which queries they hand off to us, so what data are they asking
+for? if its which web pages people ultimately visit for a query we would *not* share that ranking signal.
+-Jg
+Redacted
+On Tue, Aug 23, 2016 at 11 :28 AM,Daniel Alegre Redacted@google.com>
+wrote:
+Privileged - Reflects advice of EU counsel
+
+Hi Tamar/JG,
+We met with Apple yesterday and they had a new request on the data set request secti.on - they wanted it to be
+reciprocal, tneaning that they want to know which links on Google.com results were clicked on, or how long it
+took to satisfy the user's query on Google. Their rationale is that they wanted to improve the user experience
+with this information.
+We gave them the clear heads up that we don't share this information as it is key to our "secret sauce" but we
+would discuss with you nevertheless.
+JG - will see if I can catch a few mins of your time later today or tomorrow to get your thoughts but wanted to
+share their latest language ask.
+Daniel
+---------- Forwarded 1nessage ---------Redacted
+From: Bruce Sewell Redacted@apple.com>
+Date: Tue, Aug 23, 2016 at 8: 15 AM
+Subject: Re: ISA-Working Draft from Today's Meeting
+To: Daniel Alegre Redacted
+Redacted
+@google.com>
+Redacted
+Redacted@apple.com>,
+Cc: Liz Daly Redacted@google.com>,
+Jayna Whitt Redacted
+@apple.com>,BJ Watrous<Redacted
+Redacted
+Redacted
+Kent Walker _
+_ @google.com>,
+Joan BraddiRedacted
+@google.com]
+Rosie Lipscomb
+Redacted@google.com>
+
+Thanks. Here is the draft language I proposed for the data exchange section. We will have more specificity
+around this later today.
+
+Redacted
+On Aug. 22, 2016, at 7:58 PM, Daniel Alegre,Redacted@google.com> wrote:
+As agreed, we will rework the advertisement portion after our internal review.
+
+Ex. No.
+UPX0235
+1:20-cv-03010-APM
+
+Redacted
+
+REDACTED FOR PUBLIC FILING
+
+GOOG-DOJ-26800391
+
+Thanks,
+Daniel
+On Mon, Aug 22, 2016 at 6:29 PM, Liz Daly
+All,
+
+Redacted
+
+Redacted @google.com]wrote:
+
+Attached is the working draft of the discussion doc from today's meeting. Please let me know if you have any
+
+issues with the attachment.
+Best,
+Liz
+
+Redacted
+This email may be confidential or privileged. If you received this communication by mistake, please don't forward it to anyone else, please erase all copies and
+attachments, and please let me know that it went to the wrong person. Thanks.
+
+Redacted
+
+REDACTED FOR PUBLIC FILING
+
+GOOG-DOJ-26800392
+
+Redacted
+
+REDACTED FOR PUBLIC FILING
+
+GOOG-DOJ-26800393
+
+

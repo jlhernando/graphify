@@ -1,0 +1,78 @@
+Message
+Redacted
+
+From:
+Sent:
+
+Hal Varian @google.com]
+
+To:
+Subject:
+
+Daniel Russell Redacted @google.com]
+
+5/29/2020 11:46:31 PM
+Re: READ ME FIRST
+
+I think that everyone would have to agree that both data and analysis are important. Is there a way to quantify
+that.
+None of the startups I've talked to said their problem. was lack of data; all of the startups I've talked to have
+said that their problen1 was lack of data analysts. But that's an anecdote, not data ....
+
+On Fri, May 29, 2020 at 4: 18 PM Daniel Russell Redacted@google.com> wrote:
+Hi Hal - I'll take a look at your slides tomorrow. (Quick scan: Very interesting!)
+The data quality effect lS real. Peter Norvig has his own version of this story that's fairly interesting. Rut the
+algoritbmjc tweaks (and data tweaks) as you point out, are also a big part of the story.
+
+I admit that I'm not too keen on talking to regulators, but will do it if you think it's useful for the greater
+good. (And if you think I can do it effectively.)
+Wil l get back to you tomorrow.
+
+--Dan
+Redacted
+
+On Fri, May 29, 2020 at 1:06 PM Hal Varian
+@google.com>
+wrote:
+Sent you some follow ups which you can peruse at your leisure,
+Meanwhile, I'm very interested in the stats you shared about
+URL typos, etc. I attach the article version of the slides I sent you. earlier. Could you take a look at the Britny
+part and see if you agree with what l said?
+One of the topics that co111es up constantly is the "data network effect" which argues that
+high quality=> more users => more data => more analysis => high quality
+Though this is more or less right, 1) it applies to every business, 2) the "more analysis" should really be "more
+and better analysis".
+Much of Google's improvement over the years has been due to thousands of people such as yourself
+identifying tweaks that have added up to Google as it is today.
+This is a little too sophisticated for journalists and regulators to recognize. 'They believe that if we just
+
+handed Bing a billion long-tail queries, tl1ey would magically become a lot better.
+We've been doing a number of presentations to regu1ators on this topic. See 1ny presentation here. I wonder
+if you would be willing to do a Meeting with then1 on how improving quality depends more on the
+algorithmic improvements (tweaks) than on the big data per se.
+
+Ex. No.
+
+UPX0243
+1:20-cv-03010-APM
+
+Redacted
+
+REDACTED FOR PUBLIC FILING
+
+GOOG-DOJ-29903938
+
+If you are willing to do this, let me know and we can set something up. A lot would be stories like the URLtypos and this would be highly secure, so you can speak freely on these matters.
+Happy to work with you on this.
+
+Daniel M. Russell
+Google Search Quality & User Happiness
+Check out my new book: The Joy of Search (MIT Press, \Vinter, 20.19)
+
+Redacted
+
+REDACTED FOR PUBLIC FILING
+
+GOOG-DOJ-29903939
+
+

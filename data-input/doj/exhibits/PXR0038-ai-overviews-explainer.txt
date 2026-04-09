@@ -1,0 +1,136 @@
+Reviewer Type
+
+Reviewer
+
+LGTM / Date
+
+Product
+
+Elizabeth Hamon Re id
+Robby Stein
+Srinivasan {Cheenu} Venkatachary
+Hema Budaraiu
+Ph iroze Para kh
+Matthew
+Grav
+
+ER: LGTM but see comments
+RS: ----------·-----LTGM
+CV: LGTM with comments
+
+Crystal Dahlen
+Lara Levin
+Ashley Thompson
+Ned Adriance
+Meghann Farnsworth
+
+CD:
+LL: LGTM
+AT:
+NA: LGTM
+MF
+
+T&S I RAI
+
+Beth Tsai
+Michelle Chang
+
+BT
+MC
+
+Mktg
+
+Approvers:
+
+RH: LGTM
+MW: LGTM with comments
+
+Comms Team
+
+Rossa Hsieh
+Mellissa Winter
+Winter
+
+HB:
+PP:
+MG:
+
+Notify:
+Rebecca Michael
+Heaven Kim
+
+GAPP
+
+Ben Petrosky Christian Wagner
+
+BP
+CW: LGTM
+
+Legal
+
+Rich Lee
+------
+
+RL: LGTM 6/13
+
+[Majority of content adapted from SGE explainer and approved statements and
+background we've provided to press}
+How Al Overviews in Search Work
+Recently, we launched Al Overviews on Search . In this document, we'll explain how Al
+Overviews work, how they can be helpful, and the work we've done to prioritize quality and
+safety in this experience.
+
+The fundamentals
+Al Overviews use generative Al to provide key information about a topic or question, with links
+to dig. deeper and learn more on the web.
+
+Ex. No.
+PXR0038
+1:20-cv-03010-APM
+1:20-cv-03715-APM
+
+GOOG-DOJ-33964302
+
+This application of generative Al has been specifically designed to be helpful for information
+journeys in Search, meaning it'sa different experience than interacting with an LLM-based
+chatbot. Al Overviews use a customized Gemini model, which works in tandem with our existing
+Search systems - like our quality and ranking systems and the Google Knowledge Graph. Al
+Overviews are designed to carry out traditional "search" tasks, like identifying relevant, high­
+quality results from our index to support the information presented in the overview. illml
+To ensure that Al Overviews are high quality, we've integrated our core web ranking systems
+into this experience, which are fundamentally designed to surface reliable and relevant
+information. Al Overviews are built to only surface information that is backed up by top web
+results, and include links to web content that supports the information presented in the overview.
+People can use these links to dig deeper on a topic, because we know people come to Search
+to find a range of perspectives and to explore the open web.
+
+How Al Overviews can be helpful
+Before rolling out Al Overviews in Search, we tested the experience extensively through Search
+Labs to help us understand where generative Al can be most helpful. Like all the Search
+features that we build, our goal is to help people find the information they're looking for quickly
+and reliably .
+In particular, Al Overviews are helpful for more complex questions that might have previously
+taken multiple searches. Al Overviews help people get to the gist of a complicated topic or
+question more quickly, while also provid ing a jumping off point to explore links to learn more. Al
+Overviews were designed to show up on queries where they can add additional benefit beyond
+what people might already get on Search today, and where we have high confidence in the
+quality of the responses. Meaning, they will show up in Search results when our systems
+determine that generative Al can be especially helpful - for example, when you want to quickly
+understand information from a range of sources.
+With Al Overviews, people are visiting a greater diversity of websites for help with more complex
+questions. We've found that people who use Al Overviews actually use Search more and are
+more satisfied with their results. And when people click to links from Al Overviews, these clicks
+are higher quality, where users are more likely to spend more time on the site, because we've
+done a better job of finding the right info and website for them.
+
+Quality and safety protections
+Al Overviews are rooted in our core Search quality and safety systems, which we have been
+refining for more than 20 years to deliver reliable and high-quality information. Some of the key
+ways we've worked to promote quality and safety in Al Overviews include:
+
+Rigorous testing: As we do with all Search features, we undertook a rigorous testing process
+before launch to maintain our high bar for quality with Al Overviews. We've utilized methods that
+
+GOOG-DOJ-33964303
+
+

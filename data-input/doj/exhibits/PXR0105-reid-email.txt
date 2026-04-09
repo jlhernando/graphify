@@ -1,0 +1,164 @@
+Message
+Elizabeth Reid
+goog!e.com]
+5/18/2024 1:12:58 AM
+Ori An1 iga
+@google.com]
+Tom Kubik
+@google.com]; Ariel Garza
+(Cheenu) Venkatachary
+@google.com];
+@google.com; QRS all -
+
+From:
+Sent:
+To:
+
+CC:
+
+@google.com]; sp-staff
+
+@google.com]; Srinivasan
+@google.com;
+
+@google.com]
+
+Subject:
+Re:
+[Launched] Search grounding for Vertex Al
+Attachments: overview-grounding (1).png; Screen shot 2024-05-16 at 8.03.30 PM.png
+
+Congrats to the tean1 on this work!
+On Fri, May 17, 2024 at 6:09 PM Ori Amiga
+
+@google.com>
+
+wrote:
+
+[+SP leadership, Liz, and Cheenu]
+Team,
+This is really fantastic to see launch! Love seeing the momentum. in customer interest, and thank you for the
+incredible hard work that went into getting us to this point, and the close collaboration across so many
+teams. Huge congrats to all!
+lo
+
+On .Fri, May 17, 2024 at 11 :36 A.M Tom Kubik
+@google.com> wrote:
+Hi Ori -- as discussed, here narrowed down to working teams across Cloud, Core and Search, and the QRS
+
+infra n1aking it all possible.
+---------- Forwarded message --------From: Torn Kubik
+@google.com>
+Date: Thu, May 16, 2024 at 8:08 PM
+Subject:
+[Launched] Search grounding for Vertex AI
+To:
+@google.com>
+
+@google.com>
+
+@google.com>
+Cc:
+
+@google.com>•
+
+@google.com>
+
+We thought we were in the finding business.
+, we were also
+Little did we know_
+in the corpus b,u siness
+II~ R
+
+- Google CEO, year 2035, talking about the past decade [imaginary quoteJ
+
+TL;DR Gemini with Search grounding launched at general availability on 5/14@
+GCP's Vertex Al platform (link}
+Details below.
+Huge thanks to All 150+ folks involved!
+
+Ex. No.
+
+Cheers,
+
+PXR0 105
+1:20-cv-03010-APM
+1 :20-cv-03715-APM
+
+REDACTED PUBLIC VERSION
+GOOG-DOJ-33831304
+
+Your Working Team
+
+·+++++·++
+What is "Search grounding"?
+•
+It allows the Gemini model to check Search results before generating an answer. Doing so increases
+accuracy of the moders response (link)
+In other words: Gemini model treats Google Search like a corpus for Retrieval-Assisted Generation
+•
+(RAG)
+•
+It is enabled for Gemini version offered by Google Cloud over an API as part of Vertex Al
+•
+This follows on Public Preview launched at Google Cloud Next on 4/9
+
+••••
+::-::
+
+v..-.
+,;._...,l~
+=\.,; I...«'f' I·q..;f"--•
+
+..,.·:
+
+. . ... .....,...........~· 1
+
+:;?;-: ?i{tn,rr;.,,y. $,mnv •'Ii~:, :.} ,i~.:h ri-.-~
+:~ •
+
+f!{i'~ :~1'r-f :S (+;·(~~~--;,:;~ tf~w(
+
+..
+:[?~ ' 1:.: ) i..: ~; > ~f(.,,~: ! , ..x.., ,:;:,..,,,·
+
+:~ :, t: :~, ~~ :">!~~~ ~;~ :c~< >'";.<t.t,!hn~~. 'ft,."N., <.i1 n
+•:~ ., t,.,k~ •.:.l~ ~~t,~S.~r...;;,a ~ ,;2~ :;~'i~~·t:·•,!H~ c~ :~
+~-~tr~ 1 kJ,1. «!Sil ?.fl~:n!u.')) fi1I'(. .
+rs:..~~w-e.f , .-:~ ••~
+
+;r, '!-~!~-' !1',t (: >,~~~?
+
+'., ·, e, ~i-Jr..,.-..•..,.. ~ in
+O<i:X,;_):; :::·:.;;.~ ~".?
+
+. .,;
+
+4,,• ·
+
+What is "general availability"?
+1.
+We meet enterprise logging per the grounding specific service terms (link) ,
+2.
+Customers are charged $$$ for usage
+You can use the product immediately (no allow-list, which was in place for Public Preview)
+3.
+
+What do customers think?
+1.
+More than a thousand customers have signed up since Public Preview in April '24
+Quora already launched a chatbot powered by Search grounding
+2.
+
+What did it take to launch?
+TL;DR an unprecedented effort across three PAs {Cloud, Core, Search).
+Key pieces were:
+Logging work - to ship enterprise logging
+1.
+Business alignment - quality, pricing and terms
+2.
+
+REDACTED PUBLIC VERSION
+GOOG-DOJ-33831305
+
+
