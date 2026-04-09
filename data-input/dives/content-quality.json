@@ -1,0 +1,192 @@
+{
+  "id": "content-quality",
+  "route": "/content-quality",
+  "systems": [
+    "HelpfulContent",
+    "Panda",
+    "QualityEvaluation"
+  ],
+  "hero": {
+    "title": "Content Quality: From Panda to Helpful Content",
+    "subtitle": "Google's content quality system evolved from Panda's site-level classifiers (2011) to the modern Helpful Content system, which uses LLM-based effort scoring, originality measurement, and topical focus analysis. These signals feed into Q*, the site-wide quality score that gates rich results and determines domain trust."
+  },
+  "keyInsight": {
+    "label": "Key Insight from DOJ Trial",
+    "text": "Google uses an <strong>LLM to estimate content effort and originality</strong> (contentEffort signal). The <strong>siteFocusScore</strong> measures how dedicated a site is to a specific topic, while <strong>siteRadius</strong> penalizes pages that deviate from the site's core theme. <strong>OriginalContentScore</strong> measures uniqueness against the entire web. Together, these enforce topical authority at domain level."
+  },
+  "pillars": [
+    {
+      "type": "leak",
+      "title": "Panda + Qstar Signals",
+      "items": [
+        "<strong>OriginalContentScore</strong> - Uniqueness measurement, 0-127 scale",
+        "<strong>EffortScore</strong> - LLM-estimated effort invested in content",
+        "<strong>gibberishScores</strong> - AI-generated and low-quality text detection",
+        "<strong>Panda modifiers</strong> - Site-wide quality adjustment factors (6 signals)",
+        "<strong>NSR (44 signals)</strong> - Site-level ranking foundation for Q*",
+        "<strong>siteAuthority</strong> - Domain trust score feeding into Q*"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "Quality Signals",
+      "items": [
+        "<strong>contentEffort</strong> - LLM-based labor and originality estimation",
+        "<strong>OriginalContentScore</strong> - Content uniqueness vs the broader web",
+        "<strong>siteFocusScore</strong> - Topical dedication measurement",
+        "<strong>siteRadius</strong> - Page deviation from site's core theme (higher = worse)",
+        "<strong>ugcScore</strong> - User-generated content quality assessment",
+        "<strong>ugcDiscussionEffortScore</strong> - Forum/discussion thread quality"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "2 Patents",
+      "items": [
+        "<strong>2011 Panda</strong> - IL/RQ ratio (independent links / reference queries)",
+        "<strong>Site-level classifier</strong> - Quality applied at domain, not page level",
+        "<strong>E-A-T</strong> - Expertise, Authoritativeness, Trustworthiness (2018)",
+        "<strong>HCU</strong> - \"Helpful\" classifier demotes entire domains (2022)",
+        "<strong>Q* threshold</strong> - Below 0.4 = ineligible for rich results",
+        "Bill Slawski documented the shift from page-level to site-level quality",
+        "<a href=\"https://patents.google.com/patent/US20090204579\">US20090204579</a>: Indexing explicitly-specified quick-link data for web pages; <a href=\"https://patents.google.com/patent/US7047229\">US7047229</a>: Searching content on web pages"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Content Quality Scoring Affects Your SEO",
+      "items": [
+        "<strong>Maximize contentEffort by showing original work</strong>: Google's LLM evaluates labor and originality. Include original research, proprietary data, unique analysis, expert interviews, or custom illustrations. Templated content with swapped keywords scores low. The LLM detects genuine expertise vs. surface-level rewriting.",
+        "<strong>Target OriginalContentScore above the duplicate threshold</strong>: This 0-127 scale measures content uniqueness against the entire web index. Avoid paraphrasing existing top-ranking pages. Add perspectives, data points, or angles that no other page covers. Syndicated content without canonical tags scores near zero.",
+        "<strong>Protect your siteFocusScore by staying in your lane</strong>: This signal measures topical dedication via site2Vec embeddings. A cooking site publishing crypto articles dilutes its focus score. If you must expand topics, use subdomains or separate properties to preserve the main domain's topical coherence.",
+        "<strong>Monitor siteRadius for every new page</strong>: Each page is measured against your site's core semantic centroid. Pages with high siteRadius (far from the site's theme) are flagged as off-topic and can drag down domain quality. Before publishing, ask: does this page fit my site's established topic cluster?",
+        "<strong>Audit and remove thin content to protect Q*</strong>: Q* is a site-wide quality score, and values below 0.4 disqualify sites from rich results (featured snippets, knowledge panels). Panda modifiers apply at the domain level, meaning a section of low-quality pages can sink the entire site. Prune or noindex thin tag pages, empty category pages, and auto-generated content.",
+        "<strong>Treat UGC sections as quality liabilities</strong>: ugcScore and ugcDiscussionEffortScore evaluate user-generated content quality. Unmoderated forums, low-effort comment sections, and spammy user reviews actively hurt your Q* score. Implement moderation, minimum quality standards, or noindex low-value UGC pages.",
+        "<strong>Avoid gibberishScore triggers with AI content</strong>: This signal detects AI-generated and low-quality text. If using AI for content production, ensure heavy human editing, fact-checking, and addition of original insights. Pure AI output, especially at scale, will score poorly on both gibberishScore and contentEffort."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "contentEffort",
+      "source": "DOJ: LLM-based labor and originality estimation",
+      "how": "LLM analyzes content to estimate labor and originality. Part of CompressedQualitySignals. Distinguishes genuine expert writing from templated/automated content.",
+      "formula": "<span class=\"cf-fn\">contentEffort</span>(page) = <span class=\"cf-fn\">LLM_eval</span>(\n  <span class=\"cf-val\">labor_indicators</span>, <span class=\"cf-val\">originality_markers</span>\n)  <span class=\"cf-comment\">// in CompressedQualitySignals</span>\n<span class=\"cf-comment\">// expert writing vs templated/automated detection</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8682892\">US8682892</a> (content quality scoring), <a href=\"https://patents.google.com/patent/US9697259\">US9697259</a> (document quality)",
+      "affects": "Affected by: original research, unique data, expert analysis. More human effort and expertise = higher score."
+    },
+    {
+      "name": "OriginalContentScore",
+      "source": "Leak: 7-bit value 0-127 + DOJ: uniqueness vs broader web",
+      "how": "7-bit value (0-127). Measures content uniqueness vs the broader web. Low scores = scraped or heavily duplicated content.",
+      "formula": "<span class=\"cf-fn\">OriginalContentScore</span>(page) = <span class=\"cf-fn\">dedupe_check</span>(\n  <span class=\"cf-val\">content_fingerprint</span>, <span class=\"cf-val\">web_index</span>\n)  <span class=\"cf-comment\">// 7-bit: 0 (pure copy) to 127 (fully original)</span>\n<span class=\"cf-comment\">// low values trigger duplicate content filters</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8682892\">US8682892</a> (content quality scoring)",
+      "affects": "Affected by: publishing original content not found elsewhere. Unique perspectives, data, and analysis score higher."
+    },
+    {
+      "name": "siteFocusScore",
+      "source": "DOJ: topical authority measurement",
+      "how": "Quantifies how focused a site is on a specific topic. Uses site2Vec embeddings to measure topical coherence. Higher score = more topically focused site.",
+      "formula": "<span class=\"cf-fn\">siteFocusScore</span>(domain) = <span class=\"cf-fn\">coherence</span>(\n  <span class=\"cf-val\">site2Vec</span>[all_pages]\n)  <span class=\"cf-comment\">// higher = more topically focused</span>\n<span class=\"cf-comment\">// measures embedding variance across all pages</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US9697259\">US9697259</a> (document quality signals)",
+      "affects": "Affected by: staying focused on your niche. Topic-diluted sites score lower. Depth > breadth for topical authority."
+    },
+    {
+      "name": "siteRadius",
+      "source": "DOJ: page deviation from site core theme",
+      "how": "Measures how far a specific page deviates from the site's core semantic theme. Uses embedding distance. Higher values = more topic drift from site focus.",
+      "formula": "<span class=\"cf-fn\">siteRadius</span>(page) = <span class=\"cf-fn\">distance</span>(\n  <span class=\"cf-val\">page_embedding</span>, <span class=\"cf-val\">site2Vec</span>[domain]\n)  <span class=\"cf-comment\">// higher = more topic drift</span>\n<span class=\"cf-kw\">if</span> siteRadius &gt; <span class=\"cf-val\">threshold</span>: page flagged as off-topic\n<span class=\"cf-comment\">// each page measured against site centroid</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US9697259\">US9697259</a> (document quality signals)",
+      "affects": "Affected by: keeping content aligned with your site's core topic. Off-topic pages hurt this metric. Each page should relate to the site's main theme."
+    }
+  ],
+  "pipeline": {
+    "title": "Content Quality Pipeline",
+    "stages": [
+      {
+        "name": "Content Analysis",
+        "detail": "contentEffort (LLM), OriginalContentScore, gibberishScores"
+      },
+      {
+        "name": "Topical Analysis",
+        "detail": "siteFocusScore, siteRadius, topic coherence"
+      },
+      {
+        "name": "Panda Modifiers",
+        "detail": "Site-wide quality adjustments, UGC scoring"
+      },
+      {
+        "name": "Q* Score",
+        "detail": "0-1 scale, hand-crafted, query-independent"
+      },
+      {
+        "name": "Rich Results Gate",
+        "detail": "Q* below 0.4 = no featured snippets, knowledge panels"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2011",
+      "type": "patent",
+      "title": "Panda Algorithm",
+      "desc": "First site-wide quality scoring. Uses IL/RQ ratio (independent links / reference queries) as quality proxy."
+    },
+    {
+      "year": "2014",
+      "type": "patent",
+      "title": "Panda 4.0",
+      "desc": "Major Panda refresh affecting 7.5% of queries. Soft 404 detection and thin content demotion improved."
+    },
+    {
+      "year": "2018",
+      "type": "patent",
+      "title": "E-A-T Framework",
+      "desc": "Expertise, Authoritativeness, Trustworthiness formalized in quality rater guidelines. Influences Q* scoring."
+    },
+    {
+      "year": "2022",
+      "type": "patent",
+      "title": "Helpful Content Update",
+      "desc": "Site-wide classifier that demotes entire domains producing \"unhelpful\" content. Domain-level penalty."
+    },
+    {
+      "year": "2023",
+      "type": "patent",
+      "title": "HCU September Update",
+      "desc": "Major HCU refresh penalizing AI-generated, low-effort content at scale. Many sites lost 50-90% traffic."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "API Leak: Content Signals",
+      "desc": "OriginalContentScore, Panda modifiers, and 19 Qstar signals confirmed. Content quality is multi-layered."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "DOJ Trial: LLM Effort Scoring",
+      "desc": "contentEffort uses LLM to estimate labor and originality. siteFocusScore enforces topical authority."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"We evaluate content on a page-by-page basis.\"",
+      "internalSource": "DOJ + Leak",
+      "internalClaim": "siteFocusScore, siteRadius, and Panda modifiers apply at domain level. One section of low-quality content can drag down an entire site's Q* score."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"There's no penalty for AI-generated content if it's helpful.\"",
+      "internalSource": "API Leak + DOJ",
+      "internalClaim": "GibberishScore actively detects machine-generated text. contentEffort uses LLM to score labor and originality. Low-effort AI content receives measurably lower quality scores."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"Write about whatever topics your audience needs.\"",
+      "internalSource": "DOJ Trial",
+      "internalClaim": "siteFocusScore rewards topical dedication. siteRadius penalizes deviation from core theme. Sites covering too many unrelated topics are measurably disadvantaged in quality scoring."
+    }
+  ]
+}

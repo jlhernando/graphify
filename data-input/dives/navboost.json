@@ -1,0 +1,454 @@
+{
+  "id": "navboost",
+  "route": "/navboost",
+  "systems": [
+    "NavBoost",
+    "Glue"
+  ],
+  "hero": {
+    "title": "NavBoost: Google's Click Signal System",
+    "subtitle": "NavBoost is Google's primary click-based re-ranking system, mentioned 84 times in the API leak. It tracks good clicks, bad clicks, dwell time, Chrome data, and direct traffic. The DOJ trial revealed it achieves 91% accuracy improvements, contradicting Google's public claims that click signals are \"noisy.\""
+  },
+  "keyInsight": {
+    "label": "Key Insight from DOJ Trial",
+    "text": "NavBoost is <strong>\"just a big table\"</strong> of click data, not a machine learning system. It aggregates and looks up user interaction statistics. It retains 13 months of click data (pre-2017: 18 months), sliced by location and device type. Pandu Nayak testified it achieves <strong>91% accuracy improvements</strong> in ranking quality. Judge Mehta's opinion: 13 months of Google data equals <strong>over 17.5 years of Bing data</strong>. LLMs did <strong>not replace NavBoost</strong> in ranking, and NavBoost can beat LLMs on freshness."
+  },
+  "pillars": [
+    {
+      "type": "leak",
+      "title": "Core NavBoost Signals",
+      "items": [
+        "<strong>goodClicks</strong> - Positive engagement clicks (long dwell, task completion)",
+        "<strong>badClicks</strong> - Negative signals (quick bounces, pogo-sticking)",
+        "<strong>lastLongestClicks</strong> - Session's longest click duration (satisfaction proxy)",
+        "<strong>chromeInTotal</strong> - Total Chrome browser views at site level",
+        "<strong>directFrac</strong> - Direct/type-in traffic fraction (brand authority signal)",
+        "<strong>RealTimeBoost</strong> - Incoming Chrome visits and instant NavBoost for breaking content",
+        "<strong>clickDissatisfaction</strong> - Penalty for users who keep searching after clicking",
+        "<strong>serpDemotion</strong> - Pre-computed integer demotion multiplier for SERP-level pogo-sticking (poor title/snippet promise)",
+        "<strong>navDemotion</strong> - Pre-computed integer demotion multiplier for poor on-page experience after click-through (slow site, confusing navigation)",
+        "<strong>QualityNavboostCrapsAgingData</strong> - Click data segmented into time-based buckets: lastWeekBucket, lastMonthBucket for trend analysis",
+        "<strong>Duration Performance Score</strong> - Category-normalized dwell time (Patent <a href=\"https://patents.google.com/patent/US9514194\">US9514194</a>, Navneet Panda). Dwell time evaluated relative to content category peers, not globally. A 5-minute visit on a recipe site is measured against other recipe sites. Direct URL inputs (type-in traffic) get a duration boost (e.g., 1.5x). Last-visited durations discounted to filter short clicks.",
+        "<strong>impressions</strong> - Denominator for CTR calculation per query-document pair",
+        "<strong>absoluteImpressions</strong> - Host-level unsquashed impressions operating at domain level, not URL level",
+        "<strong>unicornClicks</strong> - Click subset associated with \"Unicorn user\" events (possibly authenticated Google users or Chrome users; undefined in leak)",
+        "<strong>voterTokenCount</strong> - Number of distinct voter tokens (lower bound on distinct users). Anti-manipulation signal: 500 clicks from 3 tokens = red flag; 500 clicks from 480 tokens = healthy organic. Used for privacy-related filtering; signal suppressed below minimum user threshold"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "Signals,  Core",
+      "items": [
+        "<strong>NavBoost</strong> - 91% accuracy, \"just a big table,\" not ML (Nayak sworn testimony). VP Grushetsky (2019 email, DOJ exhibit UPX0197): \"NavBoost alone was likely more powerful than the rest of ranking combined.\" Created by HJ Kim (his 2nd signal project, many patents, PXR0356). Nayak (PXR0357): NavBoost is a \"QD table, a query-to-document lookup table, used in both directions containing counts/frequencies of user query activity by document\". <strong>Mehta opinion</strong>: Pre-2017 trained on 18 months; now 13 months. 'Navboost remains one of the most power[ful] ranking components historically' (UPX190)",
+        "<strong>NavBoost beats LLMs on freshness</strong> - Mehta opinion (FOF 103): 'Traditional systems like Navboost can also beat out LLMs (and even generalization systems) in certain aspects of SERP production, like freshness.' LLMs did NOT replace NavBoost/QBST in ranking (FOF 102). LLMs are 'additional signals that get balanced both against each other as well as against other signals' (Nayak)",
+        "<strong>NavBoost as early-stage filter</strong> - Nayak: \"You get NavBoost only after they're retrieved in the first place.\" NOT a final twiddler making minor adjustments. NavBoost is applied after initial retrieval to cull tens of thousands of candidates down to hundreds before passing to RankBrain/DeepRank. Pages need topical relevance and links to enter the candidate set; NavBoost culls and reorders within that set. Cannot rank documents lacking click history (bootstrapping problem for new content)",
+        "<strong>QSessions</strong> - Structured internal session model tracking query, clicks, reformulations, and session termination. Primary data source for NavBoost click classification",
+        "<strong>Position bias correction</strong> - Nayak (PXR0357): an early click signal measured show-vs-click rate but was biased by link position. A Google engineer developed a modification that calculates click value while correcting for position bias. This is foundational to how NavBoost weights clicks",
+        "<strong>Multi-click = hard query</strong> - Eric Lehman (UPX0219, May 2020): \"If someone clicks on three search results, which one is bad? Well, likely ALL of them, because it is probably a hard query if they clicked 3 results.\" Multiple clicks signal query difficulty, not just individual page quality",
+        "<strong>Click data scale</strong> - ~1 billion new user behavior examples per day (Lehman UPX0192, 2016). Training corpus contains ~100 billion clicks vs ~1 million IS rater scores. Clicks provide 'vastly clearer picture of how people interact with search results'",
+        "<strong>Click prediction strategy</strong> - Lehman (UPX0192): 'Predict what results users will click. Boost those results. Patch up problems with page quality, relevance, optionalization.' Multiple overlapping click prediction systems nicknamed 'Predictionosaurus Clickus'",
+        "<strong>Evaluation: train on past, predict future</strong> - Click signal evaluation methodology 'train on the past, predict the future,' largely eliminating overfitting. Continuous evaluation on fresh queries and live index. Importance of freshness and localization built into the metric (Lehman UPX0192)",
+        "<strong>RankLab</strong> - Internal tuning tool for ranking curves. '1,000,000 IS ratings are more than sufficient to superbly tune curves via RankLab and human judgment' (Lehman UPX0192)",
+        "<strong>Glue</strong> - SERP interaction logger and underlying data warehouse for NavBoost. Tracks: query text, location, device, layout, clicks, hovers, scrolls, swipes, dwell time. Stores goodClicks, badClicks, lastLongestClicks per query-document pair. Segmented by geographic location and device type",
+        "<strong>InstantGlue</strong> - Real-time user signals with ~10-minute latency for breaking news",
+        "<strong>P*</strong> - Popularity score combining NavBoost clicks with anchor metrics",
+        "<strong>NavBoostLocationSlice</strong> - Click data segmented by geographic location",
+        "<strong>NavBoostDeviceSlice</strong> - Click data segmented by device type (mobile/desktop)",
+        "<strong>MobileNavBoost</strong> - Separate mobile click signal system launched Q1 2014 producing a 'huge LE win' (UPX1087, Ranking Newsletter Aug 2014). Confirmed mobile and desktop search intents diverge. Mobile users: higher abandonment, fewer result examinations, skew toward head and local queries",
+        "<strong>QBST (Query-Based Salient Terms)</strong> - Memorization system trained on 13 months of user data. Identifies words/pairs that 'should appear prominently on web pages relevant to that query' (Lehman). Helps GSE 'understand facts about the world' (Mehta FOF 95). Distinct from NavBoost: QBST memorizes term associations, NavBoost memorizes click patterns",
+        "<strong>Chrome data</strong> - Form submissions, scrolling intensity, purchase activity feed rankings",
+        "<strong>Priors algorithm</strong> (UPX0205, Research All-Hands Apr 2015): 'Score the doors based on how many people took it. Rank the choices based on how popular it is.' Described as 'one of the strongest signals for much of Google's search and ads ranking.' At Google's scale, 'even the most obscure choice would have been exercised by thousands of people.' Behavioral similarity matching: describe results by the people who chose them, not demographics",
+        "<strong>Click data = 'secret sauce'</strong> (UPX0235, Giannandrea Aug 2016): During Apple ISA negotiations, Apple requested click data. Daniel Alegre told Apple: 'we don't share this information as it is key to our secret sauce.' JG (Giannandrea): 'if its which web pages people ultimately visit for a query we would *not* share that ranking signal.' Confirms click destination AND dwell/satisfaction time are ranking signals",
+        "<strong>Click tracking infrastructure</strong> (UPX2022, Google vs Bing 2017): Google's click tracking uses ~50-100 compressed bytes per URL via onmousedown='return rwt(this,...)' rewrite. Bing used just a few bytes via an 'h' attribute. Direct evidence of Google's heavier click data collection per result",
+        "<strong>NavBoost queries as LLM pre-training data</strong> (PXR0095, Gemini v3 2024): 'Append anonymized NavBoost Queries for selected documents' as pre-training input for Search-dedicated Gemini model. 'Anon navboost queries could be huge, given we see MMLU increases from aquarium queries.' NavBoost data now feeds both ranking AND LLM quality",
+        "<strong>AI Overview clicks are higher quality</strong> (PXR0038): 'When people click links from AI Overviews, these clicks are higher quality, where users are more likely to spend more time on the site.' Implies AIO click signals loop back into NavBoost with stronger engagement metrics",
+        "<strong>ABC Signals: Clicks as dwell time</strong> (PXR0356, HJ Kim Interview Feb 2025): Clicks (C) in ABC signals historically measured how long a user stayed at a linked page before bouncing back to SERP. NavBoost is one of the 'high-level buckets' composing the final IR score, alongside ABC-topicality and Quality",
+        "<strong>Showing clickable results is NOT the goal</strong> (UPX0192, Lehman Jun 2016): 'Showing results that users want to click is NOT the ultimate goal' because it would promote clickbait, promote irrelevant appeal, be too forgiving of optionalization, and demote official pages. 'But showing results that users want to click is CLOSE to our goal... we can do this almost right thing extremely well by drawing upon trillions of examples'",
+        "<strong>Engineers resented NavBoost's dominance</strong> (UPX0197, Grushetsky Jan 2019): 'engineers outside of NavBoost team used to be also not happy about the power of Navboost, and the fact it was stealing wins'",
+        "<strong>Designing UX to learn from users</strong> (UPX0203, Lehman Dec 2016): 'In designing user experiences, SERVING the user is NOT ENOUGH. We have to design interactions that also allow us to LEARN from users.' Goal: 'sustain the illusion that we understand'",
+        "<strong>Squeezing fractions of bits at scale</strong> (UPX0219, Lehman May 2020): 'Not just one ranking system learns from search logs. Learning from logs is the main mechanism behind ranking.' All major ML systems rely on logs: RankBrain, RankEmbed, DeepRank. 'If we can squeeze a fraction of a bit more meaning out of a session, then we get like a billion times that the very next day.' Value judgments extracted by translating logged events (clicks, swipes, views, scrolls, pauses) to guesses at what was good or bad",
+        "<strong>Google's two-way dialogue magic</strong> (UPX0228, Google is Magical): 'This two-way dialogue is the source of Google's magic. With every query, we give some knowledge, and get a little back... After a few hundred billion rounds, we start lookin' pretty smart!' 10 blue links implicitly pose: 'Which result is best?' Titles and snippets provide background; the answer is a click",
+        "<strong>Three Pillars of Ranking</strong> (UPX0004, Life of a Click, Eric Lehman): Body (what the document says about itself), Anchors (what the Web says about the document), User-interactions (what users say about the document). 'User-interactions include clicks, attention on a result, swipes on carousels and entering a new query'"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "CRAPS Data Architecture (CrapsData Protobuf)",
+      "items": [
+        "<strong>patternLevel</strong> - URL abstraction hierarchy for signal inheritance. Level 0: full URL (exact page). Level 1: host pattern (p://example.com). Level 2: domain pattern (p://def.ghi). Confirms click signals propagate from pages up to domain level",
+        "<strong>sliceTag</strong> - Flexible segmentation key allowing ad-hoc signal slicing by device, country, locale, or custom dimensions. Enables arbitrary experimental signal cuts",
+        "<strong>mobileSignals</strong> - Separate CrapsClickSignals instance from \"tier 1/2 mobile interfaces in QSessions.\" Not just device slicing but independent mobile click signal computation",
+        "<strong>CrapsDevice.uxTier</strong> - Browser capability tier: 1 = modern browsers, 2 = middle tier, 3 = very old browsers. Disproportionate low-tier clicks may flag automated manipulation (bots use outdated user agents)",
+        "<strong>CrapsDevice.os</strong> - Operating system tracked per click session, enabling OS-level signal segmentation",
+        "<strong>packedIpAddress</strong> - Network byte order IP string in CrapsData, used by CrapsIpPrior system (references internal craps-ip-prior.h)",
+        "<strong>unscaledIpPriorBadFraction</strong> - IP-level reputation score before linear scaling/offset/min-max transformation (references craps-penalty.cc). IP block reputation may explain shared hosting ranking disadvantages (Reboot Online experiment by Shai Aharony and Oliver Sissons)"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "Domain Quality Consistency (StatsWithWeightsProto)",
+      "items": [
+        "<strong>StatsWithWeightsProto</strong> - Statistical distribution model with 15 attributes measuring click quality consistency across all URLs within a patternLevel (domain/host/URL). Fields: n (sample size), weightedN, mean, median, stddev, variance, varOfMean, stdError, hi, lo, pc10, pc25, pc75, pc90, kind",
+        "<strong>Consistency over spikes</strong>: A domain with median good-click ratio 0.6 and tight standard deviation signals consistently strong quality. The same mean but massive standard deviation signals inconsistent quality across pages, likely triggering site-wide demotion",
+        "<strong>Percentile breakpoints</strong>: pc10 (10th percentile) captures worst-performing pages. A domain's weakest pages drag down the entire profile. Best-performing pages alone are insufficient if the bottom 10% performs poorly",
+        "<strong>patternSccStats</strong> - Links StatsWithWeightsProto to CrapsData, analyzing distribution of click quality across URLs within each pattern level"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "14 Patents",
+      "items": [
+        "Implicit user feedback: long clicks vs short clicks as relevance signals, modifying ranking based on view duration (<a href=\"https://patents.google.com/patent/US11816114\">US11816114</a>)",
+        "User behavior ranking: ranking documents using click probability models trained on user behavior and feature data (<a href=\"https://patents.google.com/patent/US7716225\">US7716225</a>)",
+        "Site quality scoring: dwell time and pogo-sticking measurement for site-level quality assessment (<a href=\"https://patents.google.com/patent/US9195944\">US9195944</a>)",
+        "Repeatable queries: identifying queries users submit repeatedly, learning repeatability models to serve cached high-quality results (<a href=\"https://patents.google.com/patent/US11868417\">US11868417</a>)",
+        "Location quality: inferring location quality from travel time investment, comparing anticipated vs actual distance users travel (<a href=\"https://patents.google.com/patent/US9558210\">US9558210</a>)",
+        "List generation: on-topic probabilistic models for automatically creating ranked lists from user behavior patterns (<a href=\"https://patents.google.com/patent/US7350187\">US7350187</a>)",
+        "<a href=\"https://patents.google.com/patent/US9684697\">US9684697</a>: Ranking search results; <a href=\"https://patents.google.com/patent/US7769751\">US7769751</a>: Method and apparatus for classifying documents based on user inputs; <a href=\"https://patents.google.com/patent/US7937340\">US7937340</a>: Automated satisfaction measurement for web search",
+        "<a href=\"https://patents.google.com/patent/US7373599\">US7373599</a>: Method and system for optimum placement of advertisements on a webpage; <a href=\"https://patents.google.com/patent/US7401072\">US7401072</a>: Named URL entry; <a href=\"https://patents.google.com/patent/US7149743\">US7149743</a>: Virtual directory",
+        "<a href=\"https://patents.google.com/patent/US6470269\">US6470269</a>: Method for providing time discrimination in the world wide web; <a href=\"https://patents.google.com/patent/US8065296\">US8065296</a>: Systems and methods for determining a quality of provided items"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "Click Probability Model",
+      "items": [
+        "<strong>ClickProbability</strong> - Per-result predicted CTR for every organic position",
+        "Google builds a prediction model of expected click-through rate",
+        "System builds per-result expected click rate, then measures over/underperformance against prediction",
+        "Results can over/underperform against this prediction",
+        "Click probability prediction can be modified through changes to page titles and other SERP-visible elements",
+        "\"Google doesn't use CTR in ranking\" is technically true: they use a <em>predicted</em> CTR model",
+        "Google Ads Planner provides hints about estimated CTR",
+        "Candour exploit: 2TB data across 90M queries confirmed click probability exists for every organic result",
+        "Confirmed via $13,337 Google Vulnerability Reward Program bounty to Mark Williams-Cook (Candour Agency, Dec 2024)",
+        "<strong>Yandex cross-reference:</strong> Yandex leak confirms position-adjusted CTR expectations: pages ranking lower that receive clicks comparable to higher positions get extra credit. This validates a CTR prediction model. Yandex also tracks bookmarking and direct returns as discrete positive signals, and segments click data by geography (regional CTR variation), suggesting NavBoost likely maintains geo-segmented click profiles beyond the confirmed location slicing"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "Category-Normalized Dwell Time (Patent US9514194)",
+      "items": [
+        "<strong>Your dwell time is judged against your category peers, not the entire web</strong>: Patent US9514194 (Navneet Panda) reveals Google normalizes dwell time by content category. A cooking recipe site held for 5 minutes is compared to the median for other cooking sites, not all websites. A news site where users spend 2 minutes may score well because that is above the news category median. Understand what dwell time benchmarks look like in your specific content category.",
+        "<strong>Direct URL traffic (type-in) gets a duration boost</strong>: The patent explicitly states that durations from direct URL input are boosted (e.g., 1.5x multiplier). This confirms that type-in traffic is a positive quality signal. Brand building that drives direct visits to your site improves your duration performance score, independent of search-originated visits.",
+        "<strong>Last-visited durations are discounted to filter noise</strong>: When a user leaves your site, the duration of the last page they visited is discounted or ignored. This filters out short clicks (pogo-sticking back to SERP) and artificially long durations (user left tab open, went to lunch). Your mid-session page durations matter more than exit page durations.",
+        "<strong>Your site gets multiple category scores, weighted by relevance</strong>: Sites belong to multiple categories with different weights. A sports news site might be 70% sports, 30% news. The Duration Performance Score is a weighted combination of how the site performs against peers in each category. Staying focused on your core categories strengthens your score."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "NavBoost",
+      "source": "DOJ: Core click aggregation system",
+      "how": "Aggregates click data over 13 months into a lookup table (pre-2017: 18 months, per Mehta FOF 96). For each URL, tracks good clicks (long dwell), bad clicks (pogo-sticking), and last longest clicks (strongest satisfaction). Data sliced by location and device type. Not ML, just statistical aggregation. \"Just a big table\" achieving 91% accuracy improvements. Mehta opinion: 13 months of Google data equals over 17.5 years of Bing data. NavBoost beats LLMs on freshness (FOF 103).",
+      "formula": "<span class=\"cf-fn\">NavBoost</span>(url, loc, device) = <span class=\"cf-fn\">lookup</span>(\n  <span class=\"cf-val\">click_table</span>[url][loc][device]\n)  <span class=\"cf-comment\">// retention: 13 months rolling window</span>\n<span class=\"cf-comment\">// NOT ML. Statistical aggregation only.</span>\n<span class=\"cf-comment\">// accuracy improvement: 91% (Nayak testimony)</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8661029\">US8661029</a> (ranking based on click data), <a href=\"https://patents.google.com/patent/US8874555\">US8874555</a> (modifying search result ranking), <a href=\"https://patents.google.com/patent/US8244701\">US8244701</a> (rapid behavior-based index updates), <a href=\"https://patents.google.com/patent/US7716225\">US7716225</a> (ranking by user behavior + feature data)",
+      "affects": "Affected by: user engagement metrics. Increase dwell time, reduce pogo-sticking. Content that satisfies search intent keeps users on page."
+    },
+    {
+      "name": "goodClicks / badClicks / lastLongestClicks",
+      "source": "DOJ testimony",
+      "how": "goodClicks = clicks with extended dwell time on destination. badClicks = immediate returns to SERP (pogo-sticking). lastLongestClicks = final result clicked with significant dwell time (strongest signal). Raw counts per URL aggregated over 13 months.",
+      "formula": "<span class=\"cf-fn\">goodClicks</span>(url) = <span class=\"cf-fn\">count</span>(clicks <span class=\"cf-kw\">where</span> dwell_time &gt; <span class=\"cf-val\">threshold</span>)\n<span class=\"cf-fn\">badClicks</span>(url) = <span class=\"cf-fn\">count</span>(clicks <span class=\"cf-kw\">where</span> <span class=\"cf-val\">pogo_stick</span> == true)\n<span class=\"cf-fn\">lastLongestClicks</span>(url) = <span class=\"cf-fn\">count</span>(clicks <span class=\"cf-kw\">where</span>\n  is_last_click &amp;&amp; dwell &gt; <span class=\"cf-val\">long_threshold</span>\n)  <span class=\"cf-comment\">// strongest satisfaction signal</span>",
+      "affects": "Affected by: content quality and relevance to search intent. Engaging content = more good clicks. Misleading titles = more bad clicks."
+    },
+    {
+      "name": "CRAPS",
+      "source": "DOJ: Click and Results Prediction System",
+      "how": "Processes aggregated NavBoost click data into ranking adjustments. Core integration point for weighted user signals. Converts raw click counts into ranking modifiers (promotions and demotions).",
+      "formula": "<span class=\"cf-fn\">CRAPS</span>(url) = <span class=\"cf-fn\">transform</span>(\n  <span class=\"cf-val\">goodClicks</span>, <span class=\"cf-val\">badClicks</span>, <span class=\"cf-val\">lastLongestClicks</span>\n) &rarr; ranking_modifier  <span class=\"cf-comment\">// +boost or -demotion</span>\n<span class=\"cf-comment\">// core integration: NavBoost → CRAPS → Ascorer</span>",
+      "affects": "Affected by: aggregate user satisfaction patterns. Consistently good user experience improves CRAPS output."
+    },
+    {
+      "name": "squashedClicks / unsquashedClicks",
+      "source": "DOJ + Leak + Patent US8046371B2",
+      "how": "CrapsClickSignals stores both squashed and unsquashed versions of every click metric (clicks, impressions, lastLongestClicks). The squashing function (referenced in Patent US8046371B2 on local search scoring) applies a normalizing curve (logarithmic, sigmoid, or hard ceiling) that prevents high-traffic pages from dominating. A BBC article with 50,000 clicks does not drown out a specialist blog with 500 clicks because squashed ratios compress the scale. Architecture: unsquashed data feeds anti-spam detection (raw volumes reveal manipulation); squashed data feeds the ranking algorithm (normalized ratios determine position).",
+      "formula": "<span class=\"cf-fn\">squashed</span>(signal) = <span class=\"cf-fn\">normalize</span>(<span class=\"cf-val\">raw_signal</span>)\n<span class=\"cf-comment\">// logarithmic/sigmoid/ceiling compression</span>\n<span class=\"cf-comment\">// 50K clicks vs 500 clicks: ratios matter, not volumes</span>\n\n<span class=\"cf-fn\">CrapsData</span>.squashed = <span class=\"cf-fn\">CrapsClickSignals</span>(<span class=\"cf-val\">normalized</span>)\n<span class=\"cf-fn\">CrapsData</span>.unsquashed = <span class=\"cf-fn\">CrapsClickSignals</span>(<span class=\"cf-val\">raw</span>)\n<span class=\"cf-comment\">// squashed → ranking algorithm</span>\n<span class=\"cf-comment\">// unsquashed → anti-spam detection</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US8046371B2\">US8046371B2</a> (local search scoring with squashing functions)",
+      "affects": "Affected by: natural click patterns. Artificial click inflation gets squashed. Organic diverse engagement is more resilient. Unsquashed data exposes manipulation attempts."
+    },
+    {
+      "name": "serpDemotion / navDemotion",
+      "source": "Leak: Two-stage dissatisfaction measurement",
+      "how": "Google measures user dissatisfaction at two distinct stages. serpDemotion: triggered by pogo-sticking on the SERP itself, penalizing pages whose title/snippet set inaccurate expectations. navDemotion: triggered by poor on-page experience after click-through (slow loading, confusing navigation, content mismatch). Both are pre-computed integer values that function as direct demotion multipliers in the ranking formula. A poor experience is a quantifiable liability.",
+      "formula": "<span class=\"cf-fn\">serpDemotion</span>(url) = <span class=\"cf-fn\">aggregate</span>(\n  <span class=\"cf-val\">pogo_stick_rate</span> on SERP\n) &rarr; <span class=\"cf-val\">integer_multiplier</span>\n\n<span class=\"cf-fn\">navDemotion</span>(url) = <span class=\"cf-fn\">aggregate</span>(\n  <span class=\"cf-val\">on_page_dissatisfaction</span>\n) &rarr; <span class=\"cf-val\">integer_multiplier</span>\n<span class=\"cf-comment\">// Two-stage: promise (SERP) vs delivery (page)</span>\n<span class=\"cf-comment\">// Both are pre-computed, stored in CompressedQualitySignals</span>",
+      "affects": "Affected by: SERP snippet accuracy (serpDemotion), page load speed, navigation clarity, content-snippet alignment (navDemotion)."
+    },
+    {
+      "name": "voterTokenCount (User Diversity)",
+      "source": "Leak: CrapsData protobuf",
+      "how": "Counts distinct voter tokens as a lower bound on distinct users contributing clicks to a query-document pair. Used for both anti-manipulation detection and privacy-related filtering. High click volume from few tokens indicates artificial manipulation. Low token counts may suppress the NavBoost signal entirely to protect user privacy. The GlueVoterTokenBitmapMessage extends this concept to all SERP features via a 256-bit bitmap capable of tracking up to 256 distinct voter token hash buckets.",
+      "formula": "<span class=\"cf-fn\">voterTokenCount</span>(query, url) =\n  <span class=\"cf-fn\">countDistinct</span>(<span class=\"cf-val\">voter_tokens</span>)\n<span class=\"cf-comment\">// 500 clicks from 3 tokens = red flag</span>\n<span class=\"cf-comment\">// 500 clicks from 480 tokens = healthy organic</span>\n<span class=\"cf-comment\">// below minimum threshold → signal suppressed (privacy)</span>\n<span class=\"cf-comment\">// Glue extends via 256-bit bitmap for all SERP features</span>",
+      "affects": "Affected by: genuine user diversity. Organic content attracting diverse real users survives this filter. Artificial click campaigns with limited user accounts are detected."
+    },
+    {
+      "name": "patternLevel (Signal Inheritance Hierarchy)",
+      "source": "Leak: CrapsData protobuf",
+      "how": "Integer field defining URL abstraction level for signal aggregation. Level 0 = full URL (page-specific signals). Level 1 = host pattern (subdomain-level aggregation). Level 2 = domain pattern (entire domain). Click signals computed at Level 0 propagate upward: a domain's overall click quality profile is the aggregate of all its pages' signals. This confirms domain-level signal inheritance for NavBoost.",
+      "formula": "<span class=\"cf-fn\">patternLevel</span>(0) = <span class=\"cf-val\">full_url</span>\n<span class=\"cf-comment\">// https://example.com/services/seo-audit</span>\n<span class=\"cf-fn\">patternLevel</span>(1) = <span class=\"cf-val\">host_pattern</span>\n<span class=\"cf-comment\">// p://example.com</span>\n<span class=\"cf-fn\">patternLevel</span>(2) = <span class=\"cf-val\">domain_pattern</span>\n<span class=\"cf-comment\">// p://def.ghi</span>\n<span class=\"cf-comment\">// signals propagate: page → host → domain</span>",
+      "affects": "Affected by: site-wide click quality. Poor-performing pages drag down the domain profile. Consistent quality across all URLs strengthens domain-level signals."
+    },
+    {
+      "name": "StatsWithWeightsProto (Domain Consistency)",
+      "source": "Leak: QualityNavboost protobuf",
+      "how": "Statistical distribution model analyzing click quality consistency across all URLs within a pattern level. Captures sample size (n), central tendency (mean, median), dispersion (stddev, variance), and percentile breakpoints (pc10, pc25, pc75, pc90). Linked to CrapsData via patternSccStats. A domain with consistent quality across pages (tight distribution) scores better than one with the same average but high variance.",
+      "formula": "<span class=\"cf-fn\">StatsWithWeightsProto</span>(pattern) = {\n  <span class=\"cf-val\">n</span>, <span class=\"cf-val\">mean</span>, <span class=\"cf-val\">median</span>,\n  <span class=\"cf-val\">stddev</span>, <span class=\"cf-val\">variance</span>,\n  <span class=\"cf-val\">pc10</span>, <span class=\"cf-val\">pc25</span>, <span class=\"cf-val\">pc75</span>, <span class=\"cf-val\">pc90</span>\n}\n<span class=\"cf-comment\">// mean=0.6, stddev=0.05 → consistently strong</span>\n<span class=\"cf-comment\">// mean=0.6, stddev=0.3 → inconsistent → demotion risk</span>\n<span class=\"cf-comment\">// pc10 = worst pages drag down entire domain profile</span>",
+      "affects": "Affected by: quality consistency across all pages. Prune or improve underperforming pages. The bottom 10% (pc10) of your site's click quality hurts the whole domain."
+    },
+    {
+      "name": "Rapid Behavior Index Updates",
+      "source": "Patent US8244701 (Google, 2011)",
+      "how": "Architectural patent describing how Google applies recent user behavior data to search rankings without waiting for full index rebuilds. The system publishes update files containing significant behavior changes to in-memory index managers on multiple index-serving machines. Each machine filters relevant updates, translates URLs to document IDs via mapping schedules (seenURL chunks), and updates the in-memory index. Dual index strategy: one index serves queries while the other is updated, then they swap. This is the infrastructure that enables NavBoost click signals to affect rankings rapidly rather than waiting for batch processing.",
+      "formula": "<span class=\"cf-fn\">BehaviorUpdate</span>(signal) = <span class=\"cf-fn\">publish</span>(\n  <span class=\"cf-val\">update_file</span>[significant_changes]\n) &rarr; <span class=\"cf-val\">in_memory_index</span>[N machines]\n<span class=\"cf-comment\">// each machine filters for relevant docs</span>\n<span class=\"cf-comment\">// URL → docID via seenURL mapping schedule</span>\n<span class=\"cf-comment\">// dual index: serve from A, update B, then swap</span>\n<span class=\"cf-comment\">// enables rapid click signal propagation</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US8244701\">US8244701</a> (Using behavior data to quickly improve search ranking)",
+      "affects": "Affected by: recency of user behavior data, significance threshold for updates, index serving infrastructure. Explains how NavBoost click signals propagate to rankings faster than full index rebuilds."
+    },
+    {
+      "name": "CAS Model (Clicks, Attention, Satisfaction)",
+      "source": "Google Research Paper (Chuklin & de Rijke, 2016)",
+      "how": "Google's SERP evaluation model jointly captures click behavior, user attention, and satisfaction. Addresses challenges traditional click models miss: (1) 'good abandonments' where users find answers without clicking, (2) non-linear SERP layouts with diverse features, (3) utility gained directly on the SERP without click-through. Each SERP item generates a feature vector determining examination probability, click probability, and utility contribution.",
+      "formula": "<span class=\"cf-fn\">CAS</span>(serp_item) =\n  <span class=\"cf-fn\">P_examine</span>(<span class=\"cf-val\">features</span>) &times;\n  <span class=\"cf-fn\">P_click</span>(<span class=\"cf-val\">features</span> | examined) &times;\n  <span class=\"cf-fn\">utility</span>(<span class=\"cf-val\">examined</span>, <span class=\"cf-val\">clicked</span>)\n  &rarr; <span class=\"cf-val\">satisfaction_score</span>\n<span class=\"cf-comment\">// Accounts for good abandonments (no click != bad)</span>\n<span class=\"cf-comment\">// Handles non-linear SERP layouts (panels, carousels)</span>\n<span class=\"cf-comment\">// Better agreement with user-reported satisfaction</span>",
+      "patents": "Research: <a href=\"https://research.google/pubs/incorporating-clicks-attention-and-satisfaction-into-a-search-engine-result-page-evaluation-model/\">CAS Paper (CIKM 2016)</a>",
+      "affects": "Affected by: SERP presentation quality, how well content satisfies without requiring click-through, user attention patterns."
+    },
+    {
+      "name": "Duration Performance Score (Category-Normalized Dwell Time)",
+      "source": "Patent US9514194 (Navneet Panda, James A. Kunz, 2016)",
+      "how": "Google does not evaluate dwell time as a single raw number. This patent reveals that dwell time is normalized by content category: a cooking recipe page held for 5 minutes is evaluated against the median for cooking sites, not all sites. The system: (1) measures session durations across all pages on a site, (2) assigns the site to multiple weighted categories, (3) computes a cross-website category duration score (CWCDS) as the median dwell time for all sites in that category, (4) scores each site relative to its category peers. The output is a Duration Performance Score (DPS) used in ranking, crawl prioritization, and demotion protection. Key detail: direct URL input (type-in traffic) durations are boosted by a multiplier (e.g., 1.5x), confirming that type-in traffic is a quality signal. Last-visited durations are discounted to filter noise from short clicks and idle tabs.",
+      "formula": "<span class=\"cf-fn\">WDS</span>(site) = <span class=\"cf-fn\">median</span>(<span class=\"cf-val\">session_durations</span>[all_pages])\n<span class=\"cf-comment\">// Discount last-visited duration (filters short clicks)</span>\n<span class=\"cf-comment\">// Boost direct URL input durations (type-in = quality signal)</span>\n\n<span class=\"cf-fn\">CWCDS</span>(category) = <span class=\"cf-fn\">median</span>(\n  <span class=\"cf-val\">WDS</span>[all_sites_in_category]\n) <span class=\"cf-comment\">// cross-website category duration score</span>\n\n<span class=\"cf-fn\">CDS</span>(site, cat) = <span class=\"cf-fn\">compare</span>(\n  <span class=\"cf-val\">WDS</span>(site) <span class=\"cf-kw\">vs</span> <span class=\"cf-val\">CWCDS</span>(cat)\n) &times; <span class=\"cf-val\">category_weight</span>\n\n<span class=\"cf-fn\">DPS</span>(site) = <span class=\"cf-fn\">f</span>(\n  <span class=\"cf-val\">CDS_1</span>, <span class=\"cf-val\">CDS_2</span> ... <span class=\"cf-val\">CDS_k</span>\n) <span class=\"cf-comment\">// e.g., count_above_threshold / total_categories</span>\n<span class=\"cf-comment\">// Used in: ranking, crawl priority, demotion protection</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US9514194\">US9514194</a> (Website duration performance based on category durations)",
+      "affects": "Affected by: how long users stay on your site relative to category peers. A recipe site is compared to other recipe sites, not news sites. Direct/type-in traffic boosts your score. Short clicks and pogo-sticking are discounted."
+    },
+    {
+      "name": "Implicit Feedback Classification",
+      "source": "Patent",
+      "how": "Classifies user clicks into quality tiers based on view duration. Long clicks (extended dwell time) are positive relevance signals; short clicks (quick bounce) are negative. The system modifies search result ranking by aggregating implicit feedback signals across users for each query-document pair. Jeffrey Dean's patent extends this with a link click probability model trained on user behavior features.",
+      "formula": "<span class=\"cf-fn\">implicitFeedback</span>(click) = {\n<span class=\"cf-val\">long_click</span>: dwell &gt; <span class=\"cf-val\">threshold_long</span>,\n<span class=\"cf-val\">short_click</span>: dwell &lt; <span class=\"cf-val\">threshold_short</span>\n}\n<span class=\"cf-fn\">rankModifier</span>(url, query) = <span class=\"cf-fn\">aggregate</span>(\n<span class=\"cf-val\">long_clicks</span> - <span class=\"cf-val\">short_clicks</span>, users\n)  <span class=\"cf-comment\">// per query-document pair across users</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US11816114\">US11816114</a> (implicit user feedback ranking modification), <a href=\"https://patents.google.com/patent/US7716225\">US7716225</a> (ranking by user behavior + feature data)",
+      "affects": "Affected by: user dwell time, bounce rate, task completion signals. Content that genuinely satisfies search intent generates long clicks."
+    },
+    {
+      "name": "Repeatable Query Identification",
+      "source": "Patent",
+      "how": "Identifies queries that users submit repeatedly over time and learns a repeatability model. For repeatable queries (e.g., 'weather', 'stock price AAPL'), the system can serve cached or pre-computed high-quality results. The repeatability learning model uses temporal patterns and user session data to classify query types.",
+      "formula": "<span class=\"cf-fn\">repeatability</span>(query) = <span class=\"cf-fn\">model</span>(\n<span class=\"cf-val\">temporal_pattern</span>, <span class=\"cf-val\">user_sessions</span>, <span class=\"cf-val\">frequency</span>\n) &rarr; <span class=\"cf-val\">repeatable_score</span>\n<span class=\"cf-comment\">// high score → serve cached/pre-computed results</span>\n<span class=\"cf-comment\">// identifies habitual query patterns</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US11868417\">US11868417</a> (repeatable query identification and issuance)",
+      "affects": "Affected by: query frequency patterns, temporal regularity, user session repetition. Informational queries about changing data tend to be repeatable."
+    }
+  ],
+  "pipeline": {
+    "title": "NavBoost in the Ranking Pipeline",
+    "stages": [
+      {
+        "name": "User Interaction",
+        "detail": "Clicks, dwell, scrolls, Chrome data"
+      },
+      {
+        "name": "Glue Logger",
+        "detail": "Real-time SERP interaction capture"
+      },
+      {
+        "name": "NavBoost Table",
+        "detail": "13 months of click data, sliced by location/device"
+      },
+      {
+        "name": "P* Score",
+        "detail": "Popularity: NavBoost + anchor metrics"
+      },
+      {
+        "name": "Post-Ranking",
+        "detail": "Re-ranks Mustang results before serving"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2005",
+      "type": "patent",
+      "title": "Click-based Ranking Patents",
+      "desc": "Early Google patents on using click data to adjust search rankings"
+    },
+    {
+      "year": "2011",
+      "type": "patent",
+      "title": "Rapid Behavior Index Updates (US8244701)",
+      "desc": "Google patents in-memory index update system that applies recent user behavior data to rankings without full index rebuilds. Dual index strategy (serve from one, update the other) enables rapid click signal propagation. Infrastructure that supports NavBoost's near-real-time ranking impact."
+    },
+    {
+      "year": "2012",
+      "type": "patent",
+      "title": "NavBoost System Emerges",
+      "desc": "Internal click aggregation system replaces earlier click-based approaches"
+    },
+    {
+      "year": "2014",
+      "type": "doj",
+      "title": "Mobile NavBoost Launched (UPX1087)",
+      "desc": "Mobile NavBoost launched Q1 2014 as separate system from desktop NavBoost. Produced 'huge LE win,' proving mobile and desktop search intents diverge. Mobile-to-desktop volume ratio already 2:3 by August 2014. Top mobile intents: local business seeking, porn (private device), event monitoring."
+    },
+    {
+      "year": "2016",
+      "type": "doj",
+      "title": "Lehman: Unified Click Prediction (UPX0192)",
+      "desc": "Eric Lehman presentation (Jun 2016): 'Reliance on user feedback in ranking has steadily increased over the past decade.' ~1B new behavior examples/day, ~100B clicks in training corpus. 'Showing results users want to click is CLOSE to our goal.' Multiple overlapping click prediction systems: 'Predictionosaurus Clickus.' Evaluation: 'train on the past, predict the future.'"
+    },
+    {
+      "year": "2019",
+      "type": "doj",
+      "title": "Grushetsky: NavBoost Most Powerful Signal",
+      "desc": "VP Alexander Grushetsky internal email (DOJ exhibit): \"NavBoost alone was likely more powerful than the rest of ranking combined.\" Source: justice.gov/d9/2023-10/417245.pdf"
+    },
+    {
+      "year": "2019",
+      "type": "patent",
+      "title": "Chrome Data Integration",
+      "desc": "Chrome browser usage data begins feeding into NavBoost popularity signals"
+    },
+    {
+      "year": "2015",
+      "type": "patent",
+      "title": "Site Quality Scoring (US9195944)",
+      "desc": "Patent by Vladimir Ofitserov on scoring site quality using dwell time and pogo-sticking signals. Measures visit duration and return-to-SERP timing as quality indicators at the site level, not just page level."
+    },
+    {
+      "year": "2016",
+      "type": "patent",
+      "title": "CAS Model Published",
+      "desc": "Google researchers publish CAS (Clicks, Attention, Satisfaction) model for SERP evaluation. Accounts for good abandonments and non-linear layouts. Better satisfaction prediction than click-only models."
+    },
+    {
+      "year": "2016",
+      "type": "patent",
+      "title": "Category-Normalized Dwell Time (US9514194)",
+      "desc": "Navneet Panda patents category-duration normalization: dwell time scored relative to content category peers. A recipe site compared to recipe sites, not news sites. Direct URL input durations boosted. Last-visited durations discounted."
+    },
+    {
+      "year": "2023",
+      "type": "exploit",
+      "title": "Yandex Leak Cross-Reference",
+      "desc": "Yandex source code leak reveals 102 dwell time factors (TG_USERFEAT_SEARCH_DWELL_TIME), position-adjusted CTR expectations, and bookmarking as a discrete positive signal. User signals account for 19% of all Yandex factors (the largest single category), validating Google's heavy reliance on NavBoost. Yandex's FI_QUERY_DOWNER_CLICKS_COMBO (+0.369 weight) is the second-highest positive factor in their entire system."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "API Leak: Six NavBoost Protobuf Models",
+      "desc": "84 mentions of NavBoost in ContentWarehouseAPI. Six QualityNavboost protobuf models exposed: CrapsClickSignals (10 attributes), CrapsData (22 attributes), CrapsDevice (3), FeatureCrapsData (6), StatsWithWeightsProto (15), GlueVoterTokenBitmapMessage (2). Reveals patternLevel hierarchy, voterTokenCount, IP reputation scoring, squashed/unsquashed architecture, uxTier browser capability tiers, and domain quality consistency measurement."
+    },
+    {
+      "year": "2024",
+      "type": "exploit",
+      "title": "Candour: Click Probability & Query Classifications",
+      "desc": "Mark Williams-Cook (Candour Agency) discovered Google endpoint exposing 2TB data across 90M queries. Confirmed per-result click probability prediction model. Revealed 8 query semantic classes and consensus scoring. Google paid $13,337 bounty."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "serpDemotion / navDemotion Revealed",
+      "desc": "API leak exposes two-stage demotion system: serpDemotion (pogo-sticking penalty) and navDemotion (poor on-page experience). Both are pre-computed integer demotion multipliers stored in CompressedQualitySignals."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "Mehta Liability Opinion (Aug 2024)",
+      "desc": "Judge Mehta's 286-page opinion finding Google guilty of monopoly maintenance. Key NavBoost findings: Pre-2017, NavBoost trained on 18 months of data; now 13 months (FOF 96). 13 months of Google data = 17.5 years of Bing data (Whinston testimony). NavBoost beats LLMs on freshness (FOF 103). LLMs did NOT replace NavBoost/QBST (FOF 102). QBST is a 'memorization system' trained on 13 months of user data (FOF 95). 'Navboost remains one of the most power[ful] ranking components historically' (UPX190)."
+    },
+    {
+      "year": "2015",
+      "type": "doj",
+      "title": "Priors Algorithm: Click Popularity = Strongest Signal (UPX0205)",
+      "desc": "Research & MI All-Hands (Apr 2015): 'Score the doors based on how many people took it. This is simple, yet very powerful: it is one of the strongest signals for much of Google's search and ads ranking!' Google describes results 'based on the people who took it,' matching users by behavioral similarity, not demographics."
+    },
+    {
+      "year": "2016",
+      "type": "doj",
+      "title": "Giannandrea: Click Data Is Secret Sauce (UPX0235)",
+      "desc": "During Apple ISA negotiations (Aug 2016), Apple requested click data. Alegre: 'we don't share this information as it is key to our secret sauce.' JG (Giannandrea): 'if its which web pages people ultimately visit for a query we would *not* share that ranking signal.' Confirms click destinations and dwell time are ranking signals Google guards most."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "NavBoost Queries Feed Gemini Pre-Training (PXR0095)",
+      "desc": "Search GenAI planning doc: 'Append anonymized NavBoost Queries for selected documents' to Gemini v3-xs pre-training. NavBoost data now feeds both click-based ranking AND LLM quality. 'Anon navboost queries could be huge, given we see MMLU increases.' The click data moat extends to LLM quality."
+    },
+    {
+      "year": "2025",
+      "type": "doj",
+      "title": "DOJ Remedies: Kim & Nayak Interviews (PXR0356, PXR0357)",
+      "desc": "HJ Kim interview (Feb 2025): Confirms he created NavBoost and page quality team (~2008). Reveals T* stabilized ~2020. Explains hand-crafting philosophy: 'if anything breaks Google knows what to fix.' Q* can be query-dependent in certain cases. Google acknowledged API leak: 'documents named components but don't go into curves/thresholds.' Nayak interview (Jan 2025): NavBoost is a 'QD table used in both directions.' Top-level signals are 'linear combination of log of individual raw signals' with monotonicity constraint. Google 're-thinking search stack from ground-up with LLM.' ML training windows shrinking (90 days, 60 days). RankEmbed 'performs poorly for tail queries.' FastSearch (RankEmbed-only) used as RAG for Gemini app."
+    },
+    {
+      "year": "2016",
+      "type": "doj",
+      "title": "Eric Lehman: 'We Do Not Understand Documents' (UPX0203)",
+      "desc": "Q4 Search All Hands (Dec 2016). Lehman: 'We do not understand documents. We fake it. Today, our ability to understand documents directly is minimal. So we watch how people react to documents and memorize their responses.' And: 'In designing user experiences, SERVING the user is NOT ENOUGH. We have to design interactions that also allow us to LEARN from users. That is how we sustain the illusion that we understand.'"
+    },
+    {
+      "year": "2018",
+      "type": "doj",
+      "title": "Ranking for Research: Clicks Are Secret (UPX0204)",
+      "desc": "Internal document (Nov 2018): 'Do not discuss the use of clicks in search, except on a need-to-know basis with people who understand not to talk about this topic externally. Google has a public position. It is debatable. But please don't craft your own.' Lists 18 search quality aspects. Also: 'The association between observed user behavior and search result quality is tenuous.'"
+    },
+    {
+      "year": "2018",
+      "type": "doj",
+      "title": "Better Previews = Better Clicks = Better Ranking (UPX1115)",
+      "desc": "Search Quality All Hands 2018: 'Better result previews can lead to happier users and more informed user interactions. This improves the training data for models used in ranking and language understanding. This can in turn improve results and result previews thus creating a virtuous cycle.'"
+    },
+    {
+      "year": "2020",
+      "type": "doj",
+      "title": "Search/Ads Wall Confirmed (UPX0708)",
+      "desc": "Paul Haahr (Jun 2020): 'there can be pressure via Ads to change the product to favor Ads in general more -- holding back Search changes that are good for users but bad for revenue.' Nayak confirmed two principles: honest results and Search/Ads wall ('we don't use ads signals in search'). Protection depended on individuals, not institutional structures."
+    },
+    {
+      "year": "2020",
+      "type": "doj",
+      "title": "Logging & Ranking: Value Judgments Foundation (UPX0219)",
+      "desc": "Lehman (May 2020): 'Value judgments are the foundation of Google search.' 'Learning from logs is the main mechanism behind ranking.' 'Ranking is an extreme outlier in business impact.' 'A slight improvement in value judgments pays off a billion-fold the very next day.' Multiple clicks on 3 results = all likely bad because hard query."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"We do not use clicks directly in ranking. Click data is too noisy to be a reliable signal.\"",
+      "internalSource": "DOJ Trial (Nayak)",
+      "internalClaim": "NavBoost achieves 91% accuracy improvements. 13 months of click data retained. Sliced by location and device for contextual precision."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"Chrome browsing data is not used for ranking purposes.\"",
+      "internalSource": "API Leak + DOJ",
+      "internalClaim": "chromeInTotal, chrome_trans_clicks, uniqueChromeViews, chromeFormSubmissions, chromeScrollingIntensity, chromePurchaseActivity all confirmed in ranking pipeline."
+    },
+    {
+      "publicSource": "Gary Illyes (Google)",
+      "publicClaim": "\"We don't use click-through rate directly in ranking.\"",
+      "internalSource": "Candour Exploit",
+      "internalClaim": "Per-result ClickProbability prediction model exists. Google predicts expected CTR and uses over/underperformance. Technically not \"direct\" CTR, but a prediction model based on CTR."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"Click data is just one of many signals, and it's quite noisy.\"",
+      "internalSource": "DOJ Exhibit (Grushetsky email, 2019)",
+      "internalClaim": "VP Alexander Grushetsky: \"NavBoost alone was likely more powerful than the rest of ranking combined.\" Source: justice.gov/d9/2023-10/417245.pdf. Not one of many signals, but the dominant signal."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"Click data is too noisy to be a reliable signal. We use sophisticated AI to understand content.\"",
+      "internalSource": "DOJ Exhibit UPX0203 (Lehman, Dec 2016) + UPX0204 (Nov 2018)",
+      "internalClaim": "Eric Lehman (Q4 All Hands): \"We do not understand documents. We fake it. We hardly look at documents. We look at people.\" Internal policy (Ranking for Research): \"Do not discuss the use of clicks in search. Google has a public position. It is debatable. But please don't craft your own.\""
+    },
+    {
+      "publicSource": "Nayak (DOJ Trial, 2023)",
+      "publicClaim": "\"NavBoost is just one of over a hundred signals.\"",
+      "internalSource": "DOJ Remedies PXR0357 (Nayak, Jan 2025)",
+      "internalClaim": "Nayak confirms Google avoids simply 'predicting clicks' but learning from logs IS the main mechanism. Top-level signals are a 'linear combination of log of individual raw signals.' Google is now 're-thinking their search stack from the ground-up with LLM taking a more prominent role.'"
+    },
+    {
+      "publicSource": "Nayak (DOJ Remedies PXR0357, Jan 2025)",
+      "publicClaim": "\"Google avoids simply predicting clicks because clicks are easily manipulated and are a poor proxy for enhancing user experience.\"",
+      "internalSource": "DOJ Exhibits UPX0192 + UPX0219 + UPX0197 (Lehman & Grushetsky, 2016-2020)",
+      "internalClaim": "Lehman (UPX0192, 2016): 'Strategy: Predict what results users will click. Boost those results.' Lehman (UPX0219, 2020): 'Learning from logs is THE MAIN MECHANISM behind ranking. ALL major ML systems rely on logs.' Grushetsky (UPX0197, 2019): 'NavBoost alone was more positive on clicks than the rest of ranking combined.' Nayak's distinction is between RAW clicks (poor proxy) and PROCESSED click signals (NavBoost, goodClicks/badClicks, dwell time), which are the backbone. The processing is the innovation, not the avoidance of clicks."
+    }
+  ]
+}

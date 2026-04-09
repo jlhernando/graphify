@@ -1,0 +1,182 @@
+{
+  "id": "quality-eval",
+  "route": "/quality-eval",
+  "systems": [
+    "QualityEvaluation"
+  ],
+  "hero": {
+    "title": "Quality Evaluation: IS Score & Human Raters",
+    "subtitle": "Quality Evaluation is Google's human-driven quality measurement system with 3 confirmed DOJ signals. The IS (Information Satisfaction) Score is Google's primary quality metric, computed from 16,000 human raters worldwide on a 100-point scale. It trains every major ranking system and evaluates search quality across 18 dimensions."
+  },
+  "keyInsight": {
+    "label": "Key Insight from DOJ Trial",
+    "text": "The <strong>IS Score</strong> is Google's north star metric, measured on a 100-point scale by <strong>16,000 human raters worldwide</strong>. It directly trains RankBrain, SpamBrain, the Helpful Content System, and MUM. Removing Wikipedia would cause only a <strong>~0.5 IS point loss</strong>, quantifying Wikipedia's actual ranking importance. The system evaluates search across <strong>18 quality dimensions</strong> including relevance, page quality, popularity, freshness, localization, social fairness, and spam detection."
+  },
+  "pillars": [
+    {
+      "type": "doj",
+      "title": "Signals,  Core",
+      "items": [
+        "<strong>IS Score</strong> - Information Satisfaction on 100-point scale (sworn testimony, core)",
+        "<strong>IS4@5</strong> - Precision measurement of satisfaction at position 5",
+        "<strong>18SearchQualityAspects</strong> - 18 quality dimensions from trial exhibit (core)",
+        "16,000 human raters worldwide provide training data",
+        "Trains RankBrain, SpamBrain, HCU, and MUM",
+        "Wikipedia removal = ~0.5 IS point loss (quantified)"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "Quality Infrastructure",
+      "items": [
+        "<strong>Q*</strong> - Site-wide quality score (0-1), likely IS-derived",
+        "<strong>chardScores</strong> - Content quality prediction scores",
+        "<strong>racterScores</strong> - Content quality evaluator (named after 1984 AI)",
+        "<strong>articleScoreV2</strong> - Article quality scoring model",
+        "<strong>lowQuality</strong> - ML quality classification via site vectors",
+        "Quality infrastructure throughout NSR and CompressedQualitySignals"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "6 Patents",
+      "items": [
+        "Human rater annotations train ML ranking models",
+        "E-E-A-T (Experience, Expertise, Authority, Trust) evaluation criteria",
+        "Side-by-side comparison experiments for algorithm changes",
+        "Quality dimensions include social fairness and privacy",
+        "Localization and language-specific quality assessment",
+        "Spam detection as one of 18 quality evaluation dimensions",
+        "<a href=\"https://patents.google.com/patent/US20100114678\">US20100114678</a>: Compensation Distribution Using Quality Score; <a href=\"https://patents.google.com/patent/US9002832B1\">US9002832B1</a>: Classifying sites as low quality sites; <a href=\"https://patents.google.com/patent/US9098552\">US9098552</a>: Scoring images related to entities",
+        "<a href=\"https://patents.google.com/patent/US7475267\">US7475267</a>: Systems and methods for delay in startup of multiple components; <a href=\"https://patents.google.com/patent/US9183224\">US9183224</a>: Identifying matching canonical documents in response to a visual query; <a href=\"https://patents.google.com/patent/US20090144272\">US20090144272</a>: Rating raters"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Quality Evaluation Affects Your SEO",
+      "items": [
+        "<strong>Study the Quality Rater Guidelines as your scoring rubric</strong>: IS Score from 16,000 raters directly trains RankBrain, SpamBrain, HCU, and MUM. The rater guidelines are the closest public document to Google's actual quality criteria. Align your content with E-E-A-T dimensions: demonstrate first-hand Experience, show Expertise with credentials, build Authority through citations and links, and establish Trust with transparent sourcing.",
+        "<strong>Target a Q* score above 0.4 for featured snippet eligibility</strong>: The leak confirmed Q* is a site-wide quality score on a 0-1 scale, and pages on sites below 0.4 are ineligible for featured snippets. Improve site-wide content quality, not just individual pages. Remove or noindex thin, outdated, or low-quality pages that drag down the aggregate score.",
+        "<strong>Optimize across all 18 quality dimensions, not just relevance</strong>: DOJ trial exhibits revealed quality evaluation covers relevance, page quality, popularity, freshness, localization, social fairness, and 12 more dimensions. A page can score well on relevance but fail on localization or freshness. Ensure content is geographically appropriate, regularly updated, and accessible.",
+        "<strong>Build content that would satisfy a human rater in 30 seconds</strong>: Quality raters spend limited time per evaluation. Your page needs to demonstrate expertise and trustworthiness immediately: author bylines with credentials, publication dates, clear sourcing, well-structured content above the fold. If a rater cannot quickly identify why your content is authoritative, the IS Score drops.",
+        "<strong>Monitor site-level quality signals via chardScores and lowQuality</strong>: The leak revealed ML quality classification via site vectors (lowQuality) and content quality prediction (chardScores). These operate at the site level. One section of consistently poor content, such as auto-generated category pages or thin tag archives, can trigger site-wide quality demotion.",
+        "<strong>Benchmark against Wikipedia's quality standard</strong>: DOJ testimony revealed removing Wikipedia would cause only a ~0.5 IS point loss, quantifying its importance. Wikipedia succeeds because it scores consistently high across multiple quality dimensions: sourcing, neutrality, comprehensiveness, and regular updates. Model your content structure after Wikipedia's approach for your niche: cite sources inline, maintain neutral tone, update regularly."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "IS Score",
+      "source": "DOJ",
+      "how": "100-point satisfaction metric computed from 16,000 human raters worldwide scoring 18 quality dimensions. Raters evaluate live search results against detailed guidelines. Aggregate scores train RankBrain, SpamBrain, HCU, and MUM.",
+      "formula": "<span class=\"cf-fn\">ISScore</span>(query, serp) = <span class=\"cf-fn\">aggregate</span>(\n  <span class=\"cf-val\">raterScores[18dims]</span>, <span class=\"cf-val\">16K raters worldwide</span>\n)  <span class=\"cf-comment\">// 0-100 scale, trains RankBrain/SpamBrain/HCU/MUM</span>\n<span class=\"cf-comment\">// Wikipedia removal = ~0.5 IS point loss (quantified)</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8682892\">US8682892</a> (content quality), <a href=\"https://patents.google.com/patent/US9697259\">US9697259</a> (quality scoring)",
+      "affects": "Affected by: human rater evaluations, 18 quality dimensions, rater geography and guidelines version"
+    },
+    {
+      "name": "IS4@5",
+      "source": "DOJ",
+      "how": "Precision measurement of information satisfaction at position 5. Evaluates whether the top 5 results collectively satisfy the query intent. Used as a benchmark for algorithm change experiments.",
+      "formula": "<span class=\"cf-fn\">IS4@5</span>(query) = <span class=\"cf-fn\">precision</span>(\n  <span class=\"cf-val\">ISScore(results[1..5])</span>, <span class=\"cf-val\">threshold=4</span>\n)  <span class=\"cf-comment\">// fraction of top-5 results with IS &gt;= 4</span>\n<span class=\"cf-comment\">// benchmark metric for algorithm change experiments</span>",
+      "affects": "Affected by: result diversity, query intent coverage, position 1-5 quality"
+    },
+    {
+      "name": "18SearchQualityAspects",
+      "source": "DOJ",
+      "how": "18 quality dimensions evaluated by human raters: relevance, page quality, popularity, freshness, localization, social fairness, adult content, web ecosystem impact, spam detection, and more. Each dimension scored independently then aggregated.",
+      "formula": "<span class=\"cf-fn\">QualityAspects</span>(result) = {\n  <span class=\"cf-val\">relevance</span>, <span class=\"cf-val\">pageQuality</span>, <span class=\"cf-val\">popularity</span>, <span class=\"cf-val\">freshness</span>,\n  <span class=\"cf-val\">localization</span>, <span class=\"cf-val\">fairness</span>, <span class=\"cf-val\">spam</span>, ... <span class=\"cf-comment\">// 18 dimensions total</span>\n}.<span class=\"cf-fn\">aggregate</span>() &rarr; <span class=\"cf-val\">ISScore</span>",
+      "affects": "Affected by: content relevance, page quality signals, user engagement, geographic targeting, content safety"
+    },
+    {
+      "name": "Q*",
+      "source": "DOJ+Leak",
+      "how": "Site-wide quality score on a 0-1 scale. 0.4 threshold required for featured snippet eligibility. Likely trained on IS Score data from human raters. Part of QualityNsrPQData in NSR. Aggregated at site level via sitechunks.",
+      "formula": "<span class=\"cf-fn\">Q*</span>(site) = <span class=\"cf-fn\">trainedModel</span>(\n  <span class=\"cf-val\">ISScoreData</span>, <span class=\"cf-val\">sitechunks</span>, <span class=\"cf-val\">NSR</span>\n)  <span class=\"cf-comment\">// 0.0-1.0 scale, QualityNsrPQData</span>\n<span class=\"cf-kw\">if</span> Q* &lt; <span class=\"cf-val\">0.4</span>: <span class=\"cf-kw\">ineligible(featuredSnippet)</span>\n<span class=\"cf-comment\">// trained on IS Score human rater data</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8682892\">US8682892</a> (content quality), <a href=\"https://patents.google.com/patent/US9697259\">US9697259</a> (quality scoring)",
+      "affects": "Affected by: IS Score training data, site-level content quality, NSR signals, engagement metrics"
+    }
+  ],
+  "pipeline": {
+    "title": "Quality Evaluation Pipeline",
+    "stages": [
+      {
+        "name": "16K Human Raters",
+        "detail": "Worldwide raters evaluate search results quality"
+      },
+      {
+        "name": "IS Score",
+        "detail": "100-point Information Satisfaction metric computed"
+      },
+      {
+        "name": "18 Dimensions",
+        "detail": "Relevance, quality, popularity, freshness, fairness, etc."
+      },
+      {
+        "name": "ML Training",
+        "detail": "IS scores train RankBrain, SpamBrain, HCU, MUM"
+      },
+      {
+        "name": "Algorithm Eval",
+        "detail": "Side-by-side experiments, IS4@5 precision tracking"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2005",
+      "type": "patent",
+      "title": "Quality Rater Program",
+      "desc": "Google establishes human quality rater program. External contractors evaluate search result quality."
+    },
+    {
+      "year": "2013",
+      "type": "patent",
+      "title": "Quality Rater Guidelines Published",
+      "desc": "E-A-T framework publicly documented. Expertise, Authoritativeness, Trustworthiness become industry terms."
+    },
+    {
+      "year": "2019",
+      "type": "patent",
+      "title": "IS Score Formalized",
+      "desc": "Information Satisfaction metric established as primary quality measurement on 100-point scale."
+    },
+    {
+      "year": "2022",
+      "type": "patent",
+      "title": "E-E-A-T Update",
+      "desc": "Experience added to E-A-T framework. Quality dimensions expanded to 18 aspects."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "DOJ Trial: 16K Raters Revealed",
+      "desc": "Pandu Nayak testified: IS Score from 16,000 human raters worldwide. Used to train RankBrain, SpamBrain, HCU, MUM."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "DOJ: 18 Quality Dimensions",
+      "desc": "Trial exhibit revealed 18 search quality aspects: relevance, page quality, popularity, freshness, and 14 more."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"Quality raters don't directly influence rankings. They're just for evaluation.\"",
+      "internalSource": "DOJ Trial",
+      "internalClaim": "IS Score from 16,000 raters is used to directly TRAIN RankBrain, SpamBrain, the Helpful Content System, and MUM. Rater judgments are the training signal for every major ranking model."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"Wikipedia has no special treatment in our algorithms.\"",
+      "internalSource": "DOJ Trial",
+      "internalClaim": "Pandu Nayak testified that removing Wikipedia would cause a ~0.5 IS point loss, meaning Google has precisely quantified Wikipedia's contribution. This level of measurement implies deliberate monitoring of Wikipedia's ranking impact."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"We focus on relevance and helpfulness as our primary quality metrics.\"",
+      "internalSource": "DOJ Trial",
+      "internalClaim": "The 18 quality dimensions include \"web ecosystem\" (Google's market impact), \"social fairness\" (bias mitigation), \"optionalization\" (feature A/B testing), and \"adult content demotion.\" Quality evaluation extends far beyond relevance."
+    }
+  ]
+}

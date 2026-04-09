@@ -1,0 +1,268 @@
+{
+  "id": "anti-optimization",
+  "route": "/anti-optimization",
+  "systems": [
+    "SpamBrain",
+    "Mustang"
+  ],
+  "hero": {
+    "title": "Anti-Optimization: Threshold Detection & Pre-Ranking Exclusion",
+    "subtitle": "Over-optimization detection operates at multiple levels in search ranking: gradual post-ranking demotion (SpamBrain scores), hard threshold exclusion at the retrieval stage (Mustang candidate filtering), and pattern-based spam classification (Bayesian and neural detectors). The 2023 Yandex source code leak revealed 315 anti-SEO threshold factors, with 39 operating at the initial retrieval stage (L1) that can exclude pages before they ever reach the neural re-ranking pipeline. This is a qualitatively different penalty from demotion: excluded pages are invisible regardless of content quality."
+  },
+  "keyInsight": {
+    "label": "Key Insight from Yandex Leak + Google API Leak",
+    "text": "The Yandex leak revealed a critical architectural distinction: <strong>39 anti-SEO factors operate at the initial retrieval stage (L1)</strong>, excluding pages from candidate lists before neural re-ranking (L2/L3). This is not demotion; it is <strong>pre-ranking exclusion</strong>. A page that triggers these hard thresholds never enters the ranking pipeline. If Google's Mustang applies similar hard filters during initial candidate selection from the 400B+ document index, heavily over-optimized pages may be invisible in search results no matter how good their content. Google's API leak confirms multiple over-optimization signals: <strong>keywordStuffingScore</strong>, <strong>phraseAnchorSpamPenalty</strong>, <strong>exactMatchDomainDemotion</strong>, and the binary <strong>spamRank</strong> (0 or 65535). The Yandex evidence suggests these may include hard exclusion thresholds, not just gradual penalties."
+  },
+  "pillars": [
+    {
+      "type": "leak",
+      "title": "Google API Leak: Over-Optimization Signals",
+      "items": [
+        "<strong>keywordStuffingScore</strong>: Keyword density violation measurement. Confirmed in both API leak and DOJ trial",
+        "<strong>phraseAnchorSpamPenalty</strong>: Combined demotion for spammy anchor text patterns. Tracks count, days, rate, and fraction",
+        "<strong>exactMatchDomainDemotion</strong>: Explicit penalty for manipulative exact-match keyword domains",
+        "<strong>anchorMismatchDemotion</strong>: Penalty when inbound anchor text does not match page content topic",
+        "<strong>spamRank</strong>: Binary 0 or 65535 for linking to known spam sites. No middle ground",
+        "<strong>spamBrainTotalDocSpamScore</strong>: Overall spam probability on 0-1 scale from SpamBrain neural network",
+        "<strong>GibberishScore</strong>: Detection of nonsensical or machine-generated text (in CompressedQualitySignals)",
+        "<strong>IsAnchorBayesSpam</strong>: Bayesian classifier detecting unnatural anchor text distribution patterns",
+        "<strong>DocLevelSpamScore</strong>: Page-specific manipulation assessment"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "DOJ Trial: Spam Architecture",
+      "items": [
+        "<strong>SpamBrain</strong>: Google's primary spam detection neural network. Uses link graph patterns, content analysis, and behavioral signals",
+        "<strong>hostAge / HostAgeSandbox</strong>: New domains sandboxed 3-6 months at serving time. Hard threshold on domain age",
+        "<strong>Penguin</strong>: Integrated into core algorithm since 2015. Link spam penalties applied in real-time crawl cycles",
+        "<strong>Mustang initial retrieval</strong>: Selects ~10K candidates from 400B+ index. If over-optimization filters apply here, excluded pages never reach ranking",
+        "Pandu Nayak confirmed ranking operates in stages: initial retrieval (Mustang), first-pass scoring (Ascorer), neural re-ranking, Twiddler adjustments"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "UPX0204: Ranking for Research (Eric Lehman, Nov 2018)",
+      "items": [
+        "<strong>'Attempts to manipulate search results are continuous, sophisticated, and well-funded'</strong> - Internal acknowledgment of the scale of SEO manipulation threat",
+        "<strong>'Information about how search works should remain need-to-know'</strong> - Explicit secrecy policy around ranking mechanisms",
+        "<strong>'Keep talk about how search works on a need-to-know basis. Everything we leak will be used against us by SEOs, patent trolls, competitors'</strong> - Direct admission that SEO industry exploits any disclosed information",
+        "<strong>'All emails involving people in Search are likely to be retained in connection with multiple, ongoing lawsuits'</strong> - Legal retention awareness affecting internal communication",
+        "<strong>'Internal communications have been repeatedly leaked to the press and cast in a bad light'</strong> - Acknowledgment of internal leak history"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "PXR0356: Reverse Engineering Vulnerability (HJ Kim, Feb 2025)",
+      "items": [
+        "<strong>'Finding the correct edges for these adjustments is difficult, but would be easy to reverse engineer and copy from looking at the data'</strong> - Ranking adjustments are fragile and copiable",
+        "<strong>Click log exposure risk</strong>: If competitors see click logs, 'they have a notion of authority for a given site' - Click data reveals authority signals",
+        "<strong>Q* reverse engineering</strong>: Q* 'could be easily reverse engineered because Q is largely static' - Quality signal acknowledged as vulnerable to reverse engineering"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "2 Patents",
+      "items": [
+        "<strong>Link spam detection via derivative analysis</strong> - Patent <a href=\"https://patents.google.com/patent/US7509344\">US7509344</a> (Google, filed 2004): Detects link manipulation by analyzing PageRank derivatives with respect to coupling factor c. Transition matrix A(c) = [cP + (1-c)E]^T. Derivative x'(c) = (I-cP^T)^(-1)(P-E)^T x(c). Link farms produce large negative normalized derivatives (rank inflated beyond legitimate authority). Web rings produce large positive derivatives. Normalized derivative = x'(c)/x(c) isolates manipulation signal independent of absolute rank",
+        "<strong>Phrase-based spam detection</strong> - Patent <a href=\"https://patents.google.com/patent/US8078629\">US8078629</a> (Google, filed 2006): Indexes documents by n-gram phrase fingerprints. Identifies spam through anomalous phrase co-occurrence patterns: documents sharing unusual phrase combinations across unrelated topics. Phrase distribution analysis flags content farms, article spinning, and keyword-stuffed pages. Co-occurrence graph reveals coordinated spam networks producing content with similar phrase templates"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "Yandex Leak: Anti-SEO Architecture",
+      "items": [
+        "<strong>315 anti-SEO threshold factors</strong>: When optimization metrics exceed defined limits, pages are flagged as potentially manipulated",
+        "<strong>39 anti-SEO factors at L1 (initial retrieval)</strong>: Can exclude over-optimized pages from posting lists before neural ranking. This is pre-ranking exclusion, not demotion",
+        "<strong>FI_ADV (weight: -0.251)</strong>: Heaviest single negative factor in the entire system. Advertising presence/density penalty",
+        "<strong>FI_COMM_LINKS_SEO_HOSTS (weight: -0.181)</strong>: Commercial/SEO anchor text penalty. Links from known SEO networks penalized",
+        "<strong>FI_SPAM_KARMA</strong>: Whois-based spam probability. Domain registration data used to assess manipulation likelihood",
+        "<strong>PF filter</strong>: Click-through rate manipulation detection via IP similarity monitoring. Identifies artificial click patterns",
+        "<strong>Nepot filter (since 2005)</strong>: Link manipulation detection for reciprocal and paid link schemes",
+        "<strong>Minusinsk update (2015)</strong>: PBN and paid link detection system targeting private blog networks",
+        "<strong>Tiered architecture</strong>: L1 initial retrieval, L2 re-ranking, L3 neural re-ranking. Anti-SEO thresholds can exclude at any tier"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Anti-Optimization Affects Your SEO",
+      "items": [
+        "<strong>Pre-ranking exclusion is the worst possible penalty</strong>: If Google applies Yandex-style hard filters at the Mustang retrieval stage, over-optimized pages may never enter the ranking pipeline. Unlike a demotion (which still shows you at position 50+), exclusion means your page is not a candidate at all. Recovery requires passing threshold checks, which is harder than improving quality scores. The first step in any penalty diagnosis should be checking whether the page appears in the index at all, not just its ranking position.",
+        "<strong>Threshold-based detection means there are hard limits, not gradual curves</strong>: The Yandex architecture reveals 315 threshold-based factors (not continuous curves). This means there are specific keyword density levels, anchor text concentration ratios, and link velocity rates that trigger hard flags. You do not gradually lose ranking as you over-optimize; you are fine until you cross a threshold, then the penalty is sudden and severe. Staying well below suspected thresholds is safer than optimizing to the edge.",
+        "<strong>Advertising density faces the steepest penalty available</strong>: Yandex's FI_ADV (-0.251) is the single heaviest negative factor across 17,854 factors. Google's adsDensityInterstitialViolationStrength (0-1000 scale) and clutterScore operate similarly. If ad density exceeds thresholds, the penalty is disproportionately harsh. Reducing ads from 60% to 30% of viewport may yield more ranking improvement than any amount of content optimization.",
+        "<strong>Commercial anchor text concentration is a distinct penalty</strong>: Yandex's FI_COMM_LINKS_SEO_HOSTS (-0.181, third heaviest negative factor) penalizes links from sites with commercial/SEO anchor text patterns. Google's phraseAnchorSpamPenalty and anchorMismatchDemotion track similar patterns. If more than a threshold percentage of your inbound anchors use commercial phrases, the penalty triggers regardless of link quality. Aim for 70%+ branded/generic anchors.",
+        "<strong>Binary signals mean one violation can flip your status</strong>: Google's spamRank is binary (0 or 65535) with no middle ground. A single outbound link to a known spam site flips the score. Yandex's threshold factors behave similarly: crossing any single threshold can trigger the flag. Audit all outbound links, user-generated content, and comment sections regularly. Use nofollow on any link you cannot vouch for.",
+        "<strong>Domain registration data feeds spam probability</strong>: Yandex's FI_SPAM_KARMA uses Whois data to assess spam likelihood. Google's hostAge sandbox (3-6 months) operates on similar principles. Short domain registrations (1 year), frequent nameserver changes, and DNS instability increase spam probability. Register domains for 3-5+ years, maintain stable DNS records, and avoid hosting on infrastructure associated with spam networks.",
+        "<strong>CTR manipulation detection uses IP similarity</strong>: Yandex's PF filter monitors IP patterns behind clicks to detect artificial CTR inflation. Google's squashedClicks and NavBoost manipulation detection serve the same function. Do not use click bots, click farms, or any service that generates artificial clicks. Even sophisticated click manipulation leaves IP distribution patterns that detection systems identify.",
+        "<strong>Distinguish between demotion and exclusion in your diagnosis</strong>: If your page ranks at position 50-100, it entered the pipeline but was demoted (content/quality issue). If your page does not appear in search results despite being indexed, it may have been excluded at the retrieval stage (over-optimization issue). The fixes are different: demotion requires improving quality signals; exclusion requires reducing optimization signals below threshold limits."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Pre-Ranking Exclusion (Hypothesis from Yandex)",
+      "source": "Yandex Leak: L1 anti-SEO filtering",
+      "how": "Yandex applies 39 anti-SEO factors at the initial retrieval stage (L1), which can exclude pages from posting lists before they reach the neural re-ranking pipeline. If a page exceeds any of these thresholds, it is removed from the candidate set. Google's Mustang selects ~10K candidates from 400B+ documents. If similar hard filters exist in Mustang, over-optimized pages are excluded before Ascorer, SpamBrain, or Twiddlers ever evaluate them.",
+      "formula": "<span class=\"cf-fn\">MustangFilter</span>(doc) = <span class=\"cf-fn\">check</span>(\n  <span class=\"cf-val\">anti_seo_thresholds[]</span>\n)\n<span class=\"cf-kw\">if</span> <span class=\"cf-fn\">any</span>(threshold_exceeded): <span class=\"cf-kw\">EXCLUDE</span>\n<span class=\"cf-comment\">// Yandex: 39 factors at L1 retrieval stage</span>\n<span class=\"cf-comment\">// Excluded pages never reach ranking pipeline</span>\n<span class=\"cf-comment\">// Different from demotion: page is invisible, not low-ranked</span>",
+      "affects": "Affected by: keyword density exceeding thresholds, anchor text concentration, link velocity spikes, ad density, and other over-optimization signals. Stay well below suspected limits."
+    },
+    {
+      "name": "Over-Optimization Threshold Detection",
+      "source": "Yandex Leak + Google API Leak",
+      "how": "Yandex uses 315 threshold-based anti-SEO factors. When any metric exceeds its defined limit, the page is flagged. Google's confirmed signals (keywordStuffingScore, phraseAnchorSpamPenalty, exactMatchDomainDemotion) operate on similar threshold principles. The key insight is that these are hard thresholds, not gradual curves: a page is either below the limit (no penalty) or above it (full penalty applied).",
+      "formula": "<span class=\"cf-fn\">OverOptScore</span>(doc) = <span class=\"cf-fn\">evaluate</span>(\n  <span class=\"cf-val\">keywordStuffingScore</span>,\n  <span class=\"cf-val\">phraseAnchorSpamFraq</span>,\n  <span class=\"cf-val\">anchorMismatchDemotion</span>,\n  <span class=\"cf-val\">exactMatchDomainDemotion</span>,\n  <span class=\"cf-val\">spamBrainTotalDocSpamScore</span>\n)\n<span class=\"cf-kw\">if</span> <span class=\"cf-fn\">any</span>(metric &gt; <span class=\"cf-val\">threshold</span>): <span class=\"cf-kw\">apply</span> penalty\n<span class=\"cf-comment\">// Yandex: 315 threshold-based factors</span>\n<span class=\"cf-comment\">// Google: multiple confirmed threshold signals</span>\n<span class=\"cf-comment\">// Penalty is binary at threshold, not gradual</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US9002867\">US9002867</a> (spam detection), <a href=\"https://patents.google.com/patent/US7533092B2\">US7533092</a> (link-based spam detection)",
+      "affects": "Affected by: keyword density, anchor text diversity, link velocity, domain age, outbound link quality, ad density. All have hard threshold limits."
+    },
+    {
+      "name": "Link Spam Derivative Detection",
+      "source": "Patent US7509344 (Google, 2004)",
+      "how": "Detects link manipulation by analyzing how a page's rank changes as the coupling factor c varies. The transition matrix A(c) = [cP + (1-c)E]^T defines rank as a function of c. The derivative x'(c) = (I-cP^T)^(-1)(P-E)^T x(c) measures sensitivity to the link graph. Normalizing by rank (x'(c)/x(c)) isolates the manipulation signal. Link farms produce large negative normalized derivatives (rank inflated beyond legitimate authority via concentrated inbound links). Web rings produce large positive derivatives (mutual linking creates artificial rank amplification). Legitimate sites have moderate, stable derivatives.",
+      "formula": "<span class=\"cf-fn\">A</span>(<span class=\"cf-val\">c</span>) = [<span class=\"cf-val\">c</span><span class=\"cf-val\">P</span> + (1-<span class=\"cf-val\">c</span>)<span class=\"cf-val\">E</span>]<sup>T</sup>\n<span class=\"cf-comment\">// P = link transition matrix, E = teleport</span>\n\n<span class=\"cf-fn\">x'</span>(<span class=\"cf-val\">c</span>) = (<span class=\"cf-val\">I</span> - <span class=\"cf-val\">c</span><span class=\"cf-val\">P</span><sup>T</sup>)<sup>-1</sup>(<span class=\"cf-val\">P</span>-<span class=\"cf-val\">E</span>)<sup>T</sup> <span class=\"cf-fn\">x</span>(<span class=\"cf-val\">c</span>)\n\n<span class=\"cf-fn\">NormalizedDeriv</span> = <span class=\"cf-fn\">x'</span>(<span class=\"cf-val\">c</span>) / <span class=\"cf-fn\">x</span>(<span class=\"cf-val\">c</span>)\n<span class=\"cf-comment\">// large negative = link farm (rank inflated)</span>\n<span class=\"cf-comment\">// large positive = web ring (mutual linking)</span>\n<span class=\"cf-comment\">// moderate = legitimate site</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US7509344\">US7509344</a> (Link spam detection, 2004)",
+      "affects": "Affected by: inbound link concentration from few sources, reciprocal linking patterns, link farm participation. Derivative analysis reveals manipulation independent of absolute rank."
+    },
+    {
+      "name": "Ad Density Penalty",
+      "source": "Yandex Leak + Google API Leak",
+      "how": "Yandex's FI_ADV (weight: -0.251) is the heaviest single negative factor in their entire 17,854-factor system. Google's adsDensityInterstitialViolationStrength operates on a 0-1000 scale, with clutterScore adding a site-level penalty. Both systems treat advertising density as an extreme negative signal, with penalties disproportionate to most other factors.",
+      "formula": "<span class=\"cf-fn\">AdPenalty</span>(page) = <span class=\"cf-fn\">max</span>(\n  <span class=\"cf-fn\">adsDensityViolation</span>(<span class=\"cf-val\">0-1000</span>),\n  <span class=\"cf-fn\">clutterScore</span>(<span class=\"cf-val\">site_level</span>)\n)\n<span class=\"cf-comment\">// Yandex FI_ADV: -0.251 (heaviest negative factor)</span>\n<span class=\"cf-comment\">// Google: 0-1000 scale + site-level clutter</span>\n<span class=\"cf-comment\">// Disproportionate penalty vs other signals</span>",
+      "affects": "Affected by: above-the-fold ad density, interstitial popups, auto-play video ads. Reducing ad density may yield more ranking improvement than content optimization."
+    }
+  ],
+  "pipeline": {
+    "title": "Anti-Optimization Detection Pipeline",
+    "stages": [
+      {
+        "name": "Crawl-Time Signals",
+        "detail": "Keyword density, content structure, link patterns captured during crawl (Trawler/Alexandria)"
+      },
+      {
+        "name": "Pre-Ranking Filters (L1)",
+        "detail": "Hard threshold checks on over-optimization metrics. Exceeding limits excludes page from candidate set (Yandex: 39 L1 factors)"
+      },
+      {
+        "name": "Initial Scoring (Ascorer)",
+        "detail": "keywordStuffingScore, anchorMismatchDemotion, exactMatchDomainDemotion applied during first-pass ranking"
+      },
+      {
+        "name": "SpamBrain Neural Analysis",
+        "detail": "Neural network evaluates link graph patterns, content quality, behavioral signals. Outputs spamBrainTotalDocSpamScore (0-1)"
+      },
+      {
+        "name": "Bayesian Classifiers",
+        "detail": "IsAnchorBayesSpam, phraseAnchorSpam suite detect unnatural patterns. Velocity, concentration, and distribution analysis"
+      },
+      {
+        "name": "Action: Demotion or Exclusion",
+        "detail": "Gradual demotion (post-ranking) or hard exclusion (pre-ranking). Different recovery paths for each"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2003",
+      "type": "patent",
+      "title": "Early Spam Filters",
+      "desc": "Google files first patents on link spam detection and content quality filtering."
+    },
+    {
+      "year": "2004",
+      "type": "patent",
+      "title": "Link Spam Derivative Patent (US7509344)",
+      "desc": "Google patents link manipulation detection via PageRank derivative analysis. Transition matrix A(c) = [cP + (1-c)E]^T. Normalized derivative x'(c)/x(c) reveals link farms (large negative) and web rings (large positive). Mathematical foundation for link spam detection."
+    },
+    {
+      "year": "2005",
+      "type": "patent",
+      "title": "Yandex Nepot Filter",
+      "desc": "Yandex introduces Nepot filter for link manipulation detection (reciprocal and paid links)."
+    },
+    {
+      "year": "2006",
+      "type": "patent",
+      "title": "Phrase-Based Spam Patent (US8078629)",
+      "desc": "Google patents phrase-based spam detection using n-gram fingerprints. Documents indexed by phrase co-occurrence patterns. Anomalous phrase distributions reveal content farms, article spinning, and keyword stuffing. Co-occurrence graphs identify coordinated spam networks."
+    },
+    {
+      "year": "2012",
+      "type": "patent",
+      "title": "Penguin Algorithm",
+      "desc": "Major link spam update targeting manipulative link building and exact-match anchor text abuse."
+    },
+    {
+      "year": "2015",
+      "type": "patent",
+      "title": "Yandex Minusinsk Update",
+      "desc": "Yandex introduces PBN and paid link detection system targeting private blog networks."
+    },
+    {
+      "year": "2018",
+      "type": "patent",
+      "title": "SpamBrain Launches",
+      "desc": "Google announces AI-based spam detection. Neural network for link spam pattern recognition at scale."
+    },
+    {
+      "year": "2023",
+      "type": "exploit",
+      "title": "Yandex Leak: Pre-Ranking Exclusion Revealed",
+      "desc": "Yandex source code reveals 315 anti-SEO threshold factors, with 39 operating at L1 (initial retrieval). Pages exceeding thresholds excluded before neural re-ranking. FI_ADV (-0.251) is the heaviest negative factor. FI_COMM_LINKS_SEO_HOSTS (-0.181) penalizes SEO anchor patterns."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "API Leak: Spam Signals Confirmed",
+      "desc": "keywordStuffingScore, phraseAnchorSpamPenalty, spamRank (binary 0/65535), exactMatchDomainDemotion, anchorMismatchDemotion confirmed."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "DOJ Trial: Sandbox and GibberishScore",
+      "desc": "hostAge sandboxes new domains 3-6 months. GibberishScore detects AI-generated content. scamness scored 0-1023."
+    },
+    {
+      "year": "2018",
+      "type": "doj",
+      "title": "Ranking for Research: Need-to-Know Policy (UPX0204)",
+      "desc": "Eric Lehman (Nov 2018): 'Attempts to manipulate search results are continuous, sophisticated, and well-funded.' 'Everything we leak will be used against us by SEOs, patent trolls, competitors.' Explicit internal policy to keep ranking information on a need-to-know basis."
+    },
+    {
+      "year": "2025",
+      "type": "doj",
+      "title": "Q* Reverse Engineering Vulnerability (PXR0356)",
+      "desc": "HJ Kim (Feb 2025): Q* 'could be easily reverse engineered because Q is largely static.' Click logs would reveal 'a notion of authority for a given site.' Ranking adjustments 'easy to reverse engineer and copy from looking at the data.'"
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "There is no specific keyword density that triggers a penalty. Just write naturally.",
+      "internalSource": "API Leak + Yandex Leak",
+      "internalClaim": "keywordStuffingScore is a confirmed threshold-based signal. Yandex uses 315 threshold-based anti-SEO factors with hard limits. Exceeding the threshold triggers immediate penalty, not gradual demotion."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "We don't have a sandbox for new domains.",
+      "internalSource": "API Leak + DOJ",
+      "internalClaim": "hostAge and HostAgeSandbox explicitly gate new domain visibility for 3-6 months. Domain registration data (Whois) feeds into spam probability scoring."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "We just promote better content. We don't penalize sites.",
+      "internalSource": "API Leak",
+      "internalClaim": "exactMatchDomainDemotion, anchorMismatchDemotion, phraseAnchorSpamPenalty, keywordStuffingScore are all explicit demotion signals. The Yandex evidence suggests even harder penalties exist: pre-ranking exclusion at the retrieval stage."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "We are transparent about how Search works. We publish extensive documentation on ranking factors and algorithm updates.",
+      "internalSource": "DOJ Trial Exhibit UPX0204 (Eric Lehman, Nov 2018)",
+      "internalClaim": "'Information about how search works should remain need-to-know.' 'Everything we leak will be used against us by SEOs, patent trolls, competitors.' Internal communications explicitly advocate secrecy about ranking mechanics."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "Our ranking systems are complex and cannot be easily gamed or reverse-engineered.",
+      "internalSource": "DOJ Remedies Exhibit PXR0356 (HJ Kim, Feb 2025)",
+      "internalClaim": "Q* 'could be easily reverse engineered because Q is largely static.' Click logs would expose 'a notion of authority for a given site.' Ranking adjustments are 'easy to reverse engineer and copy from looking at the data.'"
+    }
+  ]
+}

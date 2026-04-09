@@ -1,0 +1,136 @@
+{
+  "id": "discover",
+  "route": "/discover",
+  "systems": [
+    "Discover"
+  ],
+  "hero": {
+    "title": "Google Discover: Interest-Based Feed Ranking",
+    "subtitle": "Google Discover is a feed-based content recommendation system that surfaces content without explicit queries. It uses TopicLayer (built on the Knowledge Graph), user interest modeling, Bayesian CTR prediction, and NavBoost-style engagement signals. Since February 2026, Discover ranks content independently from search using a separate algorithm."
+  },
+  "keyInsight": {
+    "label": "Key Insight from Research + API Leak",
+    "text": "Discover represents a <strong>fundamentally different ranking paradigm</strong>: interest-based rather than query-based. It uses <strong>TopicLayer</strong> (added to Knowledge Graph) to develop hundreds of thousands of subtopics per topic. A <strong>Bayesian CTR prediction model</strong> applies learnings at site and subfolder level. As of February 2026, Discover uses a <strong>separate algorithm</strong> from search, prioritizing quality signals and topic authority over engagement metrics."
+  },
+  "pillars": [
+    {
+      "type": "patent",
+      "title": "5 Patents",
+      "items": [
+        "TopicLayer analyzes all web content per topic and develops subtopics",
+        "Identifies both evergreen and fresh content per subtopic",
+        "Entity mapping from Knowledge Graph to user interests",
+        "Patent <a href=\"https://patents.google.com/patent/US9547823B2\">US9547823</a>: Knowledge graph media recommendations",
+        "Nine-stage pipeline: qualification > interest matching > CTR prediction > filtering",
+        "<a href=\"https://patents.google.com/patent/US7668823\">US7668823</a>: Identifying inadequate search content; <a href=\"https://patents.google.com/patent/US8037063\">US8037063</a>: Identifying inadequate search content; <a href=\"https://patents.google.com/patent/US20100138421\">US20100138421</a>: Identifying inadequate search content",
+        "<a href=\"https://patents.google.com/patent/US8458193\">US8458193</a>: System and method for determining active topics"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "Signals Confirmed",
+      "items": [
+        "<strong>unsquashedClicks</strong> - Raw click data before normalization",
+        "<strong>clicksTotalInterval</strong> - Total clicks within a specific time period",
+        "<strong>impressions</strong> - Content impression counts in Discover feed",
+        "NavBoost-style good/bad clicks (long dwell vs. pogo-sticking)",
+        "Repeat visit signals for content quality scoring"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "DOJ Trial Evidence",
+      "items": [
+        "<strong>Pandu Nayak</strong>: Discover feed uses NavBoost click signals and Q* quality scores to filter content eligibility",
+        "<strong>Content quality gates</strong> - Sites below Q* threshold (0.4) excluded from Discover, same gate that blocks featured snippets",
+        "<strong>Chrome data feeds Discover</strong> - chromeInTotal browsing data and Chrome activity signals used to model user interests for feed personalization",
+        "<strong>siteAuthority dependency</strong> - Discover eligibility correlates with site-level trust scores; low-authority sites rarely surface in feed"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "Optimization Signals",
+      "items": [
+        "Bayesian CTR prediction at site and subfolder level",
+        "More quality content over time increases feature likelihood",
+        "Topic authority stronger than raw engagement metrics (post-Feb 2026)",
+        "Entity-rich content maps to Knowledge Graph for interest matching",
+        "Large, high-quality images improve Discover card engagement",
+        "E-E-A-T signals weight heavily in Discover quality filtering"
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Discover Content Score",
+      "source": "Research",
+      "how": "Discover evaluates content through a nine-stage pipeline that combines topic relevance, content quality, user interest alignment, and predicted engagement. Content must pass quality gates before CTR prediction models determine surfacing likelihood.",
+      "formula": "<span class=\"cf-fn\">DiscoverScore</span>(content, user) =\n  <span class=\"cf-fn\">TopicMatch</span>(<span class=\"cf-val\">entities</span>, <span class=\"cf-val\">user_interests</span>) *\n  <span class=\"cf-fn\">QualityGate</span>(<span class=\"cf-val\">E-E-A-T</span>, <span class=\"cf-val\">site_authority</span>) *\n  <span class=\"cf-fn\">BayesianCTR</span>(<span class=\"cf-val\">site</span>, <span class=\"cf-val\">subfolder</span>)\n<span class=\"cf-comment\">// separate from search ranking since Feb 2026</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US9547823B2\">US9547823</a> (knowledge graph recommendations)",
+      "affects": "Affected by: topic authority, content freshness, entity richness, site quality history, user interest profile"
+    },
+    {
+      "name": "TopicLayer Matching",
+      "source": "Research",
+      "how": "TopicLayer extends the Knowledge Graph with topic hierarchies and subtopics. Content is mapped to topic nodes based on entity extraction. User interests are modeled as weighted topic vectors updated from browsing history and engagement patterns.",
+      "formula": "<span class=\"cf-fn\">TopicMatch</span>(content, user) =\n  <span class=\"cf-fn\">cosine_sim</span>(\n    <span class=\"cf-fn\">entity_vector</span>(<span class=\"cf-val\">content_entities</span>),\n    <span class=\"cf-fn\">interest_vector</span>(<span class=\"cf-val\">user_topics</span>)\n  )\n<span class=\"cf-comment\">// hundreds of thousands of subtopics per topic</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US9547823B2\">US9547823</a> (knowledge graph recommendations)",
+      "affects": "Affected by: entity extraction quality, Knowledge Graph coverage, user interest freshness"
+    }
+  ],
+  "pipeline": {
+    "title": "Discover Content Pipeline",
+    "stages": [
+      {
+        "name": "Content Qualification",
+        "detail": "Content must meet E-E-A-T and quality thresholds to enter Discover pool"
+      },
+      {
+        "name": "Entity Extraction",
+        "detail": "Webref extracts entities and maps to Knowledge Graph topics"
+      },
+      {
+        "name": "TopicLayer Matching",
+        "detail": "Content topics matched against user interest profiles"
+      },
+      {
+        "name": "Bayesian CTR Prediction",
+        "detail": "Site and subfolder-level CTR prediction based on historical performance"
+      },
+      {
+        "name": "Quality Filtering",
+        "detail": "NavBoost-style engagement signals filter low-quality content"
+      },
+      {
+        "name": "Feed Assembly",
+        "detail": "Final ranking and card presentation in user's Discover feed"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2017",
+      "type": "patent",
+      "title": "Google Feed Launched",
+      "desc": "Initial feed feature using basic topic following and trending content."
+    },
+    {
+      "year": "2018",
+      "type": "patent",
+      "title": "Rebranded to Discover",
+      "desc": "Google Feed becomes Discover. TopicLayer added to Knowledge Graph for subtopic modeling."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "API Leak Signals",
+      "desc": "Leak reveals unsquashedClicks, clicksTotalInterval, and impression tracking for Discover."
+    },
+    {
+      "year": "2026",
+      "type": "patent",
+      "title": "Separate Algorithm",
+      "desc": "Discover now ranks independently from search, using quality signals and topic authority over engagement."
+    }
+  ]
+}

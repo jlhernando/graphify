@@ -1,0 +1,163 @@
+{
+  "id": "passage-ranking",
+  "route": "/passage-ranking",
+  "systems": [
+    "PassageRanking"
+  ],
+  "hero": {
+    "title": "Passage Ranking: Section-Level Scoring",
+    "subtitle": "Passage Ranking allows Google to score and rank individual passages from a page independently, rather than only evaluating the page as a whole. Launched February 2021, it impacts approximately 7% of search queries. It uses BERT-based NLP models to identify and evaluate passage-level relevance, allowing long-form content with deeply buried relevant sections to surface."
+  },
+  "keyInsight": {
+    "label": "Key Insight from Google + Patents",
+    "text": "Passage Ranking changed the <strong>fundamental unit of ranking</strong> from whole pages to sections within pages. Google clarified that pages are <strong>still indexed as whole documents</strong>, but passages are scored as an <strong>additional ranking factor</strong>. This means a 5,000-word article with one highly relevant paragraph can now rank for specific queries. BERT powers the language understanding that enables passage identification and scoring."
+  },
+  "pillars": [
+    {
+      "type": "patent",
+      "title": "12 Patents",
+      "items": [
+        "Patent <a href=\"https://patents.google.com/patent/US20160078102A1\">US20160078102</a>: <strong>Text indexing and passage retrieval</strong> - annotated passage indexes",
+        "Patent <a href=\"https://patents.google.com/patent/US9940367B1\">US9940367</a>: <strong>Scoring candidate answer passages</strong> - query-passage scoring",
+        "One document can be scored multiple times for different queries",
+        "Passages scored on term match, answer term match, semantic relevance",
+        "BERT bidirectional understanding enables passage boundary detection",
+        "Passages scored based on author popularity, word characteristics, frequency",
+        "Cross-attention between query tokens and passage content",
+        "<strong>Answer passage scoring</strong> - Patent <a href=\"https://patents.google.com/patent/US10783156\">US10783156</a> (Baker, Venkatachary et al., filed 2018): Combines query-dependent scores (query term TF/IDF match, answer term match from top N docs) with query-independent scores (passage position, language model conformance, source reputation). Generates candidate passages from both structured (tables, lists) and unstructured content. NEWSCORE(D) = 0.8 * OLDSCORE(D) + 0.2 * SOURCERANK(SOURCE(D)). Term weight = (resources containing term) * IDF",
+        "<strong>Weighted answer term vectors</strong> - Patent <a href=\"https://patents.google.com/patent/US10019513\">US10019513</a> (Google, filed 2015): Pre-computes weighted term vectors from question-answer pairs in web resources. Identifies questions via POS patterns, extracts subsequent answer text, clusters questions by similarity. At query time, scores candidate passages using term_frequency * answer_term_weight. Terms weighted by frequency across answers in the cluster, enabling lightweight real-time passage scoring against pre-computed intent-specific vectors",
+        "<a href=\"https://patents.google.com/patent/US9959315\">US9959315</a>: Context scoring adjustments for answer passages; <a href=\"https://patents.google.com/patent/US7953720\">US7953720</a>: Selecting the best answer to a fact query from among a set of potential answers; <a href=\"https://patents.google.com/patent/US11289096\">US11289096</a>: Providing answers to voice queries using user feedback",
+        "<a href=\"https://patents.google.com/patent/US9146992\">US9146992</a>: Enriching web resources; <a href=\"https://patents.google.com/patent/US5987450\">US5987450</a>: System and method for obtaining complete and correct answers from incomplete and/or incorrect dat...; <a href=\"https://patents.google.com/patent/US9576576\">US9576576</a>: Answering questions using environmental context",
+        "<a href=\"https://patents.google.com/patent/US9679027\">US9679027</a>: Generating related questions for search queries; <a href=\"https://patents.google.com/patent/US8819006\">US8819006</a>: Rich content for query answers"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "API Leak Signals",
+      "items": [
+        "<strong>SnippetBrainSelectedText</strong> - Pre-extracted passage text selected by SnippetBrain for featured snippet and passage ranking",
+        "<strong>contentPassageScore</strong> - Per-passage relevance score stored in document index for query-time passage retrieval",
+        "<strong>passageAnnotation</strong> - Passage-level annotation metadata including topic boundaries and semantic structure",
+        "<strong>bodyContentBreaks</strong> - Section boundary markers used by passage segmentation to identify logical content divisions",
+        "<strong>sectionHeadingAnchors</strong> - Heading structure signals for passage boundary detection and topical segmentation"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "DOJ Trial Evidence",
+      "items": [
+        "<strong>Passage scoring feeds featured snippets</strong> - Testimony confirmed passage-level retrieval determines featured snippet extraction, not full-page relevance",
+        "<strong>BERT cross-attention</strong> - HJ Kim confirmed BERT bidirectional model scores query-passage pairs, not just query-document pairs",
+        "<strong>FastSearch passage retrieval</strong> - Elizabeth Reid affidavit: FastSearch retrieves passage-level content for AI Overview grounding, using RankEmbed signals",
+        "<strong>DeepRank passage scoring</strong> - DeepRank applies neural re-ranking at passage level for top candidates, confirmed as one of only two ML ranking systems"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "Optimization Signals",
+      "items": [
+        "Clear section headers help Google identify passage boundaries",
+        "Self-contained paragraphs that directly answer questions rank better",
+        "Long-form content benefits when individual sections are comprehensive",
+        "FAQ patterns with question-answer pairs align with passage scoring",
+        "Impacts ~7% of searches (Google's stated figure at launch)",
+        "Works alongside full-page scoring, not as replacement"
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Passage Score",
+      "source": "Patent",
+      "how": "Each passage within a document receives an independent relevance score based on query-passage alignment. The passage score combines term matching, semantic similarity (via BERT), and passage quality signals. A document's final ranking considers both its full-page score and its best passage score.",
+      "formula": "<span class=\"cf-fn\">PassageScore</span>(query, passage) =\n  <span class=\"cf-fn\">BERT_crossattn</span>(<span class=\"cf-val\">query</span>, <span class=\"cf-val\">passage</span>) *\n  <span class=\"cf-fn\">term_match</span>(<span class=\"cf-val\">query_terms</span>, <span class=\"cf-val\">passage_terms</span>) *\n  <span class=\"cf-fn\">quality</span>(<span class=\"cf-val\">length</span>, <span class=\"cf-val\">structure</span>, <span class=\"cf-val\">uniqueness</span>)\n<span class=\"cf-comment\">// ~7% of queries affected at launch</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US20160078102A1\">US20160078102</a>, <a href=\"https://patents.google.com/patent/US9940367B1\">US9940367</a>",
+      "affects": "Affected by: passage clarity, query-passage semantic alignment, passage completeness, BERT model"
+    },
+    {
+      "name": "Document Multi-Score",
+      "source": "Patent",
+      "how": "A single document can now carry multiple relevance scores: one for the full page and additional scores for individual passages. The document's ranking for a given query uses the highest applicable score. This allows long-form content to rank for specific queries based on passage relevance even if the overall page topic is broader.",
+      "formula": "<span class=\"cf-fn\">DocRank</span>(query, doc) = <span class=\"cf-fn\">max</span>(\n  <span class=\"cf-fn\">FullPageScore</span>(<span class=\"cf-val\">query</span>, <span class=\"cf-val\">doc</span>),\n  <span class=\"cf-fn\">max</span>(<span class=\"cf-fn\">PassageScore</span>(<span class=\"cf-val\">query</span>, <span class=\"cf-val\">p</span>) for <span class=\"cf-val\">p</span> in <span class=\"cf-val\">passages</span>)\n)\n<span class=\"cf-comment\">// full page still indexed, passages scored additionally</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US20160078102A1\">US20160078102</a>",
+      "affects": "Affected by: page structure, passage boundaries, content depth per section"
+    },
+    {
+      "name": "Answer Passage Scoring",
+      "source": "Patent US10783156 (Baker, Venkatachary et al., 2018)",
+      "how": "Scores candidate answer passages for question queries by combining query-dependent and query-independent features. Query-dependent: TF/IDF term match score plus answer term match (terms weighted by frequency across top N documents * IDF). Query-independent: passage position in document, language model conformance, source reputation. Handles both structured (tables, lists) and unstructured (prose) content with type-specific unit selection. Source quality adjustment: NEWSCORE = 0.8 * OLDSCORE + 0.2 * SOURCERANK, where SOURCERANK incorporates 13 metrics including article production volume, breaking news score, staff size, and original named entity generation.",
+      "formula": "<span class=\"cf-fn\">AnswerScore</span>(q, passage) = <span class=\"cf-fn\">QueryDependent</span>(\n  <span class=\"cf-fn\">TF_IDF_match</span>(<span class=\"cf-val\">q</span>, <span class=\"cf-val\">passage</span>),\n  <span class=\"cf-fn\">AnswerTermMatch</span>(<span class=\"cf-val\">q</span>, <span class=\"cf-val\">passage</span>)\n) + <span class=\"cf-fn\">QueryIndependent</span>(\n  <span class=\"cf-val\">position</span>, <span class=\"cf-val\">LM_conformance</span>, <span class=\"cf-val\">source_rep</span>\n)\n\n<span class=\"cf-fn\">NEWSCORE</span>(D) = 0.8 &times; <span class=\"cf-val\">OLDSCORE</span>(D) +\n  0.2 &times; <span class=\"cf-fn\">SOURCERANK</span>(<span class=\"cf-val\">SOURCE</span>(D))\n<span class=\"cf-comment\">// source quality weighted at 20%</span>\n\n<span class=\"cf-fn\">TermWeight</span>(t) = <span class=\"cf-val\">doc_count</span>(t) &times; <span class=\"cf-fn\">IDF</span>(t)\n<span class=\"cf-comment\">// from top N documents for query</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US10783156\">US10783156</a> (Scoring candidate answer passages, 2018)",
+      "affects": "Affected by: passage clarity, query term coverage, answer term density, passage position (earlier = better), source reputation, content structure type (tables/lists scored differently from prose)."
+    },
+    {
+      "name": "Weighted Answer Term Scoring",
+      "source": "Patent US10019513 (Google, 2015)",
+      "how": "Pre-computes weighted answer term vectors from question-answer pairs found in web resources (FAQs, Q&A sites, how-to articles). The system identifies question patterns via POS tagging, extracts the subsequent answer text, clusters similar questions by semantic similarity, and generates term frequency-weighted vectors for each question cluster. At query time, candidate answer passages are scored by computing the sum of term_frequency * answer_term_weight for each term in the passage. Term weights can be scaled by the similarity between the incoming question and the question definition for the cluster.",
+      "formula": "<span class=\"cf-fn\">AnswerTermScore</span>(q, passage) =\n  &Sigma; <span class=\"cf-fn\">tf</span>(<span class=\"cf-val\">term</span>, <span class=\"cf-val\">passage</span>) &times;\n  <span class=\"cf-fn\">weight</span>(<span class=\"cf-val\">term</span>, <span class=\"cf-val\">cluster</span>(q))\n\n<span class=\"cf-fn\">weight</span>(term, cluster) =\n  <span class=\"cf-fn\">freq</span>(term <span class=\"cf-kw\">in</span> cluster_answers) &times;\n  <span class=\"cf-fn\">sim</span>(q, cluster_definition)\n<span class=\"cf-comment\">// pre-computed from Q&A pairs at index time</span>\n<span class=\"cf-comment\">// lightweight real-time passage scoring</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US10019513\">US10019513</a> (Weighted answer terms for scoring, 2015)",
+      "affects": "Affected by: presence of Q&A-style content, answer term density, alignment with common question patterns. Pages structured as clear question-answer pairs feed the pre-computation pipeline."
+    }
+  ],
+  "pipeline": {
+    "title": "Passage Ranking Pipeline",
+    "stages": [
+      {
+        "name": "Page Indexing",
+        "detail": "Full page indexed as single document (standard process)"
+      },
+      {
+        "name": "Passage Segmentation",
+        "detail": "BERT-based NLP identifies logical passage boundaries"
+      },
+      {
+        "name": "Passage Annotation",
+        "detail": "Each passage annotated with topic, quality, and structure signals"
+      },
+      {
+        "name": "Query-Passage Matching",
+        "detail": "At query time, passages scored independently against query"
+      },
+      {
+        "name": "Score Selection",
+        "detail": "Best passage score vs. full-page score determines ranking"
+      },
+      {
+        "name": "Snippet Extraction",
+        "detail": "Highest-scoring passage used for featured snippet or result snippet"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2015",
+      "type": "patent",
+      "title": "Weighted Answer Term Vectors (US10019513)",
+      "desc": "Google patents pre-computed weighted answer term vectors from Q&A pairs. Clusters questions by similarity, generates intent-specific term frequency weights. Enables lightweight real-time passage scoring against pre-computed vectors."
+    },
+    {
+      "year": "2018",
+      "type": "patent",
+      "title": "BERT Integration",
+      "desc": "BERT enables deep language understanding needed for passage boundary detection and scoring."
+    },
+    {
+      "year": "2020",
+      "type": "patent",
+      "title": "Passage Ranking Announced",
+      "desc": "Google announces passage ranking at Search On event. 'We can now index individual passages from pages.'"
+    },
+    {
+      "year": "2021",
+      "type": "patent",
+      "title": "Passage Ranking Live",
+      "desc": "Launches February 2021. Impacts ~7% of queries. Martin Splitt clarifies pages still indexed whole."
+    },
+    {
+      "year": "2023",
+      "type": "patent",
+      "title": "AI Overviews Connection",
+      "desc": "Passage-level retrieval feeds into AI Overview generation. FastSearch retrieves passages for Gemini grounding."
+    }
+  ]
+}

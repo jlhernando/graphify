@@ -1,0 +1,169 @@
+{
+  "id": "webmirror",
+  "route": "/webmirror",
+  "systems": [
+    "WebMirror",
+    "Trawler",
+    "SegIndexer"
+  ],
+  "hero": {
+    "title": "WebMirror: Duplicate Detection and Canonicalization",
+    "subtitle": "WebMirror is Google's system for detecting duplicate and near-duplicate content across the web. It uses SimHash fingerprinting to create 64-bit signatures of every document, then clusters pages that differ by 3 or fewer bits as near-duplicates. For each cluster, a machine learning model evaluates ~40 signals to select the canonical URL. The API leak revealed three production signals (WebMirror, duplicateClusterId, localizedCluster), DOJ evidence confirmed shingling-based detection, and 37 patents spanning two decades document the evolution from basic fingerprinting to sophisticated multi-language deduplication."
+  },
+  "keyInsight": {
+    "label": "Key Insight from API Leak + DOJ + Patents",
+    "text": "WebMirror operates at massive scale with a deceptively simple core mechanism: <strong>SimHash fingerprinting</strong>. Each document gets a 64-bit fingerprint based on 5-gram word sequences (shingling). Documents with fingerprints differing in <strong>3 or fewer bits (k=3)</strong> are considered near-duplicates and grouped into clusters via <strong>duplicateClusterId</strong>. Then a <strong>~40-signal ML model</strong> selects the canonical URL from each cluster. The <strong>localizedCluster</strong> signal extends this to multi-language pages, handling hreflang relationships. Non-canonical pages are either excluded from the index or marked as alternates. The DOJ confirmed <strong>shingleInfo</strong> in CompressedQualitySignals, meaning duplicate detection directly affects quality scoring."
+  },
+  "pillars": [
+    {
+      "type": "patent",
+      "title": "10 Patents",
+      "items": [
+        "Patent <a href=\"https://patents.google.com/patent/US7711679\">US7711679</a>: <strong>Phrase-based detection of duplicate documents</strong> (Anna Lynn Patterson) - Uses phrase analysis rather than just word-level comparison for more accurate duplicate detection",
+        "Patent <a href=\"https://patents.google.com/patent/US6658423\">US6658423</a>: <strong>Detecting duplicate and near-duplicate files</strong> (William Pugh, Monika Henzinger) - Core near-duplicate detection using fingerprinting",
+        "Patent <a href=\"https://patents.google.com/patent/US6138113\">US6138113</a>: <strong>Method for identifying near duplicate pages in a hyperlinked database</strong> (Jeffrey Dean, Monika Henzinger) - Foundation of SimHash-based deduplication",
+        "Patent <a href=\"https://patents.google.com/patent/US7680773\">US7680773</a>: <strong>Automatically managing duplicate documents when crawling dynamic documents</strong> (Anurag Acharya, Arvind Jain) - Handles URL parameters, session IDs, and dynamic content that create false duplicates",
+        "Patent <a href=\"https://patents.google.com/patent/US7185088\">US7185088</a>: <strong>Removing duplicate search engine results</strong> - Deduplication at the SERP level to prevent users seeing the same content multiple times",
+        "37 patents total spanning from 1996 (US5745900, database fingerprinting) to modern era. The volume reflects the scale challenge: billions of pages require efficient deduplication",
+        "<a href=\"https://patents.google.com/patent/US7146416\">US7146416</a>: Web site activity monitoring system with tracking by categories and terms; <a href=\"https://patents.google.com/patent/US7062482\">US7062482</a>: Techniques for phonetic searching; <a href=\"https://patents.google.com/patent/US7366718\">US7366718</a>: Detecting duplicate and near-duplicate files",
+        "<a href=\"https://patents.google.com/patent/US8001462\">US8001462</a>: Updating search engine document index based on calculated age of changed portions in a document"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "API Leak: 3 WebMirror Signals",
+      "items": [
+        "<strong>WebMirror</strong> (WebMirror module): Core canonicalization and deduplication system. Tier 1 match, 100/100 corroboration, 17 matched patents",
+        "<strong>duplicateClusterId</strong> (IndexingDocjoinerDataVersion): Assigns each page to a duplicate content cluster. Used for canonical URL selection. Tier 1, 100/100 corroboration, 37 matched patents",
+        "<strong>localizedCluster</strong> (IndexingDupsLocalizedLocalizedCluster): Multi-language page relationship grouping for hreflang deduplication. Groups translated versions of the same content. Tier 2, 54/100 corroboration, 17 patents",
+        "All three signals categorized under <strong>technical-crawl</strong>, confirming WebMirror operates in the crawl/index pipeline, not at ranking time"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "DOJ Trial: Shingling Confirmation",
+      "items": [
+        "<strong>shingleInfo</strong> (CompressedQualitySignals): Duplicate content detection via overlapping word sequences (shingling). Confirmed as cross-reference evidence",
+        "Module placement in <strong>CompressedQualitySignals</strong> means duplicate detection feeds directly into quality scoring, not just index management",
+        "Near-duplicate pages don't just get deduplicated; they can affect the quality score of the surviving canonical page",
+        "The DOJ categorizes shingleInfo under <strong>spam-content</strong>, confirming Google treats content duplication as a quality/spam signal"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Duplicate Detection Affects SEO",
+      "items": [
+        "<strong>Canonical selection uses ~40 signals</strong>: Google's ML model considers content quality, link signals, traffic, freshness, and domain authority when picking the canonical. The best version wins, not necessarily the original",
+        "<strong>Near-duplicate threshold is k=3 bits</strong>: SimHash with 64-bit fingerprints and 3-bit tolerance catches paraphrased content, not just exact copies. Minor rewording won't help",
+        "<strong>Shingling uses 5-grams</strong>: Overlapping sequences of 5 consecutive words create the fingerprint. This catches paragraph-level copying even with different surrounding text",
+        "<strong>hreflang clusters matter</strong>: localizedCluster groups translated pages correctly, but misconfigured hreflang can cause Google to pick the wrong language version as canonical",
+        "<strong>Duplicate pages waste crawl budget</strong>: Non-canonical pages in your duplicate cluster still get crawled but aren't indexed. URL parameters, session IDs, and faceted navigation create unnecessary duplicates",
+        "<strong>Quality score impact</strong>: shingleInfo in CompressedQualitySignals means scraped/duplicated content can lower your site's quality score, not just lose the individual page",
+        "<strong>Syndicated content risk</strong>: If you syndicate content to higher-authority sites, their version may become canonical. Use rel=canonical pointing to your original"
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "SimHash Fingerprinting",
+      "source": "Patent + Leak",
+      "how": "Each document is converted to a 64-bit fingerprint using SimHash. The document is broken into overlapping 5-word sequences (shingles). Each shingle is hashed, and the hash values are combined into a single 64-bit signature. Two documents with signatures differing in 3 or fewer bits (Hamming distance <= 3) are considered near-duplicates.",
+      "formula": "<span class=\"cf-fn\">fingerprint</span>(doc) = <span class=\"cf-fn\">SimHash</span>(\n  <span class=\"cf-fn\">shingles</span>(doc, n=5)\n)  <span class=\"cf-comment\">// 64-bit output</span>\n\n<span class=\"cf-fn\">isNearDuplicate</span>(a, b) =\n  <span class=\"cf-fn\">hamming</span>(\n    fingerprint(a), fingerprint(b)\n  ) <= 3\n<span class=\"cf-comment\">// k=3 bit tolerance</span>\n<span class=\"cf-comment\">// Catches paraphrasing, not just exact copies</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US6138113\">US6138113</a> (Dean, Henzinger), <a href=\"https://patents.google.com/patent/US6658423\">US6658423</a> (Pugh, Henzinger)",
+      "affects": "Affected by: word-level content changes, content length, language. Minor rewording within 3-bit tolerance still detected as duplicate"
+    },
+    {
+      "name": "Canonical Selection (~40 Signals)",
+      "source": "Leak + Indexing Deep Dive",
+      "how": "When multiple pages are clustered as duplicates, a machine learning model evaluates approximately 40 signals to select the canonical URL. Signals include: content completeness, domain authority, PageRank, link signals, page speed, HTTPS, user-preferred URL, rel=canonical hints, sitemap declarations, redirect chains, and historical indexing data.",
+      "formula": "<span class=\"cf-fn\">canonical</span>(cluster) = <span class=\"cf-fn\">ML_select</span>(\n  <span class=\"cf-val\">pages</span> ∈ cluster,\n  <span class=\"cf-val\">~40 signals</span>\n)\n<span class=\"cf-comment\">// Signals: content quality, authority, links</span>\n<span class=\"cf-comment\">// PageRank, HTTPS, rel=canonical hints</span>\n<span class=\"cf-comment\">// User preferences, sitemap, redirects</span>\n<span class=\"cf-comment\">// Non-canonical pages excluded from index</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US7711679\">US7711679</a>, <a href=\"https://patents.google.com/patent/US7185088\">US7185088</a>",
+      "affects": "Affected by: domain authority, content completeness, HTTPS status, rel=canonical hints, sitemap signals, redirect configuration"
+    },
+    {
+      "name": "Localized Cluster (hreflang)",
+      "source": "Leak",
+      "how": "The localizedCluster signal groups translated versions of the same content into language-specific clusters. This prevents a French translation from competing with the English original for the same canonical slot. Each language version can be canonical within its own localized cluster, allowing proper international indexing.",
+      "formula": "<span class=\"cf-fn\">localizedCluster</span>(page) =\n  <span class=\"cf-fn\">group</span>(\n    <span class=\"cf-val\">hreflang_annotations</span>,\n    <span class=\"cf-val\">language_detection</span>,\n    <span class=\"cf-val\">content_similarity</span>\n  )\n<span class=\"cf-comment\">// Groups: en, es, fr, de versions</span>\n<span class=\"cf-comment\">// Each language has its own canonical</span>\n<span class=\"cf-comment\">// Misconfigured hreflang → wrong canonical</span>",
+      "patents": "",
+      "affects": "Affected by: hreflang annotation accuracy, content translation quality, language detection, URL structure"
+    }
+  ],
+  "pipeline": {
+    "title": "WebMirror Deduplication Pipeline",
+    "stages": [
+      {
+        "name": "Crawl & Content Extraction",
+        "detail": "Trawler crawls pages. Raw HTML extracted and rendered (if JS-dependent). Text content passed to WebMirror."
+      },
+      {
+        "name": "Shingling (5-gram)",
+        "detail": "Document broken into overlapping 5-word sequences. Each shingle hashed individually."
+      },
+      {
+        "name": "SimHash Fingerprinting",
+        "detail": "Shingle hashes combined into 64-bit SimHash fingerprint. Compact representation of document content."
+      },
+      {
+        "name": "Near-Duplicate Clustering",
+        "detail": "Pages with fingerprints differing by <= 3 bits grouped into clusters. duplicateClusterId assigned."
+      },
+      {
+        "name": "Localized Clustering",
+        "detail": "Multi-language versions grouped via hreflang and content similarity. localizedCluster separates language variants."
+      },
+      {
+        "name": "Canonical Selection (ML)",
+        "detail": "~40-signal ML model selects canonical URL per cluster. Non-canonical pages excluded from index or marked as alternates."
+      },
+      {
+        "name": "Quality Score Impact",
+        "detail": "shingleInfo feeds into CompressedQualitySignals. Scraped/duplicate content affects site-wide quality scoring."
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "1996",
+      "type": "patent",
+      "title": "Database Fingerprinting",
+      "desc": "US5745900 (Michael Burrows): Method for indexing duplicate database records using full-record fingerprints. AltaVista era."
+    },
+    {
+      "year": "1998",
+      "type": "patent",
+      "title": "SimHash Near-Duplicate Detection",
+      "desc": "US6138113 (Jeffrey Dean, Monika Henzinger): Method for identifying near-duplicate pages using fingerprinting. Foundation of WebMirror."
+    },
+    {
+      "year": "2000",
+      "type": "patent",
+      "title": "Query-Specific Deduplication",
+      "desc": "US6615209 (Benedict Gomes, Ben Smith): Detecting duplicates per query, not globally. Different queries may surface different canonicals."
+    },
+    {
+      "year": "2004",
+      "type": "patent",
+      "title": "Phrase-Based Detection",
+      "desc": "US7711679 (Anna Lynn Patterson): Phrase-level duplicate detection, more accurate than word-level. Catches paraphrased content."
+    },
+    {
+      "year": "2005",
+      "type": "patent",
+      "title": "Dynamic Document Dedup",
+      "desc": "US7680773 (Anurag Acharya, Arvind Jain): Handling URL parameters, session IDs, and dynamic content that create false duplicates."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "Three Signals Revealed",
+      "desc": "API leak exposes WebMirror, duplicateClusterId (37 patents), and localizedCluster. SimHash with 5-gram shingling and k=3 threshold confirmed."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "shingleInfo in Quality",
+      "desc": "DOJ confirms shingleInfo in CompressedQualitySignals. Duplicate detection directly affects quality scoring, not just index management."
+    }
+  ]
+}

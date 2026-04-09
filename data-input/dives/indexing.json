@@ -1,0 +1,198 @@
+{
+  "id": "indexing",
+  "route": "/indexing",
+  "systems": [
+    "Trawler",
+    "Alexandria",
+    "SegIndexer",
+    "WebMirror",
+    "TeraGoogle"
+  ],
+  "hero": {
+    "title": "Indexing Decisions: What Gets In (and What Doesn't)",
+    "subtitle": "Google's indexing pipeline decides which of the trillions of known URLs enter the search index. The process involves crawl scheduling, quality thresholds, duplicate detection, and tiered storage. Elizabeth Reid called index tiering and crawl scheduling Google's 'most guarded secrets.' Only a fraction of discovered URLs make it to the searchable index, with pages scored by importance rank, site quality, and predicted query utility."
+  },
+  "keyInsight": {
+    "label": "Key Insight from Patents + DOJ + API Leak",
+    "text": "Google's index has a <strong>Soft Limit and Hard Limit</strong> (Patent US7509315). Pages receive an <strong>importance rank</strong> (0-10 scale). Once the soft limit is reached, only pages exceeding the current <strong>importance threshold</strong> get indexed. Lower-quality pages are evicted when better content arrives. The API leak revealed <strong>scaledSelectionTierRank</strong> (0-32767), which places pages into three tiers: <strong>Base</strong> (flash storage, best ranking potential), <strong>Zeppelins</strong> (SSD, mid-tier), and <strong>Landfills</strong> (HDD, lowest ceiling). A Landfills document <strong>cannot outrank</strong> a Base document regardless of other signals."
+  },
+  "pillars": [
+    {
+      "type": "patent",
+      "title": "10 Patents",
+      "items": [
+        "Patent <a href=\"https://patents.google.com/patent/US7509315B1\">US7509315</a>: <strong>Managing URLs</strong> - Soft/Hard limits on index size, importance rank threshold for inclusion",
+        "Patent <a href=\"https://patents.google.com/patent/US8554759B1\">US8554759</a>: <strong>Selection of Documents to Place in Search Index</strong> - Utility score predicts probability of satisfying queries",
+        "Patent <a href=\"https://patents.google.com/patent/US9031929B1\">US9031929</a>: <strong>Site Quality Score</strong> (Panda) - Site quality directly gates whether to crawl, refresh, or index",
+        "Patent <a href=\"https://patents.google.com/patent/US9195944B1\">US9195944</a>: <strong>Scoring Site Quality</strong> - User visit durations determine if pages are 'sufficiently high quality to be indexed'",
+        "Patent <a href=\"https://patents.google.com/patent/US9002832B1\">US9002832</a>: <strong>Classifying Sites as Low Quality</strong> - Link quality scores classify sites, below threshold = indexing affected",
+        "<a href=\"https://patents.google.com/patent/US7599920\">US7599920</a>: System and method for enabling website owners to manage crawl rate in a website indexing system; <a href=\"https://patents.google.com/patent/US7363279\">US7363279</a>: Method and system for calculating importance of a block within a display page; <a href=\"https://patents.google.com/patent/US20060294086\">US20060294086</a>: Realtime indexing and search in large, rapidly changing document collections",
+        "<a href=\"https://patents.google.com/patent/US7676759\">US7676759</a>: Method and apparatus for searching data; <a href=\"https://patents.google.com/patent/US6278992\">US6278992</a>: Search engine using indexing method for storing and retrieving data"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "5 Patents",
+      "items": [
+        "Patent <a href=\"https://patents.google.com/patent/US7725452B1\">US7725452</a>: <strong>Scheduler for Search Engine Crawler</strong> - Three-tier crawl: Base (200M+), Daily (50M+), Real-time (5M+)",
+        "Patent <a href=\"https://patents.google.com/patent/US8037054B2\">US8037054</a>: <strong>Crawler Scheduler Using Sitemaps</strong> - Sitemap priority scores create 'must-crawl' URLs",
+        "Patent <a href=\"https://patents.google.com/patent/US8666964B1\">US8666964</a>: <strong>Managing Items in Crawl Schedule</strong> - Recrawl prioritization for important/changed pages",
+        "Patent <a href=\"https://patents.google.com/patent/US8458163B2\">US8458163</a>: <strong>Website Owner Crawl Rate Management</strong> - Site owners request faster/slower crawl via Search Console. Speed-up requests are only honored when the current rate limit is provably the binding constraint: |currentLimit - maxActualRate| < threshold. If the crawler is already below server capacity, a speed-up request won't change behavior",
+        "Patent <a href=\"https://patents.google.com/patent/US7634466B2\">US7634466</a>: <strong>Realtime Indexing</strong> - Near-real-time indexing for rapidly changing content"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "API Leak: Indexing Signals",
+      "items": [
+        "<strong>scaledSelectionTierRank</strong> (0-32767): Determines index tier (Base/Zeppelins/Landfills), acts as ranking ceiling",
+        "<strong>OriginalContentScore</strong> (0-512): Originality measure, low score = thin content risk for deindexing",
+        "<strong>bodyWordsToTokensRatio</strong>: Meaningful words vs tokens, quality indicator",
+        "<strong>onsiteProminence</strong>: Page importance within site (simulated traffic from homepage)",
+        "<strong>homePageInfo</strong>: Trust levels: NOT_TRUSTED, PARTIALLY_TRUSTED, FULLY_TRUSTED",
+        "<strong>QuarantineInfo</strong>: Bitmask flagging violations, indicates removal from index",
+        "<strong>lastSignificantUpdate</strong>: Distinguishes substantial revisions from minor edits",
+        "<strong>shingleInfo</strong>: SimHash fingerprinting for near-duplicate detection (WebMirror)"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "DOJ Trial Evidence",
+      "items": [
+        "<strong>Elizabeth Reid</strong>: 'Index tiering and crawl scheduling are among Google's most sensitive proprietary assets'",
+        "Google labels the 'vast majority of webpages' as 'Spam, Duplicates, and Low Quality Pages'",
+        "<strong>Q* and P*</strong> are the two top-level signals driving crawl frequency decisions",
+        "'Information regarding crawl schedule reveals proprietary freshness signals and index tiering structure'",
+        "Spam fighting depends on obscurity: 'external knowledge of spam-fighting mechanisms eliminates their value'",
+        "Index described as 'the product of proprietary crawling, annotation, and tiering systems'"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "Index/No-Index Heuristics",
+      "items": [
+        "<strong>INDEXED:</strong> High importance rank + strong siteAuthority/NSR + original content + user engagement + fast server",
+        "<strong>NOT INDEXED:</strong> Below importance threshold, pandaDemotion active, thin content, duplicate, spam flags",
+        "Crawl budget = server response speed (faster = more budget) * popularity * update frequency",
+        "85% of crawl issues from structural traps (faceted nav, infinite URL params, action parameters)",
+        "Deindexing timeline: Days 1-130 safe, Days 131-189 transitional, Days 190+ most pages dropped",
+        "Content must be 'worth fetching' per scheduler signals; declining search demand reduces crawl budget"
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Index Inclusion Decision",
+      "source": "Patent",
+      "how": "Each discovered URL receives an importance rank (0-10 scale). Google maintains a Soft Limit (target index size) and Hard Limit (absolute ceiling). Once the soft limit is reached, only pages exceeding the current importance threshold are crawled and indexed. Lower-ranked pages are evicted when higher-quality content arrives. The predictedUtility component (Patent US8554759) decomposes into two probabilities: P(click|position) (position-adjusted CTR from historical data) multiplied by P(impression) (probability of appearing in results given query volume). The model is trained on features including file type, host/domain, document length, language, encoding, and link-based score.",
+      "formula": "<span class=\"cf-fn\">IndexDecision</span>(url) =\n  <span class=\"cf-fn\">importanceRank</span>(<span class=\"cf-val\">url</span>) >= <span class=\"cf-fn\">threshold</span>(<span class=\"cf-val\">histogram</span>)\n  AND <span class=\"cf-fn\">siteQuality</span>(<span class=\"cf-val\">site</span>) > <span class=\"cf-val\">Q*_minimum</span>\n  AND NOT <span class=\"cf-fn\">isDuplicate</span>(<span class=\"cf-val\">SimHash</span>)\n  AND <span class=\"cf-fn\">predictedUtility</span>(<span class=\"cf-val\">url</span>) > <span class=\"cf-val\">utility_cutoff</span>\n\n<span class=\"cf-fn\">predictedUtility</span>(url) =\n  P(<span class=\"cf-val\">click</span> | <span class=\"cf-val\">position</span>) &times; P(<span class=\"cf-val\">impression</span>)\n<span class=\"cf-comment\">// = expected clicks per time period</span>\n<span class=\"cf-comment\">// trained on: file_type, domain, length, language, link_score</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US7509315B1\">US7509315</a>, <a href=\"https://patents.google.com/patent/US8554759B1\">US8554759</a>",
+      "affects": "Affected by: importance rank, site quality (Q*), content originality, duplicate status, predicted query utility"
+    },
+    {
+      "name": "Crawl Priority Score",
+      "source": "Patent",
+      "how": "The crawler scheduler computes a priority score for each URL determining when and how often it gets crawled. The score combines content change frequency (detected by comparing content checksums across successive downloads, stored in a history log), PageRank (link-based importance), and age (time since last fetch). The inclusion threshold is dynamically derived from histogram sampling of all known URL importance scores, with target crawl set size as an adjustable parameter. Sitemap lastmod timestamps provide an additional skip signal: if lastmod <= last_crawl_date, the URL is deferred without fetching.",
+      "formula": "<span class=\"cf-fn\">CrawlPriority</span>(url) = f(\n  <span class=\"cf-fn\">PageRank</span>(<span class=\"cf-val\">url</span>),\n  <span class=\"cf-fn\">changeFrequency</span>(<span class=\"cf-val\">checksum_history</span>),\n  <span class=\"cf-fn\">age</span>(<span class=\"cf-val\">time_since_last_fetch</span>)\n)\n<span class=\"cf-comment\">// threshold = histogram_sample(all_url_scores, target_set_size)</span>\n<span class=\"cf-kw\">if</span> CrawlPriority >= <span class=\"cf-val\">threshold</span>: schedule crawl\n<span class=\"cf-kw\">if</span> sitemap.lastmod &lt;= last_crawl_date: <span class=\"cf-kw\">skip</span> fetch\n<span class=\"cf-comment\">// Tiers: Base (200M+), Daily (50M+), Real-time (5M+)</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US7725452B1\">US7725452</a>, <a href=\"https://patents.google.com/patent/US8037054B2\">US8037054</a>, <a href=\"https://patents.google.com/patent/US8666964B1\">US8666964</a>",
+      "affects": "Affected by: content change rate, PageRank, crawl history, sitemap signals, server response speed"
+    },
+    {
+      "name": "Index Tier Placement",
+      "source": "Leak",
+      "how": "After a page enters the index, it is placed into one of three storage tiers based on its scaledSelectionTierRank (0-32767). This score is language-normalized and combines site authority, user engagement (NavBoost), and content quality signals. The tier acts as a ceiling on ranking potential: Base-tier documents have the highest ceiling, while Landfills documents are severely limited regardless of other signals.",
+      "formula": "<span class=\"cf-fn\">TierPlacement</span>(doc) =\n  IF <span class=\"cf-fn\">scaledSelectionTierRank</span> > <span class=\"cf-val\">T1</span>: <span class=\"cf-val\">Base</span> (Flash, highest ceiling)\n  IF <span class=\"cf-fn\">scaledSelectionTierRank</span> > <span class=\"cf-val\">T2</span>: <span class=\"cf-val\">Zeppelins</span> (SSD, mid ceiling)\n  ELSE: <span class=\"cf-val\">Landfills</span> (HDD, lowest ceiling)\n<span class=\"cf-comment\">// Landfills doc cannot outrank Base doc</span>",
+      "patents": "",
+      "affects": "Affected by: siteAuthority, NavBoost engagement, NSR, content quality, language normalization"
+    },
+    {
+      "name": "Duplicate Detection",
+      "source": "Patent",
+      "how": "WebMirror uses SimHash fingerprinting to detect near-duplicate content. Each document gets a 64-bit fingerprint computed from weighted features (stop words stripped, remaining terms weighted). Documents with fingerprints differing in 3 or fewer bits (k=3) are near-duplicates. A permutation-based lookup trick enables fast matching at web scale: N permutations of each fingerprint are stored in sorted tables, enabling prefix-based lookup instead of brute-force comparison against all stored fingerprints. Near-duplicates can be either discarded or kept with outgoing links suppressed (preventing link graph pollution from mirrors). One canonical URL is selected per cluster using ~40 signals via ML. Duplicate sources include: mirrors, format variants (HTML/text/mobile), prepended/appended boilerplate, site re-branding via word replacement, and content aggregators.",
+      "formula": "<span class=\"cf-fn\">SimHash</span>(doc) = 64-bit hash from weighted features\n<span class=\"cf-fn\">IsDuplicate</span>(doc) =\n  <span class=\"cf-fn\">HammingDistance</span>(\n    <span class=\"cf-fn\">SimHash</span>(<span class=\"cf-val\">doc</span>),\n    <span class=\"cf-fn\">SimHash</span>(<span class=\"cf-val\">existing_docs</span>)\n  ) <= <span class=\"cf-val\">3</span>\n<span class=\"cf-comment\">// permutation-based lookup for O(1) matching at scale</span>\n<span class=\"cf-comment\">// outcome: discard OR keep with links suppressed</span>\n<span class=\"cf-comment\">// ~40 signals select canonical via ML</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8548972B1\">US8548972</a>",
+      "affects": "Affected by: content similarity, SimHash fingerprint, canonical signals, content originality"
+    }
+  ],
+  "pipeline": {
+    "title": "Indexing Decision Pipeline",
+    "stages": [
+      {
+        "name": "URL Discovery",
+        "detail": "Trawler discovers URLs via crawling, sitemaps, and external feeds"
+      },
+      {
+        "name": "Crawl Scheduling",
+        "detail": "Scheduler computes priority score. URL assigned to Base/Daily/Real-time crawl tier"
+      },
+      {
+        "name": "Fetch & Render",
+        "detail": "Trawler fetches page. Rendering service executes JS if needed (Chromium/Blink)"
+      },
+      {
+        "name": "Quality Gate",
+        "detail": "Site quality (Q*), importance rank, and spam scores evaluated. Below threshold = rejected"
+      },
+      {
+        "name": "Duplicate Check",
+        "detail": "WebMirror computes SimHash. Near-duplicates clustered. One canonical selected per cluster"
+      },
+      {
+        "name": "Index Admission",
+        "detail": "predictedUtility score computed. Only top N documents admitted to Alexandria index"
+      },
+      {
+        "name": "Tier Placement",
+        "detail": "SegIndexer assigns scaledSelectionTierRank. Page placed in Base, Zeppelins, or Landfills"
+      },
+      {
+        "name": "Ongoing Maintenance",
+        "detail": "Pages re-evaluated on recrawl. Declining engagement/quality can trigger tier demotion or removal"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2003",
+      "type": "patent",
+      "title": "GFS & MapReduce",
+      "desc": "Google File System and MapReduce enable distributed indexing at web scale."
+    },
+    {
+      "year": "2005",
+      "type": "patent",
+      "title": "Managing URLs Patent",
+      "desc": "US7509315 establishes Soft/Hard index limits and importance rank thresholds for index inclusion."
+    },
+    {
+      "year": "2008",
+      "type": "patent",
+      "title": "SimHash Duplicate Detection",
+      "desc": "US8548972 introduces 64-bit fingerprinting with k=3 for near-duplicate detection across 8B pages."
+    },
+    {
+      "year": "2010",
+      "type": "patent",
+      "title": "Caffeine Launch",
+      "desc": "Replaces batch indexing with continuous incremental indexing. Pages enter index in near-real-time."
+    },
+    {
+      "year": "2017",
+      "type": "patent",
+      "title": "Mobile-First Indexing",
+      "desc": "Google begins indexing mobile versions of pages as primary. Desktop becomes secondary index source."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "API Leak Reveals Tiers",
+      "desc": "scaledSelectionTierRank (0-32767) exposed. Base/Zeppelins/Landfills tier system confirmed."
+    },
+    {
+      "year": "2026",
+      "type": "doj",
+      "title": "Reid Affidavit",
+      "desc": "Elizabeth Reid declares index tiering and crawl scheduling as Google's 'most guarded secrets.'"
+    }
+  ]
+}

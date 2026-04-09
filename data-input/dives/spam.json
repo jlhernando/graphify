@@ -1,0 +1,216 @@
+{
+  "id": "spam",
+  "route": "/spam",
+  "systems": [
+    "SpamBrain"
+  ],
+  "hero": {
+    "title": "SpamBrain: Google's Anti-Spam System",
+    "subtitle": "SpamBrain is Google's primary spam detection system, with 26 confirmed signals in the API leak and 9 from the DOJ trial. It analyzes link graphs, anchor text patterns, content quality, and domain age. The system can detect AI-generated content, keyword stuffing, link manipulation, and scam pages."
+  },
+  "keyInsight": {
+    "label": "Key Insight from API Leak + DOJ Trial",
+    "text": "New domains are <strong>sandboxed for 3-6 months</strong> via the hostAge attribute, contradicting Google's public claim that domain age doesn't matter. SpamBrain assigns a <strong>scamness score (0-1023)</strong> for fraud detection, a <strong>GibberishScore</strong> for AI-generated content, and a binary <strong>spamRank</strong> (0 or 65535) based on outbound link patterns."
+  },
+  "pillars": [
+    {
+      "type": "leak",
+      "title": "Signals Confirmed",
+      "items": [
+        "<strong>phraseAnchorSpamPenalty</strong> - Combined anchor text demotion for spammy link patterns",
+        "<strong>spamRank</strong> - Binary score (0 or 65535) for linking to known spammers",
+        "<strong>spamBrainTotalDocSpamScore</strong> - Overall spam probability on 0-1 scale",
+        "<strong>keywordStuffingScore</strong> - Keyword density violation measurement",
+        "<strong>anchorMismatchDemotion</strong> - Penalty when inbound links don't match site topic",
+        "<strong>exactMatchDomainDemotion</strong> - Penalty for manipulative exact-match domains",
+        "<strong>phraseAnchorSpamDays</strong> - Days to discover 80% of spam phrases (link velocity)",
+        "<strong>CrapsIpPrior (packedIpAddress)</strong> - IP-level reputation scoring within NavBoost's CRAPS system. packedIpAddress stores network byte order IP string. unscaledIpPriorBadFraction measures IP-level bad-click reputation before linear scaling/offset/min-max transformation. References internal craps-ip-prior.h and craps-penalty.cc. IP block reputation may explain shared hosting ranking disadvantages (Reboot Online experiment by Shai Aharony/Oliver Sissons)",
+        "<strong>CrapsDevice.uxTier</strong> - Browser capability tier in NavBoost click classification: 1 = modern browsers, 2 = middle tier, 3 = very old browsers. Disproportionate clicks from low-tier browsers (tier 3) may flag automated manipulation, as click bots and CTR tools typically use outdated user agents that map to low uxTier values"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "Signals,  Core",
+      "items": [
+        "<strong>GibberishScore</strong> - Detection of nonsensical or machine-generated text",
+        "<strong>DocLevelSpamScore</strong> - Page-specific manipulation assessment",
+        "<strong>scamness</strong> - Fraud likelihood score, scaled 0-1023",
+        "<strong>hostAge</strong> - Domain age signal, sandboxes new sites 3-6 months",
+        "<strong>HostAgeSandbox</strong> - Explicit sandbox mechanism for new domains",
+        "<strong>IsAnchorBayesSpam</strong> - Bayesian classifier for unnatural anchor patterns",
+        "<strong>KeywordStuffingScore</strong> - Over-optimization detection (confirmed in both sources)"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "1 Patents",
+      "items": [
+        "Penguin algorithm targets manipulative link building patterns",
+        "Cross-domain spam link detection via link graph topology",
+        "SpamBrain neural network for link pattern recognition",
+        "Anchor text distribution analysis across linking domains",
+        "Link velocity measurement (rate of new backlinks over time)",
+        "Outbound link quality propagation (linking to spam = spam signal)",
+        "<strong>Anti-reverse-engineering noise</strong> - Patent <a href=\"https://patents.google.com/patent/US8612436\">US8612436</a> (Grundman, filed 2011): Adds controlled random noise to spam scores to prevent reverse engineering. Noise function B(x)=K*(x-x^2)^2 is shaped to be larger near decision boundaries (demotion at 0.6, blocking at 0.8). Enhanced boundary shaping: B'(x)=B(x)*(1+e^(-2000(x-0.6)^2)*0.9)*(1-e^(-5000(x-0.8)^2)*0.9). Three different variation functions for three score subsets. This is why SEO experiments to reverse-engineer spam thresholds produce inconsistent results"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How SpamBrain Affects Your SEO",
+      "items": [
+        "<strong>Audit outbound links aggressively because spamRank is binary</strong>: The leak confirmed spamRank is 0 or 65535 with no middle ground. A single outbound link to a known spam site can flip the score from clean to flagged. Regularly crawl your site for broken links, hacked injection links, and user-generated content (comments, forums) that may link to spam domains. Use nofollow on any link you cannot vouch for.",
+        "<strong>Diversify anchor text to avoid phraseAnchorSpamPenalty</strong>: The leak tracks phraseAnchorSpamCount (spam phrases from unique domains), phraseAnchorSpamDays (velocity: days to discover 80% of spam phrases), and phraseAnchorSpamFraq (fraction of anchors containing spam). If more than a threshold percentage of your inbound anchors use the same commercial phrase, the penalty triggers. Aim for a natural distribution: brand names, URLs, generic phrases, and varied descriptive text.",
+        "<strong>Expect a 3-6 month sandbox on new domains and plan accordingly</strong>: DOJ testimony confirmed hostAge sandboxes new domains at serving time. Do not expect organic traffic from a new domain in the first 3-6 months regardless of content quality. Use this period to build content depth, earn initial links, and generate engagement signals (social sharing, direct traffic) that help exit the sandbox faster.",
+        "<strong>Avoid keyword density thresholds that trigger keywordStuffingScore</strong>: Confirmed in both the API leak and DOJ trial, keywordStuffingScore measures over-optimization. There is no safe density percentage. Instead, write naturally and use semantic variations. If you notice the same phrase appearing more than 3-4 times per 1000 words, rewrite using synonyms or restructure sections.",
+        "<strong>Ensure inbound link topics match your site to prevent anchorMismatchDemotion</strong>: The leak confirmed anchorMismatchDemotion penalizes when inbound links do not match site topic. A cooking blog receiving bulk links from casino or pharmaceutical sites triggers this demotion. If you have been the target of negative SEO or accumulated off-topic links, disavow them proactively.",
+        "<strong>Do not register exact-match domains for SEO advantage</strong>: exactMatchDomainDemotion is an explicit penalty in the leak. Domains like 'best-running-shoes-2024.com' that exist solely to exploit keyword matching face demotion. Use a brandable domain and build topical authority through content quality instead.",
+        "<strong>Human-edit all AI-generated content to avoid GibberishScore flags</strong>: DOJ testimony confirmed GibberishScore detects nonsensical and machine-generated text. Raw LLM output with repetitive phrasing, logical inconsistencies, or hallucinated facts can trigger this filter. Every AI-generated piece needs substantive human editing: add original insights, verify facts, restructure for natural flow, and inject first-hand experience.",
+        "<strong>Yandex cross-reference: over-optimization can cause pre-ranking exclusion</strong>: Yandex applies 39 anti-SEO factors at the initial retrieval stage (L1), which can exclude pages from candidate lists BEFORE neural re-ranking. This is a qualitatively different penalty from post-ranking demotion: the page never enters the ranking pipeline at all. If Google's Mustang applies similar hard filters during initial candidate selection from the 400B+ index, heavily over-optimized pages may be invisible regardless of content quality. The Yandex leak also reveals FI_ADV (-0.251) as the single heaviest negative factor, validating that ad-heavy pages face extreme penalties."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "spamRank",
+      "source": "Leak: binary 0 or 65535",
+      "how": "Binary signal (0 or 65535 in 16-bit representation). Measures likelihood that a page links to known spam sites. 0 = clean, 65535 = flagged. Graph-based analysis of outbound link patterns.",
+      "formula": "<span class=\"cf-fn\">spamRank</span>(page) = <span class=\"cf-fn\">graph_analysis</span>(\n  <span class=\"cf-val\">outbound_links</span>, <span class=\"cf-val\">known_spam_set</span>\n)  <span class=\"cf-comment\">// binary: 0 (clean) or 65535 (flagged)</span>\n<span class=\"cf-kw\">if</span> links_to_spam &gt; <span class=\"cf-val\">0</span>: spamRank = <span class=\"cf-val\">65535</span>\n<span class=\"cf-comment\">// 16-bit representation, no middle ground</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US9002867\">US9002867</a> (spam detection in web pages)",
+      "affects": "Affected by: your outbound link profile. Linking to spam/low-quality sites triggers this. Audit outbound links regularly."
+    },
+    {
+      "name": "phraseAnchorSpamPenalty",
+      "source": "Leak",
+      "how": "Combined demotion penalty for spammy anchor text patterns. phraseAnchorSpamCount counts spam phrases from unique domains. phraseAnchorSpamDays tracks velocity (days to discover 80% of spam phrases). phraseAnchorSpamFraq measures fraction of all anchors containing spam.",
+      "formula": "<span class=\"cf-fn\">phraseAnchorSpam</span>(url) = <span class=\"cf-fn\">combine</span>(\n  <span class=\"cf-val\">spamCount</span>[unique_domains],\n  <span class=\"cf-val\">spamDays</span>(days_to_80pct),\n  <span class=\"cf-val\">spamFraq</span>(spam_anchors / total_anchors)\n)  <span class=\"cf-comment\">// velocity + concentration = penalty</span>\n<span class=\"cf-kw\">if</span> spamFraq &gt; <span class=\"cf-val\">threshold</span>: <span class=\"cf-kw\">apply</span> demotion",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US9002867\">US9002867</a> (spam detection), <a href=\"https://patents.google.com/patent/US9165040\">US9165040</a> (link graph analysis)",
+      "affects": "Affected by: anchor text diversity and naturalness. Avoid exact-match anchor text campaigns. Fast link velocity with repetitive anchors triggers detection."
+    },
+    {
+      "name": "GibberishScore",
+      "source": "DOJ: nonsensical/machine-generated text detection",
+      "how": "Detects nonsensical or machine-generated text. Quality filter for content coherence. Part of CompressedQualitySignals module in SpamBrain system.",
+      "formula": "<span class=\"cf-fn\">GibberishScore</span>(page) = <span class=\"cf-fn\">coherence_check</span>(\n  <span class=\"cf-val\">text_content</span>, <span class=\"cf-val\">language_model</span>\n)  <span class=\"cf-comment\">// in CompressedQualitySignals module</span>\n<span class=\"cf-kw\">if</span> score &gt; <span class=\"cf-val\">gibberish_threshold</span>: <span class=\"cf-kw\">flag</span> as machine_generated\n<span class=\"cf-comment\">// feeds into SpamBrain neural network</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US9002867\">US9002867</a> (spam detection), <a href=\"https://patents.google.com/patent/US8682892\">US8682892</a> (content quality scoring)",
+      "affects": "Affected by: content readability and coherence. AI-generated content that lacks logical structure may trigger this. Human editing and review improves scores."
+    },
+    {
+      "name": "hostAge",
+      "source": "DOJ: Domain age signal, 3-6 month sandbox",
+      "how": "Domain age signal used to sandbox new sites for 3-6 months at serving time. Newer domains face initial trust limitations until sufficient behavioral data accumulates. Contradicts Google's public denial of a sandbox.",
+      "formula": "<span class=\"cf-fn\">hostAge</span>(domain) = <span class=\"cf-fn\">days_since</span>(\n  <span class=\"cf-val\">first_index_date</span>\n)  <span class=\"cf-comment\">// serving-time evaluation</span>\n<span class=\"cf-kw\">if</span> hostAge &lt; <span class=\"cf-val\">~90-180 days</span>: <span class=\"cf-kw\">apply</span> sandbox\n<span class=\"cf-comment\">// exits sandbox as behavioral data accumulates</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8645362\">US8645362</a> (resource load times and trust), <a href=\"https://patents.google.com/patent/US9002867\">US9002867</a> (spam detection)",
+      "affects": "Affected by: domain age. New sites will have reduced visibility for 3-6 months regardless of content quality. Building behavioral signals (engagement) helps exit sandbox faster."
+    },
+    {
+      "name": "Spam Score Noise (Anti-Reverse-Engineering)",
+      "source": "Patent US8612436 (Grundman, Google, 2011)",
+      "how": "Google adds controlled random noise to spam scores to prevent SEO practitioners from reverse-engineering spam thresholds through experimentation. The noise function B(x)=K*(x-x^2)^2 peaks near decision boundaries and drops to zero at extremes (clearly spam or clearly clean). Enhanced boundary shaping amplifies noise specifically near the demotion threshold (0.6) and blocking threshold (0.8), making experimentation near boundaries unreliable. Three different variation functions are applied to three score ranges. Final noisy score: S'(z) = S(z) + B(S(z)) * R(z), where R is a random number in [-1, 1].",
+      "formula": "<span class=\"cf-fn\">B</span>(x) = <span class=\"cf-val\">K</span> &times; (x - x<sup>2</sup>)<sup>2</sup>\n<span class=\"cf-comment\">// K = L / 0.0625, L = max noise (e.g., 0.1)</span>\n<span class=\"cf-comment\">// peaks near 0.5, zero at 0 and 1</span>\n\n<span class=\"cf-fn\">B'</span>(x) = <span class=\"cf-fn\">B</span>(x) &times;\n  (1 + e<sup>-2000(x-0.6)<sup>2</sup></sup> &times; 0.9) &times;\n  (1 - e<sup>-5000(x-0.8)<sup>2</sup></sup> &times; 0.9)\n<span class=\"cf-comment\">// amplifies noise near demotion (0.6) and blocking (0.8)</span>\n\n<span class=\"cf-fn\">S'</span>(z) = <span class=\"cf-fn\">S</span>(z) + <span class=\"cf-fn\">B</span>(<span class=\"cf-fn\">S</span>(z)) &times; <span class=\"cf-fn\">R</span>(z)\n<span class=\"cf-comment\">// R(z) = random [-1.0, 1.0]</span>\n<span class=\"cf-comment\">// prevents reverse engineering via experimentation</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US8612436\">US8612436</a> (Reverse engineering circumvention of spam detection, 2011)",
+      "affects": "Affected by: nothing actionable. This is a defensive mechanism explaining why SEO experiments to detect spam thresholds produce inconsistent, unreliable results. The noise is intentionally maximized near decision boundaries."
+    },
+    {
+      "name": "CrapsIpPrior (IP Reputation)",
+      "source": "Leak: CrapsData protobuf (NavBoost)",
+      "how": "IP-level reputation scoring within NavBoost's CRAPS system. packedIpAddress (network byte order string) identifies the IP block associated with click traffic. unscaledIpPriorBadFraction measures the fraction of bad clicks originating from that IP range before linear scaling and normalization. High bad-click fraction from an IP block degrades the quality of click signals from that range. Implemented in craps-ip-prior.h and craps-penalty.cc. This may explain why shared hosting environments (where sites share IP blocks with spam/low-quality neighbors) face ranking disadvantages.",
+      "formula": "<span class=\"cf-fn\">CrapsIpPrior</span>(ip_block) = <span class=\"cf-fn\">aggregate</span>(\n  <span class=\"cf-val\">bad_clicks</span> / <span class=\"cf-val\">total_clicks</span>\n  <span class=\"cf-kw\">from</span> <span class=\"cf-val\">packedIpAddress</span> range\n) &rarr; <span class=\"cf-val\">unscaledIpPriorBadFraction</span>\n<span class=\"cf-comment\">// pre-transformation: linear scaling + offset + min-max</span>\n<span class=\"cf-comment\">// high bad fraction → click signals from IP degraded</span>\n<span class=\"cf-comment\">// shared hosting: neighbor spam poisons IP reputation</span>",
+      "affects": "Affected by: hosting environment. Shared hosting with spammy neighbors degrades IP reputation. Dedicated IPs or reputable hosting providers avoid this. Sites on compromised IP blocks may see click signals discounted."
+    }
+  ],
+  "pipeline": {
+    "title": "SpamBrain Detection Pipeline",
+    "stages": [
+      {
+        "name": "Content Analysis",
+        "detail": "GibberishScore, keywordStuffing, scamness"
+      },
+      {
+        "name": "Link Graph",
+        "detail": "spamRank, anchorMismatch, phraseAnchorSpam"
+      },
+      {
+        "name": "Domain Signals",
+        "detail": "hostAge sandbox, exactMatchDomain, domain trust"
+      },
+      {
+        "name": "SpamBrain ML",
+        "detail": "Neural network aggregation of all spam signals"
+      },
+      {
+        "name": "Action",
+        "detail": "Demotion, sandbox, or removal from index"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2003",
+      "type": "patent",
+      "title": "Early Spam Filters",
+      "desc": "Google files first patents on link spam detection and content quality filtering."
+    },
+    {
+      "year": "2011",
+      "type": "patent",
+      "title": "Anti-Reverse-Engineering Noise (US8612436)",
+      "desc": "Google patents controlled noise injection into spam scores to prevent SEO reverse engineering. B(x)=K*(x-x^2)^2 peaks near decision boundaries. Enhanced shaping amplifies noise near demotion (0.6) and blocking (0.8) thresholds. Three variation functions for three score ranges. Explains why threshold experiments produce inconsistent results."
+    },
+    {
+      "year": "2012",
+      "type": "patent",
+      "title": "Penguin Algorithm",
+      "desc": "Major link spam update. Targets manipulative link building, exact-match anchor text abuse."
+    },
+    {
+      "year": "2015",
+      "type": "patent",
+      "title": "Real-Time Penguin",
+      "desc": "Penguin integrated into core algorithm. Link spam penalties now applied in real-time crawl cycles."
+    },
+    {
+      "year": "2018",
+      "type": "patent",
+      "title": "SpamBrain Launches",
+      "desc": "Google announces AI-based spam detection system. Uses neural networks for link spam pattern recognition."
+    },
+    {
+      "year": "2023",
+      "type": "exploit",
+      "title": "Yandex Leak Cross-Reference",
+      "desc": "Yandex's FI_ADV (advertising, weight: -0.251) is the heaviest single negative factor in their entire system. 315 anti-SEO threshold factors detect over-optimization, with 39 operating at the initial retrieval stage (L1), excluding pages BEFORE neural re-ranking. FI_SPAM_KARMA uses Whois data for spam probability. PF filter detects CTR manipulation via IP similarity. FI_COMM_LINKS_SEO_HOSTS (-0.181) penalizes commercial anchor text. This pattern of pre-ranking exclusion suggests Google's Mustang may similarly hard-filter over-optimized pages before they reach the ranking pipeline."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "API Leak: 26 Spam Signals",
+      "desc": "phraseAnchorSpamPenalty, spamRank, keywordStuffingScore, anchorMismatchDemotion, and 22 more confirmed."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "DOJ Trial: Sandbox Confirmed",
+      "desc": "hostAge signal sandboxes new domains for 3-6 months. GibberishScore detects AI-generated content. scamness scored 0-1023."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"Domain age is not a ranking factor. A new site has the same chance as an established one.\"",
+      "internalSource": "API Leak + DOJ",
+      "internalClaim": "hostAge signal sandboxes new domains for 3-6 months in serving time. The HostAgeSandbox mechanism explicitly gates new domain visibility."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"We don't penalize sites. We just promote better content.\"",
+      "internalSource": "API Leak",
+      "internalClaim": "exactMatchDomainDemotion, anchorMismatchDemotion, phraseAnchorSpamPenalty are explicit demotion signals applied to specific pages and domains."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"Our spam systems focus on content quality, not links.\"",
+      "internalSource": "API Leak",
+      "internalClaim": "26 SpamBrain signals with heavy focus on link analysis: phraseAnchorSpamCount, phraseAnchorSpamFraq, spamRank, anchorMismatchDemotion. Link graph analysis remains central."
+    }
+  ]
+}

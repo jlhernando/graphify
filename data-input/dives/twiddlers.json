@@ -1,0 +1,198 @@
+{
+  "id": "twiddlers",
+  "route": "/twiddlers",
+  "systems": [
+    "Twiddlers"
+  ],
+  "hero": {
+    "title": "Twiddlers: Post-Ranking Adjustments",
+    "subtitle": "Twiddlers are Google's late-stage re-ranking filters that make final adjustments to search results after initial Mustang scoring. With 11 confirmed signals from the DOJ trial, they handle quality boosts, diversity enforcement, content filtering, and specialized result treatment. They are the \"last mile\" of Google's ranking pipeline."
+  },
+  "keyInsight": {
+    "label": "Key Insight from DOJ Trial",
+    "text": "Twiddlers operate in <strong>two categories</strong>: <strong>PredocTwiddlers</strong> process hundreds of URLs with fast heuristics for deduplication and diversity, while <strong>LazyTwiddlers</strong> operate on the top 20-30 results using full metadata for fine-grained adjustments. The <strong>YouTubeDensityTwiddler</strong> prevents YouTube from dominating SERPs, <strong>OfficialPageTwiddler</strong> boosts brand pages for navigational queries, and <strong>SocialLikesAnnotator</strong> confirms social signals influence rankings."
+  },
+  "pillars": [
+    {
+      "type": "doj",
+      "title": "Signals,  Core",
+      "items": [
+        "<strong>Twiddlers</strong> - Core late-stage re-ranking filter system (sworn testimony)",
+        "<strong>PredocTwiddlers</strong> - Fast heuristics on hundreds of URLs for dedup and diversity",
+        "<strong>LazyTwiddlers</strong> - Full metadata analysis on top 20-30 results",
+        "<strong>YouTubeDensityTwiddler</strong> - Prevents YouTube overrepresentation in SERPs",
+        "<strong>OfficialPageTwiddler</strong> - Boosts official brand pages for navigational queries",
+        "<strong>DMCAFilter</strong> - Filters URLs with copyright takedown notices",
+        "<strong>SocialLikesAnnotator</strong> - Boosts results with strong social engagement signals"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "Twiddler Functions in Mustang",
+      "items": [
+        "<strong>QualityBoost</strong> - Re-ranking function boosting high-quality results",
+        "<strong>RealTimeBoost</strong> - Real-time signals including Chrome visit data",
+        "<strong>WebImageBoost</strong> - Image result promotion in mixed SERPs",
+        "<strong>VideoScore</strong> - Video content quality and engagement measurement",
+        "<strong>ShoppingScore</strong> - E-commerce content quality indicator",
+        "<strong>BlogCategorizer</strong> - Blog content classification for SERP diversity",
+        "<strong>BadURLsCategorizer</strong> - Problematic URL identification and demotion"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "3 Patents",
+      "items": [
+        "Pluggable filter architecture allows adding new ranking adjustments",
+        "Result diversity enforcement prevents single-domain SERP dominance",
+        "Freshness Twiddler adjusts rankings for time-sensitive queries",
+        "Legal compliance filters (DMCA, court orders) applied at this stage",
+        "Brand/navigational query special treatment via OfficialPageTwiddler",
+        "Content type balancing between articles, videos, images, shopping",
+        "<strong>LC|C click fraction re-ranking</strong> - Patent <a href=\"https://patents.google.com/patent/US11816114\">US11816114</a> (Google, filed 2021): Post-ranking modification using implicit user feedback. LC|C = weighted_clicks / (total_clicks + S0), smoothed hierarchically across language/country. Click weights: short click (<5s) = -0.1, medium (5-30s) = 0.5, long (>30s) = 1.0, last click = 0.9. IRBoost = 1 + M/(1+e^(X*(LC|C-0.5))) (sigmoid), or linear/exponential variants. Adjusts by query category (navigational vs informational) and user type (expert vs novice)",
+        "<a href=\"https://patents.google.com/patent/US7440968\">US7440968</a>: Query boosting based on classification; <a href=\"https://patents.google.com/patent/US7827254\">US7827254</a>: Automatic generation of rewrite rules for URLs"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Twiddlers Affect Your SEO",
+      "items": [
+        "<strong>Earn social engagement signals for SocialLikesAnnotator</strong>: Despite Google publicly denying social signals as a ranking factor, DOJ testimony confirmed SocialLikesAnnotator as a Twiddler that annotates and potentially boosts results with strong social engagement. Build genuine social sharing for your content: shareable data visualizations, quotable insights, and content formats that naturally generate likes and shares on social platforms.",
+        "<strong>Keep content fresh for time-sensitive queries to benefit from FreshnessTwiddler</strong>: FreshnessTwiddler demotes stale content for time-sensitive queries. If your content covers topics with a freshness component (annual events, pricing, regulations, technology), update it with visible publication dates and change logs. Adding 'Updated March 2026' is not enough; the content itself must contain current information.",
+        "<strong>Secure your brand's OfficialPageTwiddler boost</strong>: OfficialPageTwiddler provides significant rank promotion for official domains on navigational queries. Build brand recognition through consistent naming across all platforms, claim your Google Business Profile, implement Schema.org Organization markup, and generate branded search volume. The stronger Google's confidence that your domain is the 'official' source for your brand, the larger the boost.",
+        "<strong>Diversify content formats to avoid single-type SERP caps</strong>: YouTubeDensityTwiddler caps video results per SERP, and similar diversity enforcement exists for other content types. If your strategy relies entirely on one format (e.g., only blog posts or only videos), you are competing for capped slots. Produce multiple content types, articles, videos, images, tools, so you can appear in different SERP sections simultaneously.",
+        "<strong>Avoid BadURLsCategorizer triggers with clean URL patterns</strong>: The leak confirmed BadURLsCategorizer identifies and demotes problematic URLs. Use clean, descriptive URL structures without excessive parameters, session IDs, or dynamically generated paths. URLs with patterns associated with spam (long parameter strings, numeric-only paths, excessive subdirectory depth) risk categorization as 'bad URLs.'",
+        "<strong>Leverage QualityBoost by meeting multiple quality thresholds</strong>: QualityBoost is a Twiddler re-ranking function that boosts high-quality results confirmed in the leak. This operates on top of initial Mustang scores, meaning quality can override raw relevance at the Twiddler stage. Pages that score well on Q*, engagement metrics, and content quality signals receive a multiplicative boost that can jump positions in the final top 20-30.",
+        "<strong>Use RealTimeBoost signals by driving direct Chrome traffic</strong>: The leak confirmed RealTimeBoost includes Chrome visit data as a real-time ranking signal. Pages receiving direct traffic from Chrome users (bookmarks, typed URLs, history visits) get a real-time boost. Build a loyal audience that returns directly to your content, not just through search, to strengthen this signal."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Twiddlers",
+      "source": "DOJ",
+      "how": "Series of re-ranking functions post-Mustang. Two categories: PredocTwiddlers (fast heuristics on hundreds of URLs for dedup/diversity) and LazyTwiddlers (full metadata on top 20-30 results for fine-grained adjustments).",
+      "formula": "<span class=\"cf-fn\">TwiddlerPipeline</span>(results) =\n<span class=\"cf-fn\">PredocTwiddlers</span>(<span class=\"cf-val\">results[0..N]</span>)  <span class=\"cf-comment\">// fast: dedup, diversity, ~100s URLs</span>\n&rarr; <span class=\"cf-fn\">LazyTwiddlers</span>(<span class=\"cf-val\">top[20..30]</span>)  <span class=\"cf-comment\">// full metadata, fine-grained</span>\n<span class=\"cf-comment\">// each twiddler adjusts score multiplicatively or additively</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8661029\">US8661029</a> (ranking based on click data)",
+      "affects": "Affected by: understanding which twiddlers exist helps optimize for specific adjustments."
+    },
+    {
+      "name": "OfficialPageTwiddler",
+      "source": "DOJ",
+      "how": "Boosts official brand and authoritative pages for navigational and brand queries. Identifies official domains and promotes them.",
+      "formula": "<span class=\"cf-fn\">OfficialPageTwiddler</span>(url, q) =\n<span class=\"cf-kw\">if</span> <span class=\"cf-fn\">isNavigational</span>(q) &amp;&amp; <span class=\"cf-fn\">isOfficialDomain</span>(url):\n<span class=\"cf-val\">score</span> *= <span class=\"cf-val\">officialBoost</span>  <span class=\"cf-comment\">// significant rank promotion</span>\n<span class=\"cf-comment\">// brand queries: official domain almost always #1</span>",
+      "affects": "Affected by: strong brand signals, Schema.org Organization, consistent brand presence. Important for navigational queries."
+    },
+    {
+      "name": "FreshnessTwiddler",
+      "source": "DOJ",
+      "how": "Adjusts rankings based on content timeliness. Promotes fresh content, demotes stale results for time-sensitive queries. Applied in the Twiddler framework.",
+      "formula": "<span class=\"cf-fn\">FreshnessTwiddler</span>(doc, q) =\n<span class=\"cf-kw\">if</span> <span class=\"cf-fn\">isTimeSensitive</span>(q):\n<span class=\"cf-val\">score</span> *= <span class=\"cf-fn\">decay</span>(<span class=\"cf-val\">doc.age</span>, <span class=\"cf-val\">queryFreshnessNeed</span>)\n<span class=\"cf-comment\">// stale content demoted for news/trending queries</span>",
+      "affects": "Affected by: keep content updated for time-sensitive topics. Publication dates, regular updates matter."
+    },
+    {
+      "name": "YouTubeDensityTwiddler",
+      "source": "DOJ",
+      "how": "Manages video result density in SERPs. Prevents YouTube overrepresentation. Limits how many video results appear for a query.",
+      "formula": "<span class=\"cf-fn\">YouTubeDensityTwiddler</span>(serp) =\n<span class=\"cf-kw\">if</span> <span class=\"cf-fn\">count</span>(<span class=\"cf-val\">serp.youtube</span>) &gt; <span class=\"cf-val\">maxDensity</span>:\n<span class=\"cf-kw\">demote</span>(<span class=\"cf-val\">excess youtube results</span>)  <span class=\"cf-comment\">// cap video slots</span>\n<span class=\"cf-comment\">// prevents YouTube monopolizing SERPs</span>",
+      "affects": "Affected by: not directly actionable. But means video results face a cap in SERPs."
+    },
+    {
+      "name": "LC|C Click Fraction Boost",
+      "source": "Patent US11816114 (Google, 2021)",
+      "how": "Post-ranking score modification using implicit user feedback. Computes LC|C (Long Click given Click) fraction: ratio of quality-weighted clicks to total clicks for each query-document pair. Click weights: short (<5s) = -0.1, medium (5-30s) = 0.5, long (>30s) = 1.0, last click (no return) = 0.9. Base fraction smoothed hierarchically across language and country levels with smoothing parameters S0, S1, S2. Transformed into IR score boost via sigmoid, linear, or exponential functions. Adjusts thresholds by query category (navigational queries accept shorter dwell times) and user type (expert users weighted more heavily).",
+      "formula": "<span class=\"cf-fn\">LCC_BASE</span> = <span class=\"cf-val\">#WC</span>(q,d) /\n  (<span class=\"cf-val\">#C</span>(q,d) + <span class=\"cf-val\">S0</span>)\n<span class=\"cf-comment\">// WC = weighted clicks, C = total clicks</span>\n\n<span class=\"cf-fn\">LCC_LANG</span> = (<span class=\"cf-val\">#WC</span>(q,d,L) + S1 &times; <span class=\"cf-val\">LCC_BASE</span>) /\n  (<span class=\"cf-val\">#C</span>(q,d,L) + <span class=\"cf-val\">S1</span>)\n\n<span class=\"cf-fn\">IRBoost</span> = 1 + <span class=\"cf-val\">M</span> /\n  (1 + <span class=\"cf-fn\">e</span><sup>(<span class=\"cf-val\">X</span> &times; (<span class=\"cf-val\">LC|C</span> - 0.5))</sup>)\n<span class=\"cf-comment\">// click weights: short=-0.1, med=0.5, long=1.0</span>\n<span class=\"cf-comment\">// last click=0.9, preceded click=0.3</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US11816114\">US11816114</a> (Implicit user feedback ranking, 2021)",
+      "affects": "Affected by: user dwell time, click quality, query category (navigational vs informational), user expertise level. Longer engagement produces higher LC|C and stronger boost."
+    }
+  ],
+  "pipeline": {
+    "title": "Twiddler Processing Pipeline",
+    "stages": [
+      {
+        "name": "Mustang Output",
+        "detail": "Initial scored results from retrieval and first-pass ranking"
+      },
+      {
+        "name": "PredocTwiddlers",
+        "detail": "Fast heuristics: dedup, diversity, BadURLs filtering"
+      },
+      {
+        "name": "Quality Twiddlers",
+        "detail": "QualityBoost, FreshnessTwiddler, OfficialPageTwiddler"
+      },
+      {
+        "name": "LazyTwiddlers",
+        "detail": "Full metadata on top 20-30: VideoScore, ShoppingScore, social"
+      },
+      {
+        "name": "Final SERP",
+        "detail": "DMCAFilter, YouTubeDensity cap, content type balance"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2011",
+      "type": "patent",
+      "title": "Early Re-ranking",
+      "desc": "Google introduces post-retrieval ranking adjustments. Manual result quality filters applied after initial scoring."
+    },
+    {
+      "year": "2015",
+      "type": "patent",
+      "title": "Twiddler Framework",
+      "desc": "Formalized system of pluggable re-ranking functions. Each Twiddler handles a specific ranking adjustment."
+    },
+    {
+      "year": "2019",
+      "type": "patent",
+      "title": "Diversity Enforcement",
+      "desc": "Twiddlers expanded to handle result diversity, preventing domain monopolization of SERPs."
+    },
+    {
+      "year": "2021",
+      "type": "patent",
+      "title": "LC|C Click Fraction Patent (US11816114)",
+      "desc": "Google patents implicit user feedback re-ranking. LC|C = weighted clicks / total clicks, smoothed across language/country. Click weights: short (<5s) = -0.1, long (>30s) = 1.0. IRBoost via sigmoid/linear/exponential transforms. Adjusts by query category and user expertise."
+    },
+    {
+      "year": "2022",
+      "type": "patent",
+      "title": "Content Filtering",
+      "desc": "DMCA, copyright, and legal compliance Twiddlers added. Content moderation integrated into ranking pipeline."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "DOJ Trial: 11 Twiddlers Named",
+      "desc": "PredocTwiddlers, LazyTwiddlers, YouTubeDensityTwiddler, OfficialPageTwiddler, BlogCategorizer, and 6 more revealed."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "API Leak: Twiddler Functions",
+      "desc": "QualityBoost, RealTimeBoost, WebImageBoost confirmed as Mustang-integrated Twiddler re-ranking functions."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "Social signals are not a ranking factor.",
+      "internalSource": "DOJ Trial",
+      "internalClaim": "SocialLikesAnnotator is a confirmed Twiddler that annotates and potentially boosts results with strong social engagement signals (likes, shares). Social signals are used."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "YouTube videos are ranked the same as any other content.",
+      "internalSource": "DOJ Trial",
+      "internalClaim": "YouTubeDensityTwiddler explicitly manages video result density in SERPs to prevent YouTube overrepresentation. YouTube gets special, not equal, treatment."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "Rankings are determined algorithmically without manual intervention.",
+      "internalSource": "DOJ Trial",
+      "internalClaim": "OfficialPageTwiddler manually boosts brand pages. BlogCategorizer applies content-type-specific treatment. These are targeted, deliberate ranking overrides for specific content categories."
+    }
+  ]
+}

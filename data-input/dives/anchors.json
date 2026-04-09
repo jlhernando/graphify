@@ -1,0 +1,181 @@
+{
+  "id": "anchors",
+  "route": "/anchors",
+  "systems": [
+    "Anchors",
+    "SpamBrain"
+  ],
+  "hero": {
+    "title": "Anchors: The ABC Framework's Link Signal",
+    "subtitle": "Anchor text is the 'A' in Google's ABC framework (Anchors + Body + Clicks = T* Topicality Score). HJ Kim's DOJ deposition confirmed anchor text as one of the three foundational ranking pillars. The API leak revealed a sophisticated anchor quality pipeline: source pages classified into HIGH/MEDIUM/LOW quality tiers, homepage trust levels (FULLY_TRUSTED to NOT_TRUSTED), font size as a prominence signal, and the phraseAnchorSpam suite for detecting manipulation. The Reasonable Surfer model (US7716225) means not all links pass equal value."
+  },
+  "keyInsight": {
+    "label": "Key Insight from API Leak + DOJ Trial",
+    "text": "The 2024 API leak exposed Google's <strong>three-tier anchor quality system</strong>: source pages classified as TYPE_HIGH_QUALITY, TYPE_MEDIUM_QUALITY, or TYPE_LOW_QUALITY via the <strong>sourceType</strong> field. Homepage trust adds another layer: FULLY_TRUSTED, PARTIALLY_TRUSTED, NOT_TRUSTED, NOT_HOMEPAGE. The <strong>anchorMismatchDemotion</strong> signal penalizes pages whose inbound anchor text doesn't match their content. HJ Kim confirmed at trial that <strong>T* = Anchors + Body + Clicks</strong>, making anchor text one of three sub-signals in the core topicality score. The <strong>phraseAnchorSpam</strong> suite (penalty, count, days, rate) feeds into SpamBrain for detecting link manipulation at scale."
+  },
+  "pillars": [
+    {
+      "type": "patent",
+      "title": "11 Patents",
+      "items": [
+        "Patent <a href=\"https://patents.google.com/patent/US7260573B2\">US7260573</a>: <strong>Personalizing anchor text scores</strong> - Anchor text relevance scored differently per user/context. Not a flat global score",
+        "Patent <a href=\"https://patents.google.com/patent/US8458207B2\">US8458207</a>: <strong>Using anchor text to provide context</strong> - Surrounding text of anchor links used as additional context signal beyond the anchor itself",
+        "Patent <a href=\"https://patents.google.com/patent/US7716225B1\">US7716225</a>: <strong>Reasonable Surfer</strong> (Dean, Anderson, Battle) - Link value weighted by font size, position, color, context. Directly affects anchor text value",
+        "Patent <a href=\"https://patents.google.com/patent/US7533092B2\">US7533092</a>: <strong>Link-based spam detection</strong> - Identifies unnatural link patterns including coordinated anchor text manipulation",
+        "Anchor text has been a core ranking signal since the original Backrub paper (1996). It tells Google what OTHER sites think a page is about",
+        "<a href=\"https://patents.google.com/patent/US8549014\">US8549014</a>: Document scoring based on document content update; <a href=\"https://patents.google.com/patent/US20110238644\">US20110238644</a>: Using Anchor Text With Hyperlink Structures for Web Searches; <a href=\"https://patents.google.com/patent/US20090287698\">US20090287698</a>: Artificial anchor for a document",
+        "<a href=\"https://patents.google.com/patent/US20090319533\">US20090319533</a>: Assigning Human-Understandable Labels to Web Pages; <a href=\"https://patents.google.com/patent/US20090259629\">US20090259629</a>: Abbreviation handling in web search; <a href=\"https://patents.google.com/patent/US7089490\">US7089490</a>: Identifying navigation bars and objectionable navigation bars",
+        "<a href=\"https://patents.google.com/patent/US20110033080\">US20110033080</a>: Processing techniques for text capture from a rendered document"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "API Leak: Anchor Quality Pipeline",
+      "items": [
+        "<strong>sourceType</strong> (AnchorsAnchor): Source page quality tier: TYPE_HIGH_QUALITY, TYPE_MEDIUM_QUALITY, TYPE_LOW_QUALITY",
+        "<strong>homePageInfo</strong> (AnchorsAnchorSource): Homepage trust level: FULLY_TRUSTED, PARTIALLY_TRUSTED, NOT_TRUSTED, NOT_HOMEPAGE",
+        "<strong>fontsize</strong> (AnchorsAnchor): Font size of anchor text used as link prominence signal (Reasonable Surfer)",
+        "<strong>droppedLocalAnchorCount</strong>: Internal links explicitly excluded from external link calculations",
+        "<strong>TrustedAnchors</strong>: Quality and trustworthiness assessment of inbound anchor text",
+        "<strong>phraseAnchorSpamPenalty</strong>: Combined demotion penalty for spammy anchor patterns (feeds SpamBrain)",
+        "<strong>phraseAnchorSpamCount</strong>: Number of spammy anchor phrases detected pointing to a page",
+        "<strong>homepagePagerankNs</strong> (AnchorsAnchorSource): Homepage PageRank_NS used as trust anchor for source evaluation"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "DOJ Trial: ABC Framework",
+      "items": [
+        "<strong>HJ Kim</strong>: T* (Topicality) = Anchors + Body + Clicks. Anchor text is one of three foundational sub-signals",
+        "<strong>T*</strong>: Query-dependent topicality score. Anchors measure what the web says about a document through link context",
+        "<strong>anchorMismatchDemotion</strong>: Pages penalized when inbound anchor text doesn't match actual page content",
+        "<strong>IsAnchorBayesSpam</strong>: Bayesian classifier detecting unnatural anchor text patterns indicative of link manipulation",
+        "<strong>Three Pillars of Ranking</strong>: Body (content), Anchors (web mentions), User-interactions (clicks, attention). Core architectural principle from trial exhibits"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Anchor Text Affects Rankings",
+      "items": [
+        "<strong>Quality tier matters</strong>: A link from a HIGH_QUALITY source passes more value than LOW_QUALITY. Not all backlinks are equal",
+        "<strong>Homepage trust propagates</strong>: FULLY_TRUSTED homepages transfer more authority than PARTIALLY_TRUSTED or NOT_TRUSTED",
+        "<strong>Font size = prominence</strong>: Larger anchor text = higher click probability = more value passed (Reasonable Surfer)",
+        "<strong>Content-anchor alignment</strong>: anchorMismatchDemotion penalizes mismatches. Anchor text should match page topic",
+        "<strong>Diversity over volume</strong>: IndyRank measures backlink independence. Many unrelated sources > cluster of related sites",
+        "<strong>Internal vs external separation</strong>: droppedLocalAnchorCount shows Google explicitly separates internal from external link signals",
+        "<strong>Spam detection is multi-signal</strong>: phraseAnchorSpam tracks penalty, count, days, and rate. Patterns detected over time, not just volume",
+        "<strong>Context beyond the link</strong>: US8458207 patents using surrounding text as context. The paragraph around your link matters",
+        "<strong>Yandex cross-reference: BM25 and per-query link relevance</strong>: Yandex uses BM25 (not TF*IDF) for both anchor text and body text relevance, validating the methodology behind Google's T* scoring. Yandex's FI_LINK_RELEV evaluates link relevance on a per-query basis, making link value dynamic rather than static. This confirms that the same backlink can have different ranking value depending on the search query. Yandex also tracks 146 distinct anchor text factors with different weights for exact match, phrase match, and query term dispersion across links"
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "T* Topicality Score (Anchor Component)",
+      "source": "DOJ",
+      "how": "T* is the query-dependent topicality score computed during initial retrieval. It combines three sub-signals: Anchors (what other sites say about the page through link text), Body (the page's own content), and Clicks (user interaction data from NavBoost). The Anchors sub-signal evaluates all inbound anchor text, weighted by source quality tier and homepage trust level.",
+      "formula": "<span class=\"cf-fn\">T*</span>(query, doc) = <span class=\"cf-fn\">f</span>(\n  <span class=\"cf-fn\">Anchors</span>(query, doc),\n  <span class=\"cf-fn\">Body</span>(query, doc),\n  <span class=\"cf-fn\">Clicks</span>(query, doc)\n)\n<span class=\"cf-comment\">// Anchors = what the web says about this page</span>\n<span class=\"cf-comment\">// Body = what the page says about itself</span>\n<span class=\"cf-comment\">// Clicks = what users do on this page</span>",
+      "patents": "",
+      "affects": "Affected by: anchor text relevance, source quality tier, homepage trust, body content match, NavBoost click data"
+    },
+    {
+      "name": "Anchor Source Quality Scoring",
+      "source": "Leak",
+      "how": "Each inbound link is scored based on the source page's quality tier (HIGH/MEDIUM/LOW) and the source domain's homepage trust level (FULLY_TRUSTED/PARTIALLY_TRUSTED/NOT_TRUSTED/NOT_HOMEPAGE). Links from high-quality, fully-trusted sources pass significantly more anchor value. Font size of the anchor text adds a prominence multiplier (Reasonable Surfer model).",
+      "formula": "<span class=\"cf-fn\">AnchorValue</span>(link) =\n  <span class=\"cf-fn\">weight</span>(<span class=\"cf-val\">sourceType</span>) *\n  <span class=\"cf-fn\">weight</span>(<span class=\"cf-val\">homePageInfo</span>) *\n  <span class=\"cf-fn\">prominence</span>(<span class=\"cf-val\">fontsize</span>, <span class=\"cf-val\">position</span>)\n<span class=\"cf-comment\">// sourceType: HIGH > MEDIUM > LOW</span>\n<span class=\"cf-comment\">// homePageInfo: FULLY_TRUSTED > PARTIALLY > NOT</span>\n<span class=\"cf-comment\">// Reasonable Surfer: font size, position matter</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US7260573B2\">US7260573</a>, <a href=\"https://patents.google.com/patent/US7716225B1\">US7716225</a>",
+      "affects": "Affected by: source page quality tier, homepage trust level, font size, link position, anchor text context"
+    },
+    {
+      "name": "Anchor Mismatch Demotion",
+      "source": "DOJ+Leak",
+      "how": "When the aggregate inbound anchor text pointing to a page doesn't match the page's actual content, Google applies a demotion. This catches pages that have manipulated their backlink profile with irrelevant anchor text, or pages that have changed content but still carry old anchor text signals. The Bayesian classifier (IsAnchorBayesSpam) detects unnatural patterns.",
+      "formula": "<span class=\"cf-fn\">AnchorDemotion</span>(doc) =\n  <span class=\"cf-fn\">mismatch</span>(\n    <span class=\"cf-fn\">aggregate_anchors</span>(<span class=\"cf-val\">doc</span>),\n    <span class=\"cf-fn\">content_topic</span>(<span class=\"cf-val\">doc</span>)\n  ) + <span class=\"cf-fn\">BayesSpam</span>(<span class=\"cf-val\">anchor_patterns</span>)\n<span class=\"cf-comment\">// anchorMismatchDemotion: topic mismatch penalty</span>\n<span class=\"cf-comment\">// IsAnchorBayesSpam: unnatural pattern detection</span>\n<span class=\"cf-comment\">// phraseAnchorSpam: rate + count + days tracking</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US7533092B2\">US7533092</a>",
+      "affects": "Affected by: anchor-content topic alignment, anchor text diversity, spam pattern detection, manipulation timeline"
+    }
+  ],
+  "pipeline": {
+    "title": "Anchor Text Processing Pipeline",
+    "stages": [
+      {
+        "name": "Link Discovery & Crawl",
+        "detail": "Trawler discovers links during crawl. Alexandria extracts anchor text, surrounding context, font size, position, and link attributes"
+      },
+      {
+        "name": "Source Quality Classification",
+        "detail": "Each source page classified into quality tiers (HIGH/MEDIUM/LOW). Homepage trust assessed (FULLY_TRUSTED to NOT_TRUSTED)"
+      },
+      {
+        "name": "Anchor Text Extraction",
+        "detail": "Anchor text parsed with surrounding context (US8458207). Internal links separated from external (droppedLocalAnchorCount)"
+      },
+      {
+        "name": "Reasonable Surfer Weighting",
+        "detail": "Each link weighted by click probability: font size, position, color, context, topical relevance (US7716225)"
+      },
+      {
+        "name": "Spam Detection",
+        "detail": "phraseAnchorSpam suite evaluates patterns: penalty score, spam count, days active, manipulation rate. IsAnchorBayesSpam classifier runs"
+      },
+      {
+        "name": "Mismatch Check",
+        "detail": "anchorMismatchDemotion compares aggregate anchor text topics against actual page content. Mismatches demoted"
+      },
+      {
+        "name": "T* Computation",
+        "detail": "Anchor scores combined with Body and Clicks sub-signals to compute T* (Topicality). Fed into Mustang for initial retrieval ranking"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "1996",
+      "type": "patent",
+      "title": "Backrub Paper",
+      "desc": "Brin and Page's original paper identifies anchor text as a key signal: 'what others say about you matters more than what you say about yourself.'"
+    },
+    {
+      "year": "2004",
+      "type": "patent",
+      "title": "Reasonable Surfer",
+      "desc": "US7716225 filed. Not all links are equal. Font size, position, color, context determine how much anchor value passes."
+    },
+    {
+      "year": "2006",
+      "type": "patent",
+      "title": "Personalized Anchor Scores",
+      "desc": "US7260573: Anchor text relevance scored differently per user/context. Anchor scores are not global constants."
+    },
+    {
+      "year": "2009",
+      "type": "patent",
+      "title": "Anchor Context Patent",
+      "desc": "US8458207: Surrounding text of anchor links used as additional signal. The paragraph around a link provides context."
+    },
+    {
+      "year": "2012",
+      "type": "patent",
+      "title": "Penguin Update",
+      "desc": "Google targets manipulative anchor text. Over-optimized exact-match anchors penalized. Natural anchor diversity rewarded."
+    },
+    {
+      "year": "2023",
+      "type": "exploit",
+      "title": "Yandex Leak Cross-Reference",
+      "desc": "Yandex uses BM25 (not TF*IDF) for anchor text and body text relevance scoring, validating Google's T* methodology. 146 anchor-specific factors (TG_LINK_TEXT) with different weights for exact match vs phrase match vs query alignment. FI_LINK_RELEV evaluates link relevance dynamically per-query. Link age is an explicit factor (older links weighted more). Non-commercial link ratio tracked separately (FI_COMM_LINKS_SEO_HOSTS, weight: -0.181)."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "Quality Tiers Revealed",
+      "desc": "API leak exposes three-tier source quality (HIGH/MEDIUM/LOW), homepage trust levels, phraseAnchorSpam suite, fontsize signal."
+    },
+    {
+      "year": "2025",
+      "type": "doj",
+      "title": "ABC Framework Confirmed",
+      "desc": "HJ Kim confirms T* = Anchors + Body + Clicks. Anchor text is one of three foundational pillars of Google's topicality scoring."
+    }
+  ]
+}

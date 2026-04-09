@@ -1,0 +1,1042 @@
+{
+  "id": "modern-patents",
+  "route": "/modern-patents",
+  "systems": [
+    "Patents"
+  ],
+  "hero": {
+    "title": "Patent Timeline: From Foundations to LLM Era",
+    "subtitle": "key Google search patents spanning 2000-2026. From HITS (2000) and PageRank (2001) through Panda, Hummingbird, RankBrain, and Word2Vec to the LLM era. Pre-2023 patents establish authority, entity, quality, and feedback systems. Modern patents (2023+) show a rapid shift to LLM-based ranking, RL fine-tuning, and AI-generated content."
+  },
+  "keyInsight": {
+    "label": "Key Pattern: From Hand-Crafted to LLM-Based",
+    "text": "The pre-2023 era reveals <strong>three architectural layers</strong>: link-based authority (PageRank 2001, Reasonable Surfer 2010, Distance-Based PageRank 2018), content quality (Phrase-Based Indexing 2009, Panda 2014, Hummingbird 2013), and user signals (Click Feedback 2015, Word2Vec/RankBrain 2017). The DOJ trial confirmed most signals are <strong>hand-crafted, not ML</strong>. But 2023+ patents show a rapid shift: <strong>US20250124067A1</strong> uses LLMs for pairwise ranking, <strong>US20260010575A1</strong> fine-tunes LLMs with RL, and <strong>US12536233B1</strong> generates AI landing pages. The hand-crafted era is transitioning to a <strong>fully LLM-augmented pipeline</strong>."
+  },
+  "patents": [
+    {
+      "num": "US6112203A",
+      "title": "HITS Algorithm (Connectivity Analysis)",
+      "date": "Aug 2000",
+      "sys": "Authority",
+      "desc": "Ranks documents as hubs and authorities using connectivity analysis. Pages linking to authorities become hubs. Kleinberg algorithm."
+    },
+    {
+      "num": "US6285999B1",
+      "title": "PageRank",
+      "date": "Sep 2001",
+      "sys": "Authority",
+      "desc": "THE foundational patent. Ranks documents by analyzing hyperlink structure, assigning importance based on number and quality of incoming links."
+    },
+    {
+      "num": "US6526440B1",
+      "title": "Local Inter-Connectivity Reranking",
+      "date": "Feb 2003",
+      "sys": "Authority",
+      "desc": "Reranks search results by analyzing link connections between top results. Pages linking to each other form authority clusters."
+    },
+    {
+      "num": "US6615209B1",
+      "title": "Detecting Query-Specific Duplicate Documents",
+      "date": "Sep 2003",
+      "sys": "Quality",
+      "desc": "Detects near-duplicate pages per query. Ensures search results show diverse content, not copies of the same page."
+    },
+    {
+      "num": "US6658423B1",
+      "title": "Detecting Duplicate and Near-Duplicate Files",
+      "date": "Dec 2003",
+      "sys": "Quality",
+      "desc": "Fingerprint-based duplicate detection using shingling. Identifies copied content across the web at scale."
+    },
+    {
+      "num": "US6678681B1",
+      "title": "Information Extraction from a Database",
+      "date": "Jan 2004",
+      "sys": "Entity",
+      "desc": "Sergey Brin's DIPRE system. Extracts structured information from the web using pattern matching. Foundation for Knowledge Graph."
+    },
+    {
+      "num": "US6799176B1",
+      "title": "Scoring Documents in a Linked Database",
+      "date": "Sep 2004",
+      "sys": "Authority",
+      "desc": "PageRank continuation. Weighted link scoring with damping factor improvements. Larry Page's refined ranking method."
+    },
+    {
+      "num": "US7058628B2",
+      "title": "Method for Node Ranking in a Linked Database",
+      "date": "Jun 2006",
+      "sys": "Authority",
+      "desc": "Further PageRank refinement. Handles link spam and dangling nodes. Assigns initial scores based on document features."
+    },
+    {
+      "num": "US7231399B1",
+      "title": "Ranking Documents Based on Large Data Sets",
+      "date": "Jun 2007",
+      "sys": "Quality",
+      "desc": "Large-scale document ranking using distributed computing. Handles billions of documents across server clusters."
+    },
+    {
+      "num": "US7260573B1",
+      "title": "Personalizing Anchor Text Scores",
+      "date": "Aug 2007",
+      "sys": "Authority",
+      "desc": "Personalizes link value by adjusting anchor text scores based on user profiles, search history, and preferences."
+    },
+    {
+      "num": "US7302645B2",
+      "title": "Identifying Manipulated Articles",
+      "date": "Nov 2007",
+      "sys": "Spam",
+      "desc": "Detects content manipulation by comparing article versions over time. Identifies suspicious edits and content spinning."
+    },
+    {
+      "num": "US7308643B1",
+      "title": "Anchor Tag Indexing in Web Crawler",
+      "date": "Dec 2007",
+      "sys": "Authority",
+      "desc": "Indexes anchor text during crawling. Associates anchor descriptions with target pages for ranking signals."
+    },
+    {
+      "num": "US7096214B1",
+      "title": "Editorial Opinion in Search Ranking",
+      "date": "Aug 2006",
+      "sys": "Quality",
+      "desc": "Combines algorithmic ranking with editorial/human evaluations. Curated ratings influence search result ordering."
+    },
+    {
+      "num": "US7136854B1",
+      "title": "Search Results for Ambiguous Queries",
+      "date": "Nov 2006",
+      "sys": "Quality",
+      "desc": "Handles ambiguous queries by providing diverse results covering multiple interpretations. Query disambiguation."
+    },
+    {
+      "num": "US7213198B1",
+      "title": "Link-Based Clustering of Hyperlinked Documents",
+      "date": "May 2007",
+      "sys": "Authority",
+      "desc": "Clusters web pages by link structure. Pages that link to each other or share link neighborhoods form topical clusters."
+    },
+    {
+      "num": "US7249121B1",
+      "title": "Semantic Units from Search Queries",
+      "date": "Jul 2007",
+      "sys": "Entity",
+      "desc": "Identifies semantic units (meaningful phrases, entities) within search queries. Foundation for understanding multi-word queries."
+    },
+    {
+      "num": "US7269587B1",
+      "title": "Scoring Documents in a Linked Database",
+      "date": "Sep 2007",
+      "sys": "Authority",
+      "desc": "Advanced link-based scoring with spam resistance. Analyzes link graph topology to identify authoritative documents."
+    },
+    {
+      "num": "US7222127B1",
+      "title": "Large Scale Machine Learning Systems",
+      "date": "May 2007",
+      "sys": "Neural",
+      "desc": "Infrastructure for large-scale ML in search. Distributed learning across massive document collections."
+    },
+    {
+      "num": "US7146358B1",
+      "title": "Anchor Text as Parallel Corpora",
+      "date": "Dec 2006",
+      "sys": "Entity",
+      "desc": "Uses anchor text as parallel translations for cross-language information retrieval. Links bridge language barriers."
+    },
+    {
+      "num": "US7346839B2",
+      "title": "Information Retrieval Based on Historical Data",
+      "date": "Mar 2008",
+      "sys": "Freshness",
+      "desc": "Scores documents using temporal data: discovery date, change frequency, link acquisition patterns, user behavior over time."
+    },
+    {
+      "num": "US7350187B2",
+      "title": "Automatically Creating Lists",
+      "date": "Mar 2008",
+      "sys": "Entity",
+      "desc": "Automatically generates structured lists from web content. Foundation for featured snippet list extraction."
+    },
+    {
+      "num": "US7426507B1",
+      "title": "Automatic Taxonomy Generation Using Phrases",
+      "date": "Sep 2008",
+      "sys": "Entity",
+      "desc": "Generates topic taxonomies from phrase co-occurrence patterns. Organizes search results into meaningful categories."
+    },
+    {
+      "num": "US7536408B2",
+      "title": "Phrase-Based Indexing",
+      "date": "May 2009",
+      "sys": "Quality",
+      "desc": "Uses co-occurring phrases to index and retrieve documents. Phrases that predict other phrases indicate topical relevance."
+    },
+    {
+      "num": "US7536382B2",
+      "title": "Query Rewriting with Entity Detection",
+      "date": "May 2009",
+      "sys": "Entity",
+      "desc": "Detects named entities in queries and rewrites queries to improve results. Foundation for brand/entity understanding."
+    },
+    {
+      "num": "US7577655B2",
+      "title": "Improving Ranking of News Articles",
+      "date": "Aug 2009",
+      "sys": "Freshness",
+      "desc": "Ranks news by source reputation, publication recency, and topical relevance. Foundation for Google News ranking."
+    },
+    {
+      "num": "US7636714B1",
+      "title": "Query Term Synonyms Within Query Context",
+      "date": "Dec 2009",
+      "sys": "Quality",
+      "desc": "Determines synonyms contextually. Same word has different synonyms depending on query context and user intent."
+    },
+    {
+      "num": "US6754873B2",
+      "title": "Finding Related Hyperlinked Documents",
+      "date": "Jun 2004",
+      "sys": "Authority",
+      "desc": "Discovers related pages by analyzing link graph neighborhoods. Pages sharing similar link patterns are topically related."
+    },
+    {
+      "num": "US7565358B2",
+      "title": "Agent Rank",
+      "date": "Jul 2009",
+      "sys": "Authority",
+      "desc": "Assigns quality scores based on author reputation via digital signatures. Foundation for E-E-A-T author signals."
+    },
+    {
+      "num": "US7603350B1",
+      "title": "Search Result Ranking Based on Trust",
+      "date": "Oct 2009",
+      "sys": "Authority",
+      "desc": "Ranks results based on trust scores from expert annotations. Trust propagation from seed documents through links."
+    },
+    {
+      "num": "US7716225B1",
+      "title": "Reasonable Surfer Model",
+      "date": "May 2010",
+      "sys": "Authority",
+      "desc": "Links users are likely to click pass more PageRank. Considers link position, font size, anchor text, content relatedness."
+    },
+    {
+      "num": "US7792833B2",
+      "title": "Ranking Search Results Using Language Types",
+      "date": "Sep 2010",
+      "sys": "Quality",
+      "desc": "Adjusts ranking based on language comparison between document and query. Language type matching."
+    },
+    {
+      "num": "US20110191416A1",
+      "title": "Content Author Badges",
+      "date": "Aug 2011",
+      "sys": "Authority",
+      "desc": "Visual verification of content creators via cryptographic hash. Design elements for authorship representation."
+    },
+    {
+      "num": "US8150842B2",
+      "title": "Reputation of an Author of Online Content",
+      "date": "Apr 2012",
+      "sys": "Authority",
+      "desc": "Author reputation scoring based on peer reviews and community ratings. Scores affect content ranking and revenue."
+    },
+    {
+      "num": "US8244722B1",
+      "title": "Rank-Modifying Spammers",
+      "date": "Aug 2012",
+      "sys": "Spam",
+      "desc": "Anti-spam mechanism using rank transition functions. Temporarily changes rankings to break spammer feedback loops."
+    },
+    {
+      "num": "US8321409B1",
+      "title": "Scoring Documents by Co-Occurrence",
+      "date": "Nov 2012",
+      "sys": "Quality",
+      "desc": "Scores documents using word co-occurrence relationships. Enables ranking pages with no hyperlink connections between them."
+    },
+    {
+      "num": "US8538984B1",
+      "title": "Synonym Identification (Hummingbird)",
+      "date": "Sep 2013",
+      "sys": "Quality",
+      "desc": "Identifies synonyms via co-occurring non-adjacent query terms. Foundation for Hummingbird semantic search capabilities."
+    },
+    {
+      "num": "US8577893B1",
+      "title": "Ranking Based on Reference Contexts",
+      "date": "Nov 2013",
+      "sys": "Spam",
+      "desc": "Analyzes text surrounding links to detect paid links and link spam. Rare words near links create context identifiers."
+    },
+    {
+      "num": "US8645362B1",
+      "title": "Using Resource Load Times in Ranking",
+      "date": "Feb 2014",
+      "sys": "PageExp",
+      "desc": "Page load time as ranking factor. Faster-loading pages promoted when relevance is similar. Measures across devices and regions."
+    },
+    {
+      "num": "US7840572B2",
+      "title": "Document Scoring Based on Inception Date",
+      "date": "Nov 2010",
+      "sys": "Freshness",
+      "desc": "Scores documents based on when first discovered by search engine. Newer documents can receive freshness boost."
+    },
+    {
+      "num": "US7895148B1",
+      "title": "Classifying Web Blocks by Linguistic Features",
+      "date": "Feb 2011",
+      "sys": "Quality",
+      "desc": "Identifies page sections (nav, content, ads, boilerplate) using linguistic features. Extracts main content for ranking."
+    },
+    {
+      "num": "US7693813B1",
+      "title": "Index Server Architecture with Phrase Posting Lists",
+      "date": "Apr 2010",
+      "sys": "Quality",
+      "desc": "Tiered and sharded phrase posting lists for search infrastructure. Enables fast phrase-level lookups at scale."
+    },
+    {
+      "num": "US7617226B1",
+      "title": "Document Treadmilling",
+      "date": "Nov 2009",
+      "sys": "Freshness",
+      "desc": "System for updating documents in repository and recovering storage from invalidated documents. Keeps index fresh."
+    },
+    {
+      "num": "US8078629B2",
+      "title": "Detecting Spam via Phrase-Based Indexing",
+      "date": "Dec 2011",
+      "sys": "Spam",
+      "desc": "Uses phrase-based analysis to detect spam. Documents with unnatural phrase patterns flagged as low quality."
+    },
+    {
+      "num": "US7383258B1",
+      "title": "Characterizing Documents by Clusters of Related Words",
+      "date": "Jun 2008",
+      "sys": "Quality",
+      "desc": "Groups related words into clusters to characterize document topics. Foundation for topical relevance assessment."
+    },
+    {
+      "num": "US7451130B2",
+      "title": "Preferred Country Biasing of Search Results",
+      "date": "Nov 2008",
+      "sys": "Local",
+      "desc": "Biases search results based on geographic location. Promotes content relevant to user country and language."
+    },
+    {
+      "num": "US7447678B2",
+      "title": "Interface for a Universal Search Engine",
+      "date": "Nov 2008",
+      "sys": "Quality",
+      "desc": "Unified interface combining web, image, news, and other search verticals. Foundation for Universal Search."
+    },
+    {
+      "num": "US7593939B1",
+      "title": "Specialized Results for Patterned Queries",
+      "date": "Sep 2009",
+      "sys": "Entity",
+      "desc": "Generates specialized search results (weather, stocks, definitions) when query matches known patterns."
+    },
+    {
+      "num": "US8812435B1",
+      "title": "Learning Objects and Facts from Documents",
+      "date": "Aug 2014",
+      "sys": "Entity",
+      "desc": "Extracts entities and facts from document patterns. Foundation for automated Knowledge Graph population."
+    },
+    {
+      "num": "US8738643B1",
+      "title": "Learning Synonymous Object Names from Anchors",
+      "date": "May 2014",
+      "sys": "Entity",
+      "desc": "Discovers entity synonyms from anchor text patterns. Foundation for entity resolution and disambiguation."
+    },
+    {
+      "num": "US8682892B1",
+      "title": "Ranking Search Results (Panda)",
+      "date": "Mar 2014",
+      "sys": "Quality",
+      "desc": "Named after co-inventor Navneet Panda. Uses independent link counts and reference queries to modify ranking scores."
+    },
+    {
+      "num": "US8938463B1",
+      "title": "Implicit User Feedback with Presentation Bias",
+      "date": "Jan 2015",
+      "sys": "NavBoost",
+      "desc": "Click feedback ranking with position bias correction. Users tend to click higher results regardless of relevance."
+    },
+    {
+      "num": "US9009192B1",
+      "title": "Identifying Central Entities",
+      "date": "Apr 2015",
+      "sys": "Entity",
+      "desc": "Identifies main entity of a web page via entity graphs and centrality scoring. Distinguishes primary topic from secondary mentions."
+    },
+    {
+      "num": "US9031929B1",
+      "title": "Site Quality Score",
+      "date": "May 2015",
+      "sys": "Quality",
+      "desc": "Site quality from ratio of branded navigational queries to total queries. Directly measures user demand for a site."
+    },
+    {
+      "num": "US9092510B1",
+      "title": "Click-Through Temporal Feedback",
+      "date": "Jul 2015",
+      "sys": "NavBoost",
+      "desc": "Adjusts rankings by temporal weighting of clicks. Recent clicks count more. Activates after threshold of selections."
+    },
+    {
+      "num": "US9135625B2",
+      "title": "Detecting Keyword-Stuffed Business Titles",
+      "date": "Sep 2015",
+      "sys": "Spam",
+      "desc": "Detects businesses stuffing keywords into their names for local SEO. Compares titles against expected naming patterns."
+    },
+    {
+      "num": "US9177074B2",
+      "title": "Confirming Authorship of Documents",
+      "date": "Nov 2015",
+      "sys": "Authority",
+      "desc": "Entity verification via profile links and email authentication. Authorship confirmation system."
+    },
+    {
+      "num": "US9305099B1",
+      "title": "Ranking by User Behavior and Feature Data",
+      "date": "Apr 2016",
+      "sys": "NavBoost",
+      "desc": "Updated Reasonable Surfer model. Combines user click behavior with page feature data for link weight assignment."
+    },
+    {
+      "num": "US9336186B1",
+      "title": "Sentence Compression for Snippets",
+      "date": "May 2016",
+      "sys": "Quality",
+      "desc": "Automated sentence compression using dependency trees. Foundation for generating concise featured snippet answers."
+    },
+    {
+      "num": "US9372896B1",
+      "title": "Reverse Engineering Spam Detection Circumvention",
+      "date": "Jun 2016",
+      "sys": "Spam",
+      "desc": "Detects when spammers reverse-engineer anti-spam algorithms. Identifies patterns of systematic testing and adaptation."
+    },
+    {
+      "num": "US9449105B1",
+      "title": "User-Context-Based Search Engine",
+      "date": "Sep 2016",
+      "sys": "Neural",
+      "desc": "Assigns macro/micro context vectors to queries. Searches matching closest context. Foundation for personalized neural search."
+    },
+    {
+      "num": "US9558210B1",
+      "title": "Location Quality Based on Travel Time",
+      "date": "Jan 2017",
+      "sys": "Local",
+      "desc": "Scores physical locations by analyzing how much time users invest traveling there. High travel investment signals quality."
+    },
+    {
+      "num": "US9659064B1",
+      "title": "Obtaining Authoritative Search Results",
+      "date": "May 2017",
+      "sys": "Authority",
+      "desc": "Identifies authoritative results by combining content signals with entity recognition. Authority verification system."
+    },
+    {
+      "num": "US9672251B1",
+      "title": "Extracting Facts from Documents",
+      "date": "Jun 2017",
+      "sys": "Entity",
+      "desc": "Automated fact extraction from unstructured text. Populates Knowledge Graph with verified factual claims."
+    },
+    {
+      "num": "US9727617B1",
+      "title": "Searching Quotes of Entities",
+      "date": "Aug 2017",
+      "sys": "Entity",
+      "desc": "Indexes and retrieves direct quotes attributed to entities. Enables searching for what people/organizations said."
+    },
+    {
+      "num": "US9740680B1",
+      "title": "Word2Vec (Computing Word Vectors)",
+      "date": "Aug 2017",
+      "sys": "Neural",
+      "desc": "Maps words into high-dimensional vector space. Semantically similar words cluster together. Foundation for RankBrain."
+    },
+    {
+      "num": "US9767157B2",
+      "title": "Predicting Site Quality",
+      "date": "Sep 2017",
+      "sys": "Quality",
+      "desc": "Uses n-gram phrase models to predict quality scores for new sites. Applies Panda-style assessment without behavioral data."
+    },
+    {
+      "num": "US9811780B1",
+      "title": "Subjective Attributes via Curation Signals",
+      "date": "Nov 2017",
+      "sys": "Entity",
+      "desc": "Identifies subjective entity attributes from user-generated content. Tags entities with crowd opinions."
+    },
+    {
+      "num": "US9098511B1",
+      "title": "Watch Time Based Ranking",
+      "date": "Aug 2015",
+      "sys": "NavBoost",
+      "desc": "Ranks content by watch/engagement time rather than clicks alone. Longer engagement signals higher quality content."
+    },
+    {
+      "num": "US9940367B1",
+      "title": "Scoring Candidate Answer Passages",
+      "date": "Apr 2018",
+      "sys": "Quality",
+      "desc": "Scores passages from structured and unstructured data using query term match and query-independent signals."
+    },
+    {
+      "num": "US9953049B1",
+      "title": "Distance-Based PageRank",
+      "date": "Apr 2018",
+      "sys": "Authority",
+      "desc": "Updated PageRank using shortest distances from seed pages in link graph. Replaces iterative random-walk with distance model."
+    },
+    {
+      "num": "US10102268B1",
+      "title": "Efficient Index for Large Graphs",
+      "date": "Oct 2018",
+      "sys": "Entity",
+      "desc": "Two-dimensional index for Knowledge Graph search at trillion-edge scale. Low-latency entity lookup."
+    },
+    {
+      "num": "US20180046717A1",
+      "title": "Related Entities",
+      "date": "Feb 2018",
+      "sys": "Entity",
+      "desc": "Identifies related entities via co-occurrence, shared attributes, and authoritative sources. Knowledge Graph linking."
+    },
+    {
+      "num": "US20200050707A1",
+      "title": "Website Representation Vector",
+      "date": "Feb 2020",
+      "sys": "Authority",
+      "desc": "Neural network classifies sites as expert, apprentice, or layperson within knowledge domains. E-E-A-T foundation."
+    },
+    {
+      "num": "US10922326B2",
+      "title": "Triggering Knowledge Panels",
+      "date": "Feb 2021",
+      "sys": "Entity",
+      "desc": "Determines when to display knowledge panels. Identifies factual entities, selects primary entity, decides panel display."
+    },
+    {
+      "num": "US11275895B1",
+      "title": "Generating Author Vectors",
+      "date": "Mar 2022",
+      "sys": "Authority",
+      "desc": "Neural networks generate author-characterizing vectors from writing style. Identifies authors without explicit markup."
+    },
+    {
+      "num": "US11816114B1",
+      "title": "Modifying Search Result Ranking Based on Implicit User Feedback",
+      "date": "Nov 2023",
+      "sys": "NavBoost",
+      "desc": "Ranks using viewing duration metrics and LC|C click fraction. Weights clicks by dwell time, adapts by query type."
+    },
+    {
+      "num": "US11775535B2",
+      "title": "Presenting Search Result Information",
+      "date": "Oct 2023",
+      "sys": "NavBoost",
+      "desc": "Ranks pages referenced in web notebooks. Crowdsourced curation signals boost referenced pages."
+    },
+    {
+      "num": "US11875086B2",
+      "title": "Using User Input to Adapt Search Results",
+      "date": "Jan 2024",
+      "sys": "NavBoost",
+      "desc": "Dynamic search adaptation through conversational interaction across devices during sessions."
+    },
+    {
+      "num": "US20230029590A1",
+      "title": "Evaluating Output Sequences Using Auto-Regressive LM",
+      "date": "Feb 2023",
+      "sys": "Neural",
+      "desc": "Single auto-regressive LM for generation and quality evaluation. Rates sensibleness, specificity, interestingness."
+    },
+    {
+      "num": "US20230334045A1",
+      "title": "Evaluating an Interpretation for a Search Query",
+      "date": "Oct 2023",
+      "sys": "Neural",
+      "desc": "Two-stage ML: BERT-based accuracy assessment + logistic regression with temporal patterns and clustering."
+    },
+    {
+      "num": "US20250124067A1",
+      "title": "Text Ranking with Pairwise Ranking Prompting",
+      "date": "Apr 2025",
+      "sys": "Neural",
+      "desc": "LLM-based pairwise document comparison for ranking. Reduces complexity vs pointwise scoring."
+    },
+    {
+      "num": "US20230342411A1",
+      "title": "Multi Source Extraction and Scoring of Short Query Answers",
+      "date": "Oct 2023",
+      "sys": "Quality",
+      "desc": "Featured snippet quality via multi-source consensus scoring. Only displays if accuracy exceeds threshold."
+    },
+    {
+      "num": "US20230267277A1",
+      "title": "Document Activity Logs to Train ML Models for Relevance",
+      "date": "Aug 2023",
+      "sys": "Quality",
+      "desc": "Trains relevance models using co-access patterns instead of clicks. K-anonymization for privacy."
+    },
+    {
+      "num": "US11762933B2",
+      "title": "Search Results Based on Compositional Queries",
+      "date": "Sep 2023",
+      "sys": "Entity",
+      "desc": "Handles multi-entity queries with spatial/temporal relationships via KG lookup tables."
+    },
+    {
+      "num": "US11836177B2",
+      "title": "Providing Knowledge Panels with Search Results",
+      "date": "Dec 2023",
+      "sys": "Entity",
+      "desc": "Knowledge panels from multi-source aggregation. Ranks panel content by historical search frequency."
+    },
+    {
+      "num": "US11720577B2",
+      "title": "Contextualizing Knowledge Panels",
+      "date": "Aug 2023",
+      "sys": "Entity",
+      "desc": "Dynamic KG panel customization based on query context terms. Same entity, different presentations."
+    },
+    {
+      "num": "US11914627B1",
+      "title": "Parsing Natural Language Queries Without Retraining",
+      "date": "Feb 2024",
+      "sys": "Entity",
+      "desc": "Resolves query ambiguity through user interaction. Retains domain terms without model retraining."
+    },
+    {
+      "num": "US11868417B2",
+      "title": "Identification and Issuance of Repeatable Queries",
+      "date": "Jan 2024",
+      "sys": "Freshness",
+      "desc": "ML-based detection of recurring queries. Pre-indexes and caches results for temporal patterns."
+    },
+    {
+      "num": "US11769017B1",
+      "title": "Generative Summaries for Search Results",
+      "date": "Sep 2023",
+      "sys": "Freshness",
+      "desc": "AI summaries with freshness measures, locality, language, and user expertise adaptation."
+    },
+    {
+      "num": "US12158907B1",
+      "title": "Thematic Search",
+      "date": "Dec 2024",
+      "sys": "Neural",
+      "desc": "LLM-based thematic clustering of search results. Ranks themes by document prominence."
+    },
+    {
+      "num": "US20240289407A1",
+      "title": "Search with Stateful Chat",
+      "date": "Aug 2024",
+      "sys": "Neural",
+      "desc": "Conversational search maintaining user state. Generates synthetic queries, selects downstream LLMs."
+    },
+    {
+      "num": "US11829373B2",
+      "title": "Presenting Search Results (Content Safety)",
+      "date": "Nov 2023",
+      "sys": "Spam",
+      "desc": "Content rating score from mature/family-friendly classification. ML-based query safety filtering."
+    },
+    {
+      "num": "US11797626B2",
+      "title": "Search Result Filters from Resource Content",
+      "date": "Oct 2023",
+      "sys": "Quality",
+      "desc": "Dynamic filter generation from search result content analysis. Extracts keywords, removes duplicates."
+    },
+    {
+      "num": "US11762848B2",
+      "title": "Combining Parameters of Multiple Search Queries",
+      "date": "Sep 2023",
+      "sys": "Quality",
+      "desc": "Detects semantic similarity between sequential queries. Combines into enhanced searches via embeddings."
+    },
+    {
+      "num": "US11782970B2",
+      "title": "Query Categorization Based on Image Results",
+      "date": "Oct 2023",
+      "sys": "Quality",
+      "desc": "Categorizes queries by analyzing user interactions with image results via computer vision."
+    },
+    {
+      "num": "US20240354557A1",
+      "title": "Information Retrieval Using Multivariate Distributions",
+      "date": "Oct 2024",
+      "sys": "Neural",
+      "desc": "Represents queries/docs as probability distributions (mean + variance). Captures query ambiguity and topic breadth via KL divergence."
+    },
+    {
+      "num": "US20250265257A1",
+      "title": "Cross-List Learning to Rank",
+      "date": "Aug 2025",
+      "sys": "Neural",
+      "desc": "Training ranking models using pairs from different lists. Computes cross-query correlation to weight pairwise ranking losses."
+    },
+    {
+      "num": "US20250217373A1",
+      "title": "Contextualized Token Retriever",
+      "date": "Jul 2025",
+      "sys": "Neural",
+      "desc": "Retrieval using only retrieved token vectors, not all tokens. 4000x computational reduction on BEIR benchmarks."
+    },
+    {
+      "num": "US12511325B2",
+      "title": "Reranking Documents Based on Graph Representations",
+      "date": "Dec 2025",
+      "sys": "Neural",
+      "desc": "Reranks using Abstract Meaning Representation graphs. Combines semantic graph structure with inter-document connections."
+    },
+    {
+      "num": "US20250148024A1",
+      "title": "Independent Content Hosting System",
+      "date": "May 2025",
+      "sys": "Quality",
+      "desc": "Ranks UGC using creator reputation, engagement signals, and LLM-evaluated language quality. Content gets unique indexable URLs."
+    },
+    {
+      "num": "US20250139105A1",
+      "title": "Query-Aware Extractive Hierarchical Summarization",
+      "date": "May 2025",
+      "sys": "Quality",
+      "desc": "Scores sentence relevance to queries hierarchically. 3-5ms per document, scalable to billions of queries. Used for re-ranking."
+    },
+    {
+      "num": "US20250117381A1",
+      "title": "Utilizing LLM in Responding to Multifaceted Queries",
+      "date": "Apr 2025",
+      "sys": "Quality",
+      "desc": "Decomposes complex multi-part queries into subqueries. Filters, searches each facet, synthesizes comprehensive responses."
+    },
+    {
+      "num": "US12536233B1",
+      "title": "AI-Generated Content Page Tailored to a Specific User",
+      "date": "Jan 2026",
+      "sys": "PageExp",
+      "desc": "Landing page quality score from conversion rates, bounce rates, CTR, content quality. Generates AI alternatives when scores are low."
+    },
+    {
+      "num": "US12554750B2",
+      "title": "Predictive Generation of Search Suggestions",
+      "date": "Feb 2026",
+      "sys": "Local",
+      "desc": "Location-based predictive ranking using device location, query logs, user selection frequency, and social graph data."
+    },
+    {
+      "num": "US20260010575A1",
+      "title": "Fine-Tuning LLMs Using RL with Search Engine Feedback",
+      "date": "Jan 2026",
+      "sys": "Neural",
+      "desc": "Fine-tunes LLMs using search results as supervision. Trains reward models via RL, distills search knowledge into primary LLM."
+    },
+    {
+      "num": "US20250190509A1",
+      "title": "Techniques for Presenting Graphical Content in Search",
+      "date": "Jun 2025",
+      "sys": "Entity",
+      "desc": "Verifies organization images via ML + real-time entity database. Prevents imposter content in SERPs through dual verification."
+    },
+    {
+      "num": "US11734287B2",
+      "title": "Mapping Images to Search Queries",
+      "date": "Aug 2023",
+      "sys": "Entity",
+      "desc": "Converts image queries to text via knowledge graph entity extraction. Scores candidate queries by relevance, user intent, and popularity."
+    },
+    {
+      "num": "US11741191B1",
+      "title": "Privacy-Sensitive Training of Interaction Prediction",
+      "date": "Aug 2023",
+      "sys": "NavBoost",
+      "desc": "Federated learning trains click prediction models on user devices. Only parameter updates sent centrally, not raw interaction data."
+    },
+    {
+      "num": "US20240362093A1",
+      "title": "Query Response Using a Custom Corpus",
+      "date": "Oct 2024",
+      "sys": "Neural",
+      "desc": "LLMs generate API calls to external document collections, retrieve results, and condition responses. RAG for search without model retraining."
+    },
+    {
+      "num": "US20240403564A1",
+      "title": "Privacy-Preserving Personalized LLMs",
+      "date": "Dec 2024",
+      "sys": "Neural",
+      "desc": "Personalizes LLM responses via soft prompt embeddings from user features (age, location). Groups users or predicts custom embeddings."
+    },
+    {
+      "num": "US20240256965A1",
+      "title": "Instruction Fine-Tuning with Intermediate Reasoning",
+      "date": "Aug 2024",
+      "sys": "Neural",
+      "desc": "Chain-of-thought fine-tuning with annotator reasoning traces. Less than 5% reasoning data improves model generalization substantially."
+    },
+    {
+      "num": "US20250103662A1",
+      "title": "Unifying Transformers with Link Based Ranking",
+      "date": "Mar 2025",
+      "sys": "Neural",
+      "desc": "Injects PageRank and authority signals into transformer attention weights. Boosts tokens from high-authority sources, reduces hallucinations."
+    },
+    {
+      "num": "US20250217356A1",
+      "title": "Searchable Index from ML Model Outputs",
+      "date": "Jul 2025",
+      "sys": "Neural",
+      "desc": "Converts ML predictions into token-based searchable indices. Eliminates two-stage retrieval+ranking by embedding ML intelligence in the index."
+    },
+    {
+      "num": "WO2025063948A1",
+      "title": "Data Extraction Using LLMs",
+      "date": "Mar 2025",
+      "sys": "Entity",
+      "desc": "Treats entire websites as LLM input to generate entity characterizations. Builds hierarchical knowledge graphs without structured markup."
+    },
+    {
+      "num": "WO2025165363A1",
+      "title": "Hybrid Retrieval and Generative System",
+      "date": "Aug 2025",
+      "sys": "Neural",
+      "desc": "Routes query portions to retrieval or generative systems in parallel. Retrieval can short-circuit generation if strong matches found."
+    },
+    {
+      "num": "WO2025170579A1",
+      "title": "Generative Model Tuning with Quality Signals",
+      "date": "Aug 2025",
+      "sys": "Quality",
+      "desc": "Uses search ranking signals to train generative models. Higher-ranked content gets more training emphasis. ML reward model scores outputs."
+    },
+    {
+      "num": "US20260023790A1",
+      "title": "Detecting Signal Exploitation in Rankings",
+      "date": "Jan 2026",
+      "sys": "Spam",
+      "desc": "Detects ranking signal manipulation via residual analysis. Uses regression models and Z-scores across domains, caps inflated signals."
+    },
+    {
+      "num": "US11663201B2",
+      "title": "Generating Query Variants Using a Trained Generative Model",
+      "date": "May 2023",
+      "sys": "Quality",
+      "desc": "Neural generative model creates query variants at runtime for PAA, PASF features. Handles novel and tail queries without retraining."
+    },
+    {
+      "num": "US11782998B2",
+      "title": "Embedding Based Retrieval for Image Search",
+      "date": "Oct 2023",
+      "sys": "Neural",
+      "desc": "Maps queries and image-landing page pairs to shared embedding space via neural networks. Combines with term-based retrieval."
+    },
+    {
+      "num": "US11720920B1",
+      "title": "Combining Content with a Search Result",
+      "date": "Aug 2023",
+      "sys": "Entity",
+      "desc": "Enriches search results with supplementary content from knowledge sources. Merges entity data directly into result snippets."
+    },
+    {
+      "num": "US20240037137A1",
+      "title": "Ranking Based on Media Consumption History",
+      "date": "Feb 2024",
+      "sys": "NavBoost",
+      "desc": "Uses media viewing history and consumption patterns to personalize search results. Weighs engagement duration and frequency."
+    },
+    {
+      "num": "US20240346840A1",
+      "title": "Detecting a Homoglyph in a String of Characters",
+      "date": "Oct 2024",
+      "sys": "Spam",
+      "desc": "Identifies homoglyph substitutions in URLs and content to detect phishing and spam. Alerts users to deceptive character replacements."
+    },
+    {
+      "num": "US20240428003A1",
+      "title": "Automatic Content Item Updation",
+      "date": "Dec 2024",
+      "sys": "Freshness",
+      "desc": "Generates content updates automatically from computer-mediated interactions. Detects stale content and produces refresh candidates."
+    },
+    {
+      "num": "US12013887B2",
+      "title": "Contextual Estimation of Link Information Gain",
+      "date": "Jun 2024",
+      "sys": "Quality",
+      "desc": "Estimates information gain from links based on source and target context. Rewards pages providing novel information beyond the linking page."
+    },
+    {
+      "num": "US20250036621A1",
+      "title": "Generating Query Answers from User History",
+      "date": "Jan 2025",
+      "sys": "Quality",
+      "desc": "Searches user's browsing history and email for previously accessed content. NLP classifies re-finding queries and fuzzy-matches past pages."
+    },
+    {
+      "num": "US20250117757A1",
+      "title": "Increasing Query-Answering Agent Accuracy",
+      "date": "Apr 2025",
+      "sys": "Quality",
+      "desc": "Multi-agent QA system generating consultation prompts, retrieving responses, and evaluating against accuracy thresholds before answering."
+    },
+    {
+      "num": "US20250245270A1",
+      "title": "Identifying Search Results in History Repository",
+      "date": "Jul 2025",
+      "sys": "NavBoost",
+      "desc": "Tracks and indexes user search result interactions over time. Surfaces previously visited results when re-finding intent detected."
+    },
+    {
+      "num": "US20250278443A1",
+      "title": "Content Snippet Generation with Generative Model",
+      "date": "Sep 2025",
+      "sys": "Neural",
+      "desc": "Uses generative models to create search result snippets. Groups content segments for coherent multi-source summaries."
+    },
+    {
+      "num": "WO2024064249A1",
+      "title": "Prompt-Based Query Generation for Diverse Retrieval",
+      "date": "Mar 2024",
+      "sys": "Neural",
+      "desc": "PROMPTAGATOR: LLMs generate synthetic training data for dual encoders. Creates task-specific retrievers overcoming data scarcity."
+    },
+    {
+      "num": "WO2025102041A1",
+      "title": "User Embedding Models for Personalization",
+      "date": "May 2025",
+      "sys": "Neural",
+      "desc": "Compresses user history into embeddings via transformer model. Provides soft prompts to LLMs for personalized search responses."
+    }
+  ],
+  "pillars": [
+    {
+      "type": "patent",
+      "title": "1 Patents",
+      "items": [
+        "<a href=\"https://patents.google.com/patent/US7991710\">US7991710</a>: Intrusive feature classification model"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "2023 Foundation Year",
+      "items": []
+    },
+    {
+      "type": "doj",
+      "title": "2024 LLM Integration",
+      "items": []
+    },
+    {
+      "type": "leak",
+      "title": "2025 Pairwise & Retrieval",
+      "items": []
+    },
+    {
+      "type": "exploit",
+      "title": "2026 RL & AI Generation",
+      "items": []
+    }
+  ],
+  "calculations": [
+    {
+      "name": "US20250124067A1 Pairwise Ranking",
+      "source": "Patent 2025",
+      "how": "LLM-based pairwise document comparison for ranking. Instead of scoring each document independently (pointwise), the model compares two documents at a time to determine which is more relevant. Reduces complexity vs pointwise scoring. Signals shift from individual features to full-document understanding.",
+      "formula": "<span class=\"cf-fn\">PairwiseRank</span>(d1, d2, q) = <span class=\"cf-fn\">LLM</span>(\n\"Which is more relevant to q: d1 or d2?\"\n) &rarr; {<span class=\"cf-val\">d1</span> | <span class=\"cf-val\">d2</span>}\n<span class=\"cf-comment\">// O(n log n) comparisons vs O(n) pointwise</span>\n<span class=\"cf-comment\">// full-document understanding, not features</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US20200005149\">US20200005149</a> (learning to rank), <a href=\"https://patents.google.com/patent/US10963505\">US10963505</a> (neural ranking)",
+      "affects": "Affected by: LLM model capacity, document pair selection, comparison prompt design, training data quality"
+    },
+    {
+      "name": "US20260010575A1 RL Fine-tuning",
+      "source": "Patent 2026",
+      "how": "Fine-tunes LLMs using search results as supervision signal. Trains reward models via reinforcement learning where search engagement data provides the reward signal. The search engine itself becomes the training ground for the ranking model.",
+      "formula": "<span class=\"cf-fn\">RL_finetune</span>(LLM) = <span class=\"cf-fn\">train</span>(\n<span class=\"cf-val\">reward_model</span>(<span class=\"cf-val\">search_engagement</span>),\n<span class=\"cf-fn\">distill</span>(<span class=\"cf-val\">search_knowledge</span>) &rarr; LLM\n)  <span class=\"cf-comment\">// search engine = training ground</span>\n<span class=\"cf-comment\">// RL reward from user engagement data</span>",
+      "patents": "",
+      "affects": "Affected by: search engagement data, reward model accuracy, RL training stability, search feedback loop quality"
+    },
+    {
+      "name": "US12536233B1 AI Landing Pages",
+      "source": "Patent 2026",
+      "how": "Landing page quality score derived from conversion rates, bounce rates, and CTR. When scores fall below threshold, the system generates AI alternative landing pages. Google may replace publisher pages with AI-generated versions optimized for user satisfaction.",
+      "formula": "<span class=\"cf-fn\">PageQuality</span>(url) = <span class=\"cf-fn\">score</span>(\n<span class=\"cf-val\">conversion_rate</span>, <span class=\"cf-val\">bounce_rate</span>, <span class=\"cf-val\">CTR</span>\n)\n<span class=\"cf-kw\">if</span> score &lt; <span class=\"cf-val\">threshold</span>: <span class=\"cf-kw\">generate</span> AI_alternative\n<span class=\"cf-comment\">// Google may replace your page with AI version</span>",
+      "patents": "",
+      "affects": "Affected by: conversion rate, bounce rate, CTR, user satisfaction metrics, page quality threshold"
+    },
+    {
+      "name": "US20250103662A1 PageRank in Transformers",
+      "source": "Patent 2025",
+      "how": "Injects PageRank and authority signals directly into transformer attention weights. Bridges classic link-based authority with neural ranking by making the transformer architecture natively aware of graph-based trust signals during inference.",
+      "formula": "<span class=\"cf-fn\">Attention</span>(Q, K, V) += <span class=\"cf-fn\">inject</span>(\n<span class=\"cf-val\">PageRank</span>(source), <span class=\"cf-val\">authority</span>(source)\n)  <span class=\"cf-comment\">// boosts tokens from high-authority sources</span>\n<span class=\"cf-comment\">// bridges link-based trust + neural ranking</span>\n<span class=\"cf-comment\">// reduces hallucinations via authority grounding</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US20200005149\">US20200005149</a> (learning to rank), <a href=\"https://patents.google.com/patent/US10963505\">US10963505</a> (neural ranking)",
+      "affects": "Affected by: PageRank scores, transformer attention mechanism, authority signal injection method, model architecture"
+    }
+  ],
+  "pipeline": {
+    "title": "Evolution: Hand-Crafted to LLM-Augmented",
+    "stages": [
+      {
+        "name": "2001-2022",
+        "detail": "PageRank, Panda, Hummingbird, Word2Vec/RankBrain, hand-crafted signals"
+      },
+      {
+        "name": "2023",
+        "detail": "BERT evaluation, knowledge panels, click refinement"
+      },
+      {
+        "name": "2024",
+        "detail": "Stateful chat, thematic clustering, distribution-based retrieval"
+      },
+      {
+        "name": "2025",
+        "detail": "LLM pairwise ranking, 4000x-efficient retrieval, graph reranking"
+      },
+      {
+        "name": "2026",
+        "detail": "RL fine-tuning from search feedback, AI-generated landing pages"
+      }
+    ]
+  },
+  "timeline": [],
+  "contradictions": [
+    {
+      "publicSource": "DOJ Trial (2024)",
+      "publicClaim": "\"Only RankBrain and DeepRank use ML. All other signals are hand-crafted.\" (HJ Kim deposition)",
+      "internalSource": "2025-2026 Patents",
+      "internalClaim": "US20250124067A1 uses LLMs for pairwise ranking. US20260010575A1 fine-tunes LLMs via RL with search engine feedback. LLMs are replacing hand-crafted signals."
+    },
+    {
+      "publicSource": "Classic Search (2005-2022)",
+      "publicClaim": "Search is a stateless query-response system. Each query is independent.",
+      "internalSource": "2024 Patent",
+      "internalClaim": "US20240289407A1 introduces stateful conversational search maintaining context across interactions. Search becomes a dialogue."
+    },
+    {
+      "publicSource": "SEO Best Practice",
+      "publicClaim": "Optimize landing pages manually. Google crawls and indexes what you publish.",
+      "internalSource": "2026 Patent",
+      "internalClaim": "US12536233B1 scores landing page quality (conversion, bounce, CTR) and generates AI alternatives when scores are low. Google may replace your page."
+    },
+    {
+      "publicSource": "Bill Slawski Era",
+      "publicClaim": "Click signals feed into NavBoost as aggregated statistics in a \"big table.\"",
+      "internalSource": "2023 Patent",
+      "internalClaim": "US11816114B1 introduces sophisticated click weighting: LC|C fractions, query-type adaptation, and presentation bias correction."
+    }
+  ]
+}

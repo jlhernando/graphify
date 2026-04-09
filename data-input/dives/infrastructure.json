@@ -1,0 +1,364 @@
+{
+  "id": "infrastructure",
+  "route": "/infrastructure",
+  "systems": [
+    "Infrastructure",
+    "Trawler",
+    "Alexandria",
+    "TeraGoogle",
+    "SegIndexer",
+    "Rendering",
+    "WebMirror",
+    "SuperRoot",
+    "GWS",
+    "Cookbook"
+  ],
+  "hero": {
+    "title": "Infrastructure: The Search Pipeline",
+    "subtitle": "Google's search infrastructure processes ~400 billion documents through DOJ-confirmed systems and leak-confirmed signals. From Trawler crawling to GWS serving, every stage reveals how scale creates competitive advantage."
+  },
+  "keyInsight": {
+    "label": "Key Insight from DOJ Trial",
+    "text": "Google indexes approximately <strong>400 billion documents</strong> (Pandu Nayak, sworn). Crawl frequency is driven by <strong>engagement data</strong> (HJ Kim), creating a feedback loop where popular pages get crawled more, stay fresher, and rank higher. <strong>DocID</strong> profiles track per-document signals that evolve with user interactions. <strong>SegIndexer</strong> places documents into tiered storage (flash/SSD/HDD) based on importance. The search org has <strong>5,000-10,000 employees</strong> (Elizabeth Reid)."
+  },
+  "pillars": [
+    {
+      "type": "doj",
+      "title": "Signals",
+      "items": [
+        "<strong>Alexandria</strong> - Primary indexing engine, near-real-time since Caffeine (2010)",
+        "<strong>TeraGoogle</strong> - Long-term document storage, petabyte-scale web archive",
+        "<strong>SuperRoot</strong> - Query coordination orchestrating entire pipeline",
+        "<strong>GoogleWebServer (GWS)</strong> - Final serving layer delivering assembled SERPs",
+        "<strong>DocID</strong> - Per-document profiles: popularity, quality, spam scores (core)",
+        "<strong>Multiverse</strong> - Structured data feeds from external sources into Knowledge Graph",
+        "<strong>400B Index</strong> - ~400 billion documents (Nayak, sworn)",
+        "<strong>Crawl from Engagement</strong> - Engagement drives crawl priority (HJ Kim)",
+        "<strong>Search Org Scale</strong> - 5,000-10,000 employees (Elizabeth Reid)"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "Index Architecture",
+      "items": [
+        "<strong>SegIndexer</strong> - Tiered storage: flash (fast/important), SSD (medium), HDD (archive)",
+        "<strong>Trawler</strong> - Web crawling system with hostAge, createdDate, expiredDate tracking",
+        "<strong>HtmlrenderWebkitHeadless</strong> - JavaScript rendering via headless Chromium",
+        "<strong>WebMirror</strong> - Canonicalization, deduplication via SimHash (shingleInfo), localizedCluster, duplicateClusterId",
+        "<strong>sitechunks</strong> - Content chunking for distributed quality scoring",
+        "<strong>numTokens / bodySize</strong> - Token count with max cap, raw body size in bytes",
+        "<strong>language</strong> - Document language classification",
+        "<strong>Cookbook</strong> - Runtime signal generation during query processing"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "Related Patents",
+      "items": [
+        "<strong>GFS + MapReduce</strong> - Distributed file system and processing (2003)",
+        "<strong>BigTable</strong> - Structured storage for document metadata (2004)",
+        "<strong>Caffeine</strong> - Near-real-time indexing replacing batch processing (2010)",
+        "<strong>Mobile-First</strong> - Infrastructure for mobile-primary indexing (2017)",
+        "<strong>TPU Infrastructure</strong> - Custom hardware for ML model inference",
+        "<strong>MAGIT/Gemini</strong> - AI Overview generation infrastructure (2025)"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Infrastructure Affects Your SEO",
+      "items": [
+        "<strong>Earn your way into Flash tier</strong>: SegIndexer places documents into Flash (fastest), SSD, or HDD storage based on NSR and NavBoost engagement. Pages in HDD tier are rarely served for competitive queries. Build consistent engagement signals and site quality to get promoted to faster tiers where your pages are retrieved first.",
+        "<strong>Break the crawl-engagement feedback loop</strong>: HJ Kim testified that crawl frequency is driven by engagement data. Low-engagement pages get crawled less, stay stale, and rank lower. Drive initial traffic through social, email, or paid channels to generate the engagement signals Trawler uses for crawl prioritization.",
+        "<strong>Optimize for the rendering pipeline</strong>: HtmlrenderWebkitHeadless uses headless Chromium with finite resources. Heavy JavaScript that delays rendering means your content may be indexed incompletely or late. Keep critical content in initial HTML, use progressive enhancement, and ensure JS-dependent content renders within Chromium's timeout window.",
+        "<strong>Build your DocID profile deliberately</strong>: Every indexed page accumulates hundreds of signals over its lifetime via PerDocData, including quality scores, popularity metrics, and spam indicators. New URLs start with blank profiles. Preserve URL equity on established pages rather than creating new URLs unnecessarily, since the DocID profile takes months to mature.",
+        "<strong>Survive the hostAge sandbox</strong>: Trawler tracks hostAge with createdDate and expiredDate. New domains face 3-6 months in HDD tier with minimal crawl attention. Acquire aged domains when possible, register domains well before launch, and avoid expired-then-re-registered domains which carry reset or negative signals.",
+        "<strong>Signal significant updates correctly</strong>: The infrastructure distinguishes between trivial changes and significantUpdate events. Changing boilerplate or timestamps does not trigger re-scoring. Modify substantive content, update structured data, and ensure your sitemap lastmod dates reflect genuine content changes to earn re-crawling and re-scoring priority."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Trawler",
+      "source": "Leak",
+      "how": "Web crawler tracking hostAge, createdDate, and expiredDate per domain. Crawl frequency is driven by engagement data (HJ Kim testimony): popular pages get crawled more frequently, creating a feedback loop where high-engagement content stays fresher.",
+      "formula": "<span class=\"cf-fn\">CrawlPriority</span>(url) = <span class=\"cf-fn\">f</span>(\n  <span class=\"cf-val\">NavBoost_engagement</span>, <span class=\"cf-val\">NSR</span>, <span class=\"cf-val\">changeRate</span>\n)  <span class=\"cf-comment\">// higher engagement = more frequent crawl</span>\n<span class=\"cf-kw\">if</span> isHotdoc: <span class=\"cf-kw\">boost</span> crawl_frequency\n<span class=\"cf-comment\">// hostAge tracks domain birth, expiry dates</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US7580929\">US7580929</a> (info retrieval at scale), <a href=\"https://patents.google.com/patent/US8180754\">US8180754</a> (document scoring)",
+      "affects": "Affected by: NavBoost engagement signals, domain age, content change frequency, server response times"
+    },
+    {
+      "name": "SegIndexer",
+      "source": "Leak",
+      "how": "Tiered document storage system. Flash tier for important, fast-access documents. SSD tier for medium-priority. HDD tier for archive/low-priority. Tier placement determined by combining NSR (site quality) and NavBoost engagement signals.",
+      "formula": "<span class=\"cf-fn\">SegIndexer</span>(doc) = <span class=\"cf-fn\">tier_assign</span>(\n  <span class=\"cf-val\">NSR</span>(site), <span class=\"cf-val\">NavBoost_clicks</span>, <span class=\"cf-val\">query_freq</span>\n)  <span class=\"cf-comment\">// Flash &gt; SSD &gt; HDD by importance</span>\n<span class=\"cf-kw\">if</span> NSR &gt; high &amp;&amp; clicks &gt; min: <span class=\"cf-kw\">promote</span> Flash\n<span class=\"cf-comment\">// tier determines retrieval latency</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US7580929\">US7580929</a> (info retrieval at scale)",
+      "affects": "Affected by: NSR score, NavBoost click data, query frequency for document, domain authority"
+    },
+    {
+      "name": "DocID",
+      "source": "DOJ",
+      "how": "Per-document profile that accumulates hundreds of signals over its lifetime. Stores quality scores, popularity metrics, spam indicators, and metadata for each indexed page. Signals evolve with user interactions over time.",
+      "formula": "<span class=\"cf-fn\">DocID</span>(page) = {\n  <span class=\"cf-val\">Q*</span>, <span class=\"cf-val\">NSR</span>, <span class=\"cf-val\">NavBoost</span>, <span class=\"cf-val\">SpamBrain</span>,\n  <span class=\"cf-val\">pagerank_NS</span>, <span class=\"cf-val\">hostAge</span>, <span class=\"cf-val\">language</span>, ...\n}  <span class=\"cf-comment\">// hundreds of signals per document</span>\n<span class=\"cf-comment\">// accumulates over document lifetime via PerDocData</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8180754\">US8180754</a> (document scoring)",
+      "affects": "Affected by: all ranking signals, user engagement history, content updates, spam evaluations"
+    },
+    {
+      "name": "HtmlrenderWebkitHeadless",
+      "source": "Leak",
+      "how": "JavaScript rendering pipeline using headless Chromium browser. Pages requiring JS execution are rendered server-side to extract content that only appears after JavaScript runs. Rendered output is then indexed like static HTML.",
+      "formula": "<span class=\"cf-fn\">Render</span>(url) = <span class=\"cf-fn\">HeadlessChromium</span>(\n  <span class=\"cf-val\">html</span>, <span class=\"cf-val\">js_resources</span>\n) &rarr; <span class=\"cf-val\">rendered_DOM</span>\n<span class=\"cf-kw\">if</span> requires_JS: <span class=\"cf-kw\">queue</span> render_pipeline\n<span class=\"cf-comment\">// output indexed as static HTML</span>",
+      "affects": "Affected by: JS complexity, render time, page load performance, resource availability"
+    }
+  ],
+  "segIndexer": {
+    "title": "SegIndexer: Tiered Storage Architecture",
+    "tiers": [
+      {
+        "name": "Flash",
+        "tier": "Tier 1 (Fastest)",
+        "desc": "Most important documents. High-authority sites, frequently queried pages. Sub-millisecond access. Limited capacity, highest cost.",
+        "hint": "High NSR + high NavBoost engagement"
+      },
+      {
+        "name": "SSD",
+        "tier": "Tier 2 (Medium)",
+        "desc": "Moderate importance documents. Regular sites with some traffic. Fast access but slightly slower than flash. Larger capacity.",
+        "hint": "Moderate quality and engagement signals"
+      },
+      {
+        "name": "HDD",
+        "tier": "Tier 3 (Archive)",
+        "desc": "Low-priority documents. Rarely queried pages, low-quality content. Slowest access but cheapest storage. Massive capacity.",
+        "hint": "Low engagement, may not appear for most queries"
+      }
+    ]
+  },
+  "pipeline": {
+    "title": "Complete Infrastructure Pipeline",
+    "stages": [
+      {
+        "name": "Trawler",
+        "detail": "Web crawl. Frequency = f(engagement). hostAge tracks domain age."
+      },
+      {
+        "name": "Render",
+        "detail": "HtmlrenderWebkitHeadless: JS rendering via headless Chromium"
+      },
+      {
+        "name": "WebMirror",
+        "detail": "Canonicalization, SimHash dedup (shingleInfo), localizedCluster"
+      },
+      {
+        "name": "Alexandria",
+        "detail": "Primary index. Near-real-time since Caffeine. 400B+ docs."
+      },
+      {
+        "name": "SegIndexer",
+        "detail": "Tier placement: Flash / SSD / HDD by importance"
+      }
+    ]
+  },
+  "pipeline2": {
+    "stages": [
+      {
+        "name": "TeraGoogle",
+        "detail": "Long-term archive. Full document store. DocID profiles."
+      },
+      {
+        "name": "Multiverse",
+        "detail": "Structured data ingestion into Knowledge Graph"
+      },
+      {
+        "name": "QUS",
+        "detail": "Query Understanding Service: intent, entities, expansion"
+      },
+      {
+        "name": "SuperRoot",
+        "detail": "Pipeline orchestration. Routes query through ranking stages."
+      },
+      {
+        "name": "GWS",
+        "detail": "GoogleWebServer. Final SERP assembly and delivery."
+      }
+    ]
+  },
+  "docIdProfile": {
+    "title": "DocID: Per-Document Profile System",
+    "description": "Every indexed document has a <strong style=\"color:var(--white)\">DocID profile</strong> that accumulates signals over time. This is not a static snapshot but an evolving record. The PerDocData module in the API leak stores hundreds of per-document signals.",
+    "categories": [
+      {
+        "label": "QUALITY SIGNALS",
+        "text": "Q* score, NSR, Panda modifier, EffortScore, OriginalContentScore, chardScores, vlq"
+      },
+      {
+        "label": "POPULARITY SIGNALS",
+        "text": "NavBoost clicks, impressions, Chrome views, directFrac, Glue interactions, CRAPS predictions"
+      },
+      {
+        "label": "SPAM SIGNALS",
+        "text": "SpamBrain score, gibberishScore, keywordStuffingScore, anchorMismatchDemotion, scamness"
+      },
+      {
+        "label": "METADATA",
+        "text": "hostAge, createdDate, language, pageClassification, duplicateClusterId, sitechunks"
+      }
+    ]
+  },
+  "crawlBudget": {
+    "title": "Crawl Budget: What Determines Crawl Frequency",
+    "priorities": [
+      {
+        "label": "HIGH CRAWL PRIORITY",
+        "items": [
+          "High NavBoost engagement (click data)",
+          "High NSR / siteAuthority",
+          "Frequently changing content (changeRate)",
+          "Flash tier in SegIndexer",
+          "News/time-sensitive content (isHotdoc)"
+        ]
+      },
+      {
+        "label": "MEDIUM CRAWL PRIORITY",
+        "items": [
+          "Moderate engagement signals",
+          "SSD tier in SegIndexer",
+          "Regular update patterns (significantUpdate)",
+          "Established domains (moderate hostAge)"
+        ]
+      },
+      {
+        "label": "LOW CRAWL PRIORITY",
+        "items": [
+          "Low/no engagement signals",
+          "HDD tier in SegIndexer",
+          "New domains (hostAge sandbox: 3-6 months)",
+          "Low Q* or high spam probability",
+          "Stable content with no significant updates"
+        ]
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "1998",
+      "type": "patent",
+      "title": "BackRub/Google",
+      "desc": "Original PageRank and web crawler. Single-machine indexing of ~24M pages."
+    },
+    {
+      "year": "2003",
+      "type": "patent",
+      "title": "GFS & MapReduce",
+      "desc": "Google File System and MapReduce enable distributed indexing at web scale."
+    },
+    {
+      "year": "2004",
+      "type": "patent",
+      "title": "BigTable",
+      "desc": "Distributed storage system for structured data. Foundation for document storage."
+    },
+    {
+      "year": "2008",
+      "type": "patent",
+      "title": "Chrome Launch",
+      "desc": "Chrome browser provides behavioral data at scale. Eventually captures 65%+ market share."
+    },
+    {
+      "year": "2010",
+      "type": "patent",
+      "title": "Caffeine Launch",
+      "desc": "New indexing infrastructure provides near-real-time indexing. Alexandria replaces batch indexing."
+    },
+    {
+      "year": "2013",
+      "type": "patent",
+      "title": "Hummingbird",
+      "desc": "Query understanding overhaul. Semantic search requires new processing infrastructure."
+    },
+    {
+      "year": "2015",
+      "type": "patent",
+      "title": "TeraGoogle",
+      "desc": "Long-term web archive system scaled to petabytes. Full document storage for historical analysis."
+    },
+    {
+      "year": "2015",
+      "type": "patent",
+      "title": "RankBrain Deployed",
+      "desc": "First ML model in ranking. Requires GPU/TPU infrastructure for real-time inference."
+    },
+    {
+      "year": "2017",
+      "type": "patent",
+      "title": "Mobile-First Index",
+      "desc": "Infrastructure shift to crawl and index mobile versions as primary documents."
+    },
+    {
+      "year": "2019",
+      "type": "patent",
+      "title": "BERT Integration",
+      "desc": "BERT model deployed for query understanding. Requires massive inference infrastructure."
+    },
+    {
+      "year": "2020",
+      "type": "patent",
+      "title": "SuperRoot",
+      "desc": "Query coordination system manages the full search pipeline from query to SERP delivery."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "DOJ: 400B Documents",
+      "desc": "Pandu Nayak confirmed ~400 billion documents indexed. 5,000-10,000 employees in search org."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "DOJ: Crawl Bias",
+      "desc": "HJ Kim: crawl frequency driven by engagement data. Popular pages crawled more frequently."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "API Leak",
+      "desc": "Content Warehouse API exposes SegIndexer tiers, DocID profiles, per-document signal storage."
+    },
+    {
+      "year": "2025",
+      "type": "patent",
+      "title": "AI Overviews",
+      "desc": "MAGIT/Gemini integration requires new serving infrastructure for LLM-generated results."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"All pages are treated equally in our crawling and indexing.\"",
+      "internalSource": "DOJ Trial",
+      "internalClaim": "CrawlFrequencyFromEngagement: HJ Kim testified that crawl frequency is driven by engagement data. Popular pages crawled more, stay fresher, rank higher. SegIndexer places documents in different storage tiers based on importance."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"Our index comprehensively covers the web.\"",
+      "internalSource": "DOJ Trial",
+      "internalClaim": "400B documents indexed, but the web has trillions of pages. Engagement-based crawl budget means vast portions of the web receive minimal crawling. HDD tier documents are rarely served."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"Competitors can build their own search engines.\"",
+      "internalSource": "DOJ Trial",
+      "internalClaim": "5,000-10,000 employees. Alexandria, TeraGoogle, SuperRoot, GWS = decades of infrastructure. $26.3B/year in default deals. The scale barrier is the real moat."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"We don't use Chrome data for ranking.\" (historically implied)",
+      "internalSource": "DOJ + Leak",
+      "internalClaim": "chrome_trans_clicks, uniqueChromeViews, chromeFormSubmissions, chromeScrollingIntensity, chromePurchaseActivity all confirmed as ranking signals. Chrome IS a ranking data pipeline."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"New sites are not sandboxed.\"",
+      "internalSource": "Evidence",
+      "internalClaim": "hostAge in Trawler signals, host-age-sandbox in DOJ. New domains face 3-6 month observation period in HDD tier before earning promotion to higher tiers and full crawl attention."
+    }
+  ]
+}

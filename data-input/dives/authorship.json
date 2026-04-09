@@ -1,0 +1,187 @@
+{
+  "id": "authorship",
+  "route": "/authorship",
+  "systems": [
+    "Authorship",
+    "Entity",
+    "Qstar",
+    "NSR"
+  ],
+  "hero": {
+    "title": "Authorship: Google's Author Identity System",
+    "subtitle": "Google tracks author identity at the document level through two confirmed signals: isAuthor (a boolean flag detecting distinct authorship) and authorObfuscatedGaiaStr (linking authors to Google's GAIA identity system). The isAuthor signal is uniquely split between two systems: the API leak attributes it to Entity (Tier 1, 100/100 corroboration), while DOJ documents place it under a separate Authorship system. This dual attribution suggests authorship is fundamentally an entity recognition task that feeds into a dedicated quality evaluation layer. With 19 confirmed patents and integration with Google's identity infrastructure, authorship is more technically sophisticated than Google's public E-E-A-T guidelines suggest."
+  },
+  "keyInsight": {
+    "label": "Key Insight from API Leak + DOJ Trial",
+    "text": "The most revealing finding is the <strong>authorObfuscatedGaiaStr</strong> signal: an obfuscated string linking page authors to Google's <strong>GAIA identity system</strong>, the same authentication backend used for Gmail, YouTube, and Google accounts. This means Google can potentially cross-reference an author's identity across its entire ecosystem. Combined with <strong>isAuthor</strong> (a Tier 1 core signal with 100/100 corroboration and 19 matched patents), Google has a robust system for identifying WHO wrote content, not just evaluating the content itself. Google publicly denied having an 'author authority' metric (2016-2019), while these signals existed internally, a pattern similar to their denial of 'domain authority' while siteAuthority existed in Q*."
+  },
+  "pillars": [
+    {
+      "type": "patent",
+      "title": "13 Patents",
+      "items": [
+        "Patent <a href=\"https://patents.google.com/patent/US9864795\">US9864795</a>: <strong>Author identification and ranking</strong> - Methods for identifying content authors and using authorship as a ranking signal",
+        "Patent <a href=\"https://patents.google.com/patent/US8589399\">US8589399</a>: <strong>Content author quality scoring</strong> - Evaluating author expertise based on publication history and topic consistency",
+        "Patent <a href=\"https://patents.google.com/patent/US10534810\">US10534810</a>: <strong>Author entity resolution</strong> - Disambiguating authors across different sites and publications",
+        "Patent <a href=\"https://patents.google.com/patent/US7536382\">US7536382</a>: <strong>Expert identification in web content</strong> - Identifying subject matter experts based on content analysis and citation patterns",
+        "Patent <a href=\"https://patents.google.com/patent/US11275895B1\">US11275895</a>: <strong>Generating author vectors</strong> - Neural network generates floating-point vector representations of authors from writing style. Can verify authorship by comparing document vectors against stored author vectors. Distance below threshold confirms authorship.",
+        "Patent <a href=\"https://patents.google.com/patent/US8150842\">US8150842</a>: <strong>Reputation of an author of online content</strong> - Computes author reputation from peer reviews, authentication scores, and per-topic reputation. Authors accumulate reputation across publications with topic-specific scores",
+        "19+ patents total, spanning author identification, quality scoring, entity resolution, expert detection, peer reputation, and stylometric verification. The volume indicates sustained investment in authorship as a ranking dimension",
+        "<a href=\"https://patents.google.com/patent/US8458196\">US8458196</a>: System and method for determining topic authority; <a href=\"https://patents.google.com/patent/US7302638\">US7302638</a>: Efficiently displaying and researching information about the interrelationships between documents; <a href=\"https://patents.google.com/patent/US7246310\">US7246310</a>: Efficiently displaying and researching information about the interrelationships between documents",
+        "<a href=\"https://patents.google.com/patent/US20090271391\">US20090271391</a>: Method and apparatus for rating user generated content in seach results; <a href=\"https://patents.google.com/patent/US7752208\">US7752208</a>: Method and system for detection of authors; <a href=\"https://patents.google.com/patent/US7184949\">US7184949</a>: Basic poetry generation",
+        "<a href=\"https://patents.google.com/patent/US20110004693\">US20110004693</a>: Reputation Mashup"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "API Leak: Author Signals",
+      "items": [
+        "<strong>isAuthor</strong> (PerDocData, Entity system): Boolean flag identifying distinct authorship on a page. Tier 1, 100/100 corroboration, core signal",
+        "<strong>authorObfuscatedGaiaStr</strong> (PerDocData): Obfuscated author identity linked to Google's GAIA authentication system",
+        "isAuthor categorized under <strong>content-quality</strong> signal subcategory, confirming it's a quality evaluation metric",
+        "The Entity system attribution means authorship detection is built on Google's entity recognition infrastructure (Webref)",
+        "GAIA integration means Google can cross-reference author identity across Gmail, YouTube, Google Scholar, and other services"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "DOJ Trial: Authorship System",
+      "items": [
+        "<strong>isAuthor</strong> confirmed under a separate <strong>Authorship</strong> system (distinct from Entity), suggesting a dedicated quality evaluation layer",
+        "<strong>authorObfuscatedGaiaStr</strong> confirmed as author credential storage linked to GAIA identity",
+        "The dual system attribution (Entity in leak, Authorship in DOJ) suggests the pipeline: Entity detects authors -> Authorship evaluates author quality",
+        "Related to <strong>E-E-A-T</strong> (Experience, Expertise, Authoritativeness, Trustworthiness) from Google's Quality Rater Guidelines",
+        "Google publicly stated authorship markup (rel=author) was discontinued in 2014, but internal authorship signals continued"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Authorship Affects Rankings",
+      "items": [
+        "<strong>Author consistency matters</strong>: isAuthor is a boolean, meaning Google first checks if distinct authorship exists. Attributed content > anonymous content",
+        "<strong>GAIA connection is powerful</strong>: Authors with Google accounts (especially Google Scholar, YouTube, Gmail) may have richer identity profiles",
+        "<strong>Cross-site author signals</strong>: US10534810 patents entity resolution across sites. An author's reputation follows them across publications",
+        "<strong>Topic expertise clusters</strong>: US8589399 evaluates author quality by topic consistency. Authors who consistently write about specific topics score higher",
+        "<strong>E-E-A-T is real but indirect</strong>: No explicit 'E-E-A-T score' exists, but authorship signals feed into Q* quality scoring which gates features like snippets",
+        "<strong>Author pages help</strong>: Having clear author bio pages with structured data helps Google's entity resolution connect your content to your identity",
+        "<strong>YMYL amplification</strong>: In Your Money or Your Life topics, author credentials carry even more weight. Medical, financial, and legal content benefits most from strong authorship signals",
+        "<strong>Author Vectors detect AI content shifts</strong>: Patent US11275895 enables Google to build a writing-style fingerprint per author. If an established author suddenly publishes content with a radically different style vector (e.g., AI-generated), the distance between document vector and stored author vector increases, flagging a potential authorship mismatch. This creates a passive AI detection mechanism without needing explicit AI classifiers."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Author Identity Resolution",
+      "source": "Leak+Patent",
+      "how": "Google's authorship pipeline first detects whether a page has a distinct author (isAuthor boolean). If yes, it attempts to resolve the author's identity using entity recognition (Webref) and optionally links to the GAIA identity system via authorObfuscatedGaiaStr. This creates an author entity that can accumulate reputation signals across publications.",
+      "formula": "<span class=\"cf-fn\">AuthorIdentity</span>(doc) =\n  <span class=\"cf-fn\">detectAuthor</span>(<span class=\"cf-val\">doc</span>) ?\n    <span class=\"cf-fn\">resolveEntity</span>(\n      <span class=\"cf-val\">author_signals</span>(doc),\n      <span class=\"cf-val\">GAIA_lookup</span>\n    ) : <span class=\"cf-val\">null</span>\n<span class=\"cf-comment\">// isAuthor: boolean detection of distinct authorship</span>\n<span class=\"cf-comment\">// authorObfuscatedGaiaStr: GAIA identity link</span>\n<span class=\"cf-comment\">// Webref entity resolution across publications</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US9864795\">US9864795</a>, <a href=\"https://patents.google.com/patent/US10534810\">US10534810</a>",
+      "affects": "Affected by: author bio presence, structured data (Person schema), Google account association, publication history"
+    },
+    {
+      "name": "Author Quality Scoring",
+      "source": "Patent",
+      "how": "Once an author entity is resolved, Google can evaluate author quality based on publication history, topic consistency, citation patterns, and cross-site reputation. This feeds into the broader Q* quality pipeline. Authors with consistent expertise in specific topics, high-quality publication venues, and positive user engagement on their content score higher.",
+      "formula": "<span class=\"cf-fn\">AuthorQuality</span>(author) =\n  <span class=\"cf-fn\">f</span>(\n    <span class=\"cf-val\">topic_consistency</span>,\n    <span class=\"cf-val\">publication_quality</span>,\n    <span class=\"cf-val\">citation_patterns</span>,\n    <span class=\"cf-val\">engagement_signals</span>\n  )\n<span class=\"cf-comment\">// Topic consistency: staying in your lane</span>\n<span class=\"cf-comment\">// Publication quality: where you publish</span>\n<span class=\"cf-comment\">// Feeds into Q* quality scoring pipeline</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8589399\">US8589399</a>, <a href=\"https://patents.google.com/patent/US7536382\">US7536382</a>",
+      "affects": "Affected by: author's topic expertise breadth/depth, publication venue quality, author's content engagement metrics"
+    },
+    {
+      "name": "Author Vector Stylometry",
+      "source": "Patent US11275895",
+      "how": "A neural network processes word sequences alongside author identification data to produce author vectors (floating-point or quantized floating-point values). These vectors characterize communication style, personality type, and content selection patterns. For verification, a new document's text is processed to generate a candidate author vector, which is compared against stored author vectors. If the distance falls below a threshold, authorship is confirmed. This enables: (1) verifying claimed authorship, (2) detecting ghostwriting or AI-generated content attributed to a known author, (3) cross-site author identification even without bylines.",
+      "formula": "<span class=\"cf-fn\">AuthorVector</span>(author) =\n  <span class=\"cf-fn\">neural_net</span>(\n    <span class=\"cf-val\">word_sequences</span>,\n    <span class=\"cf-val\">author_id</span>\n  ) &rarr; <span class=\"cf-val\">float_vector</span>\n\n<span class=\"cf-fn\">verify</span>(doc, author) =\n  <span class=\"cf-fn\">distance</span>(\n    <span class=\"cf-fn\">AuthorVector</span>(<span class=\"cf-val\">doc</span>),\n    <span class=\"cf-fn\">stored_vector</span>(<span class=\"cf-val\">author</span>)\n  ) &lt; <span class=\"cf-val\">threshold</span>\n<span class=\"cf-comment\">// Low distance = confirmed authorship</span>\n<span class=\"cf-comment\">// High distance = style mismatch (possible AI/ghost)</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US11275895B1\">US11275895</a> (Generating author vectors)",
+      "affects": "Affected by: writing style consistency across publications. Sudden shifts to AI-generated prose increase vector distance from established author profile."
+    },
+    {
+      "name": "Author Peer Reputation",
+      "source": "Patent",
+      "how": "Computes author reputation from three components: (1) peer review scores from other authenticated authors in the same domain, (2) an authentication score based on identity verification strength, and (3) per-topic reputation that tracks expertise across specific subject areas. Authors accumulate reputation over time across publications, with topic-specific granularity allowing an author to be authoritative in one domain but not another.",
+      "formula": "<span class=\"cf-fn\">AuthorReputation</span>(author) = <span class=\"cf-fn\">combine</span>(\n<span class=\"cf-val\">peer_review_score</span>(author, topic),\n<span class=\"cf-val\">auth_score</span>(identity_verification),\n<span class=\"cf-val\">topic_reputation</span>[t1, t2, ..., tN]\n)  <span class=\"cf-comment\">// per-topic granularity</span>\n<span class=\"cf-comment\">// peer reviews from authenticated authors</span>\n<span class=\"cf-comment\">// accumulates across publications over time</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8150842\">US8150842</a> (reputation of an author of online content)",
+      "affects": "Affected by: peer endorsements, identity verification strength, topic-specific publication history. Authors with verified identities and peer recognition score higher."
+    }
+  ],
+  "pipeline": {
+    "title": "Authorship Processing Pipeline",
+    "stages": [
+      {
+        "name": "Author Detection",
+        "detail": "isAuthor boolean: Google detects whether a page has distinct authorship through bylines, structured data (Person schema), author pages, and content patterns."
+      },
+      {
+        "name": "Entity Resolution (Webref)",
+        "detail": "Detected author matched against Google's entity graph. Name disambiguation, cross-site matching, and entity consolidation performed."
+      },
+      {
+        "name": "GAIA Identity Linking",
+        "detail": "authorObfuscatedGaiaStr links resolved author entity to Google's authentication system. Enables cross-service identity verification."
+      },
+      {
+        "name": "Reputation Aggregation",
+        "detail": "Author's publication history, topic consistency, and quality metrics aggregated across all resolved content."
+      },
+      {
+        "name": "Quality Integration",
+        "detail": "Author quality signals feed into Q* and NSR quality scoring. Amplified for YMYL topics where author credentials are critical."
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2005",
+      "type": "patent",
+      "title": "Expert Identification",
+      "desc": "US7536382: Methods for identifying subject matter experts based on content analysis and citation patterns."
+    },
+    {
+      "year": "2010",
+      "type": "patent",
+      "title": "Author Peer Reputation (US8150842)",
+      "desc": "Patent on computing author reputation from peer reviews, authentication scores, and per-topic reputation. Authors accumulate topic-specific expertise scores across publications. Peer endorsements from authenticated authors carry more weight."
+    },
+    {
+      "year": "2011",
+      "type": "patent",
+      "title": "Google Authorship Launch",
+      "desc": "Google launches rel=author markup and Google+ integration. Author photos appear in search results."
+    },
+    {
+      "year": "2014",
+      "type": "patent",
+      "title": "Authorship Markup Discontinued",
+      "desc": "Google removes author photos from results and deprecates rel=author. But internal authorship signals continue (isAuthor persists in API)."
+    },
+    {
+      "year": "2018",
+      "type": "patent",
+      "title": "Author Entity Resolution",
+      "desc": "US10534810: Advanced author entity resolution across different sites and publications. Authorship becomes an entity problem."
+    },
+    {
+      "year": "2020",
+      "type": "patent",
+      "title": "Author Vectors Patent",
+      "desc": "US11275895: Generating Author Vectors. Neural network creates writing-style fingerprints per author. Can verify authorship and detect style shifts (including AI-generated content attributed to human authors)."
+    },
+    {
+      "year": "2022",
+      "type": "doj",
+      "title": "E-E-A-T Update",
+      "desc": "Google adds 'Experience' to E-A-T guidelines. Author first-hand experience becomes a quality criterion for raters."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "GAIA Link Revealed",
+      "desc": "API leak exposes isAuthor (100/100 corroboration) and authorObfuscatedGaiaStr. Author identity linked to Google's authentication system."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "Authorship System Confirmed",
+      "desc": "DOJ trial documents confirm Authorship as a separate system from Entity. Dual attribution suggests a detection-then-evaluation pipeline."
+    }
+  ]
+}

@@ -1,0 +1,196 @@
+{
+  "id": "entity-semantic",
+  "route": "/entity-semantic",
+  "systems": [
+    "EntitySemantic"
+  ],
+  "hero": {
+    "title": "Entity Semantic: How Google Understands Meaning",
+    "subtitle": "Google represents sites, pages, and topics as dense vectors (embeddings) in shared semantic spaces. site2Vec creates site-wide semantic fingerprints. Page embeddings capture individual page meaning. Topic embeddings evolve with content updates. These vectors enable semantic matching beyond keyword overlap. 4 leak signals, 2 DOJ signals, and 46 patents."
+  },
+  "keyInsight": {
+    "label": "Key Insight from API Leak + DOJ Trial",
+    "text": "<strong>site2Vec</strong> creates a site-wide semantic vector from all your content, meaning Google understands what your site is \"about\" holistically. Pages that diverge from the site's semantic vector may rank worse. <strong>topicEmbedding</strong> evolves over time as your content changes. RankEmbed uses <strong>dot product similarity</strong> (not cosine), meaning vector magnitude matters: more authoritative content can have \"louder\" embeddings."
+  },
+  "pillars": [
+    {
+      "type": "leak",
+      "title": "Signals Confirmed",
+      "items": [
+        "<strong>siteEmbeddings</strong> - Site-level semantic vectors aggregating all content",
+        "<strong>pageEmbeddings</strong> - Individual page semantic vectors",
+        "<strong>site2Vec</strong> - Word2Vec-style site-wide semantic fingerprint",
+        "<strong>topicEmbedding</strong> - Topic relevance vector that evolves with content updates"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "2 Signals Confirmed",
+      "items": [
+        "<strong>topicEmbeddings</strong> - Topic-level semantic vectors (confirmed in DOJ)",
+        "<strong>site2Vec</strong> - Site-level semantic representation (confirmed in DOJ)",
+        "RankEmbed dual encoder: queries and docs in shared semantic space",
+        "Dot product similarity (not cosine): magnitude carries meaning",
+        "DocID profiles track per-document semantic evolution over time"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "6 Patents",
+      "items": [
+        "Word2Vec and its extensions to document and site-level representations",
+        "Dual encoder architectures for query-document matching",
+        "Contextual embeddings (BERT-based) for disambiguation",
+        "Topic modeling and topical authority measurement",
+        "Cross-lingual embeddings for multilingual understanding",
+        "Temporal embedding evolution tracking content changes",
+        "<strong>Entity discovery via graph reconciliation</strong> - Patent <a href=\"https://patents.google.com/patent/US10331706\">US10331706</a> (Google, filed 2017): Discovers new Knowledge Graph entities by extracting entity-fact tuples from web sources, clustering by name+type, then iteratively splitting via determinative predicates (one-to-one relationships like birth_date). Jaccard similarity on predicate-object pairs validates entity identity. Cross-domain corroboration (min sources and domains per bucket) ensures reliability before KG inclusion",
+        "<a href=\"https://patents.google.com/patent/US6453315\">US6453315</a>: Meaning-based information organization and retrieval; <a href=\"https://patents.google.com/patent/US8458197\">US8458197</a>: System and method for determining similar topics; <a href=\"https://patents.google.com/patent/US6816857\">US6816857</a>: Meaning-based advertising and document relevance determination",
+        "<a href=\"https://patents.google.com/patent/US7158961\">US7158961</a>: Methods and apparatus for estimating similarity; <a href=\"https://patents.google.com/patent/US6182066\">US6182066</a>: Category processing of query topics and electronic document content topics"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Entity Semantic Understanding Affects Your SEO",
+      "items": [
+        "<strong>Maintain topical consistency to strengthen your site2Vec vector</strong>: Your entire domain is represented as a single dense vector in semantic space. Every page you publish shifts this vector. Off-topic content dilutes the embedding, making your site a weaker semantic match for queries in your niche. Before publishing, consider whether the content strengthens or weakens your site's semantic identity.",
+        "<strong>Exploit dot product similarity by building authoritative, comprehensive content</strong>: RankEmbed uses dot product, not cosine similarity. This means vector magnitude matters. More authoritative, in-depth content can produce \"louder\" embeddings that score higher even against pages with similar topical angles but less depth. Depth and thoroughness are mathematically rewarded.",
+        "<strong>Build topicEmbedding strength through consistent publishing cadence</strong>: Topic embeddings are versioned and evolve over time as your content changes. Consistent publication of quality content on your topic strengthens these vectors with each update. Sporadic publishing or long gaps between updates cause the embedding to weaken relative to competitors who publish steadily.",
+        "<strong>Align new pages to your existing pageEmbedding cluster</strong>: Each page generates its own semantic vector. Pages that cluster tightly around your site's core topics reinforce the overall site embedding. Create content that naturally connects to your existing pages through shared entities, concepts, and terminology. Internal linking helps, but the semantic content itself is what shapes the embedding.",
+        "<strong>Use entity co-occurrence to strengthen semantic vectors</strong>: Embedding models learn from entity relationships and co-occurrence patterns. Pages that mention a topic's key entities, related concepts, and contextually relevant terms produce richer vectors. Do not just target a single keyword; cover the semantic neighborhood that Google's embedding model associates with that topic.",
+        "<strong>Monitor topical drift when expanding into adjacent areas</strong>: topicEmbedding tracks how your content evolves. Gradual expansion into closely related topics preserves embedding coherence. A sudden pivot to an unrelated topic creates semantic dissonance in your site2Vec. Expand topically by bridging from existing strengths to adjacent areas, using hub pages that connect old and new content."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "siteEmbeddings",
+      "source": "Leak",
+      "how": "Site-level semantic vectors aggregating all page content into a single dense representation. Captures what a site is \"about\" holistically by combining individual page embeddings across the entire domain.",
+      "formula": "<span class=\"cf-fn\">siteEmbedding</span>(domain) = <span class=\"cf-fn\">aggregate</span>(\n[<span class=\"cf-val\">pageEmbed</span>(p) <span class=\"cf-kw\">for</span> p <span class=\"cf-kw\">in</span> domain.pages]\n) &rarr; <span class=\"cf-val\">site_vector</span>[d]\n<span class=\"cf-comment\">// captures what the site is \"about\" holistically</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8812435\">US8812435</a> (entity extraction), <a href=\"https://patents.google.com/patent/US9047295\">US9047295</a> (knowledge graph)",
+      "affects": "Affected by: all page content on the domain, content consistency, topical focus, content volume"
+    },
+    {
+      "name": "pageEmbeddings",
+      "source": "Leak",
+      "how": "Individual page-level semantic vectors capturing page meaning in embedding space. Each page encoded as a dense vector for similarity computation against queries and other documents.",
+      "formula": "<span class=\"cf-fn\">pageEmbedding</span>(url) = <span class=\"cf-fn\">encode</span>(\n<span class=\"cf-val\">text</span>, <span class=\"cf-val\">headings</span>, <span class=\"cf-val\">entities</span>\n) &rarr; <span class=\"cf-val\">page_vector</span>[d]\n<span class=\"cf-comment\">// dense vector for similarity vs queries and docs</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US9158846\">US9158846</a> (entity embedding)",
+      "affects": "Affected by: page text content, heading structure, entity mentions, semantic density"
+    },
+    {
+      "name": "site2Vec",
+      "source": "Leak+DOJ",
+      "how": "Word2Vec-style site-wide semantic fingerprint. Part of QualityNsrPQData in NSR. Pages diverging from the site's semantic vector may rank worse. RankEmbed uses dot product similarity (not cosine), meaning vector magnitude matters.",
+      "formula": "<span class=\"cf-fn\">site2Vec</span>(domain) = <span class=\"cf-fn\">word2vec_aggregate</span>(\n<span class=\"cf-val\">all_content</span>(domain)\n)  <span class=\"cf-comment\">// part of QualityNsrPQData in NSR</span>\n<span class=\"cf-fn\">similarity</span> = <span class=\"cf-fn\">dot_product</span>(q, site2Vec)  <span class=\"cf-comment\">// NOT cosine</span>\n<span class=\"cf-comment\">// magnitude matters: authority amplifies signal</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8812435\">US8812435</a> (entity extraction), <a href=\"https://patents.google.com/patent/US9047295\">US9047295</a> (knowledge graph)",
+      "affects": "Affected by: site-wide content consistency, topical coherence, page-to-site vector alignment, content depth"
+    },
+    {
+      "name": "topicEmbedding",
+      "source": "Leak+DOJ",
+      "how": "Topic relevance vector that evolves with content updates. Versioned data tracking topical shifts over time. Consistent topical coverage builds stronger embedding vectors. Part of the temporal semantic tracking system.",
+      "formula": "<span class=\"cf-fn\">topicEmbedding</span>(page, t) = <span class=\"cf-fn\">evolve</span>(\n<span class=\"cf-val\">topic_vec</span>[t-1], <span class=\"cf-val\">content_update</span>(t)\n)  <span class=\"cf-comment\">// versioned, tracks topical drift</span>\n<span class=\"cf-comment\">// consistent coverage builds stronger vectors</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US9158846\">US9158846</a> (entity embedding), <a href=\"https://patents.google.com/patent/US9047295\">US9047295</a> (knowledge graph)",
+      "affects": "Affected by: content update frequency, topical consistency, semantic drift over time, topic depth"
+    },
+    {
+      "name": "Entity Discovery via Graph Reconciliation",
+      "source": "Patent US10331706 (Google, 2017)",
+      "how": "Discovers new Knowledge Graph entities by extracting entity-fact tuples from multiple web sources via relation extraction. Clusters source graphs by entity name and type, then iteratively splits clusters using determinative predicates (one-to-one relationships like birth_date, headquarters). Jaccard similarity on predicate-object pairs validates entity identity across clusters. Unreliable buckets (too few sources or domains) are discarded. Remaining graphs are merged and high-confidence candidates are flagged for Knowledge Graph inclusion.",
+      "formula": "<span class=\"cf-fn\">Jaccard</span>(E1, E2) =\n  |<span class=\"cf-val\">F1</span> &cap; <span class=\"cf-val\">F2</span>| /\n  |<span class=\"cf-val\">F1</span> &cup; <span class=\"cf-val\">F2</span>|\n<span class=\"cf-comment\">// F = sets of determinative predicate-object pairs</span>\n\n<span class=\"cf-fn\">Cluster</span>(entities) =\n  <span class=\"cf-fn\">group_by</span>(<span class=\"cf-val\">name</span>, <span class=\"cf-val\">type</span>)\n  &rarr; <span class=\"cf-fn\">split_by</span>(<span class=\"cf-val\">determinative_predicates</span>)\n  &rarr; <span class=\"cf-fn\">filter</span>(<span class=\"cf-val\">min_sources</span>, <span class=\"cf-val\">min_domains</span>)\n  &rarr; <span class=\"cf-fn\">merge</span>(<span class=\"cf-val\">high_confidence</span>)\n<span class=\"cf-comment\">// cross-domain corroboration for reliability</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US10331706\">US10331706</a> (Entity discovery via graph reconciliation, 2017)",
+      "affects": "Affected by: entity mentions across multiple authoritative sources, consistency of entity facts (birth date, location, etc.), cross-domain corroboration. Entities cited consistently across diverse sources are more likely to be added to the Knowledge Graph."
+    }
+  ],
+  "pipeline": {
+    "title": "Semantic Understanding Pipeline",
+    "stages": [
+      {
+        "name": "Content Ingestion",
+        "detail": "Text extraction, entity recognition, topic identification"
+      },
+      {
+        "name": "Page Embedding",
+        "detail": "pageEmbeddings: dense vector per page from content"
+      },
+      {
+        "name": "Site Aggregation",
+        "detail": "site2Vec: site-wide vector from all page embeddings"
+      },
+      {
+        "name": "Topic Tracking",
+        "detail": "topicEmbedding: evolves over time with content updates"
+      },
+      {
+        "name": "Semantic Match",
+        "detail": "RankEmbed: dot product similarity in shared query-doc space"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2013",
+      "type": "patent",
+      "title": "Word2Vec",
+      "desc": "Google publishes word2vec: words as dense vectors. Foundation for all embedding-based search. Words with similar meanings cluster together."
+    },
+    {
+      "year": "2015",
+      "type": "patent",
+      "title": "Site Embeddings",
+      "desc": "Google extends word2vec to entire sites. site2Vec creates site-level semantic vectors from content aggregation."
+    },
+    {
+      "year": "2017",
+      "type": "patent",
+      "title": "Entity Graph Reconciliation (US10331706)",
+      "desc": "Google patents entity discovery via graph reconciliation. Extracts entity-fact tuples from web sources, clusters by name+type, splits via determinative predicates (one-to-one relationships). Jaccard similarity validates identity. Cross-domain corroboration ensures reliability for Knowledge Graph inclusion."
+    },
+    {
+      "year": "2018",
+      "type": "patent",
+      "title": "BERT",
+      "desc": "Bidirectional context understanding. \"Bank\" means different things in \"river bank\" vs \"bank account.\" Contextual embeddings."
+    },
+    {
+      "year": "2020",
+      "type": "patent",
+      "title": "RankEmbed",
+      "desc": "Dual encoder model embeds queries and documents into shared semantic space. Trained on 70 days of search logs."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "API Leak: Embedding Signals",
+      "desc": "siteEmbeddings, pageEmbeddings, site2Vec, topicEmbedding confirmed as production ranking signals."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "DOJ: RankEmbed Architecture",
+      "desc": "Dual encoder with dot product (not cosine) similarity. Trained on 70 days of logs + 16K human rater IS scores."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"Keywords are still the foundation of search. We match queries to documents by terms.\"",
+      "internalSource": "DOJ Trial",
+      "internalClaim": "RankEmbed uses dense vector embeddings for semantic matching. Documents can rank for queries with zero keyword overlap if semantically similar in embedding space."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"We evaluate each page independently based on its own merit.\"",
+      "internalSource": "API Leak",
+      "internalClaim": "site2Vec creates a site-wide semantic vector. Pages are evaluated in context of their site's overall topical profile. Off-topic pages on a site may rank worse."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"Topical authority is not a ranking signal.\"",
+      "internalSource": "API Leak + DOJ",
+      "internalClaim": "topicEmbedding tracks topical relevance over time. site2Vec measures site-level topical focus. Consistent topical coverage builds stronger embedding vectors."
+    }
+  ]
+}

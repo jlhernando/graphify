@@ -1,0 +1,218 @@
+{
+  "id": "rankembed",
+  "route": "/rankembed",
+  "systems": [
+    "RankEmbed"
+  ],
+  "hero": {
+    "title": "RankEmbed: Neural Ranking via Embeddings",
+    "subtitle": "RankEmbed is Google's primary deep learning ranking system with 5 confirmed signals from the DOJ trial. It uses dual encoder architecture to embed queries and documents into a shared vector space, enabling semantic matching beyond keyword overlap. It is one of only two ML-based ranking systems confirmed by Google."
+  },
+  "keyInsight": {
+    "label": "Key Insight from DOJ Trial",
+    "text": "RankEmbed uses <strong>dot product similarity</strong> (not cosine similarity) to measure query-document relevance, a deliberate architectural choice. The BERT variant is trained on exactly <strong>70 days of search logs</strong> combined with human quality rater scores. Pandu Nayak testified that only <strong>two systems use ML</strong> in ranking: RankBrain and DeepRank/RankEmbed. Everything else, including NavBoost and Q*, is hand-crafted. The court <strong>mandated sharing of user-side training data</strong>."
+  },
+  "pillars": [
+    {
+      "type": "doj",
+      "title": "Signals,  Core",
+      "items": [
+        "<strong>RankEmbed</strong> - Dual encoder embedding queries and docs into shared space (sworn testimony)",
+        "<strong>RankEmbedBERT</strong> - BERT-enhanced version, trained on 70 days of logs + rater scores. Training window shrinking: 90 days, 60 days, with improvements each time (Nayak PXR0357)",
+        "<strong>DotProductSimilarity</strong> - Primary semantic similarity metric (NOT cosine)",
+        "<strong>RankEmbedNearestNeighbors</strong> - Video content matching via embedding search",
+        "<strong>RankEmbed70DayTraining</strong> - Exact training window confirmed under oath",
+        "<strong>RankEmbed tail query weakness</strong> - Nayak (PXR0357, Jan 2025): RankEmbed 'performs poorly for tail queries.' Head queries have sufficient training data; tail/novel queries lack click signal coverage for effective embeddings",
+        "<strong>FastSearch = RankEmbed-only retrieval</strong> - Nayak (PXR0357): FastSearch uses only RankEmbed signals (no NavBoost, no link authority) to retrieve documents for Gemini AI responses. Quality admitted to be lower than full Search",
+        "<strong>Generalization system</strong> (Mehta FOF 97): RankEmbed classified alongside RankBrain, DeepRank, RankBERT, and MUM as 'generalization' systems that 'may not be so good at memorizing facts, but they're really good at understanding language.' Designed to 'fill holes in [click] data' by generalizing from data-rich queries. Still trained on user data, just less: ~1B examples vs ~1T for older signals (FOF 98)"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "RankEmbed Architecture Details (PXR0357, Nayak Jan 2025)",
+      "items": [
+        "<strong>Dual encoder model</strong>: embeds both query and document into embedding space. Retrieval and ranking are then a dot product (distance measure in embedding space)",
+        "<strong>Embedding space</strong> considers semantic properties plus other signals beyond pure text semantics",
+        "<strong>Extremely fast; high quality on common queries</strong> but 'can perform poorly for tail queries'",
+        "<strong>Trained on a sample from a single month of search data</strong>",
+        "<strong>FastSearch as RAG mechanism</strong>: Google uses FastSearch (RankEmbed-only retrieval) on Vertex AI and Gemini app for grounding responses",
+        "<strong>Signal approximation risk</strong>: 'Even just hundreds of query/result combinations would allow for approximation of certain Google signals' - low barrier to reverse-engineering RankEmbed behavior"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "Embedding Infrastructure",
+      "items": [
+        "<strong>mustangRankEmbedInfo</strong> - Deep learning rank embedding vectors in Mustang",
+        "<strong>compressedDocEmbedding</strong> - Compressed document-level embeddings for dense retrieval",
+        "<strong>pageEmbeddings</strong> - Page-level semantic vector encoding",
+        "<strong>siteEmbeddings / site2Vec</strong> - Site-level vector representations",
+        "<strong>TopicEmbedding</strong> - Topic relevance vectors that change over time",
+        "Embedding infrastructure pervades Mustang, NSR, and multiple subsystems"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "Related Patents",
+      "items": [
+        "Dual encoder maps queries and documents to shared vector space",
+        "Identifies documents beyond traditional term-based retrieval",
+        "Particularly effective for long-tail and ambiguous queries",
+        "Requires periodic retraining on fresh data to maintain accuracy",
+        "Cross-language capability via multilingual embeddings",
+        "Nearest neighbor search for multimedia content matching"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How RankEmbed Affects Your SEO",
+      "items": [
+        "<strong>Write authoritative, in-depth content because vector magnitude matters</strong>: RankEmbed uses dot product similarity, not cosine similarity (confirmed under oath). This means vector magnitude is not normalized out. More authoritative, comprehensive content produces larger embedding vectors, giving a 'louder' signal. Thin content may point in the right topical direction but with a whisper-quiet magnitude that loses to deeper pages.",
+        "<strong>Optimize for semantic relevance, not just keyword matching</strong>: RankEmbed enables pages to rank for queries without exact keyword matches by encoding meaning into vector space. Cover the full semantic field of your topic using natural language, related concepts, and explanatory context. A page about 'mortgage refinancing' should also discuss interest rates, closing costs, and loan terms, even if those are not explicit target keywords.",
+        "<strong>Build topical depth to strengthen compressedDocEmbedding</strong>: The leak confirmed compressedDocEmbedding stores compressed document-level embeddings for dense retrieval. Pages that thoroughly cover a topic from multiple angles produce richer, more distinctive embeddings. Surface-level content generates generic vectors that overlap with thousands of competitors.",
+        "<strong>Maintain site-wide topical consistency for stronger site2Vec signals</strong>: The leak's site2Vec (siteEmbeddings) creates a single dense vector for your entire domain. Publishing off-topic content dilutes this vector, weakening your domain's semantic authority. A cooking blog that publishes tech reviews confuses the site embedding. Keep your site focused or use subdomain/subfolder separation for distinct topics.",
+        "<strong>Update content regularly since RankEmbed retrains every 70 days</strong>: DOJ testimony confirmed RankEmbedBERT trains on exactly 70 days of search logs plus IS rater scores. The model's understanding is a frozen snapshot that degrades over time. Content aligned with current search patterns and terminology will better match the latest model. Stale content using outdated terminology may drift from the embedding space.",
+        "<strong>Leverage TopicEmbedding versioning by publishing consistently</strong>: The leak revealed TopicEmbedding vectors change over time (topicEmbeddingsVersionedData). Consistent publishing on your core topics builds progressively stronger topic vectors with each version update. Sporadic publishing produces weaker, less stable embeddings that shift between versions."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "RankEmbed",
+      "source": "DOJ",
+      "how": "Dual encoder model embedding queries and documents into shared vector space. Uses dot product similarity (NOT cosine). Trained on one month of search data. Identifies additional documents beyond traditional keyword retrieval.",
+      "formula": "<span class=\"cf-fn\">RankEmbed</span>(q, doc) = <span class=\"cf-fn\">dotProduct</span>(\n  <span class=\"cf-val\">encode_q(q)</span>, <span class=\"cf-val\">encode_doc(doc)</span>\n)  <span class=\"cf-comment\">// NOT cosine: magnitude matters</span>\n<span class=\"cf-comment\">// authoritative content = larger vectors = louder signal</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US20200005149\">US20200005149</a> (learning to rank), <a href=\"https://patents.google.com/patent/US10963505\">US10963505</a> (neural ranking)",
+      "affects": "Affected by: semantic depth matters. Content can rank without exact keyword matches if semantically relevant."
+    },
+    {
+      "name": "RankEmbedBERT",
+      "source": "DOJ",
+      "how": "Dual encoder using BERT architecture. Trained on exactly 70 days of search logs + 16K human quality rater IS scores. Dot product (not cosine) means magnitude matters: authoritative content has \"louder\" embeddings.",
+      "formula": "<span class=\"cf-fn\">RankEmbedBERT</span>(q, doc) = <span class=\"cf-fn\">BERT_dual_encode</span>(\n  <span class=\"cf-val\">q</span>, <span class=\"cf-val\">doc</span>\n).<span class=\"cf-fn\">dotProduct</span>()  <span class=\"cf-comment\">// trained on 70 days logs + 16K IS rater scores</span>\n<span class=\"cf-comment\">// retraining required every ~70 days or accuracy degrades</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US10963505\">US10963505</a> (neural ranking)",
+      "affects": "Affected by: comprehensive, authoritative content creates stronger embedding vectors. Quality and depth amplify signal."
+    },
+    {
+      "name": "DotProductSimilarity",
+      "source": "DOJ",
+      "how": "Primary semantic similarity metric in RankEmbed. NOT cosine similarity. Vector magnitude matters, not just direction. More authoritative content can produce larger magnitude vectors.",
+      "formula": "<span class=\"cf-fn\">DotProduct</span>(a, b) = <span class=\"cf-val\">sum</span>(\n  <span class=\"cf-val\">a[i]</span> * <span class=\"cf-val\">b[i]</span> <span class=\"cf-kw\">for</span> i <span class=\"cf-kw\">in</span> dims\n)  <span class=\"cf-comment\">// |a|*|b|*cos(theta), magnitude NOT normalized out</span>\n<span class=\"cf-comment\">// cosine: direction only. dotProduct: direction + authority magnitude</span>",
+      "affects": "Affected by: content authority and depth, not just topical relevance. Stronger content = louder embedding vector."
+    },
+    {
+      "name": "RankEmbedNearestNeighbors",
+      "source": "DOJ",
+      "how": "Video content matching via embedding nearest neighbor search. Used for multimedia ranking. Maps video content to embedding space.",
+      "formula": "<span class=\"cf-fn\">RankEmbedNN</span>(q, videoIndex) = <span class=\"cf-fn\">nearestK</span>(\n  <span class=\"cf-val\">encode_q(q)</span>, <span class=\"cf-val\">videoIndex.embeddings</span>, <span class=\"cf-val\">k</span>\n)  <span class=\"cf-comment\">// ANN search over pre-encoded video embeddings</span>\n<span class=\"cf-comment\">// video titles, descriptions, transcripts feed embedding</span>",
+      "affects": "Affected by: video content optimization. Video descriptions and context help embedding quality."
+    }
+  ],
+  "pipeline": {
+    "title": "RankEmbed Processing Pipeline",
+    "stages": [
+      {
+        "name": "Query Encoding",
+        "detail": "BERT encodes query into dense vector representation"
+      },
+      {
+        "name": "Doc Encoding",
+        "detail": "Documents pre-encoded into compressed embeddings"
+      },
+      {
+        "name": "Dot Product",
+        "detail": "Query-document similarity via dot product (not cosine)"
+      },
+      {
+        "name": "Nearest Neighbors",
+        "detail": "Retrieve top-k semantically similar documents"
+      },
+      {
+        "name": "Score Fusion",
+        "detail": "Merge with Mustang term scores for final ranking"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2015",
+      "type": "patent",
+      "title": "RankBrain Launches",
+      "desc": "Google introduces first ML-based ranking signal. Word2Vec-style embeddings for query understanding."
+    },
+    {
+      "year": "2018",
+      "type": "patent",
+      "title": "BERT Revolution",
+      "desc": "Bidirectional transformers enable deep language understanding. Google integrates BERT into search."
+    },
+    {
+      "year": "2019",
+      "type": "patent",
+      "title": "RankEmbed Deployed",
+      "desc": "Dual encoder architecture maps queries and documents into shared embedding space for neural retrieval."
+    },
+    {
+      "year": "2022",
+      "type": "patent",
+      "title": "MUM Integration",
+      "desc": "Multitask Unified Model adds multimodal understanding. RankEmbed extended with cross-language capabilities."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "DOJ Trial: Training Details",
+      "desc": "RankEmbed BERT trained on exactly 70 days of search logs. Uses dot product (not cosine) similarity. Court mandated data sharing."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "DOJ: Only 2 ML Systems",
+      "desc": "Pandu Nayak testified only RankBrain and DeepRank/RankEmbed use ML in ranking. Everything else is hand-crafted."
+    },
+    {
+      "year": "2025",
+      "type": "doj",
+      "title": "DOJ Remedies: Tail Query Weakness + FastSearch (PXR0357)",
+      "desc": "Nayak interview (Jan 2025): RankEmbed 'performs poorly for tail queries.' FastSearch (RankEmbed-only) used as RAG for Gemini, quality lower than full Search. Training window shrinking (90→60 days) with improvements. Google 're-thinking search stack from ground-up with LLM.'"
+    },
+    {
+      "year": "2025",
+      "type": "doj",
+      "title": "DOJ Remedies: RankEmbed Architecture + Signal Approximation (PXR0357)",
+      "desc": "Nayak (Jan 2025): RankEmbed dual encoder embeds query+document, retrieval is dot product in embedding space. Embedding space encodes semantic properties plus other signals. Trained on single month sample. 'Even just hundreds of query/result combinations would allow for approximation of certain Google signals.' FastSearch (RankEmbed-only) powers Vertex AI and Gemini grounding."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"We use many ML models throughout the ranking pipeline.\"",
+      "internalSource": "DOJ Trial",
+      "internalClaim": "Pandu Nayak testified under oath that only TWO systems use ML: RankBrain and DeepRank/RankEmbed. NavBoost is \"just a big table.\" Q* is hand-crafted. SpamBrain uses neural nets but for spam, not ranking."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"Our AI models understand content deeply and holistically.\"",
+      "internalSource": "DOJ Trial",
+      "internalClaim": "RankEmbed requires retraining on fresh data every 70 days. Without retraining, accuracy degrades. The model's \"understanding\" is a snapshot frozen in time, not continuous learning."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"Our ranking data is proprietary and essential to our competitive advantage.\"",
+      "internalSource": "DOJ Trial",
+      "internalClaim": "The court mandated sharing of user-side RankEmbed training data as part of the antitrust remedy. Google's training data advantage was deemed anticompetitive."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"Our neural models provide superior understanding for all types of searches.\"",
+      "internalSource": "DOJ Remedies PXR0357 (Nayak, Jan 2025)",
+      "internalClaim": "Nayak admitted RankEmbed 'performs poorly for tail queries.' The neural model's effectiveness is concentrated on head queries with sufficient training data. The long tail, where users have the most unique needs, is where the neural model is weakest."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"Our ranking signals are extremely complex and cannot be easily replicated.\"",
+      "internalSource": "DOJ Remedies PXR0357 (Nayak, Jan 2025)",
+      "internalClaim": "Nayak acknowledged that 'even just hundreds of query/result combinations would allow for approximation of certain Google signals.' The barrier to replicating RankEmbed's core behavior is far lower than publicly claimed."
+    }
+  ]
+}

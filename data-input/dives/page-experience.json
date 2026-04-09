@@ -1,0 +1,196 @@
+{
+  "id": "page-experience",
+  "route": "/page-experience",
+  "systems": [
+    "PageExperience"
+  ],
+  "hero": {
+    "title": "Page Experience: UX as a Ranking Signal",
+    "subtitle": "Google's Page Experience system combines Core Web Vitals (LCP, INP, CLS), mobile-friendliness, HTTPS, and interstitial penalties into a unified UX quality signal. The API leak revealed specific scoring mechanisms including a 0-1000 ad density violation scale, a tri-state mobile optimization classifier, and site-level clutter penalties."
+  },
+  "keyInsight": {
+    "label": "Key Insight from API Leak + DOJ Trial",
+    "text": "Core Web Vitals use <strong>real Chrome field data</strong> (mobileCwv, desktopCwv), not lab measurements. The <strong>adsDensityInterstitialViolationStrength</strong> is scored 0-1000, measuring exactly how aggressively a page uses ads and popups. <strong>clutterScore</strong> is a site-level penalty for distracting UI elements. The <strong>isSmartphoneOptimized</strong> signal is tri-state (not binary), meaning partially optimized sites get partial credit."
+  },
+  "pillars": [
+    {
+      "type": "leak",
+      "title": "UX Scoring Signals",
+      "items": [
+        "<strong>pageSpeedScore</strong> - Aggregated Core Web Vitals performance score",
+        "<strong>mobileFriendlyScore</strong> - Mobile-friendliness for mobile-first indexing",
+        "<strong>mobileInterstitials</strong> - Mobile popup/interstitial penalty signal",
+        "<strong>desktopInterstitials</strong> - Desktop intrusive popup detection",
+        "<strong>clutterScore</strong> - Site-level penalty for ads, popups, excessive UI"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "Signals Confirmed",
+      "items": [
+        "<strong>mobileCwv</strong> - Core Web Vitals field data for mobile (LCP, INP, CLS)",
+        "<strong>desktopCwv</strong> - Core Web Vitals field data for desktop devices",
+        "<strong>clutterScore</strong> - Site-level penalization for distracting elements",
+        "<strong>adsDensityInterstitialViolationStrength</strong> - Ad violation score, 0-1000 scale",
+        "<strong>isSmartphoneOptimized</strong> - Tri-state mobile-friendliness classification",
+        "<strong>badSslCertificate</strong> - Invalid SSL as negative trust indicator"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "7 Patents",
+      "items": [
+        "<strong>LCP</strong> - Largest Contentful Paint (loading performance)",
+        "<strong>INP</strong> - Interaction to Next Paint (interactivity, replaced FID)",
+        "<strong>CLS</strong> - Cumulative Layout Shift (visual stability)",
+        "Field data from Chrome User Experience Report (CrUX)",
+        "Mobile-first indexing: mobile version is primary for ranking",
+        "HTTPS required since 2014, badSslCertificate penalizes invalid certs",
+        "<a href=\"https://patents.google.com/patent/US20110142016\">US20110142016</a>: Ad hoc networking based on content and location; <a href=\"https://patents.google.com/patent/US8635106\">US8635106</a>: System for targeting data to users on mobile devices; <a href=\"https://patents.google.com/patent/US20080035402\">US20080035402</a>: Mobile Device Suitable for Supporting Apparatus for Site Imaging While in Transit",
+        "<a href=\"https://patents.google.com/patent/US7203684\">US7203684</a>: Serving content-targeted ADS in e-mail, such as e-mail newsletters; <a href=\"https://patents.google.com/patent/US8271057\">US8271057</a>: Condition-based activation, shut-down and management of applications of mobile devices; <a href=\"https://patents.google.com/patent/US8478519\">US8478519</a>: Providing results to parameterless search queries",
+        "<a href=\"https://patents.google.com/patent/US7742953\">US7742953</a>: Adding information or functionality to a rendered document via association with an electronic cou..."
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Page Experience Affects Your SEO",
+      "items": [
+        "<strong>Optimize for Chrome field data, not lab scores</strong>: mobileCwv and desktopCwv use real Chrome User Experience Report (CrUX) field data, not Lighthouse lab measurements. A perfect lab score means nothing if real users on slower devices experience poor performance. Monitor CrUX data in Search Console and PageSpeed Insights. Optimize for the 75th percentile of your actual user base, especially on mobile.",
+        "<strong>Keep adsDensityInterstitialViolationStrength near zero</strong>: This 0-1000 scale precisely measures ad and popup aggressiveness. Even moderate scores create demotion. Avoid full-screen interstitials on mobile, limit above-the-fold ad density to under 30% of viewport, and never auto-play video ads. Follow Google's Better Ads Standards as a minimum baseline, since the internal scoring is more granular than the public guidelines suggest.",
+        "<strong>Achieve fully-optimized status in the tri-state mobile classifier</strong>: isSmartphoneOptimized is not binary but tri-state (optimized, partial, not optimized). Partially optimized sites receive partial credit, not full. Ensure responsive design with proper viewport meta tags, readable text without zooming (16px+ base font), tap targets at least 48px apart, and no horizontal scrolling. Test on actual mid-range Android devices, not just iPhone.",
+        "<strong>Minimize clutterScore at the site level</strong>: clutterScore is a site-level penalty, not per-page. If some pages on your site have excessive ads, popups, or distracting elements, the penalty affects your entire domain's page experience score. Audit all page templates including error pages, category pages, and archive pages for clutter, not just your primary content pages.",
+        "<strong>Target LCP under 2.5s by optimizing the largest element</strong>: LCP measures when the largest contentful element renders. Identify your LCP element (usually a hero image or heading text) and optimize specifically for it. Preload hero images, use next-gen formats (WebP/AVIF), set explicit width/height to avoid layout recalculation, and eliminate render-blocking resources that delay the LCP element.",
+        "<strong>Fix CLS by reserving space for dynamic content</strong>: Cumulative Layout Shift (CLS < 0.1 threshold) penalizes visual instability. Common causes: ad slots without reserved dimensions, lazy-loaded images without aspect-ratio attributes, dynamically injected content above the fold, and web fonts causing text reflow. Set explicit dimensions on all media elements and use font-display: optional to prevent layout shifts.",
+        "<strong>Yandex cross-reference: ad density is the single strongest negative signal</strong>: Yandex's FI_ADV has a weight of -0.251, the heaviest negative factor in their entire 17,854-factor ranking system. This cross-validates Google's clutterScore and adsDensityInterstitialViolationStrength as among the most impactful ranking penalties. Yandex also directly penalizes crawl depth (URL distance from homepage) and orphan pages (no internal links), suggesting these factors influence Google's page experience evaluation even if not explicitly documented as separate signals."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "mobileCwv / desktopCwv",
+      "source": "DOJ: Core Web Vitals field data",
+      "how": "Field data from real Chrome users. Measures LCP (Largest Contentful Paint), FID/INP (Interaction to Next Paint), CLS (Cumulative Layout Shift). Separate scores for mobile and desktop.",
+      "formula": "<span class=\"cf-fn\">CWV</span>(url, device) = <span class=\"cf-fn\">CrUX_field_data</span>(\n<span class=\"cf-val\">LCP</span> &lt; 2.5s, <span class=\"cf-val\">INP</span> &lt; 200ms, <span class=\"cf-val\">CLS</span> &lt; 0.1\n)  <span class=\"cf-comment\">// separate mobile and desktop scores</span>\n<span class=\"cf-comment\">// real Chrome user data, not synthetic tests</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8645362\">US8645362</a> (resource load times as ranking signal)",
+      "affects": "Affected by: optimizing page speed (LCP < 2.5s), interactivity (INP < 200ms), visual stability (CLS < 0.1). Use Chrome UX Report data."
+    },
+    {
+      "name": "clutterScore",
+      "source": "DOJ: site-level penalization for distracting elements",
+      "how": "Site-level penalty for distracting elements. Evaluates ad density, pop-ups, interstitials, and other elements that degrade user experience.",
+      "formula": "<span class=\"cf-fn\">clutterScore</span>(site) = <span class=\"cf-fn\">evaluate</span>(\n<span class=\"cf-val\">ad_density</span>, <span class=\"cf-val\">popups</span>, <span class=\"cf-val\">interstitials</span>, <span class=\"cf-val\">distractions</span>\n)  <span class=\"cf-comment\">// site-level penalty, not per-page</span>\n<span class=\"cf-comment\">// higher clutter = stronger demotion</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8645362\">US8645362</a> (resource load times and trust)",
+      "affects": "Affected by: reducing intrusive ads, pop-ups, interstitials. Clean layouts score better. Especially important on mobile."
+    },
+    {
+      "name": "adsDensityInterstitialViolationStrength",
+      "source": "DOJ: scaled 0-1000 ad density violations",
+      "how": "Scaled 0-1000 score. Measures strength of ad density and interstitial policy violations specifically on mobile pages. Higher = worse.",
+      "formula": "<span class=\"cf-fn\">adsDensityViolation</span>(page) = <span class=\"cf-fn\">score</span>(\n<span class=\"cf-val\">mobile_ad_density</span>, <span class=\"cf-val\">interstitial_violations</span>\n)  <span class=\"cf-comment\">// range: 0 (clean) - 1000 (severe)</span>\n<span class=\"cf-comment\">// mobile-specific, follows Better Ads Standards</span>",
+      "affects": "Affected by: reducing mobile ad density. Avoid full-screen interstitials. Follow Google's Better Ads Standards."
+    },
+    {
+      "name": "isSmartphoneOptimized",
+      "source": "DOJ: tri-state mobile-friendliness classification",
+      "how": "Tri-state classification for smartphone optimization. Not just pass/fail - three levels of mobile-friendliness assessment.",
+      "formula": "<span class=\"cf-fn\">isSmartphoneOptimized</span>(page) = <span class=\"cf-fn\">classify</span>(\n<span class=\"cf-val\">responsive</span>, <span class=\"cf-val\">tap_targets</span>, <span class=\"cf-val\">viewport</span>, <span class=\"cf-val\">text_size</span>\n)  <span class=\"cf-comment\">// tri-state: optimized | partial | not_optimized</span>\n<span class=\"cf-comment\">// NOT binary (contradicts public statements)</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8645362\">US8645362</a> (resource load times as ranking signal)",
+      "affects": "Affected by: responsive design, readable text without zooming, adequate tap targets, no horizontal scrolling on mobile."
+    }
+  ],
+  "pipeline": {
+    "title": "Page Experience Signal Pipeline",
+    "stages": [
+      {
+        "name": "Chrome Field Data",
+        "detail": "Real user CWV metrics (LCP, INP, CLS)"
+      },
+      {
+        "name": "Mobile Analysis",
+        "detail": "isSmartphoneOptimized (tri-state), mobileFriendlyScore"
+      },
+      {
+        "name": "UX Penalties",
+        "detail": "clutterScore, interstitials, adsDensity (0-1000)"
+      },
+      {
+        "name": "Trust Checks",
+        "detail": "HTTPS validation, badSslCertificate"
+      },
+      {
+        "name": "Page Experience Score",
+        "detail": "Combined UX quality signal for ranking"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2010",
+      "type": "patent",
+      "title": "Mobile-Friendly Signals",
+      "desc": "Google begins factoring mobile usability into rankings. Mobile-first thinking starts."
+    },
+    {
+      "year": "2015",
+      "type": "patent",
+      "title": "Mobilegeddon Update",
+      "desc": "Mobile-friendliness becomes a ranking factor. Pages not optimized for mobile demoted in mobile search."
+    },
+    {
+      "year": "2018",
+      "type": "patent",
+      "title": "Speed Update",
+      "desc": "Page speed becomes a ranking factor for mobile searches. Slow sites demoted."
+    },
+    {
+      "year": "2020",
+      "type": "patent",
+      "title": "Core Web Vitals Announced",
+      "desc": "Google introduces LCP, FID, CLS as standardized UX metrics. Planned as ranking signals."
+    },
+    {
+      "year": "2021",
+      "type": "patent",
+      "title": "Page Experience Update",
+      "desc": "Core Web Vitals officially become ranking signals. Combined with mobile-friendliness, HTTPS, no intrusive interstitials."
+    },
+    {
+      "year": "2023",
+      "type": "exploit",
+      "title": "Yandex Leak Cross-Reference",
+      "desc": "Yandex's FI_ADV (advertising presence, weight: -0.251) is the heaviest single negative factor in their entire ranking system, validating ad density as a dominant penalty. FI_IS_MOBILE_BEAUTY_HOST scores mobile optimization at the host level. Crawl depth is weighted directly: pages with more URL slashes (deeper in site hierarchy) are penalized. Orphan pages (no internal links) receive specific negative signals. Embedded maps are a positive signal when contextually relevant."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "API Leak: UX Signals",
+      "desc": "clutterScore, pageSpeedScore, mobileInterstitials, desktopInterstitials confirmed. Ad density penalties revealed."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "DOJ Trial: CWV Field Data",
+      "desc": "mobileCwv and desktopCwv use real Chrome field data. adsDensityInterstitialViolationStrength scored 0-1000."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "Core Web Vitals is a minor ranking factor. Content relevance matters much more.",
+      "internalSource": "API Leak + DOJ",
+      "internalClaim": "Dedicated mobileCwv and desktopCwv signals use real Chrome field data. adsDensityInterstitialViolationStrength is a precise 0-1000 scale penalty. These are concrete, measured ranking inputs."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "Mobile-friendliness is a simple binary signal.",
+      "internalSource": "DOJ Trial",
+      "internalClaim": "isSmartphoneOptimized is tri-state, not binary. Sites can be fully optimized, partially optimized, or not optimized, each with different ranking treatment."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "We don't penalize sites for showing ads.",
+      "internalSource": "API Leak + DOJ",
+      "internalClaim": "adsDensityInterstitialViolationStrength explicitly penalizes ad density and popups on a 0-1000 scale. clutterScore penalizes distracting page elements at site level."
+    }
+  ]
+}

@@ -1,0 +1,301 @@
+{
+  "title": "LLM Pipeline: How Each Stage Affects Brand/Domain Mentions",
+  "slug": "llm-pipeline-brand-influence",
+  "date": "2026-03-29",
+  "summary": "End-to-end mapping of the LLM training and inference pipeline (pre-training, fine-tuning, RLHF, RAG, system prompts, inference-time sampling) with focus on how each stage determines which brands and domains get mentioned in outputs. Covers GPT-4, Gemini, Claude, Llama, Perplexity.",
+  "sections": [
+    {
+      "id": "1",
+      "title": "Stage 1: Pre-Training Data",
+      "subsections": [
+        {
+          "id": "1.1",
+          "title": "Common Crawl Filtering: What Survives",
+          "content": "Common Crawl is the foundational data source for nearly all LLMs. The raw crawl is massive (petabytes), but aggressive filtering reduces it by 90%+. The pipeline: raw HTML download -> text extraction -> language detection -> heuristic quality filters -> deduplication -> domain/URL blocklists -> final corpus.\n\nHeuristic filters that determine domain survival:\n- Punctuation presence and density\n- Word/sentence count thresholds (too short = removed)\n- Alphanumeric character proportion\n- Line length distribution\n- Repetitive pattern detection\n- Blocklist filtering (400+ offensive words; disproportionately removes African American English at 42% vs 6.2% for white-aligned English)\n\nDomains that survive at scale: .com dominates, followed by .org and .net. The Dodge et al. (2021) study on C4 found patents.google.com was the single largest domain by token count. 51.3% of URLs are US-hosted. Countries with large English-speaking populations (India 3.4%, Pakistan 0.06%, Nigeria 0.03%) are severely underrepresented.\n\nCommon Crawl's WebGraph top domains (Facebook, Google, YouTube, Wikipedia) correlate with the domains most-cited by LLMs. English-language content represents ~44% of CC-MAIN-2023-50.",
+          "sources": [
+            "https://arxiv.org/abs/2104.08758",
+            "https://knowingmachines.org/publications/9-ways-to-see/essays/c4",
+            "https://dev.to/extractdata/inside-common-crawl-the-dataset-behind-ai-models-and-its-real-world-limits-2eo2",
+            "https://metehanai.substack.com/p/free-tool-common-crawl-llm-training",
+            "https://www.mozillafoundation.org/en/research/library/generative-ai-training-data/common-crawl/"
+          ]
+        },
+        {
+          "id": "1.2",
+          "title": "Major Datasets: The Pile, RedPajama, RefinedWeb, FineWeb, DCLM",
+          "content": "THE PILE (EleutherAI, 2020): 825 GiB, 22 subsets. Composition by size: Pile-CC 227 GiB, Books3 101 GiB, PubMed Central 90 GiB, GitHub 95 GiB, OpenWebText2 63 GiB, FreeLaw 51 GiB, StackExchange 32 GiB, USPTO Backgrounds 23 GiB, PubMed Abstracts 19 GiB, Wikipedia (English) 6.4 GiB, Project Gutenberg 11 GiB, OpenSubtitles 13 GiB. Key insight: the composite approach deliberately upsamples academic, legal, and code content relative to their natural web frequency. Any brand/domain heavily represented in PubMed, StackExchange, GitHub, or US patent filings gets disproportionate representation.\n\nREDPAJAMA-V1: Open reproduction of LLaMA training data. V2: 30T+ tokens of raw web data with 40+ quality annotations implementing C4, Gopher, and RefinedWeb quality signals. Allows researchers to filter by domain quality.\n\nREFINEDWEB: 600B tokens. Demonstrated that web-only data (no composite upsampling) can match composite dataset quality. Heavy URL-level and document-level deduplication.\n\nFINEWEB: 15T+ tokens from 96 Common Crawl snapshots (2013-2024). Uses URL blocklists, fastText language ID (English confidence >= 0.65), MassiveText-inspired quality filters, MinHash deduplication per crawl. FineWeb-edu adds a model-based educational quality classifier.\n\nDCLM: 240T tokens. Uses model-based classifier trained on curated positive examples from OpenHermes 2.5 and Reddit's r/ExplainLikeImFive. This means content structured like helpful explanations and instruction-following gets boosted.\n\nBrand influence: Domains overrepresented in these datasets have their terminology, facts, and framing baked into the model's weights. Wikipedia and high-quality news sites appear in nearly every dataset. Niche domains that survive quality filtering appear far more than their web traffic would suggest (e.g., patents.google.com in C4).",
+          "sources": [
+            "https://pile.eleuther.ai/paper.pdf",
+            "https://arxiv.org/abs/2411.12372",
+            "https://huggingface.co/datasets/HuggingFaceFW/fineweb",
+            "https://arxiv.org/html/2406.17557v1",
+            "https://github.com/karpathy/llm.c/discussions/664"
+          ]
+        },
+        {
+          "id": "1.3",
+          "title": "Domain Weighting and Deduplication Strategies",
+          "content": "Two-stage training is standard: Stage 1 trains on massive general web crawl (10T+ tokens for breadth), Stage 2 trains on smaller curated high-quality data (0.5-1T tokens of books, Wikipedia, verified content for depth). This means Stage 2 sources have outsized per-token influence on the model's behavior.\n\nUpsampling strategies: Wikipedia, books, and code are typically upsampled 2-5x relative to their natural occurrence. This means Wikipedia's framing of entities becomes the model's default framing. If Wikipedia says Brand X is 'the leading provider of Y,' that becomes the model's prior.\n\nDeduplication approaches: Exact dedup (hash-based), near-dedup (MinHash/SimHash), and SoftDedup (reweighting instead of removal, achieving 26% training speedup). Deduplication reduces the influence of content farms that publish the same text across many domains. It also reduces the advantage of press release syndication, where the same brand mention appears on hundreds of news sites.\n\nDomain diversity: Research shows that strategically selecting a smaller but better-distributed subset and training on it multiple times outperforms training on the full unfiltered dataset once. This suggests that data curators make deliberate choices about which domains to include, and those choices compound through training.",
+          "sources": [
+            "https://www.rohan-paul.com/p/selecting-and-preparing-training",
+            "https://arxiv.org/abs/2308.12284",
+            "https://arxiv.org/html/2407.06654v1",
+            "https://nebius.com/blog/posts/data-preparation/llm-dataprep-techniques"
+          ]
+        },
+        {
+          "id": "1.4",
+          "title": "Model-Specific Training Data",
+          "content": "GPT-4 (leaked via George Hotz, confirmed by Soumith Chintala): Mixture of 8x220B parameter models (1.8T total params, 120 layers). Trained on ~13T tokens including CommonCrawl and RefinedWeb. Some fine-tuning from ScaleAI. Training cost ~$63M. The MoE architecture means different experts may specialize in different domains/topics.\n\nLLAMA 2: 2T tokens, exclusively publicly available data (Common Crawl, Wikipedia, Project Gutenberg, open code repos). Removed sites that often disclose personal data. Upsampled trustworthy sources. Primarily English + 27 other languages.\n\nLLAMA 3: 15T+ tokens (7x Llama 2), 4x more code. Over 5% high-quality non-English data across 30+ languages. Custom data-filtering pipelines: heuristic filters, NSFW filters, semantic dedup, text quality classifiers. Meta optimized the data mix across trivia, STEM, coding, history, etc.\n\nLLAMA 3/4: Added Meta-proprietary data including publicly shared posts from Instagram and Facebook, and user interactions with Meta AI. Private messages/non-public posts excluded.\n\nGEMINI: Training data includes web crawls, licensed data, user data from Google products, YouTube transcripts (filtered for copyright), and AI-generated data. Filtering: dedup, robots.txt compliance, safety filtering, quality filtering. The inclusion of YouTube transcripts gives Gemini unique exposure to spoken-word content about brands.\n\nCLAUDE: Anthropic has disclosed minimal information about training data. Known to use Constitutional AI for alignment rather than pure RLHF.",
+          "sources": [
+            "https://the-decoder.com/gpt-4-architecture-datasets-costs-and-more-leaked/",
+            "https://www.kdnuggets.com/2023/07/gpt4-details-leaked.html",
+            "https://ai.meta.com/blog/meta-llama-3/",
+            "https://en.wikipedia.org/wiki/Gemini_(language_model)",
+            "https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-3-Pro-Model-Card.pdf"
+          ]
+        },
+        {
+          "id": "1.5",
+          "title": "Brand Influence at the Pre-Training Stage",
+          "content": "OVERREPRESENTED DOMAINS/BRANDS:\n- Wikipedia: Upsampled in virtually every training dataset. Wikipedia's editorial consensus becomes the model's default framing for any entity.\n- StackExchange/GitHub: Heavy representation means developer tool brands (AWS, Google Cloud, Microsoft Azure, Docker, etc.) are deeply embedded.\n- News outlets: Major English-language news sites (NYT, BBC, Reuters, etc.) survive all quality filters and form the model's understanding of current events and brand narratives.\n- patents.google.com: Largest single domain in C4 by token count. Patent terminology and inventions are overrepresented.\n- Reddit: Explicitly used in DCLM (r/ExplainLikeImFive). Reddit's community recommendations shape the model's 'common wisdom.'\n- US-centric content: 51.3% of C4 URLs are US-hosted. American brands, products, and cultural references dominate.\n\nUNDERREPRESENTED:\n- Non-English content: Filtering by English confidence >= 0.65 removes multilingual and code-switched content.\n- Global South domains: India 3.4%, Pakistan 0.06%, Nigeria 0.03% of C4 URLs. Brands primarily known in these markets are nearly invisible.\n- Small/new businesses: Deduplication and quality filtering favor established domains with diverse, high-quality content. New domains with little content history are filtered out.\n- Paywalled content: Sites behind hard paywalls (academic journals, premium news) have their content underrepresented relative to their influence.\n- Social media content: While some public posts are included, most social platform content is behind login walls and excluded."
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "title": "Stage 2: Fine-Tuning and Alignment (RLHF / CAI / RLAIF)",
+      "subsections": [
+        {
+          "id": "2.1",
+          "title": "How Human Preference Data Shapes Brand Recommendations",
+          "content": "RLHF (Reinforcement Learning from Human Feedback) is a three-stage pipeline: Supervised Fine-Tuning (SFT) on curated examples, Reward Model (RM) training from human preference pairs, and PPO-based reinforcement learning to optimize the policy against the reward model.\n\nThe human annotators who create preference data introduce systematic biases:\n- They tend to prefer responses that mention well-known brands (recognizable = 'more helpful')\n- They reward longer, more detailed responses (verbosity bias)\n- They prefer responses that sound authoritative and confident\n- They punish responses that seem uncertain, even when uncertainty is appropriate\n- Geographic and cultural biases of the annotator workforce (often US-based, English-speaking) shape which brands are considered 'good' recommendations\n\nThe reward model then learns these biases as optimization targets. When the policy model is trained against this reward signal, it amplifies these biases further.\n\nHuman preference data costs ~$1+ per prompt. The annotator workforce composition directly determines which brands the model learns to recommend. If annotators are predominantly young, tech-savvy, US-based workers (common for companies like ScaleAI and Surge), the model learns to recommend brands popular with that demographic.",
+          "sources": [
+            "https://arxiv.org/abs/2405.16455",
+            "https://www.superannotate.com/blog/rlhf-for-llm",
+            "https://labelbox.com/blog/using-reinforcement-learning-from-human-feedback-to-fine-tune-large-language-models/"
+          ]
+        },
+        {
+          "id": "2.2",
+          "title": "Reward Model Biases",
+          "content": "Known biases in reward models that affect brand mentions:\n\n1. LENGTH BIAS: DeBERTa-based reward models prefer verbose correct responses over concise ones. This means brands that are described at length in training data get boosted. Newer SOTA reward models show the opposite trend (penalizing verbosity).\n\n2. POSITION BIAS: Reward models exhibit prefix bias, where minor variations in query prefixes trigger systematic preference shifts along racial and gender dimensions.\n\n3. SYCOPHANCY: Models trained with RLHF learn to agree with users. If a user mentions preferring Brand X, the model is rewarded for confirming that preference. This creates a feedback loop where popular brands get recommended more because users ask about them more.\n\n4. PREFERENCE COLLAPSE: KL-based regularization in RLHF can virtually disregard minority preferences. If 80% of annotators prefer Brand A over Brand B, the model may learn to always recommend A, even when B is objectively better for certain use cases.\n\n5. FORMAT BIAS: Reward models can mistakenly favor responses with specific formatting (bullet points, headers, bold text), leading to recommendations of brands whose information is more easily formatted attractively.\n\n6. HALLUCINATION REWARD: Some reward models favor responses with hallucinated content if it sounds plausible and authoritative. This can lead to the model generating fake product features or endorsements.\n\n7. REWARD HACKING: Models learn to produce high-reward responses that don't align with actual human preferences. The most documented example is verbosity bias, but this extends to brand recommendations that 'sound' authoritative.",
+          "sources": [
+            "https://arxiv.org/html/2603.03291",
+            "https://arxiv.org/abs/2602.15222",
+            "https://arxiv.org/html/2602.01002",
+            "https://arxiv.org/html/2411.15287v1"
+          ]
+        },
+        {
+          "id": "2.3",
+          "title": "Constitutional AI (Anthropic) vs RLHF (OpenAI) vs RLAIF (Google)",
+          "content": "RLHF (OpenAI, standard approach):\n- Human labelers -> Preference data -> Reward model -> Fine-tuning\n- Inherits annotator biases directly\n- Opaque reward signal makes it hard to trace why certain brands are preferred\n- Expensive ($1+/prompt for human labels)\n- Known to amplify sycophancy\n\nCONSTITUTIONAL AI (Anthropic/Claude):\n- Written principles ('constitution') -> AI self-critique -> AI revision -> Training\n- Principles are explicit and auditable (e.g., 'be helpful, harmless, honest')\n- Chain-of-thought reasoning makes brand preference traceable to specific principles\n- Less dependent on human annotator demographics\n- Creates more harmless outputs with minimal helpfulness impact\n- Key difference for brands: the constitution can explicitly encode neutrality principles, making Claude potentially less likely to show arbitrary brand preferences\n\nRLAIF (Google, used in parts of Gemini training):\n- Replaces human annotators with AI model feedback\n- Scales cheaply (<$0.01/prompt vs $1+ for RLHF)\n- Propagates biases of the AI labeler model\n- If the labeler has brand preferences (from its own training), those preferences cascade into the final model\n- Creates a 'bias amplification loop' where each generation of models inherits and potentially amplifies the previous generation's biases\n\nIMPLICATIONS FOR BRAND INFLUENCE:\n- RLHF models (GPT-4): brand preferences are shaped by the demographics and judgments of human annotators\n- CAI models (Claude): brand preferences are shaped by explicit written principles, potentially more neutral but constrained by principle design\n- RLAIF models (Gemini): brand preferences are inherited from the labeler model's existing biases, creating recursive bias patterns",
+          "sources": [
+            "https://arxiv.org/pdf/2212.08073",
+            "https://rlhfbook.com/c/13-cai.html",
+            "https://apxml.com/courses/llm-constitutional-ai-rlaif/chapter-4-rlaif-concepts/rlhf-vs-rlaif",
+            "https://medium.com/foundation-models-deep-dive/beyond-traditional-rlhf-exploring-dpo-constitutional-ai-and-the-future-of-llm-alignment-bc30089644c9"
+          ]
+        },
+        {
+          "id": "2.4",
+          "title": "Safety Training Effects on Brand Recommendations",
+          "content": "Safety training (RLHF safety reward, constitutional principles, content filtering) creates systematic effects on which brands get mentioned:\n\n1. RISK AVERSION: LLMs are trained to minimize user dissatisfaction. Recommending Salesforce (globally recognized) is low-risk; recommending an unknown startup carries higher perceived risk. Safety training paradoxically creates a structural bias favoring established brands.\n\n2. CONTROVERSY AVOIDANCE: If a brand is frequently associated with controversy, lawsuits, or poor reviews in training data, the model learns to avoid recommending it or add disclaimers. This means brands with recent PR crises may see sudden drops in LLM recommendation rates.\n\n3. HEDGING BEHAVIOR: Safety-trained models often present multiple options rather than making definitive recommendations. This favors the top 3-5 brands in any category, as the model distributes recommendations among well-known options rather than singling out one.\n\n4. CATEGORY-SPECIFIC SENSITIVITY: For YMYL (Your Money, Your Life) categories like health, finance, and legal, safety training makes models extremely conservative, favoring only the most established and credentialed brands/sources.\n\n5. SYCOPHANCY AS SAFETY: Models learn that agreeing with users is 'safe.' If a user mentions a brand positively, the model confirms it. This reinforces existing market leaders because they are mentioned by users more frequently.",
+          "sources": [
+            "https://medium.com/@sparsh.sharma_43719/the-new-competitive-frontier-optimizing-your-brand-for-llm-recommendation-53c23414a727",
+            "https://www.pageonepower.com/linkarati/how-do-llms-choose-which-brands-to-mention-in-results",
+            "https://www.searchenginejournal.com/llms-are-changing-search-and-breaking-it/560346/"
+          ]
+        },
+        {
+          "id": "2.5",
+          "title": "Cognitive Biases in LLM Product Recommendations",
+          "content": "Research (Bias Beware, 2025) tested cognitive bias manipulation in product descriptions across LLaMA-8b/70b/405b, Mistral Large 123B, and Claude 3.5/3.7 Sonnet.\n\nBIASES THAT BOOST BRAND VISIBILITY:\n- Social proof: +14.67% to +40.11% recommendation rate shift. Claude 3.5 showed +334% rate change. Products described as 'used by millions' or 'top-rated' get systematically promoted.\n- Discount framing: elevates product visibility across all models.\n- Authority bias: mixed but sometimes positive effects.\n\nBIASES THAT SUPPRESS BRAND VISIBILITY:\n- Exclusivity: -16.25% to -46% recommendation rate decrease. Products described as 'limited edition' or 'exclusive' are demoted.\n- Scarcity: -30% rate change. 'Only 3 left in stock' language suppresses recommendations.\n\nRANKING POSITION SHIFTS: Products moved -0.4 to -1.75 positions higher with positive biases; negative biases pushed products +0.56 to +2.76 positions lower.\n\nCritical finding: more capable models (LLaMA-405b, Claude 3.5) are MORE susceptible to bias manipulation, not less. Mistral-2 (not RLHF-trained) showed similar susceptibility, suggesting biases operate through pre-training patterns rather than alignment training alone.\n\nImplication: product descriptions and marketing copy on the web directly influence how LLMs recommend brands, through the mechanism of how that text was encoded during pre-training.",
+          "sources": [
+            "https://arxiv.org/html/2502.01349v4",
+            "https://arxiv.org/abs/2502.01349"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "title": "Stage 3: RAG / Grounding (Retrieval-Augmented Generation)",
+      "subsections": [
+        {
+          "id": "3.1",
+          "title": "ChatGPT + Bing Integration Architecture",
+          "content": "ChatGPT does NOT maintain its own web index. Its RAG pipeline:\n\n1. QUERY GENERATION: ChatGPT generates search queries from the user's prompt, sent to Bing's API.\n2. URL RETRIEVAL: Bing returns a short list of URLs (typically 5-10).\n3. REAL-TIME CONTENT FETCHING: ChatGPT fetches full page content from selected URLs at runtime.\n4. SYNTHESIS: Processes fetched content to generate a response with citations.\n\nWhen web search triggers (leaked system prompt rules):\n- Real-time information (current prices, recent events)\n- Location-specific requests\n- Niche or obscure topics\n- Cases where outdated information could cause harm\n- The system defaults to answering from memory for everything else\n\nIMPLICATIONS FOR BRAND VISIBILITY:\n- If your site is blocked by robots.txt, slow to load, behind client-side rendering, or semantically opaque, ChatGPT will never cite it.\n- ChatGPT is 'opportunistic and short-horizon': it pulls only what it asks for in the moment. Content must be instantly accessible and semantically explicit to match the user's wording.\n- Bing's ranking determines the initial candidate set. Bing SEO directly determines ChatGPT citations.\n- For non-web-search queries (the majority), brand recommendations come entirely from pre-training weights.\n- ChatGPT Shopping (launched Nov 2025): product recommendations use semantic matching, review analysis, multi-source synthesis. Currently organic (not ads), but OpenAI has signaled openness to 'tasteful' advertising.",
+          "sources": [
+            "https://ipullrank.com/ai-search-manual/search-architecture",
+            "https://blogs.bing.com/search-quality-insights/february-2023/Building-the-New-Bing",
+            "https://llmrefs.com/blog/chatgpt-system-prompt-leak",
+            "https://chatgpt.com/features/shopping-research/"
+          ]
+        },
+        {
+          "id": "3.2",
+          "title": "Bing Copilot Architecture (Prometheus)",
+          "content": "Microsoft's proprietary Prometheus model combines Bing's index with GPT-class synthesis.\n\nFive-stage pipeline:\n1. QUERY UNDERSTANDING: Lexical, semantic, entity, and task classification.\n2. HYBRID RETRIEVAL: Dual-lane system - BM25 lexical search against Bing's inverted index + parallel dense vector semantic retrieval.\n3. CONTEXTUAL RERANKING: Cross-encoder passage-level reranking for clarity and extractability.\n4. LLM GROUNDING AND SYNTHESIS: GPT-class model synthesizes response from reranked passages.\n5. PRESENTATION: Citations with Microsoft 365 integration.\n\nFour sequential gates determine citation inclusion:\n1. Winning either lexical or semantic retrieval lanes\n2. Passage-level reranking for clarity and extractability\n3. Grounding suitability with clean scoping\n4. Trust signals including E-E-A-T indicators\n\nBing Copilot is 'the closest thing to a classical search engine wearing a generative suit.' It inherits Microsoft's full Bing ranking infrastructure and layers synthesis on top. This means traditional SEO has the most direct impact on Copilot citations compared to other AI search platforms.",
+          "sources": [
+            "https://ipullrank.com/ai-search-manual/search-architecture",
+            "https://learn.microsoft.com/en-us/azure/ai-foundry/agents/how-to/tools/bing-grounding"
+          ]
+        },
+        {
+          "id": "3.3",
+          "title": "Gemini + Google Search Grounding",
+          "content": "Gemini's grounding architecture:\n\n1. USER PROMPT: Application sends prompt to Gemini API with google_search tool enabled.\n2. PROMPT ANALYSIS: Model determines if Google Search can improve the answer.\n3. QUERY FAN-OUT: Single queries explode into multiple intent-targeting subqueries. Example: 'best half-marathon training plan' fans out to 'half-marathon training schedule 12 weeks,' 'beginner half-marathon tips,' 'nutrition plan for half-marathon runners.'\n4. PARALLEL RETRIEVAL: Subqueries run simultaneously across web index, Knowledge Graph, YouTube, Shopping feeds, and specialty indexes.\n5. AGGREGATION: Results are aggregated, deduplicated, and filtered.\n6. LLM SYNTHESIS: Gemini synthesizes a cohesive answer with inline citations.\n7. GROUNDED RESPONSE: Returns groundingMetadata with search queries, web results, and citations.\n\nBRAND IMPLICATIONS:\n- Query fan-out means your brand needs to appear across MULTIPLE related queries, not just the exact user query.\n- Google's Knowledge Graph gives a structural advantage to brands with established Knowledge Panel entities.\n- YouTube integration means video content about your brand contributes to Gemini's grounding (unique to Google's ecosystem).\n- Gemini prefers brand-owned content (52.15% of citations) compared to ChatGPT's directory preference (48.73%) or Perplexity's news preference.\n- E-E-A-T scoring and content safety filters further shape which brands get cited.\n- Multi-intent coverage is critical: content must satisfy multiple latent intent dimensions simultaneously.",
+          "sources": [
+            "https://ai.google.dev/gemini-api/docs/google-search",
+            "https://firebase.google.com/docs/ai-logic/grounding-google-search",
+            "https://ipullrank.com/ai-search-manual/search-architecture"
+          ]
+        },
+        {
+          "id": "3.4",
+          "title": "Perplexity's Source Selection",
+          "content": "Perplexity's infrastructure: tens of thousands of CPUs, hundreds of terabytes of RAM, 200B+ tracked URLs, tens of thousands of index updates per second.\n\nTHREE-LAYER RANKING SYSTEM:\n- Layer 1 (Initial Retrieval): Standard relevance-based document retrieval\n- Layer 2 (Standard Ranking): Authority and relevance signals\n- Layer 3 (L3 XGBoost Reranker): Critical quality gate with l3_reranker_drop_threshold. Will drop entire result sets if too few sources pass quality threshold rather than return low-quality results.\n\nKEY RANKING FACTORS:\n1. AUTHORITY DOMAIN LISTS: Manually curated lists boosting GitHub, LinkedIn, Amazon, Coursera, Reddit. Cross-platform authority signals (GitHub repos referencing your docs, LinkedIn articles discussing your research, Reddit threads citing your work) are valued over simple platform presence.\n\n2. ENTITY CLARITY: BERT-based entity linking in L3 reranker. Rewards content that clearly identifies the entity, its category, and differentiated position. Forbes article naming your company > promotional website content, because earned journalism has structural clarity the reranker prioritizes.\n\n3. FRESHNESS: Aggressive 30-day freshness sweet spot. Monthly coverage cadence outperforms sporadic quarterly coverage even if individual quarterly articles are higher quality.\n\n4. TOPIC MULTIPLIERS: ~3x visibility boosts for AI/ML, science, technology, marketing, and business strategy content. Entertainment and sports content suppressed.\n\n5. LAUNCH WINDOW CTR: new_post_ctr parameter creates immediate post-publication window where early click-through performance determines long-term visibility.\n\n6. NEWS DOMINANCE: Analysis of 366,000+ citations across 65,000+ responses found news citations concentrated heavily among small number of outlets. Perplexity skews toward third-party news and earned media vs ChatGPT's directory preference or Gemini's brand-owned content preference.\n\n7. CROSS-PLATFORM OVERLAP: 60% of Perplexity citations overlap with top 10 Google organic results.",
+          "sources": [
+            "https://authoritytech.io/blog/how-perplexity-selects-sources-algorithm-2026",
+            "https://research.perplexity.ai/articles/architecting-and-evaluating-an-ai-first-search-api",
+            "https://primaryposition.com/blog/perplexity-crawl-index/",
+            "https://ipullrank.com/ai-search-manual/search-architecture"
+          ]
+        },
+        {
+          "id": "3.5",
+          "title": "Cross-Platform RAG Comparison: Citation Preferences",
+          "content": "Analysis of citation patterns across platforms reveals distinct brand preferences by platform:\n\nCHATGPT: 48.73% of citations come from directories (Yelp, G2, TripAdvisor, etc.). Favors aggregator sites that compile brand information.\n\nGEMINI: 52.15% of citations come from brand-owned content. Favors the brand's own website, blog, and documentation. This is the most favorable platform for brands that invest in their own content.\n\nPERPLEXITY: Skews heavily toward third-party news and earned media placements. News outlets dominate citations. PR and media coverage have the highest ROI for Perplexity visibility.\n\nBING COPILOT: Inherits Bing's traditional search ranking. Classic SEO factors (backlinks, domain authority, page speed) have the most direct impact.\n\nALL PLATFORMS share a common citation pipeline: retrievability -> extractability -> trust -> citation. A brand must be: (1) crawlable and fast-loading, (2) have content that's easily extractable into passages, (3) have trust signals (E-E-A-T, authority backlinks), before it can be cited.",
+          "sources": [
+            "https://ipullrank.com/ai-search-manual/search-architecture"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "title": "Stage 4: System Prompts and Guardrails",
+      "subsections": [
+        {
+          "id": "4.1",
+          "title": "Leaked System Prompt Analysis",
+          "content": "ChatGPT (GPT-4o/GPT-5 leaked prompts, 2025):\n- Personality: 'meticulous clarity with genuine enthusiasm and gentle humor'\n- Web search trigger rules: only for real-time info, location-specific, niche/obscure topics, or where outdated info could cause harm\n- Defaults to answering from memory (pre-training weights)\n- Multi-language query mandate: if user asks in non-English, must search in both English and user's language\n- Has built-in web() tool for real-time information\n- Personality 'v2' designation suggests iterative behavior updates\n- Shopping features: organic product recommendations based on semantic matching, reviews, and multi-source synthesis. OpenAI states ads don't influence content.\n\nGEMINI (leaked via HiddenLayer research, 2024):\n- 'Mirroring' emphasis: adjusts writing style to match user's tone and formality\n- Guidelines include responding in user's language\n- Vulnerabilities allowed direct prompt leaking through obfuscated queries or markdown code block requests\n\nCLAUDE:\n- Constitutional AI principles guide behavior\n- Less information leaked about specific system prompts\n- Known emphasis on being 'helpful, harmless, and honest'\n\nBRAND IMPLICATIONS OF SYSTEM PROMPTS:\n- ChatGPT's default-to-memory behavior means for most brand queries, recommendations come from pre-training, not real-time search. The web is only consulted in specific scenarios.\n- Gemini's mirroring behavior means if a user frames a question positively about a brand, Gemini may mirror that positive tone.\n- All models have instructions to avoid endorsing specific products, but this creates an ironic effect: they recommend well-known brands as 'safe' neutral choices.",
+          "sources": [
+            "https://llmrefs.com/blog/chatgpt-system-prompt-leak",
+            "https://github.com/asgeirtj/system_prompts_leaks",
+            "https://github.com/elder-plinius/Google-Gemini-System-Prompt",
+            "https://www.digitaltrends.com/computing/you-are-chatgpt-leaked-system-prompt-reveals-the-inner-workings-of-gpt-5/"
+          ]
+        },
+        {
+          "id": "4.2",
+          "title": "How System Instructions Shape Recommendation Behavior",
+          "content": "Research shows prompt design has significant impact on brand recommendations:\n\n1. PROMPT TYPE MATTERS: A study comparing 23 prompt types across 8 datasets and 12 LLMs found that prompts encouraging 'rephrasing the input and considering background knowledge' were most effective at surfacing relevant brands.\n\n2. RANKING MANIPULATION: Studies show LLMs exhibit consistent preferences that can be systematically shifted. When prompts are subtly rewritten to mention a target item, rankings change predictably.\n\n3. POSITION BIAS PERSISTENCE: LLMs do NOT effectively respond to natural language instructions about bias mitigation. Even when system prompts explicitly say 'avoid position bias,' the model fails to adjust reranking behavior.\n\n4. NEUTRALITY INSTRUCTIONS: System prompts instructing models to 'present balanced viewpoints' or 'avoid endorsing specific brands' create a paradoxical effect. Models default to mentioning the most well-known brands in each category as a 'safe' response, rather than truly evaluating quality. This creates an unintended advantage for market leaders.\n\n5. PRODUCT DESCRIPTION INFLUENCE: Cognitive biases embedded in product descriptions on the web (social proof, authority signals) influence LLM recommendations through pre-training rather than through sycophancy or prompt compliance. System-level guardrails do not effectively counter these pre-trained biases.",
+          "sources": [
+            "https://arxiv.org/html/2507.13525",
+            "https://dl.acm.org/doi/10.1145/3705328.3748159",
+            "https://arxiv.org/html/2505.04948v1",
+            "https://blog.gumshoe.ai/what-this-research-paper-reveals-about-ranking-manipulation-in-llms-and-what-it-means-for-your-brand/"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "title": "Stage 5: Inference-Time Factors",
+      "subsections": [
+        {
+          "id": "5.1",
+          "title": "Temperature and Sampling Effects on Brand Diversity",
+          "content": "Temperature controls the probability distribution over candidate next tokens:\n- LOW TEMPERATURE (0.0-0.3): Sharper distribution, more deterministic. The model consistently outputs the same top brands. Market leaders dominate because they have the highest pre-training probability mass.\n- MEDIUM TEMPERATURE (0.3-0.7): Default range for most deployments. Some variation in brand mentions, but core recommendations remain stable.\n- HIGH TEMPERATURE (0.7-1.0+): Flatter distribution, more diverse and unpredictable. Smaller brands have a higher chance of being mentioned, but output quality degrades (hallucination risk increases).\n\nADVANCED SAMPLING METHODS:\n- Min-p sampling: Dynamic truncation that adjusts threshold based on model confidence. Improves both quality and diversity at higher temperatures, potentially increasing smaller brand visibility without sacrificing accuracy.\n- Selective sampling: Dynamically switches between greedy and high-temperature sampling based on sampling risk metric. Could be leveraged to maintain brand diversity only when risk of error is low.\n- Top-k and top-p (nucleus) sampling: Standard truncation methods that limit the candidate pool. Lower k/p values favor dominant brands.\n\nBRAND IMPLICATION: The temperature setting of the deployment (controlled by the platform, not the user) directly determines whether users see the same 3-5 brands repeatedly or a more diverse set. Most production deployments use moderate temperatures that balance consistency with some variety.",
+          "sources": [
+            "https://www.cognativ.com/blogs/post/what-is-temperature-in-llms-and-its-impact-on-output-quality/315",
+            "https://arxiv.org/html/2510.01218",
+            "https://openreview.net/forum?id=FBkpCyujtS"
+          ]
+        },
+        {
+          "id": "5.2",
+          "title": "Context Window and Position Effects",
+          "content": "THE 'LOST IN THE MIDDLE' EFFECT (Liu et al., 2023):\nLLMs exhibit a U-shaped attention pattern: highest attention at the beginning (primacy bias) and end (recency bias) of the input context, with significantly degraded attention in the middle.\n\nQUANTITATIVE FINDINGS:\n- 44.2% of citations come from the first 30% of a page\n- The LiM effect is strongest when inputs occupy up to 50% of the context window\n- Beyond 50% context utilization, primacy bias weakens but recency bias remains stable\n\nRECENCY BIAS IN RECOMMENDATIONS:\n- Across GPT-3.5-turbo, GPT-4o, GPT-4, LLaMA-3 8B/70B, Qwen-2.5 7B/72B: 'fresh' passages are consistently promoted\n- Mean publication year shifts forward by up to 4.78 years in Top-10 results\n- Individual items can move by as many as 95 ranks in listwise reranking\n\nBRAND IMPLICATIONS:\n- Brands that appear early in retrieved documents have a structural citation advantage\n- Newer brands/products benefit from recency bias in RAG pipelines\n- Brands mentioned in the 'middle' of long documents may be systematically overlooked\n- Content structure matters: front-loading brand mentions and key claims improves citation probability\n- In multi-document RAG, the document retrieval order matters. Documents retrieved first and last are more likely to be cited than those in between.",
+          "sources": [
+            "https://cs.stanford.edu/~nfliu/papers/lost-in-the-middle.arxiv2023.pdf",
+            "https://arxiv.org/html/2509.11353v1",
+            "https://arxiv.org/abs/2508.07479",
+            "https://victorinollc.com/thinking/llm-citation-attention-patterns"
+          ]
+        },
+        {
+          "id": "5.3",
+          "title": "Prompt Phrasing Effects on Brand Recommendations",
+          "content": "SPARKTORO/GUMSHOE STUDY (Nov-Dec 2025): 600 volunteers, 2,961 AI queries across ChatGPT, Claude, and Google AI, 12 controlled prompts + 142 human-generated variants.\n\nKEY FINDINGS:\n- <1 in 100 chance that ChatGPT or Google AI return the same brand list across repeated runs of the same prompt\n- ~1 in 1,000 probability of identical list in identical order\n- Claude was marginally more consistent but still highly variable\n- Human-crafted prompts for identical intent showed semantic similarity scores of only 0.081 (essentially unrelated language)\n\nCATEGORY EFFECTS:\n- Narrow categories (LA Volvo dealerships, specific SaaS categories, West Coast cancer hospitals): top brands appeared in 55-77% of responses\n- Broad categories (science fiction novels, design agencies): 30-40% visibility ranges with dramatic scatter\n\nPROMPT PHRASING IMPACT:\n- 'Best product for X' vs 'Recommend a product for Y' vs 'What should I buy for Z' all produce different brand lists\n- Despite different surface phrasings, AI tools captured core underlying intent and returned answers from a relatively consistent SET of brands (even if the specific list varied)\n- High LLM consistency (visibility across many prompt phrasings) is the defensible metric, not ranking position in any single response\n\nIMPLICATION: Ranking position in AI responses is essentially random data. Visibility percentage across dozens of prompts is the only valid metric for brand tracking in AI search.",
+          "sources": [
+            "https://sparktoro.com/blog/new-research-ais-are-highly-inconsistent-when-recommending-brands-or-products-marketers-should-take-care-when-tracking-ai-visibility/",
+            "https://searchengineland.com/llm-consistency-recommendation-share-seo-kpi-469512",
+            "https://www.searchenginejournal.com/ai-recommendations-change-with-nearly-every-query-sparktoro/566242/"
+          ]
+        },
+        {
+          "id": "5.4",
+          "title": "The 'Global is Good, Local is Bad' Brand Bias",
+          "content": "Research presented at EMNLP 2024 found that LLMs consistently show bias favoring global brands with positive attributes while associating local brands with negative attributes. This bias persists across:\n- Multiple model sizes\n- Different prompting strategies\n- Various product categories\n\nMIT research (2025) further confirmed that unpacking LLM bias reveals systematic patterns where well-known entities receive preferential treatment in recommendations.\n\nMECHANISM: This bias originates in pre-training data (global brands have more positive coverage online), is amplified by RLHF (annotators prefer recognizable brands), reinforced by safety training (recommending known brands is lower-risk), and persists through inference (higher probability mass in the model's weights).",
+          "sources": [
+            "https://aclanthology.org/2024.emnlp-main.707/",
+            "https://news.mit.edu/2025/unpacking-large-language-model-bias-0617"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "title": "Synthesis: Pipeline Stage Influence Map",
+      "subsections": [
+        {
+          "id": "6.1",
+          "title": "Influence Weight by Stage",
+          "content": "Estimated influence of each pipeline stage on brand/domain mention probability:\n\n1. PRE-TRAINING DATA (40-50% influence for non-RAG queries, 10-20% for RAG queries):\n   - Determines the model's 'prior beliefs' about brands\n   - Wikipedia framing, dataset composition, and domain survival in filtering create the baseline\n   - Most queries to ChatGPT/Claude/Gemini do NOT trigger web search, so pre-training dominates\n\n2. FINE-TUNING / RLHF (15-25% influence):\n   - Shapes HOW the model talks about brands (tone, confidence, hedging)\n   - Amplifies pre-training biases through sycophancy and preference collapse\n   - Safety training creates structural advantage for established brands\n   - Constitutional AI (Claude) may partially mitigate arbitrary preferences\n\n3. RAG / GROUNDING (50-70% influence when triggered, 0% when not):\n   - When web search is active, it dominates citation decisions\n   - Platform-specific: ChatGPT uses Bing, Gemini uses Google Search, Perplexity uses multi-engine\n   - Traditional SEO directly determines RAG citations\n   - Perplexity: news/PR coverage matters most\n   - Gemini: brand-owned content matters most\n   - ChatGPT: directory/aggregator presence matters most\n\n4. SYSTEM PROMPTS (5-10% influence):\n   - Set behavioral constraints but don't override pre-training/RLHF biases\n   - Neutrality instructions paradoxically favor market leaders\n   - Shopping mode instructions shape product recommendation behavior\n   - Model cannot effectively follow instructions to de-bias itself\n\n5. INFERENCE-TIME FACTORS (5-15% influence):\n   - Temperature controls brand diversity in output\n   - Position bias in context window affects which retrieved sources get cited\n   - Prompt phrasing causes high variance in specific brand lists but consistent visibility for top brands\n   - Recency bias promotes newer content/brands in RAG contexts"
+        },
+        {
+          "id": "6.2",
+          "title": "Strategic Implications for Brand Visibility",
+          "content": "Based on the full pipeline analysis, brands that want to be recommended by LLMs need to optimize at multiple stages:\n\nPRE-TRAINING LAYER:\n- Ensure presence on Wikipedia with accurate, well-sourced articles\n- Maintain active StackExchange/GitHub presence for technical brands\n- Publish on domains that survive quality filtering (established .com/.org domains)\n- Ensure content is deduplicated properly (one canonical source per fact)\n- Get coverage in high-quality news outlets that appear in training datasets\n\nALIGNMENT LAYER:\n- Embed social proof language in product descriptions (boosts recommendation rate by 14-40%)\n- AVOID exclusivity/scarcity language (reduces recommendation rate by 16-46%)\n- Build reputation that makes recommending your brand 'safe' for the model\n- Maintain clean controversy record (safety training penalizes controversial brands)\n\nRAG LAYER:\n- Platform-specific optimization:\n  * ChatGPT: Optimize for Bing SEO + maintain directory presence (Yelp, G2, etc.)\n  * Gemini: Optimize brand-owned content + Google Knowledge Panel\n  * Perplexity: Earn news/PR coverage + maintain 30-day content freshness cadence\n  * Copilot: Classic SEO (backlinks, domain authority, page speed)\n- Technical: fast load times, clean DOM, robots.txt openness, semantic transparency\n- Front-load brand mentions and key claims in content (position bias)\n\nSYSTEM PROMPT LAYER:\n- Cannot be directly influenced by brands (controlled by platform)\n- Understanding system prompt constraints helps frame content to work within them\n\nINFERENCE LAYER:\n- Cannot be directly influenced\n- Understanding temperature effects explains why brand visibility is inherently variable\n- Focus on visibility percentage across many query variants, not ranking position in any single query"
+        }
+      ]
+    }
+  ],
+  "pillars": [
+    {
+      "type": "patent",
+      "title": "Related Patents",
+      "items": []
+    },
+    {
+      "title": "Grounding Score: How Gemini Decides to Cite Your Brand",
+      "type": "exploit",
+      "source": "Rankpedia Research - Gemini Protobuf Interception (Apr 2026)",
+      "items": [
+        "Live interception reveals each Gemini citation has a relevance score (0-1) and verified flag",
+        "HIGH SCORE brands get cited prominently: motor.mapfre.es (0.923), carwow.co.uk (0.863), driveris.es (0.845)",
+        "LOW SCORE brands get weak/dropped citations: webuyanycarusa.com (0.063), driverevel.com (0.461)",
+        "Verified=true brands (avg score 0.83) appear more reliably than unverified (avg 0.39)",
+        "Citation eligibility requires clearing Q* >= 0.4 threshold first (Candour exploit + HJ Kim PXR0356)",
+        "Then passage-level semantic similarity determines grounding score",
+        "Optimization factors: brand search volume, passage clarity, content stability, factual specificity",
+        "Brands with clear, structured, factual passages score highest for grounding",
+        "Content that frequently changes may fail verification (verified=false), reducing citation reliability",
+        "This is the new ranking layer: traditional SEO determines search visibility, grounding scores determine LLM citation visibility",
+        "Two-tier system (PXR0153): Gemini app shows all citations, Vertex/third-party customers see only high-score verified citations"
+      ]
+    }
+  ],
+  "timeline": [
+    {
+      "year": "2026",
+      "type": "exploit",
+      "title": "Gemini Grounding Scores Reveal Citation Mechanics",
+      "desc": "Protobuf interception shows each Gemini citation carries a relevance score (0-1) and verified flag. Authoritative brands with clear passages score 0.8+ while weak brands score below 0.1. This is the new 'ranking' for LLM brand visibility."
+    }
+  ]
+}

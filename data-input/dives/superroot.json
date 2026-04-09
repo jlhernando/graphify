@@ -1,0 +1,175 @@
+{
+  "id": "superroot",
+  "route": "/superroot",
+  "systems": [
+    "SuperRoot",
+    "FastSearch"
+  ],
+  "hero": {
+    "title": "SuperRoot: Query Orchestration Layer",
+    "subtitle": "SuperRoot is Google's central orchestration system that coordinates the entire query processing pipeline. It routes queries through Mustang, NavBoost, Twiddlers, DeepRank, and manages post-processing re-ranking and SERP presentation. Its companion system, Multiverse, handles raw document processing before SuperRoot takes over at query time."
+  },
+  "keyInsight": {
+    "label": "Key Insight from API Leak + DOJ Trial",
+    "text": "SuperRoot is the <strong>architectural glue</strong> connecting every ranking system. The 2024 API leak revealed it as the system that <strong>\"sends messages to Google's servers and manages post-processing for re-ranking and presentation.\"</strong> Its companion <strong>Multiverse</strong> handles offline document processing (scrubbing, deduplication, classification, writing static features like PageRank, Q*, site quality, embeddings). The pipeline flows: Trawler > Alexandria > Mustang > <strong>SuperRoot</strong> > GWS."
+  },
+  "pillars": [
+    {
+      "type": "leak",
+      "title": "Signals Confirmed",
+      "items": [
+        "<strong>SuperRoot</strong> - Central query orchestration, routes queries through ranking subsystems",
+        "<strong>Multiverse</strong> - Offline document processing: scrubbing, dedup, classification",
+        "Multiverse writes static features: PageRank, Q*, site quality, embeddings",
+        "SuperRoot manages post-processing re-ranking and result presentation",
+        "Coordinates Mustang retrieval, NavBoost re-ranking, Twiddler adjustments"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "DOJ Evidence",
+      "items": [
+        "<strong>Elizabeth Reid affidavit</strong> (Jan 2026) - Defined Google's most guarded ranking secrets",
+        "Index tiering structure organizing pages by access frequency and freshness",
+        "Crawl schedule reveals freshness signals (considered proprietary)",
+        "13 months of U.S. logs: queries, locations, clicks, hovers, result orders",
+        "<strong>FastSearch</strong> - Separate simplified system for AI Overviews (uses only RankEmbed)"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "Related Patents",
+      "items": [
+        "Trawler crawls > Alexandria indexes > Mustang retrieves/scores",
+        "SuperRoot orchestrates query-time processing across all subsystems",
+        "Predoc Twiddlers process several hundred URLs before deep ranking",
+        "ML systems (RankBrain, DeepRank, RankEmbed) score top 200-300 documents",
+        "Lazy Twiddlers refine final top 20-30 results",
+        "Tangram assembles final SERP layout"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How SuperRoot Affects Your SEO",
+      "items": [
+        "<strong>Survive every pipeline stage, not just one</strong>: SuperRoot orchestrates a progressive funnel from 400B+ documents to ~10 results. Your page must pass Mustang retrieval (term relevance), PredocTwiddlers (deduplication, diversity), ML scoring (semantic quality), NavBoost (engagement signals), and LazyTwiddlers (final adjustments). Optimizing for just keywords or just links leaves you vulnerable to elimination at a different stage.",
+        "<strong>Optimize for AI Overviews differently than organic search</strong>: DOJ testimony revealed FastSearch is a separate simplified system for AI Overviews that uses only RankEmbed (no link authority, no NavBoost). Google admitted the quality is lower than full Search results. To appear in AI Overviews, optimize for semantic relevance and comprehensive topic coverage rather than traditional authority signals. Clear, well-structured factual content wins in FastSearch.",
+        "<strong>Ensure Multiverse processes your static features correctly</strong>: Multiverse handles offline document processing, writing static features like PageRank, Q*, site quality, and embeddings before query time. These pre-computed signals determine your baseline competitiveness. Ensure your site's technical foundation is solid: clean crawlable structure, fast load times, proper canonicalization, and consistent internal linking so Multiverse computes strong static features.",
+        "<strong>Win at the PredocTwiddler stage by being unique</strong>: PredocTwiddlers process hundreds of URLs with fast heuristics for deduplication and diversity. If your content is substantially similar to another page that ranks higher on authority signals, you get deduplicated out. Create genuinely unique angles, original data, or novel frameworks that differentiate your page from competitors at this early filtering stage.",
+        "<strong>Build engagement signals for the NavBoost re-ranking stage</strong>: SuperRoot applies NavBoost re-ranking using a 13-month rolling window of click data including queries, locations, clicks, hovers, and result orders. Pages that earn clicks and retain users rise in this stage. Focus on compelling titles, accurate meta descriptions that match content, and immediate value above the fold to maximize click-through and reduce pogo-sticking.",
+        "<strong>Understand that ML scoring evaluates only 200-300 documents</strong>: RankBrain, DeepRank, and RankEmbed score only the top 200-300 documents from Mustang retrieval. If your page does not make this initial cut through term relevance and basic quality signals, neural ranking never evaluates it. Ensure strong foundational SEO (QBST term coverage, basic authority) to enter the ML scoring pool."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "SuperRoot Orchestration",
+      "source": "Leak+DOJ",
+      "how": "SuperRoot receives a query and coordinates the full ranking pipeline. It determines which subsystems to invoke based on query classification, manages latency budgets across systems, and assembles final results. The pipeline processes 400B+ indexed documents down to ~10 results.",
+      "formula": "<span class=\"cf-fn\">SuperRoot</span>(query) = <span class=\"cf-fn\">orchestrate</span>(\n  <span class=\"cf-fn\">Mustang</span>(<span class=\"cf-val\">retrieval</span>) &rarr; 10K candidates,\n  <span class=\"cf-fn\">PredocTwiddlers</span>(<span class=\"cf-val\">hundreds</span>),\n  <span class=\"cf-fn\">MLScoring</span>(<span class=\"cf-val\">top 200-300</span>),\n  <span class=\"cf-fn\">LazyTwiddlers</span>(<span class=\"cf-val\">top 20-30</span>)\n) &rarr; <span class=\"cf-val\">final_results</span>",
+      "patents": "",
+      "affects": "Affected by: query classification, latency budget, system availability, result type requirements"
+    },
+    {
+      "name": "FastSearch",
+      "source": "DOJ",
+      "how": "FastSearch is a separate retrieval system for AI Overviews. It uses only RankEmbed signals (not the full ranking stack), retrieves fewer documents from a curated index subset, and prioritizes semantic matching over authority. Google admitted the resulting quality is lower than full Search results.",
+      "formula": "<span class=\"cf-fn\">FastSearch</span>(query) = <span class=\"cf-fn\">RankEmbed</span>(\n  <span class=\"cf-val\">curated_index_subset</span>,\n  <span class=\"cf-val\">semantic_matching</span>\n) &rarr; <span class=\"cf-val\">grounding_docs</span>\n<span class=\"cf-comment\">// lower quality than full Search</span>\n<span class=\"cf-comment\">// no link authority, no NavBoost</span>",
+      "patents": "",
+      "affects": "Affected by: RankEmbed model, curated index subset, semantic query-document alignment"
+    },
+    {
+      "name": "Pipeline Volume",
+      "source": "DOJ",
+      "how": "The ranking pipeline progressively narrows the document set through each stage. Mustang reduces 400B+ documents to ~10K candidates. Predoc Twiddlers process several hundred. ML systems evaluate the top 200-300. Lazy Twiddlers refine the top 20-30.",
+      "formula": "<span class=\"cf-val\">400B+</span> docs &rarr; <span class=\"cf-fn\">Mustang</span> &rarr; <span class=\"cf-val\">~10K</span>\n&rarr; <span class=\"cf-fn\">PredocTwiddlers</span> &rarr; <span class=\"cf-val\">hundreds</span>\n&rarr; <span class=\"cf-fn\">RankBrain+DeepRank+RankEmbed</span> &rarr; <span class=\"cf-val\">200-300</span>\n&rarr; <span class=\"cf-fn\">LazyTwiddlers</span> &rarr; <span class=\"cf-val\">20-30</span>\n&rarr; <span class=\"cf-fn\">Tangram</span> &rarr; <span class=\"cf-val\">SERP</span>",
+      "patents": "",
+      "affects": "Affected by: query type, result freshness needs, universal search triggers"
+    }
+  ],
+  "pipeline": {
+    "title": "SuperRoot Query Processing Pipeline",
+    "stages": [
+      {
+        "name": "Query Classification",
+        "detail": "QueryUnderstanding classifies intent, entities, freshness needs"
+      },
+      {
+        "name": "Mustang Retrieval",
+        "detail": "Retrieves ~10K candidates from 400B+ indexed documents"
+      },
+      {
+        "name": "Predoc Twiddlers",
+        "detail": "~100+ adjustment functions process several hundred URLs"
+      },
+      {
+        "name": "ML Scoring",
+        "detail": "RankBrain, DeepRank, RankEmbed score top 200-300 documents"
+      },
+      {
+        "name": "NavBoost Re-ranking",
+        "detail": "Click data from 13-month rolling window adjusts rankings"
+      },
+      {
+        "name": "Lazy Twiddlers",
+        "detail": "Final adjustments on top 20-30 results (site diversity, freshness)"
+      },
+      {
+        "name": "Tangram Assembly",
+        "detail": "SERP layout with knowledge panels, featured snippets, ads"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2010",
+      "type": "patent",
+      "title": "Caffeine/Percolator",
+      "desc": "Continuous indexing replaces batch processing. Documents indexed as crawled. Built on Percolator (ACID transactions on Bigtable)."
+    },
+    {
+      "year": "2015",
+      "type": "patent",
+      "title": "RankBrain Integration",
+      "desc": "First ML system added to the pipeline. SuperRoot begins coordinating ML and traditional signals."
+    },
+    {
+      "year": "2019",
+      "type": "patent",
+      "title": "DeepRank Added",
+      "desc": "BERT-based neural ranking added as second ML system in the pipeline."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "API Leak Reveals SuperRoot",
+      "desc": "Content Warehouse API leak reveals SuperRoot as central orchestration and Multiverse for document processing."
+    },
+    {
+      "year": "2025",
+      "type": "doj",
+      "title": "FastSearch Revealed",
+      "desc": "DOJ remedies phase reveals FastSearch: separate simplified system for AI Overviews using only RankEmbed."
+    },
+    {
+      "year": "2026",
+      "type": "doj",
+      "title": "Reid Affidavit",
+      "desc": "Elizabeth Reid defines Google's most guarded secrets: index tiering, crawl scheduling, 13-month log data."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"Google Search uses hundreds of signals to rank results.\"",
+      "internalSource": "DOJ Trial",
+      "internalClaim": "Pandu Nayak testified there are 'maybe over a hundred' signals, not the 200+ previously claimed. The number has decreased, not increased, as ML models replace hand-crafted signals."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"AI Overviews use the same high-quality search results.\"",
+      "internalSource": "DOJ Trial",
+      "internalClaim": "FastSearch retrieves fewer documents from a curated subset using only RankEmbed. Google admitted 'the resulting quality is lower than Search's fully ranked web results.' No link authority or NavBoost signals used."
+    }
+  ]
+}

@@ -1,0 +1,189 @@
+{
+  "id": "mustang",
+  "route": "/mustang",
+  "systems": [
+    "Mustang"
+  ],
+  "hero": {
+    "title": "Mustang: Core Scoring & Retrieval",
+    "subtitle": "Mustang is Google's primary document scoring and serving system with 40 confirmed signals in the API leak. It handles initial retrieval, first-pass ranking, and integrates Twiddler re-ranking functions. Every search result passes through Mustang for term matching, embedding scoring, content analysis, and quality assessment."
+  },
+  "keyInsight": {
+    "label": "Key Insight from API Leak + DOJ Trial",
+    "text": "Mustang is the <strong>central nervous system</strong> of Google Search. It scores documents using <strong>OriginalContentScore</strong> (0-127, penalizing thin/duplicate content), <strong>termWeight</strong> (literal word sizing/bolding impact), and <strong>pageEmbeddings</strong> (neural vectors). The system runs <strong>Twiddler functions</strong> internally (QualityBoost, RealTimeBoost, WebImageBoost) for post-scoring adjustments. It also detects page types via <strong>pageClassification</strong> and measures <strong>commercialScore</strong> for transactional intent."
+  },
+  "pillars": [
+    {
+      "type": "leak",
+      "title": "Signals Confirmed",
+      "items": [
+        "<strong>OriginalContentScore</strong> - 7-bit value (0-127) scoring content originality",
+        "<strong>termWeight / avgTermWeight</strong> - Word size and bolding impact on scoring",
+        "<strong>pageEmbeddings</strong> - Neural page-level semantic vectors",
+        "<strong>STS</strong> - Semantic Text Scores, aggregate text understanding",
+        "<strong>QualityBoost / RealTimeBoost</strong> - Twiddler re-ranking functions within Mustang",
+        "<strong>titlematchScore</strong> - How well page titles match user queries",
+        "<strong>salientTermSet</strong> - Extracted salient terms with weights for topical relevance",
+        "<strong>rankLabAttachment</strong> - Scoring attachment system for ML components like SnippetBrain"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "Signal,  Core",
+      "items": [
+        "<strong>Mustang</strong> - Confirmed as primary retrieval and first-pass scoring system",
+        "Reduces index matches from hundreds of thousands to tens of thousands",
+        "Operates at massive scale before deeper ML processing",
+        "Integrates Twiddler framework for post-scoring adjustments",
+        "Feeds into SuperRoot for query coordination",
+        "NavBoost click data applied after Mustang initial scoring"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "1 Patents",
+      "items": [
+        "Term-based retrieval with BM25-style scoring and term proximity",
+        "Neural embedding retrieval via RankEmbed dual encoders",
+        "Document classification for page type detection (article, product, forum)",
+        "Content richness signals: numImages, bodySize, videoTranscriptQuality",
+        "Page experience: pageSpeedScore, mobileFriendlyScore, interstitials detection",
+        "Snippet scoring via WebChooserScorer for SERP presentation",
+        "<strong>Inverted index failover system</strong> - Patent <a href=\"https://patents.google.com/patent/US10073874\">US10073874</a> (Google, filed 2013): Lock-free dual-engine serving with snapshot records for instant failover. Primary engine serves current posting lists; secondary overlays snapshot bytes at recorded offsets. Snapshot records: 128-byte chunks matching CPU cache lines, containing byte offset + original bytes + timestamp + state. Update delay queue (10s) prevents corruption. Recovery window: 5 minutes of snapshots. Ensures index availability during updates"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Mustang Affects Your SEO",
+      "items": [
+        "<strong>Win at titlematchScore to survive initial retrieval</strong>: Mustang reduces 400 billion documents to tens of thousands. titlematchScore measures how well your page title matches the user query. Include your primary keyword phrase naturally in the title tag. Pages that fail this first-pass filter never reach deeper ML scoring stages, regardless of content quality.",
+        "<strong>Use HTML formatting to boost termWeight</strong>: termWeight literally measures word size and bolding impact on document scoring. avgTermWeight computes the average weighted font size of body terms. Use H1-H6 heading hierarchy with target terms, bold key phrases with strong tags, and structure content so important terms appear in visually prominent positions. This contradicts Google's public claim that formatting does not affect rankings.",
+        "<strong>Maximize OriginalContentScore above the 0-127 range</strong>: This 7-bit value (0-127) scores content originality within Mustang. Pages with duplicated, heavily paraphrased, or thin content score low and are filtered early. Create genuinely original analysis, proprietary data, unique perspectives, or first-party research. Even comprehensive content that reorganizes existing information without new insight may score low.",
+        "<strong>Stay within numTokens max cap to avoid truncation</strong>: Documents are truncated at a max token cap in Mustang. Content beyond this cap is not scored. Structure your most important content, key arguments, and primary keyword usage in the first 60-70% of the page. Do not bury critical information at the bottom of extremely long pages.",
+        "<strong>Optimize salientTermSet for topical relevance</strong>: Mustang extracts salient terms with weights to assess topical relevance. Cover the complete semantic field of your target topic using the terminology experts in that field would use. Tools like TF-IDF analysis of top-ranking competitors can reveal which salient terms you are missing from your content.",
+        "<strong>Ensure high textConfidence through clear structure</strong>: textConfidence measures how confidently Mustang can assess your text content. Ambiguous, poorly structured, or mixed-topic pages score low confidence. Use clear heading hierarchy, logical content flow, one primary topic per page, and unambiguous language. Clean HTML structure directly improves machine parseability.",
+        "<strong>Align with pageClassification for intent matching</strong>: Mustang classifies pages by type (article, product, forum, etc.) via pageClassification and measures commercialScore for transactional intent. Ensure your page structure matches Google's expected format for your content type. Product pages should look like product pages; articles should be structured as articles. Misclassification means competing in the wrong category."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Mustang",
+      "source": "DOJ",
+      "how": "Operates at massive scale reducing 400B documents to tens of thousands. Uses lightweight signals: T* topicality (Anchors + Body + Clicks), basic quality filters. Speed-critical stage.",
+      "formula": "<span class=\"cf-fn\">MustangScore</span>(doc, q) = <span class=\"cf-fn\">T*</span>(\n<span class=\"cf-val\">Anchors(q)</span>, <span class=\"cf-val\">Body(q)</span>, <span class=\"cf-val\">Clicks(q)</span>\n) + <span class=\"cf-val\">basicQualityFilter</span>  <span class=\"cf-comment\">// 400B &rarr; ~10K docs</span>\n<span class=\"cf-kw\">if</span> T* &lt; minThreshold: <span class=\"cf-kw\">discard</span>\n<span class=\"cf-comment\">// speed-critical: lightweight signals only at this stage</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US7580929\">US7580929</a> (information retrieval), <a href=\"https://patents.google.com/patent/US8180754\">US8180754</a> (document scoring)",
+      "affects": "Affected by: basic relevance must be present. Title-query match, content relevance, fundamental topicality required to pass this filter."
+    },
+    {
+      "name": "numTokens",
+      "source": "Leak",
+      "how": "Token count in document body. Documents truncated at max cap in Mustang. Part of PerDocData.",
+      "formula": "<span class=\"cf-fn\">numTokens</span>(doc) = <span class=\"cf-fn\">tokenize</span>(\n<span class=\"cf-val\">doc.body</span>\n).<span class=\"cf-val\">length</span>  <span class=\"cf-comment\">// PerDocData, truncated at maxCap</span>\n<span class=\"cf-kw\">if</span> numTokens &gt; maxCap: <span class=\"cf-kw\">truncate(doc)</span>\n<span class=\"cf-comment\">// content beyond cap not scored by Mustang</span>",
+      "affects": "Affected by: very long pages may be truncated. Very short pages lack enough content for proper scoring."
+    },
+    {
+      "name": "avgTermWeight",
+      "source": "Leak+DOJ",
+      "how": "Average weighted font size of terms in body (Leak). Content emphasis measurement via font sizing analysis (DOJ). Evaluates visual prominence of terms on page.",
+      "formula": "<span class=\"cf-fn\">avgTermWeight</span>(doc) = <span class=\"cf-fn\">mean</span>(\n<span class=\"cf-val\">fontSize(term)</span> * <span class=\"cf-val\">boldWeight(term)</span> <span class=\"cf-kw\">for</span> term <span class=\"cf-kw\">in</span> doc.body\n)  <span class=\"cf-comment\">// visual prominence of terms</span>\n<span class=\"cf-comment\">// H1-H6, bold, em tags increase term weight</span>",
+      "affects": "Affected by: use headings and emphasized text for important terms. Proper HTML heading hierarchy matters."
+    },
+    {
+      "name": "textConfidence",
+      "source": "Leak",
+      "how": "Confidence score in text relevance and quality. Part of PerDocData in Mustang system. Measures how confidently Mustang can assess the text content.",
+      "formula": "<span class=\"cf-fn\">textConfidence</span>(doc) = <span class=\"cf-fn\">assess</span>(\n<span class=\"cf-val\">textClarity</span>, <span class=\"cf-val\">structureQuality</span>, <span class=\"cf-val\">languageModel</span>\n)  <span class=\"cf-comment\">// 0.0-1.0, PerDocData</span>\n<span class=\"cf-comment\">// low confidence = ambiguous or poorly structured content</span>",
+      "affects": "Affected by: clear, unambiguous content. Well-structured text that's easy for machines to parse."
+    }
+  ],
+  "pipeline": {
+    "title": "Mustang Scoring Pipeline",
+    "stages": [
+      {
+        "name": "Index Lookup",
+        "detail": "Term matching, numTokens, bodySize, language classification"
+      },
+      {
+        "name": "Content Scoring",
+        "detail": "OriginalContentScore, termWeight, STS, titlematchScore"
+      },
+      {
+        "name": "Neural Scoring",
+        "detail": "pageEmbeddings, rankEmbedInfo, compressedDocEmbedding"
+      },
+      {
+        "name": "Quality Signals",
+        "detail": "GibberishScore, commercialScore, TagPageScore, focusDocumentScore"
+      },
+      {
+        "name": "Twiddlers",
+        "detail": "QualityBoost, RealTimeBoost, WebImageBoost, ShoppingScore"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2010",
+      "type": "patent",
+      "title": "Caffeine Index",
+      "desc": "Google launches Caffeine, replacing the old index infrastructure. Mustang becomes the primary serving system."
+    },
+    {
+      "year": "2013",
+      "type": "patent",
+      "title": "Inverted Index Failover Patent (US10073874)",
+      "desc": "Google patents lock-free dual-engine index serving with snapshot records. 128-byte cache-line-aligned snapshots enable 5-minute recovery window. 10-second update delay queue prevents corruption. Foundation for index reliability at web scale."
+    },
+    {
+      "year": "2013",
+      "type": "patent",
+      "title": "Hummingbird Update",
+      "desc": "Semantic understanding integrated into Mustang. Term matching evolves beyond exact keywords."
+    },
+    {
+      "year": "2015",
+      "type": "patent",
+      "title": "RankBrain Integration",
+      "desc": "Machine learning embeddings added to Mustang scoring. Neural signals complement traditional term weights."
+    },
+    {
+      "year": "2019",
+      "type": "patent",
+      "title": "BERT in Mustang",
+      "desc": "Deep language understanding model integrated into Mustang retrieval and ranking stages."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "API Leak: 40 Mustang Signals",
+      "desc": "OriginalContentScore, termWeight, pageEmbeddings, STS, QualityBoost, RealTimeBoost, and 34 more confirmed."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "DOJ Trial: Core Retrieval",
+      "desc": "Mustang confirmed as primary scoring/ranking system reducing index from hundreds of thousands to tens of thousands."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "We use hundreds of signals with no single dominant system.",
+      "internalSource": "API Leak + DOJ",
+      "internalClaim": "Mustang is the single system through which every result passes. It handles initial retrieval, scoring, and integrates Twiddler post-ranking. It is the backbone of Google Search."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "Word count doesn't matter. Write as much as you need.",
+      "internalSource": "API Leak",
+      "internalClaim": "numTokens shows documents are truncated at a max cap in Mustang. bodySize measures raw content length. avgTermWeight computes weighted font size of body terms. Content length directly impacts scoring."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "Bold and font size don't affect rankings.",
+      "internalSource": "API Leak",
+      "internalClaim": "termWeight is literally described as \"word size/bolding impact on document scoring.\" avgTermWeight computes the average weighted font size of terms. HTML formatting directly influences term importance."
+    }
+  ]
+}

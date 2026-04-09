@@ -1,0 +1,169 @@
+{
+  "id": "tangram",
+  "route": "/tangram",
+  "systems": [
+    "Tangram",
+    "Glue",
+    "SuperRoot"
+  ],
+  "hero": {
+    "title": "Tangram: Google's SERP Assembly Engine",
+    "subtitle": "Tangram (formerly codenamed 'Tetris') is the final system in Google's search pipeline. It takes ranked results from Ascorer/Twiddlers and assembles them into the actual SERP layout: blue links, featured snippets, Knowledge Panels, People Also Ask, image packs, video carousels, ads, and AI Overviews. Confirmed through DOJ sworn testimony, Tangram decides not just WHAT ranks but HOW it appears. It uses Instant Glue for real-time freshness signals (10-minute latency) to dynamically adjust SERP composition for breaking news and trending queries. With zero patents and zero leak signals, Tangram is known exclusively through DOJ evidence."
+  },
+  "keyInsight": {
+    "label": "Key Insight from DOJ Trial",
+    "text": "Tangram is the system that determines <strong>what SERP features you see</strong> for any given query. It doesn't rank pages; it <strong>assembles the final layout</strong> from pre-ranked results. This means two things for SEO: (1) Your page can rank #1 in organic results but still appear below a Knowledge Panel, featured snippet, People Also Ask box, and video carousel, (2) Tangram uses <strong>Instant Glue</strong> with ~10-minute latency to dynamically adjust layouts for time-sensitive queries, meaning SERP features can change rapidly during breaking news events. The system evolved from an internal project called <strong>Tetris</strong>, reflecting its role in 'fitting' different result types into the available SERP space."
+  },
+  "pillars": [
+    {
+      "type": "doj",
+      "title": "DOJ Trial: Sworn Testimony",
+      "items": [
+        "<strong>Tangram</strong> (SERPAssembly module): SERP assembly and layout system evolved from 'Tetris'. Created by HJ Kim (PXR0356, Feb 2025). Arranges blue links, universal features, and ads for optimal space and UX. Confirmed via sworn testimony.",
+        "<strong>Tetris</strong> (SERPAssembly module): Original codename for Tangram. HJ Kim named it 'fka Tetris'. Promotes fresh content and demotes stale results for time-sensitive queries. Confirmed as deprecated name.",
+        "Tangram is the <strong>final stage</strong> in the SuperRoot pipeline: Query Understanding > Mustang > Ascorer > Twiddlers > <strong>Tangram</strong> > SERP output",
+        "No leak signals or patents exist for Tangram; it's known exclusively through DOJ evidence, suggesting it's a relatively recent or highly protected system"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "Related Leak Evidence",
+      "items": [
+        "No direct Tangram signals in API leak, but related systems are well-documented:",
+        "<strong>SnippetBrain</strong>: ML-powered snippet generation. Selects best text passage for search result display. Output feeds into Tangram for layout decisions.",
+        "<strong>SuperRoot</strong>: Orchestration layer that routes queries through the pipeline. Tangram is the final stage before SuperRoot delivers the SERP.",
+        "<strong>InstantGlue</strong>: Real-time Glue variant with ~10-minute latency. Feeds freshness signals to Tangram for time-sensitive query layout adjustments."
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "Related Patent Context",
+      "items": [
+        "Tangram itself has 0 mapped patents, unusual for a core Google system. This may indicate it's newer, or its patents are classified under SuperRoot/Glue.",
+        "Glue system: <strong>77 patents</strong> covering user interaction aggregation and SERP feature scoring. These likely inform Tangram's layout decisions.",
+        "SuperRoot: Patent evidence for pipeline orchestration that includes SERP assembly as the final step.",
+        "SnippetBrain: Patents for ML-based snippet selection that feeds directly into Tangram's output.",
+        "<strong>AI-generated content pages</strong> - Patent <a href=\"https://patents.google.com/patent/US12536233\">US12536233</a> (Google, filed 2025): System generates AI-tailored landing pages displayed within SERPs. Calculates landing page score (conversion rate, bounce rate, CTR, design quality). When score exceeds threshold, inserts navigation link to AI-generated alternative with personalized headlines, product feeds, chatbot integration, and suggested filters. Google directly competes with organization landing pages through SERP presentation control",
+        "<strong>Generative summaries for search results</strong> - Patent <a href=\"https://patents.google.com/patent/US11769017\">US11769017</a> (Google, filed 2023): LLM-generated natural language summaries rendered directly in SERP. Processes query + search result documents to prevent hallucinations. Dynamic revision: monitors user interaction duration, triggers revised summaries using fine-tuned LLMs when engagement threshold exceeded. Content verification generates selectable attribution links to source documents. Foundation for AI Overviews"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How SERP Assembly Affects Your Traffic",
+      "items": [
+        "<strong>Position != visibility</strong>: Ranking #1 organically but appearing below 3 SERP features means your result may be 'below the fold.' Tangram controls this layout.",
+        "<strong>Feature eligibility matters</strong>: Getting into featured snippets, Knowledge Panels, or video carousels gives you Tangram-level visibility. Optimize for SERP features, not just rankings.",
+        "<strong>Time-sensitive queries shift layouts</strong>: During breaking news, Instant Glue feeds Tangram to promote fresh content and suppress stale results within 10 minutes. Freshness matters for trending topics.",
+        "<strong>Query classification drives features</strong>: Tangram uses query classification to decide which features to show. Navigational queries get site links; informational queries get PAA and snippets; transactional queries get shopping results.",
+        "<strong>AI Overviews (MAGIT/Gemini)</strong>: Tangram integrates AI-generated overviews into the SERP. These can push organic results significantly lower.",
+        "<strong>Mobile vs desktop layouts differ</strong>: Tangram assembles different layouts per device. Mobile SERPs are more feature-heavy, reducing organic click-through rates.",
+        "<strong>The SERP is modular</strong>: Each feature type (blue links, images, videos, maps, news) is a module that Tangram fits into available space. Your content should be eligible for multiple module types."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "SERP Assembly",
+      "source": "DOJ",
+      "how": "Tangram receives ranked results from the Ascorer/Twiddlers pipeline and query classification from Query Understanding. It then assembles the final SERP by selecting which modules (blue links, snippets, Knowledge Panel, PAA, images, videos, ads, AI Overview) to display and in what arrangement. Space allocation is optimized for user engagement and query satisfaction.",
+      "formula": "<span class=\"cf-fn\">SERP</span> = <span class=\"cf-fn\">Tangram</span>(\n  <span class=\"cf-val\">ranked_results</span>,  <span class=\"cf-comment\">// from Ascorer/Twiddlers</span>\n  <span class=\"cf-val\">query_class</span>,     <span class=\"cf-comment\">// navigational/informational/transactional</span>\n  <span class=\"cf-val\">available_modules</span> <span class=\"cf-comment\">// snippets, KP, PAA, images, videos</span>\n)\n<span class=\"cf-comment\">// Output: arranged layout with space allocation</span>\n<span class=\"cf-comment\">// AI Overview (MAGIT/Gemini) integrated here</span>",
+      "patents": "",
+      "affects": "Affected by: query intent classification, available SERP feature candidates, device type, freshness signals from Instant Glue, user location"
+    },
+    {
+      "name": "Instant Glue Freshness Feed",
+      "source": "DOJ + Leak",
+      "how": "Instant Glue operates on a 24-hour data window with approximately 10-minute latency, feeding real-time user engagement signals to Tangram. For breaking news or trending queries, this allows Tangram to rapidly adjust the SERP layout: promoting fresh content, adding news carousels, and suppressing stale results without waiting for the standard 13-month NavBoost cycle.",
+      "formula": "<span class=\"cf-fn\">InstantGlue</span>(query) =\n  <span class=\"cf-fn\">aggregate</span>(\n    <span class=\"cf-val\">clicks_24h</span>,\n    <span class=\"cf-val\">impressions_24h</span>,\n    <span class=\"cf-val\">engagement_24h</span>\n  )\n<span class=\"cf-comment\">// Latency: ~10 minutes</span>\n<span class=\"cf-comment\">// Window: 24 hours</span>\n<span class=\"cf-comment\">// Feeds Tangram for breaking news SERP adjustments</span>",
+      "patents": "",
+      "affects": "Affected by: real-time click patterns, trending query detection, breaking news events, content freshness"
+    },
+    {
+      "name": "Landing Page Score (AI Page Decision)",
+      "source": "Patent US12536233 (Google, 2025)",
+      "how": "Determines whether to generate an AI alternative to an organization's landing page directly in the SERP. Calculates a landing page score from multiple metrics: conversion rate, bounce rate, click-through rate, and qualitative factors (page design quality, content quality). When score exceeds threshold, Tangram inserts a navigation link to the AI-generated page. The AI page includes personalized headlines, product feeds, suggested filters, sitelinks, and optionally an AI chatbot. This represents Google's mechanism to compete directly with publisher landing pages at the SERP presentation layer.",
+      "formula": "<span class=\"cf-fn\">LandingPageScore</span>(page) = <span class=\"cf-fn\">f</span>(\n  <span class=\"cf-val\">conversion_rate</span>,\n  <span class=\"cf-val\">bounce_rate</span>,\n  <span class=\"cf-val\">CTR</span>,\n  <span class=\"cf-val\">design_quality</span>,\n  <span class=\"cf-val\">content_quality</span>\n)\n<span class=\"cf-kw\">if</span> score &gt; <span class=\"cf-val\">threshold</span>:\n  <span class=\"cf-kw\">insert AI-generated alternative</span>\n<span class=\"cf-comment\">// AI page: personalized headlines, product feeds,</span>\n<span class=\"cf-comment\">// chatbot, filters, previous query context</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US12536233\">US12536233</a> (AI-generated content page, 2025)",
+      "affects": "Affected by: landing page usability, conversion rate, bounce rate, design quality. Organizations with poor landing pages may see Google's AI alternative promoted instead."
+    },
+    {
+      "name": "Generative Summary with Dynamic Revision",
+      "source": "Patent US11769017 (Google, 2023)",
+      "how": "LLM generates natural language summaries for search queries, rendered directly in SERP as AI Overviews. Processes query content plus additional content from search result documents to prevent hallucinations and stale information. Monitors user interaction with search result documents; when viewing duration exceeds threshold, generates revised summary using fine-tuned LLMs that assume document familiarity. Verified summary portions get selectable attribution links to source documents.",
+      "formula": "<span class=\"cf-fn\">Summary</span>(query) = <span class=\"cf-fn\">LLM</span>(\n  <span class=\"cf-val\">query</span>,\n  <span class=\"cf-val\">search_results</span>,\n  <span class=\"cf-val\">additional_content</span>\n)\n<span class=\"cf-comment\">// prevents hallucination via grounding</span>\n\n<span class=\"cf-kw\">if</span> <span class=\"cf-fn\">userDwell</span>(doc) &gt; <span class=\"cf-val\">threshold</span>:\n  <span class=\"cf-fn\">RevisedSummary</span> = <span class=\"cf-fn\">FineTunedLLM</span>(\n    <span class=\"cf-val\">original</span> + <span class=\"cf-val\">doc_content</span>\n  )\n<span class=\"cf-comment\">// attribution links for verified portions</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US11769017\">US11769017</a> (Generative summaries for search results, 2023)",
+      "affects": "Affected by: search result document quality, query specificity, user engagement duration, LLM grounding quality. Foundation for AI Overviews in SERP."
+    }
+  ],
+  "pipeline": {
+    "title": "From Query to SERP: Tangram's Role",
+    "stages": [
+      {
+        "name": "Query Understanding",
+        "detail": "Query classified by intent (navigational, informational, transactional), topic, language, location. Determines which SERP features are candidates."
+      },
+      {
+        "name": "Mustang Retrieval",
+        "detail": "Initial document retrieval from the index using T* (Topicality). Thousands of candidate documents selected."
+      },
+      {
+        "name": "Ascorer + Twiddlers",
+        "detail": "Candidates re-ranked using ~1,700 signals. NavBoost engagement data applied. Final ranking produced."
+      },
+      {
+        "name": "Feature Candidates",
+        "detail": "SnippetBrain selects best snippets. Knowledge Panel data loaded from Webref. Image/video candidates identified. PAA questions generated."
+      },
+      {
+        "name": "Tangram Assembly",
+        "detail": "All ranked results and feature candidates assembled into final SERP layout. Space allocated by module type. Device-specific layouts generated."
+      },
+      {
+        "name": "Instant Glue Check",
+        "detail": "For time-sensitive queries, Instant Glue feeds 24h engagement data with 10-min latency. Tangram adjusts layout: adds news carousels, promotes fresh content."
+      },
+      {
+        "name": "GWS Delivery",
+        "detail": "Google Web Server renders the assembled SERP and delivers to the user's browser."
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "~2015",
+      "type": "patent",
+      "title": "Tetris System Created",
+      "desc": "Internal project codenamed 'Tetris' built for SERP module assembly. Name reflects the game-like fitting of different result types into available space."
+    },
+    {
+      "year": "~2020",
+      "type": "patent",
+      "title": "Renamed to Tangram",
+      "desc": "System renamed from Tetris to Tangram. The tangram puzzle metaphor better reflects assembling distinct shapes (modules) into a cohesive layout."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "DOJ Trial Confirmation",
+      "desc": "Tangram and Tetris both confirmed in sworn testimony as the SERP assembly system. Module: SERPAssembly. Integrated with Instant Glue for freshness."
+    },
+    {
+      "year": "2023",
+      "type": "patent",
+      "title": "Generative Summaries Patent (US11769017)",
+      "desc": "Google patents LLM-generated SERP summaries with dynamic revision. Monitors user dwell time to trigger refined summaries via fine-tuned LLMs. Attribution links verify content against source documents. Foundation for AI Overviews."
+    },
+    {
+      "year": "2025",
+      "type": "patent",
+      "title": "AI-Generated SERP Pages (US12536233)",
+      "desc": "Google patents AI-generated landing page alternatives displayed in SERPs. Landing page score (conversion, bounce, CTR, quality) determines when AI alternative is inserted. Includes personalized headlines, product feeds, chatbot, and suggested filters."
+    },
+    {
+      "year": "2025",
+      "type": "doj",
+      "title": "AI Overview Integration",
+      "desc": "Tangram integrates AI-generated overviews (MAGIT/Gemini) into search results, fundamentally changing SERP layout for informational queries."
+    }
+  ]
+}

@@ -1,0 +1,287 @@
+{
+  "id": "quality",
+  "route": "/quality",
+  "systems": [
+    "Qstar",
+    "NSR",
+    "HelpfulContent",
+    "Panda",
+    "QualityEvaluation"
+  ],
+  "hero": {
+    "title": "Q*: Google's Site Quality Scoring System",
+    "subtitle": "Q* is Google's central site-wide quality score, operating on a 0-1 scale. It is query-independent, largely static, and represents domain trustworthiness rather than individual page merit. The DOJ trial confirmed it is hand-crafted (not ML), and the Candour exploit independently confirmed the 0.4 threshold for rich result eligibility across 800,000 domains."
+  },
+  "keyInsight": {
+    "label": "Key Insight from DOJ Trial + Exploit",
+    "text": "Q* is a <strong>hand-crafted, query-independent, site-wide quality score</strong> on a 0-1 scale. Sites below <strong>0.4 are ineligible</strong> for featured snippets, People Also Ask, and rich results. This threshold was confirmed by both sworn DOJ testimony (HJ Kim) and independently by the Candour Agency exploit across 800K domains. Google publicly denied \"domain authority\" from 2016-2019 while Q* existed internally."
+  },
+  "pillars": [
+    {
+      "type": "doj",
+      "title": "Q* and Its Components",
+      "items": [
+        "<strong>Q*</strong> - 0-1 site quality score. Hand-crafted, not ML. Primarily query-independent, but HJ Kim (PXR0356, Feb 2025) revealed Q* can be query-dependent in certain cases. Below 0.4 = no rich results.",
+        "<strong>HJ Kim created page quality team</strong> (PXR0356): Kim built the page quality team ~2008 as his 3rd major project after NavBoost and another signal. Hand-crafting philosophy: 'if anything breaks Google knows what to fix' vs ML black boxes",
+        "<strong>NSR</strong> - Normalised Site Rank. Site-level quality successor to PageRank.",
+        "<strong>siteAuthority</strong> - Persistent domain trust score from quality_nsr module.",
+        "<strong>authorityPromotion</strong> - Active boost applied to high-authority domains in Q*.",
+        "<strong>chard</strong> - YMYL-specific authority signal for health, finance, safety topics.",
+        "<strong>ewok / keto</strong> - Internal codename quality prediction models feeding NSR.",
+        "<strong>Google vs Bing quality gap</strong> (UPX0220, Desktop Search Comparative Jul 2020): On 500 popular US queries, Google significantly better on full-page SxS (+0.185). 'Google is relatively stronger in ranking, authoritativeness, local context, interpretation, topicality.' Bing stronger on 'feature diversity and interactive results.' Location data was critical differentiator: 15 of 20 top SxS differences needed local context",
+        "<strong>UGC demotion as quality lever</strong> (PXR0037, Board Update Q2 2024): AI Overviews quality improved by 'increased quality of inputs and reduced the prevalence of UGC and joke/satirical content.' Confirms active filtering of user-generated and satirical content from AI Overview inputs",
+        "<strong>Ads revenue preservation as AIO principle</strong> (PXR0109, Gemini in Search exec review): 'Preserve ads revenue' listed as explicit design principle alongside 'preserve a healthy ecosystem.' AIO design balances user value with revenue protection",
+        "<strong>Authoritative Voices as ranking philosophy</strong> (PXR0034, Evolution of Search Sep 2023): Magi framework lists 'Perspectives from Human and Authoritative Voices' as a search superpower. Authority signals are a core ranking value, not just a technical signal",
+        "<strong>Content farms as Q* origin</strong> (PXR0356, HJ Kim Interview Feb 2025): 'Content farms paid students 50 cents per article and they wrote 1000s of articles on each topic. Google had a huge problem with that. That's why Google started the team to figure out the authoritative source.' Content farms were the direct catalyst for creating the page quality team",
+        "<strong>Q* is 'incredibly important'</strong> (PXR0356): HJ Kim: 'Quality score is hugely important even today. Page quality is something people complain about the most.' Q* is largely static and largely related to the site rather than the query",
+        "<strong>Q* could be reverse engineered</strong> (PXR0356): HJ Kim acknowledged Q* 'could be easily reverse engineered because Q is largely static.' Static nature makes it vulnerable to external measurement (as Candour demonstrated)",
+        "<strong>PageRank as input to Q*</strong> (PXR0356): PageRank described as 'a single signal relating to distance from a known good source,' used as one input feeding into the Quality score",
+        "<strong>18 search quality aspects</strong> (UPX0204, Eric Lehman Nov 2018): Internal document lists 18 quality dimensions: Relevance, Page quality, Popularity, Freshness, Localization, Language, Centrality, Topical diversity, Personalization, Web ecosystem, Mobile friendly, Social fairness, Optionalization, Porn demotion, Spam, Authority, Privacy, User control of spell correction",
+        "<strong>User behavior as tenuous quality proxy</strong> (UPX0204): 'The association between observed user behavior and search result quality is tenuous.' Internal acknowledgment that clicks and engagement are imperfect measures of actual quality",
+        "<strong>Search/Ads wall pressure</strong> (UPX0708, Haahr-Nayak Staff Chat Jun 2020): Paul Haahr: 'there can be pressure via Ads to change the product to favor Ads in general more - not individual advertisers, but, say, holding back Search changes that are good for users but bad for revenue.' Haahr warned: 'relying on people rather than institutional structures isn't necessarily a good idea for the long haul'",
+        "<strong>Newsroom analogy for Search independence</strong> (UPX0708): Danny Sullivan compared Search to a newsroom with an editor-in-chief providing protection against ads pushing for things. Institutional tension between search quality and revenue optimization acknowledged internally",
+        "<strong>hostAge sandbox attribute</strong> (API leak, confirmed in DOJ): 16-bit integer calculated as day number after 2005-12-31. Purpose: 'Sandbox fresh spam in serving time.' Used as a twiddler during ranking. Sandbox period approximately 3-6 months for new sites; established domains bypass the constraint. Confirms Google does sandbox new sites despite public denials",
+        "<strong>IS score = 'approximation of user utility'</strong> (Nayak testimony): IS (Information Satisfaction) described as primary quality metric. Derived from approximately 16,000 human raters. 'Always remains human-derived.' Combined with search log data for RankEmbed training. Wikipedia removal would cause approximately 0.5 IS point loss. IS4 is the side-by-side variant comparing Google vs competitors",
+        "<strong>Code Yellow 2019: ads pressure on search quality</strong> (Ben Gomes testimony, Oct 2023): Google declared 'Code Yellow' emergency in Feb 2019 lasting 7 weeks when query growth slowed, threatening revenue targets. Gomes: 'I think we are getting too involved with ads for the good of the product and company.' 'We could increase queries quite easily in the short term in user negative ways (turn off spell correction, turn off ranking improvement).' Search and Chrome engineers were reassigned to ads teams. Gomes departed his role approximately one year later",
+        "<strong>Ad auction manipulation affects quality perception</strong> (Jerry Dischler VP Ads testimony, Sep 2023): 'Squashing' artificially raises prices against highest bidders. RGSP (2019) randomly assigns top slots to second-highest bidders for 10% revenue increase. Project Momiji: 15% price inflation per auction. 'We tend not to tell advertisers about pricing changes.' Search ad CPCs more than doubled 2013-2020. Demonstrates profit optimization overriding stated auction transparency. 'Shaking the cushions' to meet revenue targets",
+        "<strong>lowQuality</strong> (API leak): NSR-derived low quality score. Feeds into Q* composite as a negative signal for sites with poor content quality metrics.",
+        "<strong>scamness</strong> (API leak): Scam model scoring on 0-1023 range. Detects deceptive or fraudulent site patterns. High scamness triggers severe ranking penalties.",
+        "<strong>unauthoritativeScore</strong> (API leak): Authority deficit measurement. Quantifies how far a site falls below authority expectations for its topic space.",
+        "<strong>pandaDemotion</strong> (API leak): Content quality adjustments inherited from Panda algorithm. Site-wide demotion factor applied to domains with thin or low-value content."
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "Page-Level Quality",
+      "items": [
+        "<strong>OriginalContentScore</strong> - 7-bit scoring (0-127) measuring content originality.",
+        "<strong>EffortScore</strong> - LLM-estimated content creation effort.",
+        "<strong>gibberishScores</strong> - Detection of spun/nonsensical/AI-generated content.",
+        "<strong>vlq</strong> - Very Low Quality flag. Severe site-level penalty.",
+        "<strong>clutterScore</strong> - Tracks excessive ads, popups, UI noise.",
+        "<strong>ymylNewsV2Score</strong> - YMYL health/finance content authority."
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "Scoring New Sites",
+      "items": [
+        "<strong>Candour endpoint exploit</strong> - Discovered by Mark Williams-Cook (Candour Agency). Google endpoint exposed 2TB of data across 90M queries. $13,337 bounty via Google Vulnerability Reward Program. Over 2,000 properties revealed.",
+        "<strong>PredictingSiteQuality</strong> - Phrase model converts content into numerical \"shape\" and compares to known-quality sites.",
+        "Explains why AI content initially ranked: LLM output matched \"good content\" patterns.",
+        "<strong>Site Quality Score Patent</strong> - Calculated from brand search volume, click-through selection rate, and anchor text brand mentions.",
+        "<strong>Panda IL/RQ ratio</strong> - Independent links divided by reference queries as quality modifier.",
+        "<strong>SiteQualityThreshold</strong> - 0.4 cutoff confirmed across 800K domains (subdomain-level scoring).",
+        "<strong>Q* threshold at subdomain level</strong> - Sites below 0.4 ineligible for featured snippets, PAA, rich results. Confirmed at subdomain granularity, not root domain.",
+        "<strong>Q* calculation factors</strong> - Brand search frequency, click-through rate when NOT in position 1, anchor text brand mentions across the web.",
+        "<strong>Q* as 'heat race qualifier'</strong> - High relevance cannot overcome low quality scores. Explains why authoritative domains dominate regardless of page optimization. Quality gating precedes relevance ranking."
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "Consensus Scoring (Candour Exploit)",
+      "source": "Candour Exploit (Mark Williams-Cook, Dec 2024)",
+      "items": [
+        "Google counts passages within content that agree with, contradict, or remain neutral to 'general consensus' on a topic",
+        "Generates a consensus score impacting ranking, especially for debunking queries (e.g., 'Is the earth flat?')",
+        "Political topics intentionally maintain mixed viewpoints in results",
+        "YMYL queries (health, financial) receive different ranking criteria and stricter evaluation standards",
+        "Consensus scoring likely connects to the API leak's 'topicEmbeddings' and factuality signals"
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Q*",
+      "source": "DOJ: 0-1 scale, hand-crafted, 0.4 threshold",
+      "how": "Site-wide score on 0-1 scale. Hand-crafted (not ML). Operates at subdomain level. Below 0.4 = ineligible for featured snippets. Inputs include site trust, content quality, E-E-A-T indicators. Primarily query-independent, but HJ Kim (PXR0356, Feb 2025) revealed Q* can be query-dependent in certain cases. Largely static, doesn't change with every query.",
+      "formula": "<span class=\"cf-fn\">Q*</span>(site) = <span class=\"cf-fn\">hand_crafted</span>(\n  <span class=\"cf-val\">seed_distance</span>, <span class=\"cf-val\">engagement</span>, <span class=\"cf-val\">E-E-A-T</span>\n)  <span class=\"cf-comment\">// range: 0.0 - 1.0, query-independent</span>\n<span class=\"cf-kw\">if</span> Q* &lt; <span class=\"cf-val\">0.4</span>: <span class=\"cf-kw\">block</span> featured_snippets, rich_results\n<span class=\"cf-comment\">// subdomain-level, NOT ML (HJ Kim deposition)</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US9697259\">US9697259</a> (document quality signals), <a href=\"https://patents.google.com/patent/US9165040\">US9165040</a> (link graph distances)",
+      "affects": "Affected by: overall domain trustworthiness and expertise. Changes slowly. Must be above 0.4 for rich SERP features."
+    },
+    {
+      "name": "IS Score",
+      "source": "DOJ: Information Satisfaction, 100-point scale",
+      "how": "100-point scale computed from 16,000 human raters worldwide. Used to train RankBrain, SpamBrain, Helpful Content System, MUM. Wikipedia removal would cause ~0.5 IS point loss. Mehta opinion (FOF 134): In 2020, Google tested degrading large ranking components (NavBoost, Synonyms) by 1 IS point for 3 months. Result: only 0.66-0.99% decline in global search revenue. This proves significant quality depreciation would NOT cause significant revenue loss. Nayak caveat: larger IS changes may have nonlinear effects. IS4 is the side-by-side rating system using human raters to compare Google vs competitors (Mehta FOF 136).",
+      "formula": "<span class=\"cf-fn\">IS</span>(query) = <span class=\"cf-fn\">mean</span>(\n  <span class=\"cf-val\">rater_scores</span>[1..16000]\n)  <span class=\"cf-comment\">// range: 0 - 100</span>\n<span class=\"cf-comment\">// training target for RankBrain, SpamBrain, HCU, MUM</span>\n<span class=\"cf-comment\">// Wikipedia removal = ~0.5 IS point loss</span>\n<span class=\"cf-comment\">// 1 IS point decline = 0.66-0.99% revenue decline (Mehta FOF 134)</span>\n<span class=\"cf-comment\">// IS4: side-by-side rater comparison vs competitors</span>",
+      "affects": "Affected by: content that human evaluators rate highly. Aligns with E-E-A-T quality guidelines. IS score trains the ML models that rank pages. 1 IS point = ~0.66-0.99% search revenue."
+    },
+    {
+      "name": "contentEffort",
+      "source": "DOJ: LLM-based labor and originality estimation",
+      "how": "Uses LLM to estimate labor and originality invested in content creation. Part of CompressedQualitySignals module. Measures creative effort vs automated/templated content.",
+      "formula": "<span class=\"cf-fn\">contentEffort</span>(page) = <span class=\"cf-fn\">LLM_score</span>(\n  <span class=\"cf-val\">labor</span>, <span class=\"cf-val\">originality</span>, <span class=\"cf-val\">expertise_depth</span>\n)  <span class=\"cf-comment\">// in CompressedQualitySignals module</span>\n<span class=\"cf-comment\">// distinguishes expert writing from templated/AI content</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8682892\">US8682892</a> (content quality scoring), <a href=\"https://patents.google.com/patent/US9697259\">US9697259</a> (document quality signals)",
+      "affects": "Affected by: original research, unique data, expert analysis. LLM detects boilerplate vs genuine effort. More original content = higher score."
+    },
+    {
+      "name": "OriginalContentScore",
+      "source": "Leak: 7-bit value 0-127 + DOJ",
+      "how": "7-bit value (0-127 range) in API leak. Measures uniqueness of content relative to the broader web. Assesses originality of a document. Low scores indicate scraped or heavily duplicated content.",
+      "formula": "<span class=\"cf-fn\">OriginalContentScore</span>(page) = <span class=\"cf-fn\">uniqueness</span>(\n  <span class=\"cf-val\">content</span>, <span class=\"cf-val\">web_corpus</span>\n)  <span class=\"cf-comment\">// 7-bit: range 0 - 127</span>\n<span class=\"cf-kw\">if</span> score &lt; <span class=\"cf-val\">threshold</span>: flag as <span class=\"cf-val\">scraped/duplicate</span>\n<span class=\"cf-comment\">// low score = heavily duplicated content</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8682892\">US8682892</a> (content quality scoring)",
+      "affects": "Affected by: publishing original content not found elsewhere. Avoid scraping/rewriting. Unique data, perspectives, and analysis score higher."
+    }
+  ],
+  "pipeline": {
+    "title": "Quality Score Pipeline",
+    "stages": [
+      {
+        "name": "Content Analysis",
+        "detail": "OriginalContent, Effort, gibberish, YMYL"
+      },
+      {
+        "name": "NSR / siteAuthority",
+        "detail": "Site-level aggregation of quality signals"
+      },
+      {
+        "name": "Q* Score (0-1)",
+        "detail": "Hand-crafted composite, query-independent"
+      },
+      {
+        "name": "Gating (0.4)",
+        "detail": "Below 0.4: no featured snippets, PAAs, rich results"
+      },
+      {
+        "name": "Ascorer Input",
+        "detail": "Feeds into primary ranking alongside P*, T*"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2008",
+      "type": "internal",
+      "title": "Page Quality Team Founded",
+      "desc": "HJ Kim started the page quality team to combat content farms. 'Content farms paid students 50 cents per article and they wrote 1000s of articles on each topic.' The team's mission: figure out the authoritative source. (PXR0356)"
+    },
+    {
+      "year": "2011",
+      "type": "patent",
+      "title": "Panda Algorithm",
+      "desc": "First site-wide quality scoring. IL/RQ ratio (independent links / reference queries) as quality proxy."
+    },
+    {
+      "year": "2013",
+      "type": "patent",
+      "title": "Site Quality Score Patent",
+      "desc": "Google patent on predicting site quality from content patterns and brand search volume."
+    },
+    {
+      "year": "2018",
+      "type": "patent",
+      "title": "E-A-T Framework Formalized",
+      "desc": "Expertise, Authoritativeness, Trustworthiness become central to quality rater guidelines."
+    },
+    {
+      "year": "2022",
+      "type": "patent",
+      "title": "Helpful Content Update",
+      "desc": "Site-wide quality classifier. HCU system penalizes \"unhelpful\" content at domain level."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "API Leak: Q* Confirmed",
+      "desc": "Q* aggregate quality score found in ContentWarehouseAPI. NSR, siteAuthority, chard scores exposed."
+    },
+    {
+      "year": "2024",
+      "type": "exploit",
+      "title": "Candour: Q* Threshold & Consensus Scoring",
+      "desc": "Mark Williams-Cook (Candour Agency) discovered Google endpoint exposing 2TB data across 90M queries. Confirmed 0.4 Q* threshold at subdomain level. Revealed consensus scoring, click probability prediction, and 8 query semantic classes. Google paid $13,337 bounty."
+    },
+    {
+      "year": "2017",
+      "type": "doj",
+      "title": "Project Folly: Latency Response (Mehta FOF 137)",
+      "desc": "Google analyzed latency vs Bing: for popular queries, 25% of SERPs took >3 seconds. Bing's first result arrived sooner 98% of the time, ~300ms faster. Google launched Project Folly to decrease latency. 'The project was a success' (Nayak). Demonstrates Google monitors and responds to competitor quality metrics."
+    },
+    {
+      "year": "2020",
+      "type": "doj",
+      "title": "Quality Reduction Experiment (Mehta FOF 134)",
+      "desc": "Google tested degrading large ranking components (NavBoost, Synonyms) by 1 IS point for ~3 months. 1 IS point = loss of 2x all Wikipedia content. Result: only 0.66-0.99% global revenue decline. Proves Google's monopoly is insulated: even significant quality degradation barely affects revenue. Nayak caveat: larger changes may be nonlinear with 'inflection points where if you make search much worse, you might actually lose a lot more traffic.'"
+    },
+    {
+      "year": "2019",
+      "type": "doj",
+      "title": "Code Yellow: Ads Pressure on Search (Ben Gomes)",
+      "desc": "Feb 2019: Google declared Code Yellow emergency (7 weeks) when query growth slowed. Ben Gomes: 'I am getting concerned that growth is all we are thinking about.' Search/Chrome engineers reassigned to ads. Gomes warned degrading ranking quality could boost short-term queries. Departed role ~1 year later. Demonstrates tension between search quality and revenue optimization."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "hostAge Sandbox Confirmed (API Leak + DOJ)",
+      "desc": "API leak exposed hostAge attribute: 16-bit integer, day number after 2005-12-31 epoch. Purpose: 'Sandbox fresh spam in serving time.' Sandbox period 3-6 months for new sites. Google publicly denied sandbox existence while the system was active."
+    },
+    {
+      "year": "2024-2025",
+      "type": "doj",
+      "title": "DOJ: Hand-Crafted Quality",
+      "desc": "HJ Kim: Q* is hand-crafted, not ML. Nayak: quality is static and site-wide. 0.4 disqualifies from featured snippets."
+    },
+    {
+      "year": "2025",
+      "type": "doj",
+      "title": "DOJ Remedies: Q* Can Be Query-Dependent (PXR0356)",
+      "desc": "HJ Kim interview (Feb 2025): Created page quality team ~2008. Revealed Q* can be query-dependent in certain cases, contradicting prior understanding that it was purely static. Hand-crafting philosophy: 'if anything breaks Google knows what to fix.' API leak acknowledged: 'documents named components but don't go into curves/thresholds.'"
+    },
+    {
+      "year": "2018",
+      "type": "doj",
+      "title": "18 Quality Aspects Defined (UPX0204)",
+      "desc": "Eric Lehman's 'Ranking for Research' document defines 18 search quality aspects: Relevance, Page quality, Popularity, Freshness, Localization, Language, Centrality, Topical diversity, Personalization, Web ecosystem, Mobile friendly, Social fairness, Optionalization, Porn demotion, Spam, Authority, Privacy, User control of spell correction. Admits user behavior is a 'tenuous' quality proxy."
+    },
+    {
+      "year": "2020",
+      "type": "doj",
+      "title": "Search/Ads Wall Pressure (UPX0708)",
+      "desc": "Paul Haahr to Pandu Nayak: 'there can be pressure via Ads to change the product to favor Ads in general more - not individual advertisers, but, say, holding back Search changes that are good for users but bad for revenue.' Warned institutional structures needed, not just reliance on individuals."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Public (2016-2019)",
+      "publicClaim": "\"There is no domain authority. We don't have such a metric. We evaluate pages individually.\"",
+      "internalSource": "Internal Reality",
+      "internalClaim": "Q* is a site-wide, domain-level quality score. siteAuthority is a persistent domain trust metric. Both existed during Google's public denials."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"Our algorithms don't distinguish between subdomains and root domains.\"",
+      "internalSource": "Candour Exploit",
+      "internalClaim": "Site quality score operates at subdomain level. Different subdomains of the same root domain receive different quality scores (confirmed across 800K domains)."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"We use hundreds of signals and machine learning to evaluate quality.\"",
+      "internalSource": "HJ Kim Deposition",
+      "internalClaim": "Q* is hand-crafted, not ML. Only RankBrain and DeepRank use LLM technologies. The vast majority of ranking signals are hand-crafted."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"If our search quality declined, users would quickly switch to competitors. Competition is just a click away.\"",
+      "internalSource": "Mehta Liability Opinion (FOF 134)",
+      "internalClaim": "Google's own 2020 experiment: degrading large ranking components by 1 IS point (equivalent to removing 2x Wikipedia) for 3 months caused only 0.66-0.99% revenue decline. Significant quality degradation barely affects revenue due to default bias and switching costs, not because users freely choose Google."
+    },
+    {
+      "publicSource": "Google Public (Gary Illyes, 2017-present)",
+      "publicClaim": "\"There is no sandbox. We don't treat new sites differently in ranking.\"",
+      "internalSource": "API Leak + DOJ Trial Evidence",
+      "internalClaim": "hostAge attribute (16-bit integer, days since 2005-12-31) explicitly 'sandboxes fresh spam in serving time.' Established domains bypass constraint. New sites face 3-6 month sandbox period."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"We rely on sophisticated AI and machine learning to understand and measure content quality.\"",
+      "internalSource": "DOJ Trial Exhibit UPX0204 (Eric Lehman, Nov 2018)",
+      "internalClaim": "'The association between observed user behavior and search result quality is tenuous.' Google internally admits that the behavioral signals they rely on (clicks, dwell time) are poor proxies for actual quality."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"Search and Ads operate independently. Ads has no influence over organic search results.\"",
+      "internalSource": "DOJ Trial Exhibit UPX0708 (Haahr-Nayak Staff Chat, Jun 2020)",
+      "internalClaim": "Paul Haahr: 'there can be pressure via Ads to change the product to favor Ads in general more - not individual advertisers, but, say, holding back Search changes that are good for users but bad for revenue.' Protection depends on individuals, not institutional structures."
+    }
+  ]
+}

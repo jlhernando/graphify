@@ -1,0 +1,246 @@
+{
+  "id": "bert-mum",
+  "route": "/bert-mum",
+  "systems": [
+    "BERT",
+    "MUM",
+    "DeepRank"
+  ],
+  "hero": {
+    "title": "BERT & MUM: Language Understanding in Search",
+    "subtitle": "BERT (2019) brought bidirectional language understanding to Google Search, enabling comprehension of prepositions, negations, and context. Internally, BERT applied to ranking is called DeepRank. MUM (2021), built on T5, is 1,000x more powerful: multimodal (text+images), multilingual (75 languages), and powers AI Overviews, Things to Know, and crisis detection. Together they represent the evolution from keyword matching to genuine language comprehension."
+  },
+  "keyInsight": {
+    "label": "Key Insight from DOJ Trial + API Leak",
+    "text": "The DOJ trial revealed that <strong>DeepRank is the internal name for BERT applied to ranking</strong>. Pandu Nayak testified that DeepRank signals can be <strong>'decomposed into signals that resembled traditional signals'</strong> and that combining both types improved results. Critically, DeepRank only runs on the <strong>final 20-30 documents</strong> due to computational cost. BERT now processes <strong>nearly every English query</strong> for understanding, but full neural re-ranking remains limited to top candidates. The API leak confirmed <strong>RankEmbed-BERT</strong> as a top-level signal alongside Q* and P*."
+  },
+  "pillars": [
+    {
+      "type": "patent",
+      "title": "4 Patents",
+      "items": [
+        "Patent <a href=\"https://patents.google.com/patent/US10452978B2\">US10452978</a>: <strong>Attention-based sequence transduction</strong> (Transformer / 'Attention Is All You Need') - foundation for BERT, MUM, Gemini",
+        "Patent <a href=\"https://patents.google.com/patent/US10180964\">US10180964</a>: <strong>Candidate answer passages</strong> - BERT-powered featured snippet selection using query-dependent and query-independent scoring",
+        "Patent <a href=\"https://patents.google.com/patent/US9940367B1\">US9940367</a>: <strong>Scoring candidate answer passages</strong> - passage scoring engine for featured snippets",
+        "Patent <a href=\"https://patents.google.com/patent/US10789427B2\">US10789427</a>: <strong>Multi-task multi-modal machine learning</strong> - MUM's underlying architecture for processing text+images across 75 languages",
+        "SMITH research (2020): Extends BERT from 512 to 2048 tokens for long document understanding"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "DOJ Trial Evidence",
+      "items": [
+        "<strong>Pandu Nayak</strong>: DeepRank = BERT for ranking. Only runs on final 20-30 docs (too expensive for all candidates)",
+        "DeepRank signals 'decomposable into signals that resembled traditional signals' - combining both improves quality",
+        "<strong>RankEmbed-BERT</strong>: Enhanced dual encoder model confirmed as top-level ranking signal",
+        "DeepRank 'not only gives significant relevance gains but ties ranking more tightly to language understanding'",
+        "eDeepRank (decomposable variant) allows auditing which traditional signals neural models approximate",
+        "<strong>BERT subsumed WebAnswers</strong> (UPX0197, Lehman Jan 2019): 'the tidal wave of deep ML that arrived in the last few weeks was a complete shock' for web answers team. 'A deep ML system will clearly outperform Google's 20-year accumulation of relevance algorithms.' BERT reset potentially wiped out past advantages, similar to what happened in machine translation. Risk: 'Google could similarly be beaten in relevance by another company'",
+        "<strong>BERT for Sundar</strong> (UPX0193): 'Early experiments with BERT applied to Web Ranking suggest very significant improvements in understanding queries, documents and intents.' Competitive moat: 'Any competitor can use BERT. Fortunately, our training data gives us a nice head-start.' Hardware cost: 'needs multiple orders of magnitude more hardware resources (mainly TPUs)'",
+        "<strong>Pre-BERT memorization systems</strong> (UPX0197, Lehman): Google's ranking relied on massive 'memorization systems' (NavBoost, click-memory) 'much larger than any current ML model' that captured 'seemingly-crucial knowledge about language and the world'",
+        "<strong>Artisanal vs end-to-end</strong> (UPX0197, Matthew Gray): Google Ads already used end-to-end deep learning by 2019, while Search still used 'artisanal' hand-tuned ranking systems. Concern: 'how to discuss this future without crushing morale'",
+        "<strong>MUM computational limits</strong> (Nayak testimony): MUM is too computationally expensive for real-time query processing and cannot index comprehensively across the web. Google trains smaller classifier models using MUM's methodology for production deployment. MUM's value is in generating training data and knowledge, not direct real-time inference",
+        "<strong>MUM vs RankBERT performance</strong> (Mehta FOF 99): RankBERT 'exhibited fairly weak performance' on newer scoring metrics. MUM 'achieved essentially human-level performance.' MUM trained on subset of web corpus + some click training data to 'understand the structure of language and acquire some kind of reasoning abilities' (Lehman/Nayak)",
+        "<strong>Generalization systems</strong> (Mehta FOF 97): RankBrain, DeepRank, RankEmbed, RankBERT, MUM are 'generalization' systems: 'may not be so good at memorizing facts, but they're really good at understanding language' (Lehman). 'Designed to fill holes in [click] data' by generalizing from data-rich to data-sparse situations",
+        "<strong>Older vs newer data requirements</strong> (Mehta FOF 98): Older signals (NavBoost, QBST) use up to 1 trillion training examples. Newer ML signals require only 1 billion. But even newer signals 'were designed with user data and continue to be trained on it.' 'Learning from this user feedback is perhaps the central way that web ranking has improved for 15 years' (UPX226)",
+        "<strong>LaMDA/PaLM/PaLM2 NOT built with user data</strong> (Mehta FOF 100): LaMDA (2021, conversation), PaLM, PaLM2 expanded capabilities but 'were not built with user data' (Nayak). Distinction: search ranking models (MUM, DeepRank) require user data; general LLMs do not",
+        "<strong>KITE and MUM as distinct training systems</strong> (PXR0026, Publisher Controls Apr 2024): Internal doc reveals 'we don't want to get into the details of distinction between Gemini training and SGE training, and KITE/MUM.' Confirms KITE is a separate training pipeline alongside MUM, both distinct from Gemini's general training",
+        "<strong>NavBoost queries improve LLM benchmarks</strong> (PXR0095, Gemini v3 2024): 'Anon navboost queries could be huge, given we see MMLU increases from aquarium queries.' NavBoost query data directly improves standard LLM benchmarks (MMLU), bridging ranking data into model quality. Search-specific data enables Search-dedicated Gemini model (v3-xs)"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "What BERT Changed for SEO",
+      "items": [
+        "Stop words now matter: 'to', 'for', 'no', 'not' change query meaning (prepositions, negations)",
+        "Natural language queries understood: 'can you get medicine for someone pharmacy' now works correctly",
+        "Featured snippets improved: BERT selects more relevant passage as answer",
+        "Passage ranking enabled: BERT identifies passage boundaries within long documents (~7% of queries)",
+        "BERT does NOT change how content should be written. It changes how Google <strong>understands</strong> queries and content",
+        "You cannot 'optimize for BERT'. Write naturally and comprehensively for your topic"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "MUM Capabilities & Impact",
+      "items": [
+        "<strong>1,000x more powerful than BERT</strong> (Google's claim). Built on T5 framework",
+        "Multimodal: understands text + images simultaneously. Photo of hiking boots + 'can I hike Mt. Fuji?'",
+        "Multilingual: trained on 75 languages. Surfaces answers from foreign-language sources",
+        "Powers 'Things to Know' SERP feature (topic exploration pathways)",
+        "Powers 'Refine/Broaden This Search' suggestions",
+        "Crisis detection: identifies suicide, abuse, substance queries and shows resources",
+        "Feeds into AI Overviews (combined with PaLM2 and Gemini models)"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "Semantic Coherence & AI Content Detection",
+      "items": [
+        "<strong>BERT NLI for contradiction detection</strong>: BERT's Natural Language Inference (NLI) architecture classifies text pairs as entailment, contradiction, or neutral. Fine-tuned BERT achieves ~85% F1 on contradiction benchmarks. Uses [CLS] token through an MLP for three-way classification.",
+        "<strong>Intra-page coherence scoring</strong>: BERT-based models can evaluate whether paragraphs within a single page contradict each other. AI-generated content commonly asserts conflicting facts across sections due to lack of global coherence. This is a detectable quality signal.",
+        "<strong>MUM cross-language fact verification</strong>: MUM can verify claims against sources in 75 languages, expanding factual validation beyond English-only. A claim on an English page can be checked against authoritative sources in German, Japanese, or Spanish.",
+        "<strong>MUM multimodal quality gates</strong>: Evaluates whether images/video genuinely support text claims or are decorative filler. Cross-references image relevance to page topic. Generic stock images score lower than original, contextually relevant media.",
+        "<strong>Content depth assessment</strong>: MUM evaluates whether content provides genuine informational depth vs. surface-level coverage. Can detect the difference between a page that truly explains a topic and one that merely strings together common knowledge without insight.",
+        "<strong>BERT 512-token limitation</strong>: BERT's context window (512 tokens) limits single-pass coherence analysis. Full-page evaluation likely uses segmented analysis or SMITH (2048 tokens). MUM's larger context enables more holistic page-level assessment."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "DeepRank (BERT for Ranking)",
+      "source": "DOJ+Leak",
+      "how": "DeepRank is Google's internal name for BERT applied to document ranking. It uses bidirectional Transformer attention to compute query-document relevance. Due to high computational cost, it only runs on the final 20-30 documents. The model produces a neural relevance score that is combined with traditional signals. The eDeepRank variant decomposes this score into interpretable components matching traditional signal categories.",
+      "formula": "<span class=\"cf-fn\">DeepRank</span>(query, doc) =\n  <span class=\"cf-fn\">BERT_crossattn</span>(\n    <span class=\"cf-fn\">encode</span>(<span class=\"cf-val\">query_tokens</span>),\n    <span class=\"cf-fn\">encode</span>(<span class=\"cf-val\">doc_tokens[:512]</span>)\n  ) &rarr; <span class=\"cf-val\">neural_relevance_score</span>\n<span class=\"cf-comment\">// Only top 20-30 docs (too expensive for all)</span>\n<span class=\"cf-comment\">// eDeepRank decomposes into traditional signal equivalents</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US10452978B2\">US10452978</a> (Transformer)",
+      "affects": "Affected by: query-document semantic alignment, token overlap, contextual word meaning, document structure"
+    },
+    {
+      "name": "RankEmbed-BERT",
+      "source": "DOJ+Leak",
+      "how": "An enhanced dual encoder model that embeds queries and documents into a shared high-dimensional space. Uses dot product (not cosine) similarity. Trained on 70 days of search logs plus human rater judgments. Confirmed as a top-level ranking signal alongside Q* (quality) and P* (popularity). More efficient than full DeepRank cross-attention, allowing broader application.",
+      "formula": "<span class=\"cf-fn\">RankEmbedBERT</span>(query, doc) =\n  <span class=\"cf-fn\">dot_product</span>(\n    <span class=\"cf-fn\">BERT_encode</span>(<span class=\"cf-val\">query</span>),\n    <span class=\"cf-fn\">BERT_encode</span>(<span class=\"cf-val\">doc</span>)\n  )\n<span class=\"cf-comment\">// Dot product, NOT cosine similarity</span>\n<span class=\"cf-comment\">// 70-day training window + human rater data</span>",
+      "patents": "",
+      "affects": "Affected by: semantic similarity, embedding quality, training data recency, query-document topic alignment"
+    },
+    {
+      "name": "BERT Query Understanding",
+      "source": "Patent+DOJ",
+      "how": "BERT processes queries bidirectionally, understanding every word in context of all other words simultaneously. This enables comprehension of prepositions ('to usa' vs 'from usa'), negations ('no curb'), and complex intent. Runs on nearly every English query. Does not produce a ranking score directly but improves query interpretation that feeds into all downstream ranking signals.",
+      "formula": "<span class=\"cf-fn\">BERTUnderstanding</span>(query) =\n  <span class=\"cf-fn\">bidirectional_encode</span>(<span class=\"cf-val\">all_tokens</span>)\n  &rarr; <span class=\"cf-fn\">intent</span>, <span class=\"cf-fn\">entities</span>, <span class=\"cf-fn\">relationships</span>\n<span class=\"cf-comment\">// Nearly every English query since late 2020</span>\n<span class=\"cf-comment\">// Prepositions + negations now change meaning</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US10452978B2\">US10452978</a>",
+      "affects": "Affected by: query complexity, stop words, prepositions, negations, entity ambiguity"
+    },
+    {
+      "name": "MUM Multimodal Understanding",
+      "source": "Patent",
+      "how": "MUM maps multiple input modalities (text, images) into a unified representation space using the T5 framework. It transfers knowledge across 75 languages and generates language (unlike BERT which only understands). Powers higher-level features like Things to Know, crisis detection, and AI Overviews. Mehta opinion (FOF 99): MUM 'achieved essentially human-level performance' while RankBERT 'exhibited fairly weak performance.' MUM trained on subset of web corpus plus click training data. LLMs are used as 'additional signals that get balanced both against each other as well as against other signals' (Nayak, FOF 102). They did NOT replace NavBoost/QBST.",
+      "formula": "<span class=\"cf-fn\">MUM</span>(inputs) =\n  <span class=\"cf-fn\">T5_encode</span>(\n    <span class=\"cf-fn\">text_modality</span>(<span class=\"cf-val\">query</span>),\n    <span class=\"cf-fn\">image_modality</span>(<span class=\"cf-val\">photo</span>)\n  ) &rarr; <span class=\"cf-val\">unified_representation</span>\n<span class=\"cf-comment\">// 75 languages, 1000x more powerful than BERT</span>\n<span class=\"cf-comment\">// Generative: can produce language, not just understand</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US10789427B2\">US10789427</a>",
+      "affects": "Affected by: query complexity, multimodal inputs, cross-language content availability, topic depth"
+    },
+    {
+      "name": "Semantic Coherence Assessment",
+      "source": "Research: BERT NLI + DiscoScore",
+      "how": "BERT's NLI capability classifies text pairs as entailment, contradiction, or neutral. Applied to page quality: segment page into paragraph pairs and evaluate pairwise coherence. Content with high contradiction rates between sections signals low editorial quality, a common AI-generated content pattern. DiscoScore (EACL 2023) extends this to discourse-level coherence evaluation using BERT embeddings.",
+      "formula": "<span class=\"cf-fn\">Coherence</span>(page) =\n  <span class=\"cf-fn\">avg</span>(\n    <span class=\"cf-fn\">NLI</span>(<span class=\"cf-val\">para_i</span>, <span class=\"cf-val\">para_j</span>)\n    <span class=\"cf-kw\">for all</span> adjacent paragraph pairs\n  )\n<span class=\"cf-comment\">// NLI output: entailment (1), neutral (0.5), contradiction (0)</span>\n<span class=\"cf-comment\">// High contradiction rate = low coherence = quality signal</span>\n<span class=\"cf-comment\">// Common in AI content: sections assert conflicting facts</span>",
+      "patents": "Research: <a href=\"https://aclanthology.org/2023.eacl-main.278.pdf\">DiscoScore (EACL 2023)</a>",
+      "affects": "Affected by: logical consistency across page sections, paragraph-level factual alignment, discourse structure quality."
+    }
+  ],
+  "pipeline": {
+    "title": "Language Understanding Pipeline",
+    "stages": [
+      {
+        "name": "Query Encoding (BERT)",
+        "detail": "BERT bidirectionally encodes query tokens. Stop words, prepositions, negations now affect meaning"
+      },
+      {
+        "name": "Intent Classification",
+        "detail": "BERT-enhanced intent detection: informational, navigational, transactional, YMYL"
+      },
+      {
+        "name": "Retrieval (RankEmbed-BERT)",
+        "detail": "Dual encoder embeds query + docs into shared space. Dot product similarity for semantic retrieval"
+      },
+      {
+        "name": "Passage Identification",
+        "detail": "BERT identifies passage boundaries within long documents for section-level scoring"
+      },
+      {
+        "name": "DeepRank Re-ranking",
+        "detail": "Full cross-attention BERT scores top 20-30 docs. Produces neural relevance score"
+      },
+      {
+        "name": "Score Fusion",
+        "detail": "Neural scores combined with traditional signals (T*, Q*, P*). Both types improve results together"
+      },
+      {
+        "name": "MUM Features",
+        "detail": "MUM generates Things to Know, Refine/Broaden, crisis detection, AI Overview content"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2017",
+      "type": "patent",
+      "title": "Transformer Patent",
+      "desc": "US10452978 'Attention Is All You Need' - the foundation for BERT, MUM, and all modern LLMs. Filed by Shazeer, Vaswani et al."
+    },
+    {
+      "year": "2018",
+      "type": "patent",
+      "title": "BERT Published",
+      "desc": "BERT paper published. Bidirectional encoding enables understanding words in full context of sentence."
+    },
+    {
+      "year": "2019",
+      "type": "doj",
+      "title": "BERT Internal Impact (UPX0197, UPX0193)",
+      "desc": "Grushetsky email thread (Jan 2019): BERT 'abruptly subsumed essentially all preceding work' in WebAnswers. Lehman: 'a deep ML system will clearly outperform Google's 20-year accumulation of relevance algorithms.' BERT bullet points for Sundar: 'our training data gives us a nice head-start' over competitors. Matthew Gray: Search still used 'artisanal' systems while Ads already had end-to-end deep learning."
+    },
+    {
+      "year": "2019",
+      "type": "patent",
+      "title": "BERT in Search",
+      "desc": "BERT launched for Google Search (Oct 2019). Affects ~10% of English queries. Largest change to search in 5 years."
+    },
+    {
+      "year": "2020",
+      "type": "patent",
+      "title": "BERT Everywhere",
+      "desc": "BERT expanded to nearly every English query. Extended to 70+ languages. SMITH extends to 2048 tokens."
+    },
+    {
+      "year": "2021",
+      "type": "patent",
+      "title": "MUM Announced",
+      "desc": "MUM announced at Google I/O. 1,000x BERT. Multimodal (text+images), 75 languages, generative. First use: COVID vaccine search."
+    },
+    {
+      "year": "2023",
+      "type": "doj",
+      "title": "DOJ Reveals DeepRank",
+      "desc": "Nayak testifies DeepRank = BERT for ranking. Only runs on top 20-30 docs. Signals decomposable into traditional equivalents."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "RankEmbed-BERT Confirmed",
+      "desc": "API leak confirms RankEmbed-BERT as top-level signal alongside Q* and P*. 70-day training window. Dot product similarity."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "Mehta Opinion: MUM vs RankBERT (Aug 2024)",
+      "desc": "Judge Mehta's opinion (FOF 99): RankBERT 'exhibited fairly weak performance.' MUM 'achieved essentially human-level performance.' All ML ranking models (RankBrain, DeepRank, RankEmbed, RankBERT, MUM) are 'generalization' systems 'designed to fill holes in [click] data' (FOF 97). Older signals use up to 1 trillion examples; newer require only 1 billion (FOF 98). LaMDA/PaLM/PaLM2 were NOT built with user data (FOF 100). LLMs did NOT replace NavBoost/QBST (FOF 102)."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Public (2019+)",
+      "publicClaim": "\"BERT transforms how Google understands every query. Our AI deeply understands language and content.\"",
+      "internalSource": "DOJ Exhibit UPX0197 (Lehman, Jan 2019)",
+      "internalClaim": "Pre-BERT, Google relied on massive 'memorization systems' (NavBoost click data) 'much larger than any current ML model.' BERT's 'startling conclusion': 'huge amounts of user feedback can be largely replaced by unsupervised learning from raw text.' Google Search still used 'artisanal' hand-tuned systems while Ads already had end-to-end deep learning."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"Our competitive advantage comes from our advanced AI technology.\"",
+      "internalSource": "DOJ Exhibit UPX0193 (Bullet Points for Sundar)",
+      "internalClaim": "'Any competitor can use BERT or similar technologies. Fortunately, our training data gives us a nice head-start.' The advantage is data, not the model architecture. Google internally acknowledged BERT is open technology; their moat is proprietary training data."
+    },
+    {
+      "publicSource": "Google Defense (DOJ Trial)",
+      "publicClaim": "\"Developments in AI and LLMs have reduced the need for user data. Modern GSEs depend less on user data to improve quality and compete.\"",
+      "internalSource": "Mehta Liability Opinion (p.232)",
+      "internalClaim": "Court rejected this: 'Google continues to rely on large volumes of user data at every step of the search journey, and no witness, even from Google, testified that LLMs had sufficiently advanced to supplant user data.' Google still retains 18 months of user data because 'its value outweighs that cost.' ML ranking models (MUM, DeepRank) are 'generalization' systems 'designed to fill holes in [click] data,' not to replace it."
+    },
+    {
+      "publicSource": "Google Public (2019)",
+      "publicClaim": "\"BERT is our biggest leap in search in 5 years and represents our continued investment in AI research.\"",
+      "internalSource": "DOJ Trial Exhibits UPX0193 + UPX0197 (2019)",
+      "internalClaim": "Internally, BERT was seen as an existential threat, not just an advance. Lehman warned BERT 'abruptly subsumed essentially all preceding work' and could mean 'Google could similarly be beaten in relevance by another company.' BERT 'needs multiple orders of magnitude more hardware resources (mainly TPUs),' making it a costly defensive move, not a triumphant innovation. Grushetsky worried about team morale if staff learned their 'artisanal' work was being displaced."
+    }
+  ]
+}

@@ -1,0 +1,166 @@
+{
+  "id": "ymyl",
+  "route": "/ymyl",
+  "systems": [
+    "YMYL",
+    "NSR"
+  ],
+  "hero": {
+    "title": "YMYL: Your Money Your Life Quality Gates",
+    "subtitle": "YMYL (Your Money Your Life) is Google's classification system for topics that can impact a person's health, financial stability, safety, or well-being. Pages classified as YMYL face significantly higher quality thresholds. The system is not a single binary flag but a spectrum of topic-specific scores: ymylHealthScore for medical content, ymylNewsScore for news credibility, and the 'chard' authority signal for YMYL domains. These scores feed into Q* and NSR, meaning YMYL classification directly raises the quality bar a page must clear to rank."
+  },
+  "keyInsight": {
+    "label": "Key Insight from API Leak + DOJ Trial",
+    "text": "The API leak revealed YMYL is scored as a <strong>continuous value, not a binary flag</strong>. The <strong>ymylNewsV2Score</strong> (V2 indicates iterative refinement) and <strong>healthScore</strong> are computed within the NSR module, meaning YMYL quality assessment is baked into the site-level quality score itself. The DOJ trial confirmed the <strong>chard</strong> signal as a named YMYL authority component. Combined with the Q* 0.4 threshold (sites below 0.4 are ineligible for featured snippets), YMYL creates a two-layer gate: first, higher quality requirements for YMYL topics, then a hard cutoff for prominent SERP features."
+  },
+  "pillars": [
+    {
+      "type": "doj",
+      "title": "DOJ Trial Evidence",
+      "items": [
+        "<strong>ymylHealthScore</strong>: Health and medical content authority assessment. Pages on medical topics must demonstrate expertise and accuracy",
+        "<strong>ymylNewsScore</strong>: News topic authority and credibility assessment. News content on YMYL topics requires journalistic standards",
+        "<strong>chard</strong>: Named authority signal specifically for YMYL domains. Covers health, finance, and safety topics",
+        "<strong>Q* 0.4 threshold</strong>: Sites below 0.4 Q* are ineligible for featured snippets. YMYL content must clear higher Q* to rank prominently",
+        "<strong>ConsensusScore</strong>: For YMYL health queries, results heavily align with medical consensus. Debunking query classifier triggers consensus-only results"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "API Leak: NSR-Embedded YMYL Signals",
+      "items": [
+        "<strong>ymylNewsV2Score</strong> (QualityNsrNsrData): YMYL score for news content, V2 model. Computed within NSR pipeline, not standalone",
+        "<strong>healthScore</strong> (QualityNsrNsrData): Health-related content quality assessment. Core signal (isCore: true)",
+        "Both YMYL signals live in the <strong>NSR module</strong>, meaning they directly affect site-level quality scores",
+        "YMYL classification is a <strong>continuous score</strong>, not binary. Sites can be partially YMYL-relevant",
+        "NSR aggregates YMYL scores with other quality signals into a single site-level metric"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How YMYL Affects Rankings",
+      "items": [
+        "<strong>Higher quality bar</strong>: YMYL topics require demonstrably higher E-E-A-T signals than non-YMYL content",
+        "<strong>Medical consensus enforcement</strong>: Health queries trigger consensus-aligned results. Anti-consensus health content demoted",
+        "<strong>Financial accuracy</strong>: Finance content must demonstrate accuracy and authority. Generic financial advice penalized",
+        "<strong>News credibility</strong>: ymylNewsV2Score evaluates news source credibility on sensitive topics",
+        "<strong>Domain authority matters more</strong>: chard signal means established YMYL domains have structural advantages",
+        "<strong>Featured snippet gating</strong>: Q* 0.4 threshold is harder to clear for YMYL content due to higher quality requirements",
+        "<strong>Topic classification cascades</strong>: A page can trigger YMYL on health, finance, legal, or safety. Each has distinct scoring"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "Quality Classification Architecture",
+      "items": [
+        "YMYL classification feeds into <strong>NSR (Normalized Site Rank)</strong> as component scores",
+        "NSR combines YMYL scores with PageRank_NS, Panda, content quality, and user signals",
+        "NSR feeds into <strong>Q* (Quality Star)</strong>, the top-level quality signal",
+        "Q* combines with T* (Topicality) and P* (Popularity) for final ranking",
+        "YMYL topics are identified through <strong>query classification</strong> and <strong>content classification</strong> simultaneously",
+        "<strong>Opinion classification for YMYL content</strong> - Patent <a href=\"https://patents.google.com/patent/US10832001\">US10832001</a> (Google, filed 2018): ML model classifies document passages as opinion vs non-opinion (or author opinion vs reported opinion vs non-opinion). Uses RNN/CNN embeddings with lexicon-based features and metadata. Classification scores indicate confidence. Ranks passages by importance and context independence. Clusters documents by opinion patterns for diversity. Critical for YMYL: separates factual medical/financial claims from personal opinions"
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "YMYL Quality Gate",
+      "source": "DOJ+Leak",
+      "how": "YMYL content must pass a higher quality threshold than non-YMYL content. The system computes topic-specific scores (health, news, finance) that feed into NSR. NSR aggregates these into a site-level quality score that feeds Q*. For YMYL topics, the effective quality bar is raised, meaning sites need higher Q* scores to rank in comparable positions.",
+      "formula": "<span class=\"cf-fn\">YMYLGate</span>(page) =\n  <span class=\"cf-fn\">classify_topic</span>(<span class=\"cf-val\">content</span>) &rarr;\n  <span class=\"cf-fn\">compute</span>(\n    <span class=\"cf-val\">healthScore</span>,\n    <span class=\"cf-val\">ymylNewsV2Score</span>,\n    <span class=\"cf-val\">chard</span>\n  ) &rarr; <span class=\"cf-fn\">NSR</span> &rarr; <span class=\"cf-fn\">Q*</span>\n<span class=\"cf-comment\">// YMYL topics = higher Q* needed to rank</span>\n<span class=\"cf-comment\">// Q* < 0.4 = no featured snippets</span>",
+      "patents": "",
+      "affects": "Affected by: topic classification, domain authority, content accuracy, E-E-A-T signals, consensus alignment"
+    },
+    {
+      "name": "Health Content Scoring",
+      "source": "Leak+DOJ",
+      "how": "Medical and health content receives a dedicated healthScore computed within the NSR module. This score evaluates medical accuracy, source authority (medical institutions, licensed practitioners), and alignment with established medical consensus. The DebunkingQueryClassifier identifies health misinformation queries and forces consensus-only results.",
+      "formula": "<span class=\"cf-fn\">HealthScore</span>(page) =\n  <span class=\"cf-fn\">medical_authority</span>(<span class=\"cf-val\">domain</span>) *\n  <span class=\"cf-fn\">consensus_alignment</span>(<span class=\"cf-val\">content</span>) *\n  <span class=\"cf-fn\">expertise_signals</span>(<span class=\"cf-val\">author</span>, <span class=\"cf-val\">citations</span>)\n<span class=\"cf-comment\">// isCore: true (critical signal)</span>\n<span class=\"cf-comment\">// Debunking queries force consensus-only results</span>",
+      "patents": "",
+      "affects": "Affected by: medical source authority, consensus alignment, author credentials, citation quality"
+    },
+    {
+      "name": "YMYL News Credibility",
+      "source": "Leak",
+      "how": "News content on YMYL topics (elections, public health, financial markets) receives a ymylNewsV2Score computed within NSR. The V2 designation indicates this is an iteratively improved model. It evaluates journalistic standards, source reputation, editorial oversight, and factual accuracy on sensitive topics.",
+      "formula": "<span class=\"cf-fn\">YMYLNewsV2</span>(page) =\n  <span class=\"cf-fn\">source_reputation</span>(<span class=\"cf-val\">domain</span>) *\n  <span class=\"cf-fn\">editorial_quality</span>(<span class=\"cf-val\">content</span>) *\n  <span class=\"cf-fn\">factual_accuracy</span>(<span class=\"cf-val\">claims</span>)\n<span class=\"cf-comment\">// V2 = iteratively refined model</span>\n<span class=\"cf-comment\">// Computed within NSR module</span>",
+      "patents": "",
+      "affects": "Affected by: source reputation, editorial standards, factual accuracy, topic sensitivity"
+    },
+    {
+      "name": "Opinion Classification for YMYL",
+      "source": "Patent US10832001 (Google, 2018)",
+      "how": "ML model classifies document passages as opinion, reported opinion, or non-opinion using RNN/CNN embeddings with lexicon-based features and metadata. Classification scores indicate confidence level. System ranks passages by importance (classification confidence, context independence). Clusters documents by opinion patterns across corpus to ensure diversity. For YMYL topics, this separates factual medical/financial claims from personal opinions, enabling ConsensusScore to evaluate factual accuracy separately from subjective content.",
+      "formula": "<span class=\"cf-fn\">OpinionScore</span>(passage) = <span class=\"cf-fn\">classify</span>(\n  <span class=\"cf-fn\">embed</span>(<span class=\"cf-val\">passage</span>, <span class=\"cf-val\">RNN/CNN</span>),\n  <span class=\"cf-val\">lexicon_features</span>,\n  <span class=\"cf-val\">metadata</span>\n)\n<span class=\"cf-comment\">// Output: author_opinion | reported_opinion | non_opinion</span>\n<span class=\"cf-comment\">// Confidence score per classification</span>\n\n<span class=\"cf-fn\">Importance</span>(passage) = <span class=\"cf-fn\">f</span>(\n  <span class=\"cf-val\">confidence</span>,\n  <span class=\"cf-val\">context_independence</span>\n)\n<span class=\"cf-comment\">// YMYL: opinions separated from factual claims</span>\n<span class=\"cf-comment\">// enables ConsensusScore on factual content only</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US10832001\">US10832001</a> (Machine learning to identify opinions, 2018)",
+      "affects": "Affected by: passage writing style (subjective vs objective language), lexicon features, document metadata. Critical for YMYL: personal health opinions deprioritized vs medical consensus."
+    }
+  ],
+  "pipeline": {
+    "title": "YMYL Classification Pipeline",
+    "stages": [
+      {
+        "name": "Topic Classification",
+        "detail": "Query and content classified into YMYL categories: health, finance, legal, safety, news"
+      },
+      {
+        "name": "Domain Authority Check",
+        "detail": "chard signal evaluates domain-level YMYL authority. Medical sites, financial institutions, government sources scored"
+      },
+      {
+        "name": "Content Quality Scoring",
+        "detail": "healthScore and ymylNewsV2Score computed per page within NSR module"
+      },
+      {
+        "name": "Consensus Evaluation",
+        "detail": "For health/science topics, ConsensusScore measures alignment with established knowledge"
+      },
+      {
+        "name": "NSR Integration",
+        "detail": "YMYL scores integrated into Normalized Site Rank alongside PageRank_NS, Panda, user signals"
+      },
+      {
+        "name": "Q* Gating",
+        "detail": "Higher effective Q* threshold for YMYL content. Below 0.4 = no featured snippets or rich results"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2014",
+      "type": "patent",
+      "title": "YMYL Concept Introduced",
+      "desc": "Google's Search Quality Evaluator Guidelines first define YMYL as a quality classification for sensitive topics."
+    },
+    {
+      "year": "2018",
+      "type": "patent",
+      "title": "Medic Update",
+      "desc": "August 2018 core update heavily impacts YMYL health sites. E-A-T becomes critical for medical content ranking."
+    },
+    {
+      "year": "2018",
+      "type": "patent",
+      "title": "Opinion Classification Patent (US10832001)",
+      "desc": "Google patents ML-based opinion vs non-opinion classification for document passages. RNN/CNN embeddings with lexicon features. Multi-class: author opinion, reported opinion, non-opinion. Critical for YMYL: separates personal health/financial opinions from factual claims."
+    },
+    {
+      "year": "2022",
+      "type": "patent",
+      "title": "E-E-A-T Added",
+      "desc": "Experience added to E-A-T framework. YMYL evaluation now considers first-hand experience alongside expertise."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "YMYL Signals Exposed",
+      "desc": "API leak reveals ymylNewsV2Score and healthScore within NSR module. YMYL is continuous, not binary."
+    },
+    {
+      "year": "2025",
+      "type": "doj",
+      "title": "chard + Thresholds",
+      "desc": "DOJ trial reveals chard authority signal for YMYL domains and Q* 0.4 threshold for featured snippet eligibility."
+    }
+  ]
+}

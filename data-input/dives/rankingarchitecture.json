@@ -1,0 +1,172 @@
+{
+  "id": "rankingarchitecture",
+  "route": "/rankingarchitecture",
+  "systems": [
+    "RankingArchitecture",
+    "Mustang",
+    "SuperRoot",
+    "Twiddlers"
+  ],
+  "hero": {
+    "title": "RankingArchitecture: Google's Ranking Orchestration Framework",
+    "subtitle": "RankingArchitecture is the meta-framework that coordinates how Google's ranking systems work together. It manages the flow between Mustang (retrieval), Ascorer (scoring), Twiddlers (re-ranking), and SuperRoot (orchestration), ensuring ~1,700 ranking signals are applied in the correct order across multiple scoring phases. Known exclusively through DOJ sworn testimony with 5 confirmed signals and zero patents or leak evidence, RankingArchitecture is the blueprint that defines which systems run, when they run, and how their outputs combine into final rankings."
+  },
+  "keyInsight": {
+    "label": "Key Insight from DOJ Trial",
+    "text": "RankingArchitecture is not a single algorithm but the <strong>coordination layer</strong> that determines how Google's ranking pipeline operates. Witnesses Pandu Nayak and HJ Kim described a multi-phase scoring system where documents pass through retrieval (Mustang), initial scoring (Ascorer with ~1,700 signals), re-ranking (Twiddlers), and final assembly (Tangram). RankingArchitecture governs the <strong>order of operations</strong>, signal dependencies, and phase transitions. This means no single signal operates in isolation: every ranking factor's impact depends on where in the pipeline it is applied and what other signals have already modified the score."
+  },
+  "pillars": [
+    {
+      "type": "doj",
+      "title": "DOJ Trial: Sworn Testimony",
+      "items": [
+        "<strong>Multi-phase scoring pipeline</strong>: Documents pass through distinct phases: retrieval (Mustang), scoring (Ascorer), re-ranking (Twiddlers), assembly (Tangram). Each phase applies different signal subsets. Confirmed by Pandu Nayak.",
+        "<strong>~1,700 ranking signals</strong>: The total signal count orchestrated across all phases. Not all signals apply to every document or query. Signal selection depends on query classification and document type.",
+        "<strong>Mustang/Twiddlers coordination</strong>: Mustang retrieves candidates, Ascorer scores them, then Twiddlers apply post-scoring adjustments (NavBoost, freshness, diversity). RankingArchitecture defines the handoff between these stages.",
+        "<strong>SuperRoot as execution layer</strong>: SuperRoot routes queries through the pipeline defined by RankingArchitecture. It handles parallel processing, timeout management, and fallback logic.",
+        "<strong>HJ Kim testimony</strong>: Confirmed that ranking signals have dependencies and ordering constraints. Some signals (like NavBoost) are applied as Twiddler adjustments AFTER initial scoring, not during it."
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "Related Leak Evidence",
+      "items": [
+        "No direct RankingArchitecture signals in the API leak, but the systems it orchestrates are well-documented:",
+        "<strong>Ascorer signals</strong>: The leak confirmed hundreds of individual scoring signals in CompositeDoc, CompressedQualitySignals, and PerDocData modules, all organized in the pipeline RankingArchitecture defines.",
+        "<strong>Twiddler signals</strong>: NavBoost, freshness boosters, and diversity adjustments confirmed as post-scoring modifications, consistent with the multi-phase architecture described in DOJ testimony.",
+        "<strong>SuperRoot</strong>: Query routing and orchestration layer confirmed in leak. Manages the execution order RankingArchitecture specifies."
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "12 Patents",
+      "items": [
+        "PageRank: original link-based document scoring (<a href=\"https://patents.google.com/patent/US6799176\">US6799176</a>), importance rank via steady-state probability (<a href=\"https://patents.google.com/patent/US7269587\">US7269587</a>)",
+        "Scoring models: ranking model trained on large click dataset (<a href=\"https://patents.google.com/patent/US7231399\">US7231399</a>), site quality score via navigational query ratio (<a href=\"https://patents.google.com/patent/US9031929\">US9031929</a>), index selection via document utility score (<a href=\"https://patents.google.com/patent/US8554759\">US8554759</a>)",
+        "Document scoring: historical data for document age/freshness scoring (<a href=\"https://patents.google.com/patent/US7346839\">US7346839</a>), ranking by reference context and rare words (<a href=\"https://patents.google.com/patent/US8577893\">US8577893</a>), news source quality ranking (<a href=\"https://patents.google.com/patent/US7577655\">US7577655</a>)",
+        "Anchor and crawler: anchor text as search result context (<a href=\"https://patents.google.com/patent/US8458207\">US8458207</a>), anchor tag indexing in web crawler (<a href=\"https://patents.google.com/patent/US7308643\">US7308643</a>), cross-language query translation via anchor text (<a href=\"https://patents.google.com/patent/US7146358\">US7146358</a>), sitemap-based crawler scheduler (<a href=\"https://patents.google.com/patent/US8037054\">US8037054</a>)"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Pipeline Architecture Affects Your Rankings",
+      "items": [
+        "<strong>Phase-specific optimization</strong>: Understand that retrieval (getting into the candidate set) and scoring (ranking within it) are separate problems. You must pass Mustang's retrieval filters BEFORE any quality signals matter.",
+        "<strong>Signal stacking compounds</strong>: Because ~1,700 signals are applied across phases, no single optimization dominates. Sites that score well across multiple signal categories (quality, relevance, engagement, authority) benefit from compounding effects.",
+        "<strong>Twiddler adjustments are decisive</strong>: NavBoost and other Twiddler adjustments happen AFTER initial scoring. This means user engagement data can override pure content quality scores. Optimizing for click-through and satisfaction metrics matters.",
+        "<strong>Query classification gates features</strong>: RankingArchitecture routes queries through different signal configurations based on query type. Informational queries emphasize content depth; navigational queries emphasize brand signals; transactional queries emphasize commercial intent matching.",
+        "<strong>Timeout sensitivity</strong>: SuperRoot enforces latency budgets. Pages that are slow to render or require extensive processing may not get full signal evaluation. Site speed indirectly affects how many signals are applied to your pages.",
+        "<strong>Freshness has its own phase</strong>: Time-sensitive content benefits from freshness Twiddlers applied after initial scoring. For trending topics, publishing speed matters because freshness adjustments can override static quality scores."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Multi-Phase Scoring Pipeline",
+      "source": "DOJ (Pandu Nayak, HJ Kim)",
+      "how": "RankingArchitecture defines a sequential pipeline where documents are progressively filtered and re-scored. Each phase applies a subset of the ~1,700 total signals. Early phases are computationally cheaper (broad filters), later phases are expensive (deep ML models). This tiered approach lets Google evaluate billions of pages efficiently.",
+      "formula": "<span class=\"cf-fn\">FinalRank</span>(doc, query) =\n  <span class=\"cf-fn\">Twiddlers</span>(\n    <span class=\"cf-fn\">Ascorer</span>(\n      <span class=\"cf-fn\">Mustang</span>(query, index),\n      <span class=\"cf-val\">signals[1..1700]</span>\n    ),\n    <span class=\"cf-val\">NavBoost</span>, <span class=\"cf-val\">freshness</span>, <span class=\"cf-val\">diversity</span>\n  )\n<span class=\"cf-comment\">// Phase 1: Mustang retrieves candidates</span>\n<span class=\"cf-comment\">// Phase 2: Ascorer scores with ~1,700 signals</span>\n<span class=\"cf-comment\">// Phase 3: Twiddlers apply post-scoring adjustments</span>\n<span class=\"cf-comment\">// Phase 4: Tangram assembles SERP layout</span>",
+      "patents": "",
+      "affects": "Affected by: query type classification, document eligibility at each phase, latency budget, signal dependencies across phases"
+    },
+    {
+      "name": "Signal Orchestration",
+      "source": "DOJ",
+      "how": "Not all ~1,700 signals are applied to every query-document pair. RankingArchitecture determines which signals are active based on query classification (navigational, informational, transactional, local), document type, and available data. Some signals are gated by quality thresholds: for example, Q* below 0.4 blocks featured snippet eligibility before snippet-specific signals are even evaluated.",
+      "formula": "<span class=\"cf-fn\">activeSignals</span>(query, doc) =\n  <span class=\"cf-fn\">select</span>(\n    <span class=\"cf-val\">allSignals[1..1700]</span>,\n    <span class=\"cf-val\">queryClass</span>,\n    <span class=\"cf-val\">docType</span>,\n    <span class=\"cf-val\">qualityGates</span>\n  )\n<span class=\"cf-comment\">// Not all signals apply to every query-doc pair</span>\n<span class=\"cf-comment\">// Query classification determines signal subset</span>\n<span class=\"cf-comment\">// Quality gates can block downstream signals</span>",
+      "patents": "",
+      "affects": "Affected by: query intent, document metadata, quality score thresholds, device type, geographic context"
+    },
+    {
+      "name": "PageRank",
+      "source": "Patent",
+      "how": "The foundational link-based scoring algorithm. Computes a steady-state probability distribution over web pages based on link structure. A page's score is the probability that a random surfer following links would land on it. Original PageRank (US6799176, Larry Page 1998) treats each inbound link as a vote weighted by the linking page's own score. The importance rank variant (US7269587) extends this with steady-state probability computation across the full web graph.",
+      "formula": "<span class=\"cf-fn\">PageRank</span>(p) = (1-d)/N + d &times; &Sigma;\n<span class=\"cf-fn\">PageRank</span>(q) / <span class=\"cf-val\">outlinks</span>(q)\n<span class=\"cf-comment\">// d = damping factor (~0.85)</span>\n<span class=\"cf-comment\">// iterative computation until convergence</span>\n<span class=\"cf-comment\">// evolved into PageRankNS in modern pipeline</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US6799176\">US6799176</a> (PageRank, Larry Page 1998), <a href=\"https://patents.google.com/patent/US7269587\">US7269587</a> (importance rank via steady-state probability)",
+      "affects": "Affected by: inbound link quantity and quality. Links from high-PageRank pages pass more value. The modern PageRankNS signal in Ascorer builds on this foundation."
+    },
+    {
+      "name": "Click Prior Model",
+      "source": "Patent",
+      "how": "Trains ranking models from massive click log datasets. The 'click prior' captures the baseline probability that a page satisfies a query based on historical click patterns. At Google's scale, even rare queries have thousands of click observations. The model produces a prior ranking that is combined with content-based signals in the scoring pipeline.",
+      "formula": "<span class=\"cf-fn\">clickPrior</span>(q, d) = <span class=\"cf-fn\">P</span>(click | q, d)\n  trained on <span class=\"cf-val\">large_dataset</span>[clicks]\n<span class=\"cf-fn\">rankScore</span> = &alpha; &times; <span class=\"cf-val\">clickPrior</span> + (1-&alpha;) &times; <span class=\"cf-val\">contentScore</span>\n<span class=\"cf-comment\">// prior from click logs + content-based signals</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US7231399\">US7231399</a> (ranking model from large click dataset)",
+      "affects": "Affected by: historical click volume, click quality, query-document pair frequency. Pages with strong click history benefit from the prior."
+    },
+    {
+      "name": "Historical Data Scoring",
+      "source": "Patent",
+      "how": "Uses document age and change patterns to adjust ranking scores. Tracks document inception date, update frequency, content change magnitude, and link growth rate over time. Documents that are consistently updated score differently than stale pages. Freshness is not just recency but the pattern of change history.",
+      "formula": "<span class=\"cf-fn\">historicalScore</span>(doc) = f(\n<span class=\"cf-val\">inception_date</span>, <span class=\"cf-val\">update_freq</span>,\n<span class=\"cf-val\">content_change_rate</span>, <span class=\"cf-val\">link_growth</span>\n)  <span class=\"cf-comment\">// pattern of change, not just recency</span>\n<span class=\"cf-comment\">// consistently updated > stale or erratic</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US7346839\">US7346839</a> (historical data for document scoring)",
+      "affects": "Affected by: document age, update patterns, content change magnitude, link acquisition velocity. Consistent publishing cadence signals quality."
+    }
+  ],
+  "pipeline": {
+    "title": "RankingArchitecture: Full Pipeline Flow",
+    "stages": [
+      {
+        "name": "Query Understanding",
+        "detail": "Query classified by intent, topic, language, location. Classification determines which signal configuration RankingArchitecture activates for subsequent phases."
+      },
+      {
+        "name": "Mustang Retrieval",
+        "detail": "Initial candidate retrieval from TeraGoogle index. T* (Topicality) and basic relevance filters applied. Thousands of candidates selected from billions of indexed pages."
+      },
+      {
+        "name": "Ascorer Scoring",
+        "detail": "Core scoring phase applying the bulk of ~1,700 signals. Quality signals (Q*, NSR, Panda), relevance signals (BERT/MUM), authority signals (PageRankNS, siteAuthority) combined into composite score."
+      },
+      {
+        "name": "Twiddler Adjustments",
+        "detail": "Post-scoring modifications: NavBoost engagement data, freshness boosts, diversity requirements, YMYL safety checks. These adjustments can significantly reorder the Ascorer output."
+      },
+      {
+        "name": "Tangram Assembly",
+        "detail": "Final SERP layout assembled from ranked results. SERP features (snippets, Knowledge Panel, PAA, images) positioned. Device-specific layouts generated."
+      },
+      {
+        "name": "GWS Delivery",
+        "detail": "Google Web Server renders and delivers the assembled SERP to the user within the latency budget SuperRoot enforces."
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "1998",
+      "type": "patent",
+      "title": "PageRank Patent Filed (US6799176)",
+      "desc": "Larry Page files the foundational PageRank patent: ranking documents by link-based steady-state probability. The algorithm that launched Google Search and remains the ancestor of modern PageRankNS."
+    },
+    {
+      "year": "2005",
+      "type": "patent",
+      "title": "Click Prior Model (US7231399)",
+      "desc": "Patent on training ranking models from massive click log datasets. Establishes the click prior as a core scoring component, combining historical click probability with content-based signals."
+    },
+    {
+      "year": "~2010",
+      "type": "patent",
+      "title": "Early Pipeline Architecture",
+      "desc": "Google's ranking system evolves from single-phase scoring to multi-phase pipeline. Mustang introduced as the core retrieval and scoring engine."
+    },
+    {
+      "year": "~2015",
+      "type": "patent",
+      "title": "Twiddler Framework Added",
+      "desc": "Post-scoring adjustment layer formalized. Individual engineers can deploy Twiddlers to modify ranking behavior without changing core scoring."
+    },
+    {
+      "year": "~2019",
+      "type": "patent",
+      "title": "SuperRoot Orchestration",
+      "desc": "SuperRoot unified as the orchestration layer managing query routing, parallel processing, and timeout enforcement across the pipeline."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "DOJ Trial: Pipeline Revealed",
+      "desc": "Pandu Nayak and HJ Kim describe the full ranking pipeline under oath. ~1,700 signals confirmed. Multi-phase architecture with Mustang, Ascorer, Twiddlers, and Tangram detailed."
+    }
+  ]
+}

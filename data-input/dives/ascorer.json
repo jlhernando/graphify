@@ -1,0 +1,160 @@
+{
+  "id": "ascorer",
+  "route": "/ascorer",
+  "systems": [
+    "Ascorer"
+  ],
+  "hero": {
+    "title": "Ascorer: The Primary Ranking Algorithm",
+    "subtitle": "Ascorer is Google's primary ranking algorithm that runs before twiddler adjustments. It is the system that combines T* (Topicality), Q* (Quality), and P* (Popularity) into a single ranking score for each document. The API leak confirmed Ascorer as a named module in the Content Warehouse API. Ascorer's output determines the initial ordering of search results before Predoc Twiddlers, ML re-ranking (DeepRank, RankEmbed, RankBrain), and Lazy Twiddlers make their adjustments."
+  },
+  "keyInsight": {
+    "label": "Key Insight from API Leak",
+    "text": "The API leak confirmed Ascorer as a <strong>named, standalone ranking module</strong>, not just an abstract scoring function. Its description reads: <strong>'primary rankings algorithm before re-ranking adjustments (twiddlers).'</strong> This means Ascorer produces the <strong>initial ranking order</strong> that the entire re-ranking pipeline then modifies. Every twiddler, every ML re-ranker, every lazy adjustment operates on Ascorer's output. It is the foundation score. Without Ascorer, there would be no initial ordering to refine."
+  },
+  "pillars": [
+    {
+      "type": "leak",
+      "title": "API Leak: Ascorer Module",
+      "items": [
+        "<strong>Ascorer</strong>: Named module in Content Warehouse API. 'Primary rankings algorithm before re-ranking adjustments'",
+        "Ascorer is the <strong>first full scoring pass</strong> after Mustang retrieval",
+        "Output feeds directly into <strong>Predoc Twiddlers</strong> (several hundred URL adjustments)",
+        "Ascorer score is the <strong>baseline</strong> that all subsequent re-rankers modify",
+        "Tagged as isCore: true, ml-ranking subcategory"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "Ranking Architecture Context",
+      "items": [
+        "Ascorer combines the <strong>three pillar signals</strong>: T* (Topicality), Q* (Quality), P* (Popularity)",
+        "T* provides <strong>query-dependent relevance</strong> (Anchors + Body + Clicks)",
+        "Q* provides <strong>site/page quality</strong> (PageRank, Panda, NSR, content quality signals)",
+        "P* provides <strong>popularity/engagement</strong> (NavBoost clicks, Chrome data, link metrics)",
+        "The combination formula is <strong>not publicly known</strong>, but all three are confirmed as inputs",
+        "Nayak: Google uses 'maybe over a hundred' signals. Ascorer likely combines many sub-signals beyond T*/Q*/P*"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Ascorer Affects Rankings",
+      "items": [
+        "<strong>Ascorer determines initial order</strong>: All subsequent systems can only adjust, not replace, Ascorer's ranking",
+        "<strong>All three pillars must be strong</strong>: High T* with low Q* or P* still produces a poor Ascorer score",
+        "<strong>Twiddlers can only adjust so much</strong>: Predoc and Lazy Twiddlers make refinements, but the foundation matters",
+        "<strong>ML re-rankers operate on Ascorer output</strong>: DeepRank and RankEmbed score the top 200-300 documents from Ascorer",
+        "<strong>No single signal dominates</strong>: Nayak confirmed Google uses many signals. No single input to Ascorer can override others",
+        "<strong>Position in the pipeline matters</strong>: Ascorer runs early. Early mistakes propagate through the entire pipeline"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "Pipeline Position",
+      "items": [
+        "Pipeline: Mustang retrieval > <strong>Ascorer</strong> > Predoc Twiddlers > ML Scoring > NavBoost > Lazy Twiddlers > Tangram",
+        "Ascorer processes <strong>~10K candidate documents</strong> from Mustang retrieval",
+        "Output narrowed by Predoc Twiddlers to <strong>several hundred</strong>",
+        "ML systems (RankBrain, DeepRank, RankEmbed) score <strong>top 200-300</strong>",
+        "Lazy Twiddlers make final adjustments on <strong>top 20-30</strong> results",
+        "<strong>Scoring function evaluation framework</strong> - Patent <a href=\"https://patents.google.com/patent/US8060497\">US8060497</a> (Zatsman, Haahr, Cutts, Wu, filed 2009): A/B testing framework for ranking functions. Pair-wise comparisons with diversity-based selection. Score(i) = (2*wins + draws) / (2*trials). Uses probabilistic ranking via cumulative normal distribution. Karma tracking prevents spam evaluations. Authors include Paul Haahr and Matt Cutts",
+        "<strong>Adaptive ranking computation</strong> - Patent <a href=\"https://patents.google.com/patent/US7028029\">US7028029</a> (Kamvar, Haveliwala, Golub, filed 2004): Optimizes PageRank iteration by identifying converged nodes and removing them from subsequent passes. Matrix transformation: A = (c(P+D) + (1-c)E)^T. Achieves 50-70% reduction in computation cost. Enables practical PageRank computation at web scale"
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Ascorer Composite Score",
+      "source": "Leak+DOJ",
+      "how": "Ascorer combines the three top-level signals (T*, Q*, P*) along with additional component signals into a single ranking score per document. The exact combination formula is unknown, but all three pillars are confirmed inputs. The output is a numeric score that determines initial document ordering before any re-ranking.",
+      "formula": "<span class=\"cf-fn\">Ascorer</span>(query, doc) = <span class=\"cf-fn\">combine</span>(\n  <span class=\"cf-fn\">T*</span>(<span class=\"cf-val\">query</span>, <span class=\"cf-val\">doc</span>),\n  <span class=\"cf-fn\">Q*</span>(<span class=\"cf-val\">doc</span>),\n  <span class=\"cf-fn\">P*</span>(<span class=\"cf-val\">doc</span>),\n  <span class=\"cf-val\">additional_signals...</span>\n) &rarr; <span class=\"cf-val\">initial_rank_score</span>\n<span class=\"cf-comment\">// 'Primary rankings algorithm before re-ranking'</span>\n<span class=\"cf-comment\">// ~10K docs scored, output feeds entire pipeline</span>",
+      "patents": "",
+      "affects": "Affected by: T* (ABC framework), Q* (quality signals), P* (popularity/engagement), all component signals"
+    },
+    {
+      "name": "Pipeline Score Evolution",
+      "source": "DOJ",
+      "how": "A document's score evolves through the pipeline. Ascorer sets the initial score. Predoc Twiddlers make early adjustments (100+ functions). ML systems add neural ranking adjustments. NavBoost re-ranks based on click data. Lazy Twiddlers make final refinements. The final score can differ significantly from Ascorer's initial score, but Ascorer determines which documents enter the pipeline at all.",
+      "formula": "<span class=\"cf-val\">score</span> = <span class=\"cf-fn\">Ascorer</span>(<span class=\"cf-val\">query</span>, <span class=\"cf-val\">doc</span>)\n  &rarr; <span class=\"cf-fn\">PredocTwiddlers</span>(<span class=\"cf-val\">score</span>)\n  &rarr; <span class=\"cf-fn\">RankBrain</span>(<span class=\"cf-val\">score</span>)\n  &rarr; <span class=\"cf-fn\">DeepRank</span>(<span class=\"cf-val\">score</span>)\n  &rarr; <span class=\"cf-fn\">NavBoost</span>(<span class=\"cf-val\">score</span>)\n  &rarr; <span class=\"cf-fn\">LazyTwiddlers</span>(<span class=\"cf-val\">score</span>)\n  &rarr; <span class=\"cf-val\">final_position</span>",
+      "patents": "",
+      "affects": "Affected by: each pipeline stage can modify the score. Early Ascorer score determines pipeline entry"
+    }
+  ],
+  "pipeline": {
+    "title": "Ascorer in the Ranking Pipeline",
+    "stages": [
+      {
+        "name": "Mustang Retrieval",
+        "detail": "~10K candidate documents retrieved from 400B+ index based on query matching"
+      },
+      {
+        "name": "Ascorer Scoring",
+        "detail": "T* + Q* + P* combined into initial ranking score for all ~10K candidates"
+      },
+      {
+        "name": "Predoc Twiddlers",
+        "detail": "100+ adjustment functions process several hundred top URLs. Site diversity, freshness, spam filters"
+      },
+      {
+        "name": "ML Re-ranking",
+        "detail": "RankBrain (all queries), DeepRank (top 200-300), RankEmbed adjust scores using neural models"
+      },
+      {
+        "name": "NavBoost Re-ranking",
+        "detail": "Click data from 13-month window adjusts rankings based on real user behavior"
+      },
+      {
+        "name": "Lazy Twiddlers",
+        "detail": "Final adjustments on top 20-30 results. Last chance for quality/diversity enforcement"
+      },
+      {
+        "name": "Tangram Assembly",
+        "detail": "Final SERP layout with featured snippets, knowledge panels, ads, organic results"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "1998",
+      "type": "patent",
+      "title": "PageRank + TF-IDF",
+      "desc": "Original Google scoring: combine link authority (PageRank) with term relevance (TF-IDF). The first 'Ascorer' was simple."
+    },
+    {
+      "year": "2004",
+      "type": "patent",
+      "title": "Adaptive PageRank Computation (US7028029)",
+      "desc": "Kamvar, Haveliwala, Golub patent iterative PageRank optimization. Identifies converged nodes and removes them from computation. 50-70% reduction in cost enables web-scale ranking."
+    },
+    {
+      "year": "2009",
+      "type": "patent",
+      "title": "Scoring Function Framework (US8060497)",
+      "desc": "Haahr, Cutts, Zatsman, Wu patent A/B testing framework for ranking functions. Pair-wise comparisons scored by (2*wins + draws) / (2*trials). Diversity-based function selection with karma tracking. Infrastructure for continuous ranking improvement."
+    },
+    {
+      "year": "2015",
+      "type": "patent",
+      "title": "ML Integration",
+      "desc": "RankBrain added as first ML component. Ascorer now combines traditional signals with neural network scores."
+    },
+    {
+      "year": "2019",
+      "type": "patent",
+      "title": "DeepRank Layer",
+      "desc": "BERT/DeepRank added. Ascorer's output now feeds a deeper ML re-ranking stage for top documents."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "Ascorer Named in API",
+      "desc": "Content Warehouse API leak confirms Ascorer as named module: 'primary rankings algorithm before re-ranking adjustments.'"
+    },
+    {
+      "year": "2025",
+      "type": "doj",
+      "title": "Three Pillars Confirmed",
+      "desc": "DOJ trial confirms T*, Q*, P* as inputs. Nayak testifies on pipeline: 'maybe over a hundred' signals combined."
+    }
+  ]
+}

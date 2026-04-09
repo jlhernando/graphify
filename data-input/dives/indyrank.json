@@ -1,0 +1,138 @@
+{
+  "id": "indyrank",
+  "route": "/indyrank",
+  "systems": [
+    "IndyRank",
+    "PageRank",
+    "SpamBrain",
+    "NSR"
+  ],
+  "hero": {
+    "title": "IndyRank: Link Independence Scoring",
+    "subtitle": "IndyRank measures how independently a page's backlinks were created. Rather than counting total links, it evaluates whether linking sites discovered the page independently or through a coordinated network. A page linked by 50 unrelated sites across different industries scores higher than one linked by 500 sites in the same private blog network. The API leak revealed four variants operating at different scales: raw IndyRank on CompositeDoc, ScaledIndyRank in NSR (site-level), and two experimental versions (ScaledExptIndyRank2/3) in PerDocData. This directly feeds Q* quality scoring and SpamBrain spam detection."
+  },
+  "keyInsight": {
+    "label": "Key Insight from API Leak",
+    "text": "The 2024 API leak revealed <strong>four IndyRank variants</strong> operating at different granularities. The core <strong>IndyRank</strong> signal (CompositeDoc, Tier 1) measures per-document link independence with 65/100 corroboration across 5 patents. <strong>ScaledIndyRank</strong> (QualityNsrNsrData) operates at the site level through NSR, meaning your domain's overall link independence profile affects every page. Two experimental variants, <strong>ScaledExptIndyRank2</strong> and <strong>ScaledExptIndyRank3</strong> (both PerDocData), suggest Google is actively refining the algorithm. IndyRank is related to PageRank, Q*, SpamBrain, NSR, and Anchors, making it a cross-cutting quality signal that touches multiple ranking pillars."
+  },
+  "pillars": [
+    {
+      "type": "patent",
+      "title": "Patent Evidence",
+      "items": [
+        "Patent <a href=\"https://patents.google.com/patent/US7024451\">US7024451</a>: <strong>Maintaining consistent independent server-side state</strong> - Foundation for computing independence metrics across distributed link graph",
+        "Patent <a href=\"https://patents.google.com/patent/US7958128\">US7958128</a>: <strong>Link independence measurement</strong> - Scoring how independently different linking domains discovered a target page",
+        "5 patents total confirmed via API leak cross-reference. IndyRank operates alongside PageRank_NS (seed distance) as complementary link quality metrics",
+        "The independence model shares mathematical foundations with TrustRank (US7603350): both evaluate link graph topology rather than raw volume"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "API Leak: Four IndyRank Variants",
+      "items": [
+        "<strong>IndyRank</strong> (CompositeDoc): Core per-document link independence score. Tier 1 trust, 65/100 corroboration",
+        "<strong>ScaledIndyRank</strong> (QualityNsrNsrData): Site-level independence via NSR. Domain-wide backlink independence affects all pages",
+        "<strong>ScaledExptIndyRank2</strong> (PerDocData): Experimental variant 2 - per-document with alternate scaling. 16/100 corroboration (in testing)",
+        "<strong>ScaledExptIndyRank3</strong> (PerDocData): Experimental variant 3 - per-document with alternate scaling. 16/100 corroboration (in testing)",
+        "All four variants confirmed as real signals. The 'Scaled' prefix suggests normalization across different site sizes",
+        "IndyRank is categorized under <strong>link-authority</strong>, confirming it directly affects authority scoring"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "Related DOJ Evidence",
+      "items": [
+        "No direct DOJ testimony names 'IndyRank' explicitly, but the concept of link independence is supported by multiple trial themes",
+        "<strong>Pandu Nayak</strong> testified that Google uses sophisticated link quality evaluation beyond simple counting",
+        "<strong>HJ Kim</strong> confirmed that link signals are one of three pillars (Anchors in T* = Anchors + Body + Clicks)",
+        "DOJ evidence on <strong>SpamBrain</strong> shows link manipulation detection, which IndyRank directly supports by identifying non-independent link patterns"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Link Independence Affects Rankings",
+      "items": [
+        "<strong>Diversity beats volume</strong>: 50 independent editorial links from unrelated sites > 500 links from a coordinated network",
+        "<strong>Industry cross-pollination</strong>: Links from sites in different verticals signal genuine value, not reciprocal arrangements",
+        "<strong>Domain-level impact via NSR</strong>: ScaledIndyRank in QualityNsrNsrData means your site's overall link independence affects every page's quality score",
+        "<strong>PBNs are detectable</strong>: Private blog networks create non-independent link patterns that IndyRank is designed to identify",
+        "<strong>Natural editorial links win</strong>: Content that earns links from journalists, researchers, and bloggers who discovered it independently scores highest",
+        "<strong>Link building strategy</strong>: Focus on creating genuinely useful content that different communities link to for different reasons",
+        "<strong>Experimental variants suggest evolution</strong>: ScaledExptIndyRank2/3 indicate Google is actively refining independence measurement"
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "IndyRank Independence Score",
+      "source": "Leak",
+      "how": "IndyRank evaluates the independence of a page's backlink profile. Rather than counting links, it measures whether linking domains discovered the target independently or through shared pathways (e.g., the same link list, the same PBN, the same guest post exchange). High independence = high IndyRank.",
+      "formula": "<span class=\"cf-fn\">IndyRank</span>(doc) = <span class=\"cf-fn\">independence</span>(\n  <span class=\"cf-val\">linking_domains</span>(doc),\n  <span class=\"cf-fn\">graph_connectivity</span>(<span class=\"cf-val\">linking_domains</span>)\n)\n<span class=\"cf-comment\">// High: diverse, unrelated linking domains</span>\n<span class=\"cf-comment\">// Low: clustered, interconnected link sources</span>\n<span class=\"cf-comment\">// Feeds into Q* and SpamBrain scoring</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US7024451\">US7024451</a>, <a href=\"https://patents.google.com/patent/US7958128\">US7958128</a>",
+      "affects": "Affected by: diversity of linking domains, cross-industry link sources, absence of reciprocal patterns, editorial nature of links"
+    },
+    {
+      "name": "ScaledIndyRank (Site-Level)",
+      "source": "Leak",
+      "how": "ScaledIndyRank normalizes the independence score at the site level via NSR (Normalized Site Rank). This means a domain with mostly independent, editorial backlinks will have all its pages benefit from a higher baseline quality score. Conversely, a domain with coordinated or purchased link patterns will see a site-wide quality penalty.",
+      "formula": "<span class=\"cf-fn\">ScaledIndyRank</span>(site) =\n  <span class=\"cf-fn\">normalize</span>(\n    <span class=\"cf-fn\">IndyRank</span>(<span class=\"cf-val\">aggregate_links</span>(site)),\n    <span class=\"cf-val\">site_size</span>\n  )\n<span class=\"cf-comment\">// Normalized for site size (small sites vs large)</span>\n<span class=\"cf-comment\">// Feeds into NSR quality evaluation</span>\n<span class=\"cf-comment\">// Affects Q* site-wide quality score</span>",
+      "patents": "",
+      "affects": "Affected by: domain-wide link profile diversity, site size normalization, NSR quality pipeline"
+    }
+  ],
+  "pipeline": {
+    "title": "IndyRank Processing Pipeline",
+    "stages": [
+      {
+        "name": "Link Graph Construction",
+        "detail": "All inbound links to a page/domain collected from the crawl graph. Each linking domain identified as a potential independent source."
+      },
+      {
+        "name": "Independence Analysis",
+        "detail": "Graph connectivity between linking domains evaluated. Domains that link to each other or share common link patterns flagged as potentially non-independent."
+      },
+      {
+        "name": "Per-Document IndyRank",
+        "detail": "Raw IndyRank score computed for each document (CompositeDoc). Measures what fraction of linking domains appear truly independent."
+      },
+      {
+        "name": "Site-Level Aggregation",
+        "detail": "ScaledIndyRank aggregates per-document scores at the site level via NSR. Normalized for site size to compare small and large sites fairly."
+      },
+      {
+        "name": "Quality Integration",
+        "detail": "IndyRank feeds into Q* quality scoring and SpamBrain spam detection. Low IndyRank triggers further link spam investigation."
+      },
+      {
+        "name": "Experimental Refinement",
+        "detail": "ScaledExptIndyRank2/3 variants test alternative scaling and independence algorithms. Active R&D on link independence measurement."
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2004",
+      "type": "patent",
+      "title": "Early Independence Research",
+      "desc": "US7024451 filed: foundations for computing independence metrics across distributed systems."
+    },
+    {
+      "year": "2008",
+      "type": "patent",
+      "title": "Link Independence Patent",
+      "desc": "US7958128: formal method for measuring how independently different domains discovered a target page."
+    },
+    {
+      "year": "2012",
+      "type": "patent",
+      "title": "Penguin Context",
+      "desc": "Google Penguin update targeted unnatural link patterns. IndyRank-style independence scoring likely informed the algorithm."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "Four Variants Revealed",
+      "desc": "API leak exposes IndyRank, ScaledIndyRank, ScaledExptIndyRank2, ScaledExptIndyRank3. Site-level variant in NSR confirmed."
+    }
+  ]
+}

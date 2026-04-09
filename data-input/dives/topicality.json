@@ -1,0 +1,181 @@
+{
+  "id": "topicality",
+  "route": "/topicality",
+  "systems": [
+    "TopicalitySignal"
+  ],
+  "hero": {
+    "title": "T*: The Topicality Score (ABC Framework)",
+    "subtitle": "T* (Topicality Star) is one of Google's three top-level ranking signals, alongside Q* (Quality) and P* (Popularity). T* is the query-dependent relevance score that determines how well a document matches the user's search intent. It is computed from three sub-signals known as the ABC framework: Anchors (what the web says about you), Body (what you say about yourself), and Clicks (what users do). T* is the foundation score used in initial retrieval by Mustang."
+  },
+  "keyInsight": {
+    "label": "Key Insight from DOJ Trial",
+    "text": "HJ Kim confirmed at trial that Google's core relevance scoring follows the <strong>ABC framework: Anchors + Body + Clicks = T*</strong>. This is the <strong>query-dependent</strong> signal, meaning it changes for every query. A page about 'Python programming' has a high T* for that query but low T* for 'pet snakes'. T* feeds directly into <strong>Mustang's initial retrieval</strong>, determining which documents enter the ranking pipeline. Pandu Nayak testified that T*, Q*, and P* are the <strong>three pillars of ranking</strong>, with T* serving as the relevance foundation."
+  },
+  "pillars": [
+    {
+      "type": "doj",
+      "title": "DOJ Trial: T* and ABC",
+      "items": [
+        "<strong>T*</strong>: Query-dependent topicality score. Foundation for initial retrieval. Changes per query",
+        "<strong>Anchors (A)</strong>: What the web says about a document through link context and descriptive anchor text",
+        "<strong>Body (B)</strong>: What the document says about itself through on-page content analysis and term matching",
+        "<strong>Clicks (C)</strong>: What users say about a document through click-through behavior, dwell time, engagement",
+        "<strong>titlematchScore</strong>: Query-to-title relevance alignment. How well the page title matches the search query",
+        "<strong>avgTermWeight</strong>: Content emphasis via font sizing analysis. Visual prominence of query terms on page",
+        "<strong>T* combines ABC in a hand-crafted way</strong> (PXR0356, HJ Kim Feb 2025): T* effectively combines ABC signals (Anchors, Body, Clicks) in a relatively hand-crafted way. ABC signals are the key components of topicality (or base score)",
+        "<strong>T* development history</strong> (PXR0356): T* was in constant development from origin until ~2020, now less change. 'Ranking development (especially topicality) involves solving many complex mathematical problems.' Dedicated team of engineers working continuously on these problems",
+        "<strong>Linear combination of log signals</strong> (PXR0357, Pandu Nayak Jan 2025): Top-level signals are a linear combination of log of individual raw signals. Signals formulated such that their impact on ranking is monotonic relative to the signal",
+        "<strong>BM25 as baseline</strong> (PXR0357): Google's traditional topicality approach was in the style of Okapi BM25. Foundation for body matching before ML enhancements"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "Component Signals",
+      "items": [
+        "<strong>Anchors sub-signal</strong>: Aggregates all inbound anchor text relevance to the query. Source quality tiers apply (HIGH/MEDIUM/LOW)",
+        "<strong>Body sub-signal</strong>: On-page term frequency, position, prominence. Title tags, headings, body text all contribute",
+        "<strong>Clicks sub-signal</strong>: NavBoost click data (13-month window). Good clicks vs. bad clicks for the query-document pair",
+        "<strong>titlematchScore</strong>: Direct title-to-query alignment. Strong title match is a powerful relevance signal",
+        "<strong>avgTermWeight</strong>: Font size and visual emphasis of terms. Larger/bolder terms weighted more (related to Reasonable Surfer)",
+        "T* is computed at <strong>retrieval time</strong> in Mustang, before ML re-ranking"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How T* Affects Rankings",
+      "items": [
+        "<strong>ABC alignment is critical</strong>: Pages rank best when Anchors, Body, and Clicks all agree on the topic",
+        "<strong>Title match is a strong signal</strong>: titlematchScore directly measures query-title relevance. Clear, descriptive titles help",
+        "<strong>Visual emphasis matters</strong>: avgTermWeight means headings, bold text, and font size affect topicality scoring",
+        "<strong>Query-dependent</strong>: You cannot have a 'good T* score' in general. T* depends entirely on the specific query",
+        "<strong>Anchor text must match content</strong>: anchorMismatchDemotion fires when anchor topics diverge from page content",
+        "<strong>Click signals validate relevance</strong>: Pages that attract clicks and engagement for a query get stronger C sub-signal",
+        "<strong>Initial retrieval gate</strong>: Low T* means a page never enters the ranking pipeline. It's filtered at retrieval"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "19 Patents",
+      "items": [
+        "Google's ranking = <strong>T* (Topicality) + Q* (Quality) + P* (Popularity)</strong>",
+        "T* is the only <strong>query-dependent</strong> top-level signal. Q* and P* are mostly query-independent",
+        "T* determines <strong>retrieval eligibility</strong>. Q* and P* adjust <strong>ranking within retrieved results</strong>",
+        "Ascorer combines T*, Q*, P* into the <strong>initial ranking score</strong> before twiddler adjustments",
+        "ML systems (DeepRank, RankEmbed, RankBrain) further refine T* through semantic understanding",
+        "<strong>Query stream quality signals</strong> - Patent <a href=\"https://patents.google.com/patent/US7962462\">US7962462</a> (Lamping, Pearson, filed 2005): Derives document quality from query streams. Three detection methods: (1) query text matches document title/URL, (2) anchor text analysis (>50% of matching anchors point to document), (3) user selection patterns (>50% of users click same result). Anti-spam limits: max 50 points per query, 100 per user, 20 per user-document pair, 30 per IP. Foundation for referenceQueries signal",
+        "<a href=\"https://patents.google.com/patent/US20090292683\">US20090292683</a>: System and method for automatically ranking lines of text; <a href=\"https://patents.google.com/patent/US7505964\">US7505964</a>: Methods and systems for improving a search ranking using related queries; <a href=\"https://patents.google.com/patent/US5577241\">US5577241</a>: Information retrieval system and method with implementation extensible query architecture",
+        "<a href=\"https://patents.google.com/patent/US7925657\">US7925657</a>: Methods and systems for adjusting a scoring measure based on query breadth; <a href=\"https://patents.google.com/patent/US20100325131\">US20100325131</a>: Assigning relevance weights based on temporal dynamics; <a href=\"https://patents.google.com/patent/US8195654\">US8195654</a>: Prediction of human ratings or rankings of information retrieval quality",
+        "<a href=\"https://patents.google.com/patent/US20090171929\">US20090171929</a>: Toward optimized query suggeston: user interfaces and algorithms; <a href=\"https://patents.google.com/patent/US6405188\">US6405188</a>: Information retrieval system; <a href=\"https://patents.google.com/patent/US20110035406\">US20110035406</a>: User Interface for Presenting Search Results for Multiple Regions of a Visual Query",
+        "<a href=\"https://patents.google.com/patent/US20110022605\">US20110022605</a>: Document scoring based on link-based criteria; <a href=\"https://patents.google.com/patent/US8515975\">US8515975</a>: Search entity transition matrix and applications of the transition matrix; <a href=\"https://patents.google.com/patent/US20070088692\">US20070088692</a>: Document scoring based on query analysis",
+        "<a href=\"https://patents.google.com/patent/US8868559\">US8868559</a>: Representative document selection for a set of duplicate documents; <a href=\"https://patents.google.com/patent/US20110264671\">US20110264671</a>: Document scoring based on document content update; <a href=\"https://patents.google.com/patent/US7421651\">US7421651</a>: Document segmentation based on visual gaps",
+        "<a href=\"https://patents.google.com/patent/US20110043652\">US20110043652</a>: Automatically providing content associated with captured information, such as information capture...; <a href=\"https://patents.google.com/patent/US5999924\">US5999924</a>: Method and apparatus for producing sequenced queries; <a href=\"https://patents.google.com/patent/US8051071\">US8051071</a>: Document scoring based on query analysis"
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "T* (Topicality Star)",
+      "source": "DOJ",
+      "how": "T* is computed as a function of three sub-signals: Anchors (A), Body (B), and Clicks (C). The Anchors component measures how relevant the inbound link text is to the query. The Body component measures on-page content relevance through term matching, title alignment, and content structure. The Clicks component uses NavBoost data to measure real user engagement for this query-document pair.",
+      "formula": "<span class=\"cf-fn\">T*</span>(query, doc) = <span class=\"cf-fn\">f</span>(\n  <span class=\"cf-fn\">A</span>(<span class=\"cf-val\">anchor_relevance</span>),\n  <span class=\"cf-fn\">B</span>(<span class=\"cf-val\">body_relevance</span>),\n  <span class=\"cf-fn\">C</span>(<span class=\"cf-val\">click_relevance</span>)\n)\n<span class=\"cf-comment\">// A = what the web says about you</span>\n<span class=\"cf-comment\">// B = what you say about yourself</span>\n<span class=\"cf-comment\">// C = what users do on your page</span>\n<span class=\"cf-comment\">// Query-dependent: changes per query</span>",
+      "patents": "",
+      "affects": "Affected by: anchor text relevance, on-page content match, title alignment, user click behavior, term prominence"
+    },
+    {
+      "name": "Body Sub-Signal (B)",
+      "source": "DOJ+Leak",
+      "how": "The Body component of T* evaluates on-page content relevance to the query. It combines term frequency, term position (title vs. heading vs. body), visual prominence (avgTermWeight from font sizing), and title-to-query alignment (titlematchScore). Title match is one of the strongest individual signals within the Body component.",
+      "formula": "<span class=\"cf-fn\">Body</span>(query, doc) =\n  <span class=\"cf-fn\">titlematchScore</span>(<span class=\"cf-val\">query</span>, <span class=\"cf-val\">title</span>) *\n  <span class=\"cf-fn\">termFrequency</span>(<span class=\"cf-val\">query_terms</span>, <span class=\"cf-val\">body</span>) *\n  <span class=\"cf-fn\">termProminence</span>(<span class=\"cf-val\">avgTermWeight</span>) *\n  <span class=\"cf-fn\">structuralMatch</span>(<span class=\"cf-val\">headings</span>, <span class=\"cf-val\">query</span>)\n<span class=\"cf-comment\">// Title match is a strong signal</span>\n<span class=\"cf-comment\">// avgTermWeight: font size and visual emphasis</span>",
+      "patents": "",
+      "affects": "Affected by: title relevance, heading structure, term frequency, font sizing, content depth"
+    },
+    {
+      "name": "Ranking Combination (T* + Q* + P*)",
+      "source": "DOJ",
+      "how": "The three top-level signals combine to produce the initial ranking score. T* provides query-dependent relevance, Q* provides query-independent quality (PageRank, site authority, content quality), and P* provides engagement-based popularity (NavBoost clicks, Chrome visit data). Ascorer is the system that combines these into a single ranking score fed to Mustang.",
+      "formula": "<span class=\"cf-fn\">Ascorer</span>(query, doc) = <span class=\"cf-fn\">combine</span>(\n  <span class=\"cf-fn\">T*</span>(<span class=\"cf-val\">query</span>, <span class=\"cf-val\">doc</span>),\n  <span class=\"cf-fn\">Q*</span>(<span class=\"cf-val\">doc</span>),\n  <span class=\"cf-fn\">P*</span>(<span class=\"cf-val\">doc</span>)\n) &rarr; <span class=\"cf-val\">initial_rank</span>\n<span class=\"cf-comment\">// T* = topicality (query-dependent)</span>\n<span class=\"cf-comment\">// Q* = quality (query-independent)</span>\n<span class=\"cf-comment\">// P* = popularity (engagement-based)</span>",
+      "patents": "",
+      "affects": "Affected by: all T*, Q*, P* component signals. Output feeds predoc twiddlers and ML re-ranking"
+    },
+    {
+      "name": "Query Stream Quality Signal",
+      "source": "Patent US7962462 (Lamping, Pearson, 2005)",
+      "how": "Derives document quality signals from search query streams by detecting when users 'ask for' a document by name. Three detection methods: (1) query text matches document title/URL/prominent text, (2) majority (>50%) of anchor text links matching the query point to the document, or (3) majority (>50%) of users clicking on the same result for the query. Assigns quality points with anti-spam limits. Foundation for referenceQueries and navigational quality signals.",
+      "formula": "<span class=\"cf-fn\">QueryStreamQuality</span>(doc) = <span class=\"cf-fn\">sum</span>(\n  <span class=\"cf-fn\">points</span>(query, doc)\n  <span class=\"cf-kw\">for</span> query <span class=\"cf-kw\">in</span> <span class=\"cf-val\">query_stream</span>\n)\n<span class=\"cf-comment\">// Anti-spam limits:</span>\n<span class=\"cf-comment\">// max 50 pts/query, 100 pts/user</span>\n<span class=\"cf-comment\">// max 20 pts/user-doc pair, 30 pts/IP</span>\n\n<span class=\"cf-fn\">Detection</span>: <span class=\"cf-fn\">titleMatch</span>(q, doc)\n  OR <span class=\"cf-fn\">anchorMajority</span>(q, doc) &gt; <span class=\"cf-val\">50%</span>\n  OR <span class=\"cf-fn\">clickMajority</span>(q, doc) &gt; <span class=\"cf-val\">50%</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US7962462\">US7962462</a> (Query stream quality signals, 2005)",
+      "affects": "Affected by: branded search volume, user click concentration, anchor text consensus. Documents that users consistently search for by name earn quality points. Foundation for referenceQueries and navigational ranking."
+    }
+  ],
+  "pipeline": {
+    "title": "T* Computation Pipeline",
+    "stages": [
+      {
+        "name": "Query Analysis",
+        "detail": "Query terms extracted, intent classified, entities identified"
+      },
+      {
+        "name": "Anchor Matching (A)",
+        "detail": "Inbound anchor text relevance to query computed. Source quality tiers applied"
+      },
+      {
+        "name": "Body Matching (B)",
+        "detail": "On-page content matched to query: title, headings, body text, term prominence"
+      },
+      {
+        "name": "Click Signal (C)",
+        "detail": "NavBoost click data (13-month window) for this query-document pair aggregated"
+      },
+      {
+        "name": "T* Computation",
+        "detail": "ABC sub-signals combined into T* topicality score per document"
+      },
+      {
+        "name": "Retrieval Filtering",
+        "detail": "Mustang uses T* to select ~10K candidate documents from 400B+ index"
+      },
+      {
+        "name": "Score Combination",
+        "detail": "T* combined with Q* and P* by Ascorer for initial ranking. Feeds ML re-ranking"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "1998",
+      "type": "patent",
+      "title": "Term Matching Origins",
+      "desc": "Original Google combined PageRank with term relevance. Body matching (TF-IDF) is the oldest ranking signal."
+    },
+    {
+      "year": "2005",
+      "type": "patent",
+      "title": "Query Stream Quality Signals (US7962462)",
+      "desc": "Google patents quality signal derivation from search query streams. Documents earn points when users 'ask for' them by name via title match, anchor text majority, or click majority. Anti-spam limits cap points per query/user/IP. Foundation for referenceQueries."
+    },
+    {
+      "year": "2015",
+      "type": "patent",
+      "title": "RankBrain Enhances T*",
+      "desc": "RankBrain adds ML-based query understanding. Novel queries mapped to known concepts, improving T* for long-tail searches."
+    },
+    {
+      "year": "2019",
+      "type": "patent",
+      "title": "BERT Deepens Understanding",
+      "desc": "BERT/DeepRank adds contextual language understanding. T* computation benefits from bidirectional query-document understanding."
+    },
+    {
+      "year": "2020",
+      "type": "doj",
+      "title": "T* Development Stabilizes (PXR0356)",
+      "desc": "HJ Kim (Feb 2025 interview) revealed T* was in constant development from origin until ~2020, after which changes slowed. 'Ranking development (especially topicality) involves solving many complex mathematical problems' with a dedicated team of engineers."
+    },
+    {
+      "year": "2025",
+      "type": "doj",
+      "title": "ABC Framework Confirmed",
+      "desc": "DOJ trial reveals T* = Anchors + Body + Clicks. HJ Kim confirms T*, Q*, P* as the three top-level ranking pillars. T* combines ABC in a relatively hand-crafted way. Nayak (PXR0357): top-level signals are a linear combination of log of individual raw signals, monotonic, baseline in style of Okapi BM25."
+    }
+  ]
+}

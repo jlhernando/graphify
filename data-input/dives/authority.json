@@ -1,0 +1,200 @@
+{
+  "id": "authority",
+  "route": "/authority",
+  "systems": [
+    "Authorship",
+    "Brand",
+    "DataAdvantage"
+  ],
+  "hero": {
+    "title": "Author & Brand Authority",
+    "subtitle": "Despite publicly deprecating authorship markup in 2014, Google maintains internal author tracking via the GAIA identity system. Brand authority is measured through direct traffic, official page classification, and topic-specific authority scores. The DOJ trial revealed that Google's data advantages create a self-reinforcing cycle that competitors cannot replicate."
+  },
+  "keyInsight": {
+    "label": "Key Insight from DOJ Trial + API Leak",
+    "text": "Google tracks author identity via <strong>authorObfuscatedGaiaStr</strong>, linking content creators to Google's GAIA identity system, even though authorship markup was \"deprecated.\" The <strong>queriesForWhichOfficial</strong> signal identifies brand queries, boosting official sites. <strong>DataScaleAdvantage</strong> (DOJ testimony) confirms a virtuous cycle: more queries generate better click data, which improves ranking, which attracts more queries."
+  },
+  "pillars": [
+    {
+      "type": "leak",
+      "title": "Authority Signals",
+      "items": [
+        "<strong>author</strong> - Document author(s) as structured entity data",
+        "<strong>isAuthor</strong> - Boolean for entity authorship attribution",
+        "<strong>siteAuthority</strong> - Domain trust score feeding into Q*",
+        "<strong>authorityPromotion</strong> - Positive ranking boost for authoritative domains",
+        "<strong>unauthoritativeScore</strong> - Negative signal for domains lacking expertise",
+        "<strong>topicAuthoritySignal</strong> - Topic-specific authority measurement"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "Signals",
+      "items": [
+        "<strong>isAuthor</strong> - Distinct authorship identification on a page",
+        "<strong>authorObfuscatedGaiaStr</strong> - Author identity linked to Google's GAIA system",
+        "<strong>queriesForWhichOfficial</strong> - Brand query identification for official sites",
+        "<strong>DefaultBias</strong> - Default settings exploit cognitive bias (DOJ antitrust)",
+        "<strong>DataScaleAdvantage</strong> - More queries = better data = better ranking = more queries",
+        "<strong>AlgorithmReconstructionRisk</strong> - Sharing data would let competitors rebuild algorithm"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "4 Patents",
+      "items": [
+        "<strong>directFrac</strong> - Direct/type-in traffic fraction (Chrome data)",
+        "<strong>chromeInTotal</strong> - Total Chrome browser visits at site level",
+        "<strong>OfficialPageTwiddler</strong> - Boosts official brand pages in rankings",
+        "Brand search volume as quality proxy (patent evidence)",
+        "E-A-T: entity-level expertise tied to Knowledge Graph",
+        "Author entities linked to published works across domains",
+        "<strong>News source quality scoring</strong> - Patent <a href=\"https://patents.google.com/patent/US10459926\">US10459926</a> (Google, filed 2015): Computes source authority using 13 orthogonal metrics: article volume, average length, story importance (cluster size), breaking news score (log(N1/T) for T<=3h), usage/traffic, human editorial opinion, circulation, staff size, bureau count, original named entities, coverage breadth, international diversity, writing style. NEWSCORE(D) = 0.8*OLDSCORE(D) + 0.2*SOURCERANK. Prevents lower-tier sources from outranking established news organizations",
+        "<a href=\"https://patents.google.com/patent/US8126876\">US8126876</a>: Systems and methods for improving the ranking of news articles; <a href=\"https://patents.google.com/patent/US8332382\">US8332382</a>: Systems and methods for improving the ranking of news articles; <a href=\"https://patents.google.com/patent/US8645368\">US8645368</a>: Systems and methods for improving the ranking of news articles"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Author & Brand Authority Affects Your SEO",
+      "items": [
+        "<strong>Build a recognizable author entity</strong>: Google's authorObfuscatedGaiaStr links content to the GAIA identity system. Authors with Google profiles, Knowledge Graph presence, and consistent bylines across domains get stronger entity signals. Create and maintain author pages with Schema.org Person markup, linking to all publications.",
+        "<strong>Invest in branded search volume</strong>: The queriesForWhichOfficial signal maps brand queries to official sites, triggering the OfficialPageTwiddler boost. Run brand awareness campaigns that generate direct searches for your brand name. More brand queries = stronger official site signal.",
+        "<strong>Increase direct traffic through Chrome</strong>: directFrac and chromeInTotal measure type-in traffic via Chrome data. Sites with high direct traffic ratios signal brand strength. Build email lists, browser bookmarks, and habitual visitors rather than relying solely on search traffic.",
+        "<strong>Earn topicAuthoritySignal through depth, not breadth</strong>: This topic-specific authority score rewards deep coverage of a niche. Publish comprehensive content clusters within your expertise area. A site that covers 50 articles on one topic builds stronger topical authority than 50 articles across 10 topics.",
+        "<strong>Avoid triggering unauthoritativeScore</strong>: This negative signal explicitly demotes domains lacking expertise. Avoid publishing YMYL content (health, finance, legal) without demonstrable credentials. Each low-authority page drags down the domain-wide siteAuthority that feeds into Q*.",
+        "<strong>Leverage the authorityPromotion boost</strong>: This positive ranking signal rewards authoritative domains. Build it through consistent quality, earning links from other authoritative sites, and maintaining editorial standards. The DOJ trial confirmed siteAuthority feeds directly into Q*, meaning domain trust is a ranking gate, not just a tiebreaker."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "isAuthor",
+      "source": "DOJ",
+      "how": "Binary flag in PerDocData. Google checks if the page has identifiable authorship.",
+      "formula": "<span class=\"cf-fn\">isAuthor</span>(page) = <span class=\"cf-fn\">detect</span>(\n<span class=\"cf-val\">byline</span>, <span class=\"cf-val\">author_schema</span>, <span class=\"cf-val\">bio_link</span>\n)  <span class=\"cf-comment\">// binary: true/false in PerDocData</span>\n<span class=\"cf-comment\">// authorship never stopped being tracked internally</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8762394\">US8762394</a> (trust buttons for authors), <a href=\"https://patents.google.com/patent/US8595186\">US8595186</a> (author rank)",
+      "affects": "Affected by: clear author bylines, author bio pages, consistent authorship across articles."
+    },
+    {
+      "name": "authorObfuscatedGaiaStr",
+      "source": "DOJ",
+      "how": "Hashed author ID connecting to Google's internal identity graph. Links content to known author entities.",
+      "formula": "<span class=\"cf-fn\">authorGaia</span>(page) = <span class=\"cf-fn\">hash</span>(\n<span class=\"cf-val\">author_entity</span> &rarr; <span class=\"cf-val\">GAIA_identity_graph</span>\n)  <span class=\"cf-comment\">// obfuscated, links to Google identity system</span>\n<span class=\"cf-comment\">// connects content to known author across domains</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8595186\">US8595186</a> (author rank), <a href=\"https://patents.google.com/patent/US8762394\">US8762394</a> (trust buttons)",
+      "affects": "Affected by: having a Google account/profile, being recognized as an entity. Author identity connects to Knowledge Graph."
+    },
+    {
+      "name": "queriesForWhichOfficial",
+      "source": "DOJ",
+      "how": "Brand signal in PerDocData identifying official/authoritative sources for navigational queries.",
+      "formula": "<span class=\"cf-fn\">queriesForWhichOfficial</span>(url) = <span class=\"cf-fn\">match</span>(\n<span class=\"cf-val\">brand_queries</span> &rarr; <span class=\"cf-val\">official_url</span>\n)  <span class=\"cf-comment\">// navigational query to source mapping</span>\n<span class=\"cf-comment\">// OfficialPageTwiddler boosts matched pages</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8762394\">US8762394</a> (trust buttons for official sources)",
+      "affects": "Affected by: strong brand recognition. Official site markup, consistent branding, Schema.org Organization markup."
+    },
+    {
+      "name": "siteAuthority",
+      "source": "DOJ+Leak",
+      "how": "Domain-wide reputation score aggregated from trust signals including PageRankNS, NSR, engagement. Applied in Q* ranking.",
+      "formula": "<span class=\"cf-fn\">siteAuthority</span>(domain) = <span class=\"cf-fn\">aggregate</span>(\n<span class=\"cf-val\">PageRankNS</span>, <span class=\"cf-val\">NSR</span>, <span class=\"cf-val\">engagement</span>, <span class=\"cf-val\">trust</span>\n) &rarr; Q*  <span class=\"cf-comment\">// feeds directly into quality scoring</span>\n<span class=\"cf-comment\">// domain-wide, shared across all pages</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US9165040\">US9165040</a> (link graph distances), <a href=\"https://patents.google.com/patent/US9400849\">US9400849</a> (scalable short paths)",
+      "affects": "Affected by: long-term domain quality, trustworthiness, consistent content quality."
+    },
+    {
+      "name": "News Source Quality Score",
+      "source": "Patent US10459926 (Google, 2015)",
+      "how": "Computes multi-factor quality scores for news sources using 13 orthogonal metrics: article production volume, average article length, story importance (cluster size in news event grouping), breaking news score (log(N1/T) where T is time to first coverage, N1=3 hours), usage/traffic patterns, human editorial opinion, circulation statistics, staff size, bureau count, original named entities generated, coverage breadth, international diversity, and writing style quality. Metrics combined via weighted sum or percentile normalization. Final article ranking blends original IR score with source quality: NEWSCORE = alpha*OLDSCORE + beta*SOURCERANK (default alpha=0.8, beta=0.2).",
+      "formula": "<span class=\"cf-fn\">BreakingScore</span> = <span class=\"cf-fn\">log</span>(<span class=\"cf-val\">N1</span> / <span class=\"cf-val\">T</span>)\n<span class=\"cf-comment\">// T = time to first coverage, N1 = 3 hours</span>\n\n<span class=\"cf-fn\">SOURCERANK</span> = <span class=\"cf-fn\">weighted_sum</span>(\n  <span class=\"cf-val\">article_volume</span>, <span class=\"cf-val\">avg_length</span>,\n  <span class=\"cf-val\">breaking_score</span>, <span class=\"cf-val\">traffic</span>,\n  <span class=\"cf-val\">editorial_opinion</span>, <span class=\"cf-val\">staff_size</span>,\n  <span class=\"cf-val\">bureau_count</span>, <span class=\"cf-val\">original_entities</span>,\n  <span class=\"cf-val\">coverage_breadth</span>, <span class=\"cf-val\">intl_diversity</span>,\n  <span class=\"cf-val\">writing_quality</span>\n)  <span class=\"cf-comment\">// 13 metrics via percentile normalization</span>\n\n<span class=\"cf-fn\">NEWSCORE</span>(D) = 0.8 &times; <span class=\"cf-val\">OLDSCORE</span>(D) +\n  0.2 &times; <span class=\"cf-fn\">SOURCERANK</span>(<span class=\"cf-val\">SOURCE</span>(D))",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US10459926\">US10459926</a> (News article ranking, 2015)",
+      "affects": "Affected by: production consistency, breaking news speed, original reporting, staff/bureau infrastructure, writing quality. Rewards institutional news authority over individual articles."
+    }
+  ],
+  "pipeline": {
+    "title": "Authority Signal Pipeline",
+    "stages": [
+      {
+        "name": "Author Identity",
+        "detail": "GAIA system, isAuthor, entity linking"
+      },
+      {
+        "name": "Brand Recognition",
+        "detail": "directFrac, chromeInTotal, brand queries"
+      },
+      {
+        "name": "Topic Authority",
+        "detail": "topicAuthoritySignal, site expertise"
+      },
+      {
+        "name": "Authority Score",
+        "detail": "authorityPromotion vs unauthoritativeScore"
+      },
+      {
+        "name": "Q* Integration",
+        "detail": "siteAuthority feeds into quality score"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2011",
+      "type": "patent",
+      "title": "Google Authorship (rel=author)",
+      "desc": "Google launches authorship markup connecting content to Google+ profiles. Author photos appear in SERPs."
+    },
+    {
+      "year": "2014",
+      "type": "patent",
+      "title": "Authorship Markup Deprecated",
+      "desc": "Google removes visible authorship from SERPs, claims it was not useful. But internal entity signals continue."
+    },
+    {
+      "year": "2015",
+      "type": "patent",
+      "title": "News Source Quality Patent (US10459926)",
+      "desc": "Google patents 13-metric news source quality scoring: article volume, breaking news speed (log(N1/T)), staff size, bureau count, original named entities, coverage breadth, writing quality. NEWSCORE = 0.8*OLDSCORE + 0.2*SOURCERANK. Source authority weighted at 20% of final article score."
+    },
+    {
+      "year": "2018",
+      "type": "patent",
+      "title": "E-A-T in Quality Guidelines",
+      "desc": "Expertise, Authoritativeness, Trustworthiness formalized. Author expertise becomes part of quality assessment."
+    },
+    {
+      "year": "2019",
+      "type": "patent",
+      "title": "Brand Authority Signals",
+      "desc": "Patents on brand search volume as quality proxy. Direct/type-in traffic measured via Chrome."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "API Leak: Author & Authority",
+      "desc": "author, isAuthor, siteAuthority, authorityPromotion, unauthoritativeScore, topicAuthoritySignal confirmed."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "DOJ Trial: GAIA Identity",
+      "desc": "authorObfuscatedGaiaStr links authors to Google identity system. queriesForWhichOfficial identifies brand queries."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google (2014)",
+      "publicClaim": "Authorship markup is deprecated. We don't track content authorship in ranking.",
+      "internalSource": "API Leak + DOJ",
+      "internalClaim": "author, isAuthor, and authorObfuscatedGaiaStr are active ranking signals. Author identity is linked to Google's GAIA identity system. Authorship tracking never stopped, just the public markup."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "Small sites can rank just as well as large brands.",
+      "internalSource": "DOJ Trial",
+      "internalClaim": "DataScaleAdvantage creates a virtuous cycle favoring established sites. DefaultBias through browser/OS defaults drives traffic to Google, which reinforces ranking data for already-popular sites."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "E-A-T is a concept from quality rater guidelines, not a direct ranking factor.",
+      "internalSource": "API Leak",
+      "internalClaim": "authorityPromotion, unauthoritativeScore, and topicAuthoritySignal are explicit algorithmic signals. siteAuthority directly feeds into Q*. E-A-T is coded into the algorithm."
+    }
+  ]
+}

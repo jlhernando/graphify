@@ -1,0 +1,177 @@
+{
+  "id": "qbst",
+  "route": "/qbst",
+  "systems": [
+    "QBST"
+  ],
+  "hero": {
+    "title": "QBST: Query Based Salient Terms",
+    "subtitle": "QBST is Google's term-based memorization retrieval system, confirmed by Pandu Nayak's sworn testimony. It identifies words that appear prominently on pages relevant to specific queries, trained on query and click data. QBST operates in the initial retrieval phase, generating the large candidate document set before ML ranking kicks in."
+  },
+  "keyInsight": {
+    "label": "Key Insight from DOJ Trial",
+    "text": "QBST is a <strong>memorization system</strong>, not a machine learning model. It has \"memorized\" which words appear prominently on pages that users click for specific queries. This makes it extremely fast for initial retrieval. The system generates the <strong>first candidate set</strong> of potentially hundreds of thousands of documents, which Mustang then scores and reduces. Combined with <strong>salientTermSet</strong> and <strong>salientTermReferenceScore</strong> from the API leak, QBST represents Google's term-relevance foundation beneath all neural ranking."
+  },
+  "pillars": [
+    {
+      "type": "doj",
+      "title": "Signal (Sworn Testimony)",
+      "items": [
+        "<strong>QBST</strong> - Query Based Salient Terms, testified by Pandu Nayak",
+        "Memorization system, not ML (explicitly stated)",
+        "Trained on query and click data correlations",
+        "Used in initial retrieval phase for candidate generation",
+        "Identifies words appearing prominently on relevant pages",
+        "Part of the pre-Mustang retrieval pipeline"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "Salient Term Signals",
+      "items": [
+        "<strong>salientTermSet</strong> - Extracted salient terms with weights for topical relevance",
+        "<strong>salientTermReferenceScore</strong> - Term weights compared against reference corpus",
+        "<strong>titlematchScore</strong> - Query-to-title term matching across site",
+        "<strong>avgTermWeight</strong> - Average weighted font size of terms in body",
+        "<strong>termWeight</strong> - Individual word size/bolding impact on scoring",
+        "All in Mustang module, implementing QBST-style term relevance"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "14 Patents",
+      "items": [
+        "Phrase-based indexing for multi-word concept matching",
+        "TF-IDF and BM25 foundations for term frequency scoring",
+        "Term proximity signals for phrase-level relevance",
+        "Query expansion via related salient terms",
+        "Inverted index lookup at massive scale for initial retrieval",
+        "Click-through data for salient term identification and weighting",
+        "<a href=\"https://patents.google.com/patent/US7617205\">US7617205</a>: Estimating confidence for query revision models; <a href=\"https://patents.google.com/patent/US7933890\">US7933890</a>: Propagating useful information among related web pages, such as web pages of a website; <a href=\"https://patents.google.com/patent/US6947930\">US6947930</a>: Systems and methods for interactive search query refinement",
+        "<a href=\"https://patents.google.com/patent/US7319994\">US7319994</a>: Document compression scheme that supports searching and partial decompression; <a href=\"https://patents.google.com/patent/US7558787\">US7558787</a>: Automatic relevance and variety checking for web and vertical search engines; <a href=\"https://patents.google.com/patent/US5826261\">US5826261</a>: System and method for querying multiple, distributed databases by selective sharing of local rela...",
+        "<a href=\"https://patents.google.com/patent/US6704727\">US6704727</a>: Method and system for generating a set of search terms; <a href=\"https://patents.google.com/patent/US6014665\">US6014665</a>: Method for organizing information; <a href=\"https://patents.google.com/patent/US20100169327\">US20100169327</a>: Tracking significant topics of discourse in forums",
+        "<a href=\"https://patents.google.com/patent/US9830379\">US9830379</a>: Name disambiguation using context terms; <a href=\"https://patents.google.com/patent/US8600973\">US8600973</a>: Removing substitution rules; <a href=\"https://patents.google.com/patent/US8504562\">US8504562</a>: Evaluation of substitute terms",
+        "<a href=\"https://patents.google.com/patent/US7676460\">US7676460</a>: Techniques for providing suggestions for creating a search query; <a href=\"https://patents.google.com/patent/US20050216478\">US20050216478</a>: Techniques for web site integration"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How QBST Affects Your SEO",
+      "items": [
+        "<strong>Mine salient terms from top-ranking pages</strong>: QBST memorizes which words appear prominently on pages that users click. Extract common terminology from the top 10 results for your target query and ensure your content includes those terms naturally. Missing expected vocabulary means QBST may exclude you from the candidate set entirely.",
+        "<strong>Use query-specific vocabulary, not just synonyms</strong>: Because QBST is a memorization system (not ML, per Nayak's sworn testimony), it relies on exact term correlations from click data. If top pages for 'best running shoes' consistently use 'cushioning,' 'pronation,' and 'drop,' your page needs those same terms to survive initial retrieval.",
+        "<strong>Optimize titles site-wide, not just per page</strong>: The leak's titlematchScore is a site-level aggregate in QualityNsrNsrData. Poor titles on any page drag down the entire domain's score. Audit all page titles for descriptive, query-relevant language, especially thin or auto-generated pages.",
+        "<strong>Emphasize terms visually with headings and bold text</strong>: The leak confirmed avgTermWeight and termWeight measure font size and bolding impact on scoring. Place your most important terms in H2/H3 headings and use bold/strong tags for key phrases. This directly feeds QBST-style term weighting in Mustang.",
+        "<strong>Build all three T* pillars simultaneously</strong>: DOJ testimony confirmed T* (Topicality) combines Anchors (what the web says), Body (what you say), and Clicks (what users say). Earning descriptive anchor text from external links, writing comprehensive on-page content, and generating engagement signals all feed the same foundational retrieval score.",
+        "<strong>Target featured snippets with structured answer formats</strong>: QBST's salientTermReferenceScore compares your term usage against a reference corpus. Pages that mirror the exact phrasing patterns of existing snippet content, using definition-style sentences, numbered lists, and direct question-answer structures, are more likely to match the memorized term patterns for snippet queries."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "QBST",
+      "source": "DOJ",
+      "how": "Memorization system identifying words appearing prominently on relevant pages. Trained on query and click data. Used in initial retrieval phase to identify large candidate document set.",
+      "formula": "<span class=\"cf-fn\">QBST</span>(query) = <span class=\"cf-fn\">lookup</span>(\n  <span class=\"cf-val\">termPageCorrelations[query.terms]</span>\n)  <span class=\"cf-comment\">// memorization, NOT ML (Nayak sworn testimony)</span>\n<span class=\"cf-comment\">// trained on query-click data: which terms appear on clicked pages</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US7580929\">US7580929</a> (information retrieval), <a href=\"https://patents.google.com/patent/US8180754\">US8180754</a> (document scoring)",
+      "affects": "Affected by: use terminology that appears on high-ranking pages for your topics. Natural use of topic-relevant vocabulary."
+    },
+    {
+      "name": "titlematchScore",
+      "source": "Leak",
+      "how": "Measures how well page titles match user queries across the site. Part of QualityNsrNsrData in Mustang. Site-wide metric, not just per-page.",
+      "formula": "<span class=\"cf-fn\">titlematchScore</span>(site) = <span class=\"cf-fn\">avg</span>(\n  <span class=\"cf-val\">titleRelevance(page, queries)</span> <span class=\"cf-kw\">for</span> page <span class=\"cf-kw\">in</span> site\n)  <span class=\"cf-comment\">// QualityNsrNsrData, site-wide aggregate</span>\n<span class=\"cf-comment\">// poor titles on any page drag down site-level score</span>",
+      "affects": "Affected by: write descriptive, query-relevant titles. Consistent title quality across the site matters."
+    },
+    {
+      "name": "T* (Topicality)",
+      "source": "DOJ",
+      "how": "Query-dependent topicality computed through three sub-signals: Anchors (A) = what the web says about you, Body (B) = what you say about yourself, Clicks (C) = what users say about you. Foundation score in initial retrieval.",
+      "formula": "<span class=\"cf-fn\">T*</span>(doc, q) = <span class=\"cf-fn\">combine</span>(\n  <span class=\"cf-val\">A(anchors)</span>, <span class=\"cf-val\">B(body)</span>, <span class=\"cf-val\">C(clicks)</span>\n)  <span class=\"cf-comment\">// A=web says, B=you say, C=users say</span>\n<span class=\"cf-comment\">// foundation retrieval score, all three pillars required</span>",
+      "affects": "Affected by: all three pillars: anchor text from links, on-page content, and user engagement signals."
+    }
+  ],
+  "pipeline": {
+    "title": "QBST in the Retrieval Pipeline",
+    "stages": [
+      {
+        "name": "Query Terms",
+        "detail": "User query parsed into terms and salient phrases"
+      },
+      {
+        "name": "QBST Lookup",
+        "detail": "Memorized term-page associations from click data"
+      },
+      {
+        "name": "Candidate Set",
+        "detail": "Hundreds of thousands of potentially relevant documents"
+      },
+      {
+        "name": "Mustang Scoring",
+        "detail": "termWeight, salientTermSet, titlematchScore applied"
+      },
+      {
+        "name": "RankEmbed",
+        "detail": "Neural retrieval adds semantically similar documents"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2003",
+      "type": "patent",
+      "title": "Early Term Matching",
+      "desc": "Google uses basic TF-IDF and BM25 for document retrieval. Term frequency dominates relevance scoring."
+    },
+    {
+      "year": "2010",
+      "type": "patent",
+      "title": "Phrase-Based Indexing",
+      "desc": "Bill Slawski documents phrase-based indexing patents. Google moves beyond single terms to multi-word concepts."
+    },
+    {
+      "year": "2013",
+      "type": "patent",
+      "title": "Hummingbird",
+      "desc": "Semantic search shift. Query meaning matters more than exact term matching. QBST adapts to semantic retrieval."
+    },
+    {
+      "year": "2017",
+      "type": "patent",
+      "title": "QBST Formalized",
+      "desc": "Query Based Salient Terms system codified as a memorization-based retrieval layer. Trained on query-click data."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "DOJ Trial: QBST Testified",
+      "desc": "Pandu Nayak explains QBST under oath as memorization system identifying prominent words on relevant pages."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "API Leak: Salient Terms",
+      "desc": "salientTermSet and salientTermReferenceScore confirmed in Mustang, implementing QBST-style term retrieval."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"Google Search is powered by advanced AI and machine learning.\"",
+      "internalSource": "DOJ Trial",
+      "internalClaim": "QBST is explicitly a memorization system, not ML. It memorizes term-page correlations from click data. The initial retrieval phase that generates candidate documents is fundamentally a lookup table, not AI."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"Keyword matching is old technology. We understand meaning now.\"",
+      "internalSource": "API Leak",
+      "internalClaim": "salientTermSet, termWeight, titlematchScore, avgTermWeight are all active term-matching signals. Word-level matching with font size weighting remains foundational to Mustang scoring."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"We don't use click data for ranking.\"",
+      "internalSource": "DOJ Trial",
+      "internalClaim": "QBST is literally \"trained on query and click data.\" The system memorizes which terms appear on pages that users click. Click data is the foundation of the entire initial retrieval system."
+    }
+  ]
+}

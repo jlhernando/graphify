@@ -1,0 +1,256 @@
+{
+  "id": "freshness",
+  "route": "/freshness",
+  "systems": [
+    "Freshness"
+  ],
+  "hero": {
+    "title": "Freshness: How Google Scores Content Timeliness",
+    "subtitle": "Google's freshness system uses 12 confirmed API signals and 4 DOJ signals to determine content timeliness. It tracks 20 document versions, distinguishes significant updates from cosmetic changes, and uses multiple date extraction methods. The FreshnessTwiddler re-ranks results in the final pipeline stage."
+  },
+  "keyInsight": {
+    "label": "Key Insight from API Leak",
+    "text": "Google tracks the <strong>last 20 versions</strong> of every document via urlHistory, each with associated weights. The system distinguishes <strong>significant updates from minor changes</strong> (significantUpdate signal). The <strong>freshdocs multiplier</strong> means links from newer pages pass more value than links from old pages, creating a freshness cascade through the link graph."
+  },
+  "pillars": [
+    {
+      "type": "leak",
+      "title": "Signals Confirmed",
+      "items": [
+        "<strong>freshdocs</strong> - Link value multiplier favoring newer source pages",
+        "<strong>FreshnessTwiddler</strong> - Re-ranking function boosting fresh documents",
+        "<strong>FS</strong> - Freshness Score based on update frequency and publish date",
+        "<strong>significantUpdate</strong> - Flag for major content revisions vs minor changes",
+        "<strong>urlHistory</strong> - Tracks last 20 document versions with weights",
+        "<strong>changeRate</strong> - Content change frequency over crawl intervals",
+        "<strong>timeSensitivity</strong> - Flag for queries needing time-sensitive treatment"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "Signals Confirmed",
+      "items": [
+        "<strong>freshboxArticleScores</strong> - Timeliness scoring for article content",
+        "<strong>semanticDateInfo</strong> - Semantic extraction of publication/update dates",
+        "<strong>lastSignificantUpdate</strong> - Timestamp of meaningful content changes",
+        "<strong>isHotdoc</strong> - Boolean flag for trending content receiving freshness boost"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "16 Patents",
+      "items": [
+        "<strong>bylineDate</strong> - Date from visible byline in search snippets",
+        "<strong>syntacticDate</strong> - Date extracted from URL patterns or title",
+        "<strong>semanticDate</strong> - Publication date inferred from content analysis",
+        "Three independent date extraction methods cross-referenced",
+        "<strong>QDF implementation</strong> - Patent <a href=\"https://patents.google.com/patent/US8832088\">US8832088</a> (Chen, Zhu, filed 2012): Query Deserves Freshness algorithm. Computes QtoA ratio (recent impression probability / overall impression probability) to detect queries where users prefer newer content. Boosting formula: S'=S*Q^D where Q=query freshness value, D=resource freshness value. D uses reverse sigmoid of document age multiplied by provider quality and topicality scores. 8 freshness signal inputs including query volume spikes, blog mentions, news mentions, social mentions, news click ratios",
+        "<strong>QDF with demotion dampening</strong> - Patent <a href=\"https://patents.google.com/patent/US9189526\">US9189526</a> (Chen, Zhu, filed 2013): Continuation patent adding demotion dampening for popular documents. When F(age) is negative (old content), applies J(query, resource) dampening function to reduce false demotions of high-quality evergreen pages. Transformation functions: linear L(x)=a+bx and sigmoidal S(x)=raise+magnitude/(1+e^(-slope*(x-mid)))",
+        "Content decay modeling for evergreen vs time-sensitive content",
+        "<strong>Document inception date scoring</strong> - Patent <a href=\"https://patents.google.com/patent/US8521749\">US8521749</a> (Haahr, Cutts, Dean, Henzinger et al., filed 2003): Foundational freshness patent. Scores documents based on inception date, link growth rate since inception (H=L/log(F+2)), content change frequency/amount, anchor text evolution, traffic trends, user behavior patterns, domain registration data, and ranking history. Multiple inception date signals cross-referenced: first crawl date, first link discovered, domain registration, first reference in external documents.",
+        "<strong>Link freshness weighting</strong> - US8521749 describes weighting links by the freshness of the linking document and anchor text. A link from a recently updated, high-trust document carries more weight than one from a stale page. Links weighted by trust of source document and authority.",
+        "<strong>Spam detection via link growth spikes</strong> - US8521749 detects spam through anomalous link growth patterns: large spikes in back links signal either topical phenomena (breaking news) or spam attempts. System applies hysteresis to cap rank growth rate and checks for mentions in news/discussion groups to distinguish legitimate spikes from manipulation.",
+        "<strong>Link-based freshness inference</strong> - Patent <a href=\"https://patents.google.com/patent/US20050144193\">US20050144193</a> (Henzinger, Google, filed 2004): Infers document freshness by analyzing the freshness of documents linking to it. If the majority of linking documents have recent HTTP last-modified-since headers, the target is scored as fresh. Tracks temporal link existence patterns: link creation/removal rates indicate freshness decay independent of the target document's own modification date",
+        "<a href=\"https://patents.google.com/patent/US20100325114\">US20100325114</a>: Systems and methods for determining document freshness; <a href=\"https://patents.google.com/patent/US20070094255\">US20070094255</a>: Document scoring based on link-based criteria; <a href=\"https://patents.google.com/patent/US20070100817\">US20070100817</a>: Document scoring based on document content update",
+        "<a href=\"https://patents.google.com/patent/US20110029542\">US20110029542</a>: Document scoring based on document inception date; <a href=\"https://patents.google.com/patent/US7568148\">US7568148</a>: Methods and apparatus for clustering news content; <a href=\"https://patents.google.com/patent/US8407231\">US8407231</a>: Document scoring based on link-based criteria",
+        "<a href=\"https://patents.google.com/patent/US9477714\">US9477714</a>: Methods and apparatus for ranking documents; <a href=\"https://patents.google.com/patent/US7702618\">US7702618</a>: Information retrieval system for archiving multiple document versions; <a href=\"https://patents.google.com/patent/US7672937\">US7672937</a>: Temporal targeting of advertisements",
+        "<a href=\"https://patents.google.com/patent/US7421432\">US7421432</a>: Hypertext browser assistant; <a href=\"https://patents.google.com/patent/US6493731\">US6493731</a>: Document management system for recording and viewing the history of document use; <a href=\"https://patents.google.com/patent/US8131717\">US8131717</a>: Scoring documents in a database"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Freshness Scoring Affects Your SEO",
+      "items": [
+        "<strong>Make substantive updates, not cosmetic date changes</strong>: Google tracks 20 document versions via urlHistory and uses significantUpdate to distinguish real revisions from trivial edits. Changing the publication date or rewording a sentence does not trigger a freshness boost. Add new sections, update statistics, include recent examples, or rewrite outdated paragraphs for the update to register.",
+        "<strong>Publish first on trending topics to capture isHotdoc</strong>: This boolean flag marks trending content for a freshness boost. It is triggered by Instant Glue's real-time pipeline, which operates with only 10-minute latency. Being the first authoritative source on a breaking topic earns the hotdoc flag and associated ranking boost. Build editorial workflows that enable rapid, quality publishing on predictable events in your niche.",
+        "<strong>Use three date signals consistently and honestly</strong>: Google cross-references bylineDate (visible date), syntacticDate (URL/title patterns), and semanticDate (content analysis). Mismatches between these signals erode trust. Display clear, accurate publication and modification dates. Use datePublished and dateModified in Schema.org Article markup. Never manipulate dates to appear fresher than reality.",
+        "<strong>Earn links from fresh content for the freshdocs multiplier</strong>: Links from newer pages pass more value than links from old, stale pages. This means a mention in a recently published article or news story carries more link equity than a link sitting on a years-old resource page. Target link building from recently published content, press coverage, and current roundups.",
+        "<strong>Match your update cadence to your content's decay curve</strong>: The changeRate signal tracks how frequently your content changes across crawl intervals. For topics where freshness matters (news, trends, statistics), establish a regular update schedule that Google's crawlers can learn. This teaches the freshness system that your content is actively maintained and worth re-crawling frequently.",
+        "<strong>Identify which queries trigger timeSensitivity</strong>: Not all queries require fresh content. The timeSensitivity flag marks queries needing time-sensitive treatment. For evergreen queries, freshness matters less than depth and authority. For time-sensitive queries, freshness dominates. Analyze your target queries in Search Console: if rankings fluctuate rapidly, the query likely has timeSensitivity enabled.",
+        "<strong>Link growth rate matters more than total links for new content</strong>: Patent US8521749 scores documents using H=L/log(F+2), where L is link score and F is time since inception. A new page with 10 links gained in one week scores higher than an old page with 100 links over 10 years. Focus link building efforts on the first weeks after publishing new content for maximum freshness signal impact.",
+        "<strong>Register domains for multiple years</strong>: US8521749 explicitly states that domains paid for several years in advance are more likely legitimate, while doorway/spam domains are rarely renewed beyond one year. Multi-year domain registration is a positive trust signal. Frequent nameserver changes and DNS record instability are red flags.",
+        "<strong>Content update substance is weighted, not just frequency</strong>: The patent describes update amount (UA) as ignoring changes to JavaScript, comments, ads, navigation, boilerplate, and date tags. Only substantive content changes (especially to titles and anchor text) count. This aligns with the API leak's significantUpdate signal. Changing a date tag is not an update.",
+        "<strong>Yandex cross-reference: 10-year content decay and time-of-day ranking</strong>: The Yandex leak reveals a 10-year hard threshold where content stops being favored, and FI_DATER_AGE (-0.207 weight) as one of the heaviest negative factors in their entire system. This cross-validates Google's inception date scoring and suggests evergreen content may face a similar age-based decay curve. Additionally, Yandex applies time-of-day query weighting (different morning vs evening algorithms), a temporal dimension not documented in Google's QDF but plausible given query intent shifts throughout the day."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "lastSignificantUpdate",
+      "source": "DOJ: meaningful content change tracking",
+      "how": "Tracks meaningful content changes, distinguishing significant updates from trivial edits. Not just any modification. Google identifies whether the update adds substantive new content or is just cosmetic.",
+      "formula": "<span class=\"cf-fn\">lastSignificantUpdate</span>(url) = <span class=\"cf-fn\">diff</span>(\n  <span class=\"cf-val\">urlHistory</span>[last_20_versions]\n)  <span class=\"cf-comment\">// tracks last 20 document versions</span>\n<span class=\"cf-kw\">if</span> delta &gt; <span class=\"cf-val\">significance_threshold</span>: update = <span class=\"cf-val\">significant</span>\n<span class=\"cf-comment\">// cosmetic edits (date changes, rewording) ignored</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8924379\">US8924379</a> (freshness signals in ranking), <a href=\"https://patents.google.com/patent/US8583617\">US8583617</a> (temporal query handling)",
+      "affects": "Affected by: making substantive content updates. Changing a date or adding a sentence may not register. Adding new sections, updating data, or significantly rewriting content does."
+    },
+    {
+      "name": "isHotdoc",
+      "source": "DOJ: Boolean flag for trending content",
+      "how": "Boolean flag (true/false). Marks content that is trending and timely. Receives a freshness ranking boost. Likely triggered by Instant Glue's real-time user signal pipeline.",
+      "formula": "<span class=\"cf-fn\">isHotdoc</span>(url) = <span class=\"cf-fn\">bool</span>(\n  <span class=\"cf-val\">InstantGlue</span>.trending(url)\n)  <span class=\"cf-comment\">// true/false, binary flag</span>\n<span class=\"cf-kw\">if</span> true: <span class=\"cf-kw\">apply</span> freshness_boost\n<span class=\"cf-comment\">// triggered by real-time user signal spikes</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8924379\">US8924379</a> (freshness signals), <a href=\"https://patents.google.com/patent/US8583617\">US8583617</a> (temporal queries)",
+      "affects": "Affected by: publishing timely content on trending topics. Speed matters. First to publish on a breaking topic gets the hotdoc flag."
+    },
+    {
+      "name": "semanticDateInfo",
+      "source": "DOJ: semantic date extraction",
+      "how": "Semantic extraction of publication and update dates from page content. Google doesn't just read meta tags. It extracts dates from visible content, bylines, and structured data.",
+      "formula": "<span class=\"cf-fn\">semanticDateInfo</span>(page) = <span class=\"cf-fn\">cross_ref</span>(\n  <span class=\"cf-val\">bylineDate</span>, <span class=\"cf-val\">syntacticDate</span>, <span class=\"cf-val\">semanticDate</span>\n)  <span class=\"cf-comment\">// three independent extraction methods</span>\n<span class=\"cf-comment\">// meta tags, URL patterns, visible content all analyzed</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8924379\">US8924379</a> (freshness signals in ranking)",
+      "affects": "Affected by: clear, visible publication dates. Use structured data (datePublished, dateModified). Avoid date manipulation. Google cross-references multiple date signals."
+    },
+    {
+      "name": "Instant Glue",
+      "source": "DOJ: real-time pipeline, ~10min latency",
+      "how": "Real-time variant of Glue delivering fresh user signals with approximately 10-minute latency on 24-hour data windows. Used for breaking news and trending queries. Feeds into Tangram for SERP assembly.",
+      "formula": "<span class=\"cf-fn\">InstantGlue</span>(query) = <span class=\"cf-fn\">stream</span>(\n  <span class=\"cf-val\">user_signals</span>, window=<span class=\"cf-val\">24h</span>, latency=<span class=\"cf-val\">~10min</span>\n) &rarr; Tangram  <span class=\"cf-comment\">// real-time SERP assembly</span>\n<span class=\"cf-comment\">// breaking news and trending queries only</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8583617\">US8583617</a> (temporal query handling)",
+      "affects": "Affected by: user engagement on fresh content. Quick response to trending topics. Real-time user signals feed back into rankings within minutes."
+    },
+    {
+      "name": "Document Inception Date Scoring",
+      "source": "Patent US8521749 (Haahr, Cutts, Dean, Henzinger, Lawrence, Pfleger, Tong)",
+      "how": "Foundational freshness patent filed in 2003 by Google's earliest search engineers. Scores documents based on their inception date relative to other documents. The system uses multiple methods to determine inception date (first crawl, first link, domain registration, first external reference) and adjusts scores based on link growth rate since inception. A document with 10 links gained yesterday scores higher than a document with 100 links gained over 10 years, because the rate is higher. The formula H=L/log(F+2) adjusts link-based scores by age. Also covers: content update scoring (U=f(UF,UA) where UF=update frequency, UA=update amount), anchor text freshness tracking, traffic pattern monitoring, user behavior analysis (dwell time trends over time), domain legitimacy signals (registration length, DNS record stability), and ranking history hysteresis to cap rank growth rate and detect spam.",
+      "formula": "<span class=\"cf-fn\">H</span>(doc) = <span class=\"cf-val\">L</span> / <span class=\"cf-fn\">log</span>(<span class=\"cf-val\">F</span> + 2)\n<span class=\"cf-comment\">// L = link-based score, F = time since inception</span>\n<span class=\"cf-comment\">// Newer docs with fast link growth score higher</span>\n\n<span class=\"cf-fn\">ContentUpdate</span>(doc) = <span class=\"cf-fn\">f</span>(\n  <span class=\"cf-val\">UF</span>,  <span class=\"cf-comment\">// update frequency (how often)</span>\n  <span class=\"cf-val\">UA</span>   <span class=\"cf-comment\">// update amount (how much changed)</span>\n)\n<span class=\"cf-comment\">// UA ignores: JS, comments, ads, nav, boilerplate, dates</span>\n<span class=\"cf-comment\">// UA weights: title changes, anchor text changes</span>\n\n<span class=\"cf-comment\">// Inception date sources (cross-referenced):</span>\n<span class=\"cf-comment\">// 1. First crawl/index date</span>\n<span class=\"cf-comment\">// 2. First link discovered</span>\n<span class=\"cf-comment\">// 3. Domain registration date</span>\n<span class=\"cf-comment\">// 4. First external reference (news, forums)</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US8521749\">US8521749</a> (Document scoring based on document inception date). Original filing: US10/748,664 (2003). Co-inventors: Matt Cutts, Jeffrey Dean, Paul Haahr, Monika Henzinger, Steve Lawrence, Karl Pfleger, Simon Tong.",
+      "affects": "Affected by: document age, link growth rate, content update frequency and substantiveness, anchor text evolution, traffic trends, domain registration length. Newer documents with rapidly growing natural links benefit. Spam-like link spikes are penalized."
+    },
+    {
+      "name": "QDF (Query Deserves Freshness)",
+      "source": "Patent US8832088 + US9189526 (Chen, Zhu, Google)",
+      "how": "Core freshness boosting algorithm. Determines if a query deserves fresh results by computing QtoA: ratio of recent impression click probability to overall impression click probability. When QtoA > 1, users prefer newer content. The system then boosts fresh documents using S'=S*Q^D, where Q is the query freshness value (derived from 8 freshness signals: query volume spikes, blog/news/social mentions, news click ratios) and D is the resource freshness value (reverse sigmoid of document age, multiplied by provider quality and topicality). Continuation patent US9189526 adds demotion dampening: when F(age) is negative, popular documents are protected from false demotion via J(query, resource) dampening function.",
+      "formula": "<span class=\"cf-fn\">QtoA</span> = <span class=\"cf-fn\">P_recent</span>(click | query) / <span class=\"cf-fn\">P_overall</span>(click | query)\n<span class=\"cf-comment\">// QtoA > 1 → users prefer newer content for this query</span>\n\n<span class=\"cf-fn\">Q</span> = <span class=\"cf-fn\">Max</span>(<span class=\"cf-val\">QFval</span>, <span class=\"cf-val\">QtoA</span>) + 1  <span class=\"cf-comment\">// when QtoA > 1</span>\n<span class=\"cf-fn\">Q</span> = <span class=\"cf-fn\">Max</span>(<span class=\"cf-val\">QFval</span>) - <span class=\"cf-val\">QtoA</span> + 1  <span class=\"cf-comment\">// when QtoA ≤ 1</span>\n\n<span class=\"cf-fn\">D</span> = <span class=\"cf-fn\">F</span>(age) &times; <span class=\"cf-fn\">G</span>(provider_quality) &times; <span class=\"cf-fn\">H</span>(query_provider) &times; <span class=\"cf-fn\">I</span>(topicality)\n<span class=\"cf-comment\">// F(age) = reverse sigmoid of document age</span>\n<span class=\"cf-comment\">// When F(age) < 0: D = F(age) / [G * H * I] (dampens demotion)</span>\n\n<span class=\"cf-fn\">S'</span> = <span class=\"cf-val\">S</span> &times; <span class=\"cf-val\">Q</span><sup>D</sup>  <span class=\"cf-comment\">// final boosted score</span>\n<span class=\"cf-comment\">// 8 QFval inputs: query volume, blog, news, social, click ratios</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8832088\">US8832088</a> (freshness-based ranking, 2012), <a href=\"https://patents.google.com/patent/US9189526\">US9189526</a> (freshness with demotion dampening, 2013)",
+      "affects": "Affected by: query freshness signals (volume spikes, news/blog/social mentions), document age, provider quality score, topicality alignment. Fresh content on trending queries gets exponential boost. Evergreen content on stable queries protected from false demotion."
+    },
+    {
+      "name": "Domain Legitimacy Scoring",
+      "source": "Patent US8521749 (Section: Domain-Related Information)",
+      "how": "The same patent describes using domain registration data as a freshness and legitimacy signal. Domains paid for several years in advance are more likely legitimate than domains registered for only one year (typical of doorway/spam domains). The system monitors DNS records over time: stable contact information, consistent name servers, and long registration periods indicate legitimacy. 'Bad' name servers are identified by hosting mainly spam, doorway, or bulk domains.",
+      "formula": "<span class=\"cf-fn\">DomainLegitimacy</span>(domain) = <span class=\"cf-fn\">score</span>(\n  <span class=\"cf-val\">registration_length</span>,  <span class=\"cf-comment\">// years paid ahead</span>\n  <span class=\"cf-val\">dns_stability</span>,         <span class=\"cf-comment\">// contact/nameserver changes</span>\n  <span class=\"cf-val\">nameserver_reputation</span>  <span class=\"cf-comment\">// known-good vs known-bad</span>\n)\n<span class=\"cf-comment\">// Valuable domains: paid 5-10 years ahead</span>\n<span class=\"cf-comment\">// Spam domains: rarely renewed beyond 1 year</span>\n<span class=\"cf-comment\">// DNS churn: frequent nameserver changes = red flag</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US8521749\">US8521749</a>",
+      "affects": "Affected by: domain registration length, DNS record stability, nameserver reputation, contact information consistency. Long-term domain registrations with stable records signal legitimacy."
+    },
+    {
+      "name": "Link-Based Freshness Inference",
+      "source": "Patent US20050144193 (Henzinger, Google, 2004)",
+      "how": "Infers target document freshness by analyzing the modification status of all documents linking to it, rather than relying on the target's own HTTP headers or metadata (which can be manipulated). Counts fresh vs non-fresh documents in the referral set using HTTP last-modified-since headers. If the majority of linking documents are recently modified, the target is scored as fresh. Also tracks temporal link existence: link creation and removal rates over time indicate content relevance decay. A document that stops attracting new links is inferred as stale even if its own content hasn't changed.",
+      "formula": "<span class=\"cf-fn\">LinkFreshness</span>(doc) =\n  <span class=\"cf-fn\">count</span>(<span class=\"cf-val\">fresh_referrers</span>) /\n  <span class=\"cf-fn\">count</span>(<span class=\"cf-val\">all_referrers</span>)\n<span class=\"cf-comment\">// fresh = recent HTTP last-modified-since</span>\n\n<span class=\"cf-kw\">if</span> fresh_ratio &gt; 0.5: <span class=\"cf-val\">Fr</span> = <span class=\"cf-val\">high</span>\n<span class=\"cf-kw\">else</span>: <span class=\"cf-val\">Fr</span> = <span class=\"cf-val\">low</span>\n\n<span class=\"cf-fn\">LinkDecay</span>(doc, t) =\n  <span class=\"cf-fn\">links_created</span>(t) - <span class=\"cf-fn\">links_removed</span>(t)\n<span class=\"cf-comment\">// declining net links = content relevance decay</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US20050144193\">US20050144193</a> (Document freshness determination, 2004)",
+      "affects": "Affected by: freshness of linking documents, link acquisition rate, link removal rate. Documents that continue attracting links from fresh sources maintain freshness scores."
+    }
+  ],
+  "pipeline": {
+    "title": "Freshness Signal Pipeline",
+    "stages": [
+      {
+        "name": "Date Extraction",
+        "detail": "bylineDate, syntacticDate, semanticDate"
+      },
+      {
+        "name": "Change Detection",
+        "detail": "urlHistory (20 versions), significantUpdate, changeRate"
+      },
+      {
+        "name": "Freshness Score",
+        "detail": "FS composite + isHotdoc trending flag"
+      },
+      {
+        "name": "Link Freshness",
+        "detail": "freshdocs multiplier on inbound links"
+      },
+      {
+        "name": "FreshnessTwiddler",
+        "detail": "Final re-ranking boost in Lazy Twiddler stage"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2004",
+      "type": "patent",
+      "title": "Link-Based Freshness Inference (US20050144193)",
+      "desc": "Henzinger patents transitive freshness inference: document freshness determined by analyzing modification status of linking documents rather than the target's own metadata. Majority voting on fresh vs stale referrers. Temporal link existence tracking for freshness decay detection."
+    },
+    {
+      "year": "2003",
+      "type": "patent",
+      "title": "Document Inception Date Scoring (US8521749)",
+      "desc": "Foundational freshness patent filed by Haahr, Cutts, Dean, Henzinger et al. Covers: inception date scoring (H=L/log(F+2)), content update scoring (frequency + amount), link growth rate analysis, anchor text freshness, traffic/user behavior monitoring, domain legitimacy (registration length, DNS stability), and ranking history hysteresis for spam detection."
+    },
+    {
+      "year": "2007",
+      "type": "patent",
+      "title": "Query Deserves Freshness",
+      "desc": "Google patents QDF algorithm to detect queries that need recent results based on search volume spikes."
+    },
+    {
+      "year": "2011",
+      "type": "patent",
+      "title": "Freshness Algorithm Update",
+      "desc": "35% of searches affected. Fresh content boosted for recent events, recurring events, and frequently updated topics."
+    },
+    {
+      "year": "2012",
+      "type": "patent",
+      "title": "QDF Implementation Patented (US8832088)",
+      "desc": "Chen and Zhu patent the core QDF algorithm. S'=S*Q^D boosting formula. QtoA ratio compares recent vs overall click impression probabilities to detect freshness-seeking queries. 8 freshness signal inputs (query volume, blog/news/social mentions, click ratios). Resource value D uses reverse sigmoid of document age multiplied by provider quality and topicality."
+    },
+    {
+      "year": "2013",
+      "type": "patent",
+      "title": "QDF Demotion Dampening (US9189526)",
+      "desc": "Continuation patent by Chen and Zhu adds protection against false demotion of high-quality evergreen content. When F(age) is negative, J(query, resource) dampening function prevents popular documents from being incorrectly penalized. Sigmoidal transformation: S(x)=raise+magnitude/(1+e^(-slope*(x-mid)))."
+    },
+    {
+      "year": "2015",
+      "type": "patent",
+      "title": "Content Change Tracking",
+      "desc": "Patents on distinguishing significant updates from cosmetic changes. urlHistory tracks last 20 document versions."
+    },
+    {
+      "year": "2019",
+      "type": "patent",
+      "title": "freshdocs Link Multiplier",
+      "desc": "Link value weighted by freshness of the linking page. Newer pages pass more link equity."
+    },
+    {
+      "year": "2023",
+      "type": "exploit",
+      "title": "Yandex Leak Cross-Reference",
+      "desc": "Yandex's FI_DATER_AGE (weight: -0.207) is one of the heaviest negative factors, confirming content age as a dominant signal. Yandex applies a 10-year hard decay threshold where old content stops being favored. Time-of-day query weighting (IND_FI_MORNING_QUERY) applies different ranking algorithms morning vs evening, a temporal dimension beyond QDF. News-specific freshness modifiers confirm Google's QDF/isHotdoc pattern."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "API Leak: 12 Freshness Signals",
+      "desc": "freshdocs, FreshnessTwiddler, significantUpdate, changeRate, timeSensitivity, urlHistory all confirmed."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "DOJ Trial: isHotdoc Flag",
+      "desc": "Boolean trending content flag for freshness boost. lastSignificantUpdate tracks meaningful changes vs minor edits."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"Just update your content regularly to stay fresh.\"",
+      "internalSource": "API Leak",
+      "internalClaim": "Google tracks exactly how content changes across 20 versions. significantUpdate distinguishes real updates from cosmetic edits. Minor date changes or rewording don't trigger freshness boosts."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"We use the date shown on the page to determine freshness.\"",
+      "internalSource": "API Leak",
+      "internalClaim": "Three independent date systems (bylineDate, syntacticDate, semanticDate) cross-referenced. Google doesn't trust any single date source and infers true publish dates independently."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"All links are treated equally regardless of when they were created.\"",
+      "internalSource": "API Leak",
+      "internalClaim": "freshdocs multiplier explicitly weights link value by source page age. Links from newer pages pass more equity than links from old, stale pages."
+    }
+  ]
+}

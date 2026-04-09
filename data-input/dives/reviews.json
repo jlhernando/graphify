@@ -1,0 +1,193 @@
+{
+  "id": "reviews",
+  "route": "/reviews",
+  "systems": [
+    "ProductReviews"
+  ],
+  "hero": {
+    "title": "Product Reviews: Quality Tiers in Review Content",
+    "subtitle": "Google's Product Reviews system uses a multi-tier quality classification with page-level and site-level signals. The API leak confirmed 5 review-specific signals, and the DOJ trial revealed 3 more. Reviews can be promoted, demoted, or classified as Ultra High Quality (UHQ), with site-level signals affecting entire review domains."
+  },
+  "keyInsight": {
+    "label": "Key Insight from API Leak + DOJ Trial",
+    "text": "Google classifies reviews into explicit quality tiers. <strong>productReviewPUhqPage</strong> marks individual pages as Ultra High Quality, while <strong>productReviewPUhqSite</strong> applies the UHQ label at domain level, creating a powerful site-wide signal. Demotion operates at both page level (<strong>productReviewPDemotePage</strong>) and site level (<strong>productReviewPDemoteSite</strong>), confirming that one bad review section can tank an entire domain."
+  },
+  "pillars": [
+    {
+      "type": "leak",
+      "title": "Review Signals",
+      "items": [
+        "<strong>productReviewPPromotePage</strong> - Page-level promotion for quality reviews",
+        "<strong>productReviewPDemoteSite</strong> - Site-level demotion confidence score",
+        "<strong>productReviewPUhqPage</strong> - Ultra High Quality page indicator",
+        "<strong>productReviewPUhqSite</strong> - UHQ at site level (strongest review signal)",
+        "<strong>productReviewPReviewPage</strong> - Review page classification flag"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "Signals Confirmed",
+      "items": [
+        "<strong>productReviewPPromotePage</strong> - High-quality review page promotion",
+        "<strong>productReviewPDemotePage</strong> - Poor quality review page demotion",
+        "<strong>productReviewPUhqPage</strong> - Ultra High Quality classification for exceptional reviews",
+        "Page-level AND site-level signals operate independently"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "4 Patents",
+      "items": [
+        "First-hand experience with the product",
+        "Original research, testing data, and quantitative measurements",
+        "Expert authorship with demonstrated expertise",
+        "Comparison with alternatives (not just one product)",
+        "Pros AND cons (not purely promotional)",
+        "Links to purchase from multiple merchants",
+        "<strong>Domain-specific sentiment classification</strong> - Patent <a href=\"https://patents.google.com/patent/US20090125371\">US20090125371</a> (Google, filed 2007): Classifies review sentiment using Maximum Entropy model with domain-specific lexicons. Base lexicon of ~360 sentiment words expanded via WordNet synonyms. Domain-specific terms extracted from high-sentiment documents in each product category. N-gram features up to n=5 capture phrase-level sentiment (e.g., 'not worth the price'). Enables per-aspect sentiment scoring for review quality assessment",
+        "<a href=\"https://patents.google.com/patent/US20110125736\">US20110125736</a>: Selecting High Quality Reviews for Display; <a href=\"https://patents.google.com/patent/US7302674\">US7302674</a>: Automating document reviews in a project management system; <a href=\"https://patents.google.com/patent/US7870131\">US7870131</a>: Mitigation of search engine hijacking"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Product Reviews Affects Your SEO",
+      "items": [
+        "<strong>Target UHQ classification with original testing data</strong>: The leak confirmed productReviewPUhqPage as an explicit 'Ultra High Quality' tier, the highest review classification. To earn UHQ, include original benchmarks (speed tests, durability tests, measurements), unique photography showing the product in use, long-term usage observations (not just unboxing), and quantitative comparisons against specific alternatives.",
+        "<strong>Treat review quality as a site-level concern, not per-page</strong>: productReviewPDemoteSite operates at the domain level with a confidence score. One section of thin affiliate reviews can trigger site-wide demotion that drags down even your best review content. Audit all review pages and either substantially improve or noindex/remove thin reviews that just restate manufacturer specs.",
+        "<strong>Demonstrate first-hand experience with specific evidence</strong>: The patent pillar confirms Google evaluates first-hand product experience. Include details only a real user would know: setup quirks, day-30 vs day-1 performance, wear patterns, software update impacts. Generic reviews that could be written from a product listing page will not reach the Promote threshold.",
+        "<strong>Include genuine pros AND cons to avoid demotion</strong>: productReviewPDemotePage flags purely promotional content. Reviews that only praise a product trigger the 'affiliate-only' classification. Include meaningful criticisms, limitations, and specific use cases where the product falls short. This signals editorial independence to the review quality classifier.",
+        "<strong>Build independent links to strengthen the IL/RQ ratio</strong>: The leak confirmed independentLinks counts unique linking root domains, used in the Panda modifier (IL/RQ ratio). Review sites need links from diverse, independent domains, not just the merchants they review. Earn citations from forums, social discussions, and other publications that reference your review methodology.",
+        "<strong>Compare multiple products within each review</strong>: Patent evidence confirms comparison with alternatives is a UHQ signal. Do not review products in isolation. Every review should position the product against 2-3 specific competitors with direct, experience-based comparisons on concrete criteria (price, performance, durability). This also increases asteroidBeltIntents coverage for comparative queries.",
+        "<strong>Link to purchase options from multiple merchants</strong>: Google's quality criteria include multi-merchant purchase links as a UHQ indicator. Providing options from Amazon, direct brand stores, and other retailers signals editorial independence rather than single-affiliate dependence. This also reduces the commercial score skew that flags affiliate-only content."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "productReviewPPromotePage",
+      "source": "DOJ: page-level promotion for high-quality reviews",
+      "how": "Page-level promotion signal in PerDocData module. Identifies and boosts high-quality product review content. Likely uses LLM-based analysis of review depth and originality.",
+      "formula": "<span class=\"cf-fn\">reviewPPromote</span>(page) = <span class=\"cf-fn\">LLM_eval</span>(\n<span class=\"cf-val\">depth</span>, <span class=\"cf-val\">originality</span>, <span class=\"cf-val\">first_hand_evidence</span>\n)  <span class=\"cf-comment\">// page-level, in PerDocData module</span>\n<span class=\"cf-kw\">if</span> quality &gt; <span class=\"cf-val\">promote_threshold</span>: <span class=\"cf-kw\">boost</span> ranking",
+      "affects": "Affected by: writing in-depth reviews with hands-on testing evidence. Include original photos, comparisons, pros/cons. Demonstrate first-hand experience."
+    },
+    {
+      "name": "productReviewPDemotePage",
+      "source": "DOJ: page-level demotion for poor quality reviews",
+      "how": "Inverse of promotion signal. Page-level demotion for thin, affiliate-only, or templated product review content. Identifies low-effort reviews.",
+      "formula": "<span class=\"cf-fn\">reviewPDemote</span>(page) = <span class=\"cf-fn\">detect</span>(\n<span class=\"cf-val\">thin_content</span>, <span class=\"cf-val\">affiliate_only</span>, <span class=\"cf-val\">templated</span>\n)  <span class=\"cf-comment\">// inverse of promotion signal</span>\n<span class=\"cf-kw\">if</span> low_effort == true: <span class=\"cf-kw\">demote</span> ranking",
+      "affects": "Affected by: avoiding thin reviews that just list specs. Don't rely on manufacturer descriptions. Original testing and analysis prevents demotion."
+    },
+    {
+      "name": "productReviewPUhqPage",
+      "source": "DOJ: Ultra High Quality classification",
+      "how": "Top-tier quality classification. \"Ultra High Quality\" designation for exceptional product review pages. Likely reserved for reviews with extensive original testing, unique data, expert analysis.",
+      "formula": "<span class=\"cf-fn\">reviewPUhq</span>(page) = <span class=\"cf-fn\">classify</span>(\n<span class=\"cf-val\">testing_depth</span>, <span class=\"cf-val\">unique_data</span>, <span class=\"cf-val\">expert_analysis</span>\n) &rarr; <span class=\"cf-val\">UHQ tier</span>  <span class=\"cf-comment\">// highest quality classification</span>\n<span class=\"cf-comment\">// reserved for exceptional reviews with original research</span>",
+      "affects": "Affected by: aiming for exceptional depth: original benchmarks, long-term testing, expert perspective, comparison methodology. This is the highest tier of review quality."
+    },
+    {
+      "name": "independentLinks",
+      "source": "Leak: count of linking root domains, Panda modifier IL/RQ ratio",
+      "how": "Count of independent linking root domains. Used as part of the Panda modifier factor (IL/RQ ratio = Independent Links / something). Higher ratio = more natural link profile.",
+      "formula": "<span class=\"cf-fn\">IL_RQ</span>(site) = <span class=\"cf-val\">independentLinks</span>(unique_root_domains)\n/ <span class=\"cf-val\">referenceQueries</span>(branded_searches)\n<span class=\"cf-comment\">// Panda modifier: higher ratio = more natural profile</span>\n<span class=\"cf-comment\">// counts linking root domains, not total links</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US9165040\">US9165040</a> (link graph distances), <a href=\"https://patents.google.com/patent/US7603350\">US7603350</a> (trust-based ranking)",
+      "affects": "Affected by: earning links from diverse, independent domains. Links from many unique domains signal that content is genuinely useful and referenced widely."
+    },
+    {
+      "name": "Domain-Specific Sentiment Classification",
+      "source": "Patent US20090125371 (Google, 2007)",
+      "how": "Classifies review sentiment using Maximum Entropy (MaxEnt) model with domain-specific lexicons. Base lexicon of ~360 sentiment words (positive and negative) expanded via WordNet synonym sets. Domain-specific sentiment terms extracted automatically from documents with highest/lowest sentiment scores within each product category. N-gram features up to n=5 capture phrase-level sentiment patterns (e.g., 'not worth the price' as a negative 5-gram). Per-aspect scoring enables granular review quality assessment: a review can be positive on build quality but negative on battery life.",
+      "formula": "<span class=\"cf-fn\">Sentiment</span>(review) = <span class=\"cf-fn\">MaxEnt</span>(\n  <span class=\"cf-val\">base_lexicon</span>(~360 words),\n  <span class=\"cf-fn\">WordNet_expand</span>(<span class=\"cf-val\">synonyms</span>),\n  <span class=\"cf-val\">domain_lexicon</span>(<span class=\"cf-val\">category</span>),\n  <span class=\"cf-val\">ngrams</span>(<span class=\"cf-val\">n=1..5</span>)\n)\n<span class=\"cf-comment\">// domain-specific: terms vary by product category</span>\n<span class=\"cf-comment\">// per-aspect: sentiment scored per product dimension</span>\n<span class=\"cf-comment\">// phrase-level: n-grams capture negation patterns</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US20090125371\">US20090125371</a> (Domain-specific sentiment classification, 2007)",
+      "affects": "Affected by: review vocabulary richness, use of domain-specific terms, balanced sentiment expression, per-aspect detail. Reviews with nuanced, category-specific sentiment score higher."
+    }
+  ],
+  "pipeline": {
+    "title": "Review Quality Pipeline",
+    "stages": [
+      {
+        "name": "Page Detection",
+        "detail": "productReviewPReviewPage classification"
+      },
+      {
+        "name": "Quality Assessment",
+        "detail": "Experience, research, expertise analysis"
+      },
+      {
+        "name": "Tier Assignment",
+        "detail": "UHQ / Promote / Neutral / Demote"
+      },
+      {
+        "name": "Site Aggregation",
+        "detail": "Page signals roll up to site-level scores"
+      },
+      {
+        "name": "Ranking Impact",
+        "detail": "UHQ sites dominate review SERPs"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2007",
+      "type": "patent",
+      "title": "Domain-Specific Sentiment Patent (US20090125371)",
+      "desc": "Google patents review sentiment classification using Maximum Entropy model with domain-specific lexicons. Base lexicon of ~360 sentiment words expanded via WordNet. Domain-specific terms extracted per product category. N-gram features up to n=5 capture phrase-level sentiment patterns."
+    },
+    {
+      "year": "2018",
+      "type": "patent",
+      "title": "Review Snippet Enhancements",
+      "desc": "Google expands review rich results. Review quality becomes a factor in snippet eligibility."
+    },
+    {
+      "year": "2021",
+      "type": "patent",
+      "title": "Product Reviews Update v1",
+      "desc": "Google targets low-quality affiliate reviews. Sites with thin comparison content see significant traffic drops."
+    },
+    {
+      "year": "2022",
+      "type": "patent",
+      "title": "Product Reviews Updates v2-v4",
+      "desc": "Three more updates in 2022 alone. Focus shifts to first-hand experience, original research, and quantitative data."
+    },
+    {
+      "year": "2023",
+      "type": "patent",
+      "title": "Reviews System Integration",
+      "desc": "Product reviews system merged into core algorithm. Runs continuously rather than as periodic updates."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "API Leak: Review Signals",
+      "desc": "productReviewPPromotePage, productReviewPDemoteSite, productReviewPUhqPage, productReviewPUhqSite confirmed."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "DOJ Trial: UHQ Classification",
+      "desc": "Ultra High Quality review tier confirmed. Page-level promotion/demotion and site-level signals revealed."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "We evaluate review quality holistically. There's no single quality threshold.",
+      "internalSource": "API Leak",
+      "internalClaim": "Explicit binary and tiered signals: productReviewPUhqPage is a distinct \"Ultra High Quality\" classification. productReviewPDemoteSite is a site-level demotion with a confidence score."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "Product reviews updates only affect product review content.",
+      "internalSource": "API Leak",
+      "internalClaim": "productReviewPDemoteSite operates at domain level. A site's overall review quality drags down or lifts up all review pages on that domain."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "Affiliate links don't affect review quality signals.",
+      "internalSource": "API Leak + DOJ",
+      "internalClaim": "The review classification system (productReviewPReviewPage) explicitly identifies review content. Thin affiliate reviews trigger productReviewPDemotePage, while genuinely helpful reviews earn UHQ status."
+    }
+  ]
+}

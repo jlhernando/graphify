@@ -1,0 +1,173 @@
+{
+  "id": "sitediversity",
+  "route": "/sitediversity",
+  "systems": [
+    "SiteDiversity"
+  ],
+  "hero": {
+    "title": "SiteDiversity: SERP Diversity Mechanism",
+    "subtitle": "SiteDiversity is Google's post-ranking mechanism that limits how many results from a single domain can appear on a SERP page. With 0 leak signals, 0 DOJ evidence, and 0 patents, it is known primarily through observable behavior and its relationship to the Twiddler framework. Applied as a Twiddler function after initial ranking, SiteDiversity prevents any single domain from monopolizing search results, regardless of how many pages from that domain scored highly. It operates alongside the YouTubeDensityTwiddler (which specifically limits YouTube results) as part of Google's broader SERP diversity enforcement."
+  },
+  "keyInsight": {
+    "label": "Key Insight from System Analysis",
+    "text": "SiteDiversity operates as a <strong>PredocTwiddler</strong>, processing results in the early post-ranking stage where fast heuristics handle deduplication and diversity across hundreds of URLs. The typical limit is <strong>2-3 results per domain per SERP page</strong>, though this varies by query type: navigational queries allow more results from the target domain, while informational queries enforce stricter diversity. SiteDiversity also interacts with <strong>subdomain handling</strong>: Google sometimes treats subdomains as separate sites (e.g., blog.example.com vs shop.example.com) and sometimes as the same site, depending on whether the subdomain has independent content and link profiles. The system was partially relaxed for <strong>site: queries</strong> and navigational searches, where users explicitly want results from a specific domain."
+  },
+  "pillars": [
+    {
+      "type": "patent",
+      "title": "5 Patents",
+      "items": [
+        "Document ranking via word relationships: builds global and local term relationship graphs to enforce topical diversity in search results (<a href=\"https://patents.google.com/patent/US8321409\">US8321409</a>)",
+        "Link-based document clustering: groups hyperlinked documents into topic clusters for diverse result presentation (<a href=\"https://patents.google.com/patent/US7213198\">US7213198</a>)",
+        "<strong>Category diversity enforcement</strong> - Patent <a href=\"https://patents.google.com/patent/US10289648\">US10289648</a> (Arora, Yang, Yang, filed 2011): Prevents POI category over-representation by applying rank-based scaling factors. Top-ranked entities in under-represented categories promoted (e.g., museums scaled to 130%), lower-ranked entities in over-represented categories demoted. Categories with >2 candidates trigger scaling. Re-ranks by combined scaled scores across all categories",
+        "The Twiddler framework patents describe pluggable re-ranking functions, which is the architecture SiteDiversity uses.",
+        "Query-dependent diversity patents describe varying diversity thresholds based on query intent: stricter for informational, relaxed for navigational.",
+        "<a href=\"https://patents.google.com/patent/US8620951\">US8620951</a>: Search query results based upon topic; <a href=\"https://patents.google.com/patent/US11314822\">US11314822</a>: Interface for a universal search"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "Related Leak Evidence",
+      "items": [
+        "No direct SiteDiversity signals in the API leak, but the Twiddler framework it operates within is documented:",
+        "<strong>YouTubeDensityTwiddler</strong> (DOJ): A specific density limiter for YouTube results, confirming the pattern of per-source result caps in the Twiddler framework.",
+        "<strong>BlogCategorizer</strong> (DOJ): Content type classification that feeds into diversity decisions. Blog content may be subject to different diversity rules than news or product pages.",
+        "<strong>PredocTwiddlers</strong> (DOJ): The early-stage Twiddler category where SiteDiversity likely operates, processing hundreds of URLs with fast heuristics for dedup and diversity.",
+        "<strong>BadURLsCategorizer</strong>: Problematic URL identification. Bad URLs from a domain may reduce that domain's diversity allocation."
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "Related DOJ Context",
+      "items": [
+        "No direct SiteDiversity signals in DOJ trial evidence, but the diversity enforcement system was confirmed through related mechanisms:",
+        "<strong>PredocTwiddlers</strong>: Confirmed as fast heuristic processors handling deduplication and diversity on hundreds of URLs. SiteDiversity operates at this stage.",
+        "<strong>YouTubeDensityTwiddler</strong>: Explicitly prevents YouTube from dominating SERPs, confirming Google has per-source density caps. SiteDiversity applies the same pattern to all domains.",
+        "DOJ testimony on Twiddlers confirmed they handle 'quality boosts, diversity enforcement, content filtering, and specialized result treatment,' directly referencing diversity as a core Twiddler function."
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How SiteDiversity Affects Your SEO",
+      "items": [
+        "<strong>Avoid cannibalizing your own rankings</strong>: SiteDiversity limits you to typically 2-3 results per SERP. If you have 5 pages targeting the same keyword, only 2-3 will appear, and the others are wasted. Consolidate overlapping content into fewer, stronger pages rather than spreading thin across many.",
+        "<strong>Use subdomains strategically for diversity</strong>: Google sometimes treats subdomains as separate sites. If you have distinct content verticals (blog, docs, shop), hosting them on subdomains may allow more SERP slots. But this only works if the subdomain has genuinely independent content and its own link profile.",
+        "<strong>Target multiple query intents per topic</strong>: Instead of creating 5 informational pages on the same topic, create pages that target different intents (informational, transactional, comparison). Different intents may land you in different SERP features, effectively bypassing the diversity limit.",
+        "<strong>Navigational queries are your exception</strong>: SiteDiversity is relaxed for navigational/brand queries. If users search for your brand name, you can dominate the SERP with homepage, product pages, support pages, and social profiles. Build strong brand recognition to trigger navigational classification.",
+        "<strong>Monitor for cannibalization signals</strong>: If your pages are alternating in rankings (page A ranks one day, page B the next, never both), SiteDiversity is likely limiting you. This is a signal to consolidate those pages or differentiate their targeting.",
+        "<strong>Leverage SERP features for extra slots</strong>: SiteDiversity applies to organic blue links, but featured snippets, video carousels, image packs, and PAA are separate feature types in Tangram. A page in the featured snippet plus a page in organic results effectively gives you two slots despite diversity limits."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "SiteDiversity Filtering",
+      "source": "Observable + Twiddler Framework",
+      "how": "After initial ranking by Mustang/Ascorer, the SiteDiversity Twiddler scans the result set and enforces per-domain limits. Results beyond the limit are pushed to later pages or suppressed. The limit varies by query classification: navigational queries allow more same-domain results, informational queries enforce stricter limits (typically 2-3 per domain).",
+      "formula": "<span class=\"cf-fn\">SiteDiversity</span>(ranked_results) =\n<span class=\"cf-kw\">for each</span> domain <span class=\"cf-kw\">in</span> results:\n  <span class=\"cf-kw\">if</span> <span class=\"cf-fn\">count</span>(domain) &gt; <span class=\"cf-val\">max_per_domain</span>:\n    <span class=\"cf-kw\">demote</span>(excess results)\n<span class=\"cf-comment\">// max_per_domain ~2-3 for informational</span>\n<span class=\"cf-comment\">// relaxed for navigational/brand queries</span>\n<span class=\"cf-comment\">// operates as PredocTwiddler (fast, early stage)</span>",
+      "patents": "",
+      "affects": "Affected by: query intent classification (navigational vs informational), number of pages from your domain in candidate results, subdomain treatment, content differentiation between your pages."
+    },
+    {
+      "name": "Subdomain Independence Check",
+      "source": "Observable",
+      "how": "Google determines whether a subdomain should be treated as part of the parent domain or as an independent site for diversity purposes. Factors include whether the subdomain has its own distinct content, independent link profile, separate site in Search Console, and different topical focus. Truly independent subdomains may receive their own diversity allocation.",
+      "formula": "<span class=\"cf-fn\">SubdomainCheck</span>(subdomain) =\n  <span class=\"cf-fn\">isIndependent</span>(\n    <span class=\"cf-val\">content_overlap</span>,\n    <span class=\"cf-val\">link_profile</span>,\n    <span class=\"cf-val\">topical_focus</span>\n  )\n<span class=\"cf-kw\">if</span> independent: <span class=\"cf-val\">separate diversity slot</span>\n<span class=\"cf-kw\">else</span>: <span class=\"cf-val\">counts toward parent domain limit</span>",
+      "patents": "",
+      "affects": "Affected by: subdomain content independence, separate link profiles, distinct topical focus, Search Console configuration."
+    },
+    {
+      "name": "Category Diversity Scaling",
+      "source": "Patent US10289648 (Arora, Yang, Yang, 2011)",
+      "how": "For POI searches, prevents category over-representation by applying rank-based scaling factors to relevance scores. Categories with more than a threshold number of candidates (e.g., >2) trigger scaling. Top-ranked entities in under-represented categories receive promotion factors (>1.0), lower-ranked entities in over-represented categories receive demotion factors (<1.0). Results re-ranked by scaled scores across all categories.",
+      "formula": "<span class=\"cf-fn\">ScaledScore</span>(poi) =\n  <span class=\"cf-val\">relevance</span>(poi) &times;\n  <span class=\"cf-fn\">scalingFactor</span>(<span class=\"cf-val\">category</span>, <span class=\"cf-val\">rank</span>)\n<span class=\"cf-comment\">// Example scaling factors:</span>\n<span class=\"cf-comment\">// Top restaurant: 120%, 2nd restaurant: 80%</span>\n<span class=\"cf-comment\">// Top museum: 130% (boost under-represented)</span>\n<span class=\"cf-kw\">if</span> <span class=\"cf-fn\">count</span>(category) &gt; <span class=\"cf-val\">threshold</span>:\n  <span class=\"cf-kw\">apply scaling table</span>\n<span class=\"cf-comment\">// re-rank by combined scaled scores</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US10289648\">US10289648</a> (Enforcing category diversity, 2011)",
+      "affects": "Affected by: category distribution in result set, rank position within category, number of candidates per category, scaling factor configuration."
+    },
+    {
+      "name": "Term Relationship Diversity",
+      "source": "Patent",
+      "how": "Builds a global term relationships graph capturing how terms co-occur and relate across the web corpus. For a given query, constructs local term relationships from the candidate result set. Documents are then scored not just on relevance but on how much they contribute to topical diversity relative to other results already selected. This prevents results that cover the same subtopic from monopolizing the SERP.",
+      "formula": "<span class=\"cf-fn\">diversityScore</span>(doc, selected) = <span class=\"cf-fn\">relevance</span>(doc) &times;\n<span class=\"cf-fn\">novelty</span>(\n<span class=\"cf-fn\">localTerms</span>(doc) - <span class=\"cf-fn\">coveredTerms</span>(selected),\n<span class=\"cf-val\">globalTermGraph</span>\n)  <span class=\"cf-comment\">// rewards documents covering new subtopics</span>\n<span class=\"cf-comment\">// penalizes redundancy with already-selected results</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8321409\">US8321409</a> (document ranking using word relationships)",
+      "affects": "Affected by: topical breadth of content, subtopic coverage relative to competing results, term relationship graph density for the query topic."
+    },
+    {
+      "name": "Link-Based Topic Clustering",
+      "source": "Patent",
+      "how": "Groups hyperlinked documents into topic clusters based on their link structure. Pages that link to each other heavily are assumed to cover related topics. The clustering enables diversity enforcement at the topic level: the system selects results from different clusters rather than returning multiple pages from the same tightly-linked cluster.",
+      "formula": "<span class=\"cf-fn\">cluster</span>(docs) = <span class=\"cf-fn\">linkPartition</span>(\n<span class=\"cf-val\">linkGraph</span>(docs)\n) &rarr; [<span class=\"cf-val\">cluster_1</span>, ..., <span class=\"cf-val\">cluster_K</span>]\n<span class=\"cf-fn\">diverseResults</span> = <span class=\"cf-fn\">selectTopFrom</span>(\neach cluster\n)  <span class=\"cf-comment\">// one top result per topic cluster</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US7213198\">US7213198</a> (link-based clustering of hyperlinked documents)",
+      "affects": "Affected by: link graph topology, inter-site linking patterns, topical cluster membership. Pages in unique link clusters get separate diversity slots."
+    }
+  ],
+  "pipeline": {
+    "title": "SiteDiversity in the Ranking Pipeline",
+    "stages": [
+      {
+        "name": "Mustang Retrieval",
+        "detail": "Initial document retrieval produces thousands of candidates. Multiple pages from the same domain may score highly."
+      },
+      {
+        "name": "Ascorer Ranking",
+        "detail": "Full ranking with ~1,700 signals. Domain-dominant topics may have 5-10 results from a single site in top positions."
+      },
+      {
+        "name": "PredocTwiddler Stage",
+        "detail": "SiteDiversity operates here. Per-domain limits enforced. Excess same-domain results demoted or pushed to later pages."
+      },
+      {
+        "name": "Content Type Diversity",
+        "detail": "YouTubeDensityTwiddler and BlogCategorizer apply content-type-specific diversity limits alongside domain diversity."
+      },
+      {
+        "name": "Tangram Assembly",
+        "detail": "SERP features (snippets, images, videos) assembled separately from blue links. A domain may appear in both organic and features."
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2003",
+      "type": "patent",
+      "title": "Host Crowding Prevention",
+      "desc": "Early Google algorithms limit same-host results in SERPs. Basic deduplication and diversity enforcement introduced."
+    },
+    {
+      "year": "2004",
+      "type": "patent",
+      "title": "Link-Based Document Clustering (US7213198)",
+      "desc": "Georges Harik (Google) patents link-based clustering of hyperlinked documents. Groups pages into topic clusters by link structure, enabling diversity enforcement at the topic level rather than just the domain level."
+    },
+    {
+      "year": "2008",
+      "type": "patent",
+      "title": "Term Relationship Diversity (US8321409)",
+      "desc": "Sharad Jain (Google) patents document ranking using word relationships. Builds global and local term relationship graphs to score documents by topical novelty relative to already-selected results."
+    },
+    {
+      "year": "2011",
+      "type": "patent",
+      "title": "Category Diversity Patent (US10289648)",
+      "desc": "Google patents POI category diversity enforcement. Rank-based scaling factors prevent category over-representation: under-represented categories boosted (130%), over-represented categories demoted. Re-ranks by scaled scores across all categories."
+    },
+    {
+      "year": "2012",
+      "type": "patent",
+      "title": "Site Diversity Update",
+      "desc": "Google updates diversity algorithm. Sites limited to 2 results per SERP page for most queries. Navigational queries exempted."
+    },
+    {
+      "year": "2019",
+      "type": "patent",
+      "title": "Site Diversity Launch (June)",
+      "desc": "Google announces formal 'site diversity' change limiting domains to 2 organic listings per page. Subdomains treated as same site in most cases."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "Twiddler Framework Confirmed",
+      "desc": "DOJ trial confirms PredocTwiddlers handle diversity enforcement. YouTubeDensityTwiddler confirms per-source density caps in the Twiddler architecture."
+    }
+  ]
+}

@@ -1,0 +1,181 @@
+{
+  "id": "phrase-indexing",
+  "route": "/phrase-indexing",
+  "systems": [
+    "Phrase-Based Index",
+    "Information Gain",
+    "Tiered Index Servers"
+  ],
+  "hero": {
+    "title": "Phrase-Based Indexing: How Google Actually Understands Content",
+    "subtitle": "Google does not index individual words. Since 2004, Anna Patterson's phrase-based indexing system identifies valid phrases via information gain, indexes documents by topical coherence, and detects spam through phrase co-occurrence anomalies. This foundational system determines what enters the candidate set before any ranking happens."
+  },
+  "keyInsight": {
+    "label": "Key Insight from Patents",
+    "text": "A phrase is <strong>valid</strong> only if it predicts the presence of other phrases (information gain > 100x expected). Documents are indexed not by keywords but by their <strong>phrase ecosystem</strong>. Spam is detected when a page contains phrases from <strong>too many unrelated topic clusters</strong>, measured against corpus-wide co-occurrence baselines. This is why keyword stuffing fails: it creates anomalous phrase distributions that the system was specifically designed to catch."
+  },
+  "pillars": [
+    {
+      "type": "patent",
+      "title": "20 Patents",
+      "items": [
+        "<strong>Valid phrase identification</strong> - A phrase is valid if it appears minimum N times AND predicts at least one other phrase via information gain. This filters noise from signal at corpus scale.",
+        "<strong>Information gain formula: I(j,k) = A(j,k) / E(j,k)</strong> - Actual co-occurrence divided by expected co-occurrence. Threshold of ~100x means phrases must appear together 100 times more than random chance. 'Golden retriever' and 'dog grooming' are related phrases; 'golden retriever' and 'tax return' are not.",
+        "<strong>Phrase posting lists</strong> - For each valid phrase, the system stores: document IDs containing it, which related phrases also appear in each document (ordered by decreasing information gain), and primary + secondary related phrases.",
+        "<strong>Anchor text integration</strong> - Hyperlink anchor text is evaluated by computing related phrases of the anchor phrase and scoring link coherence. A link with anchor 'best dog food' pointing to a page about tax preparation shows no related phrase overlap, flagging it as manipulative.",
+        "<strong>July 26, 2004 filing cluster</strong> - Patterson filed 7 interconnected applications in a single day: phrase identification, phrase-based indexing, phrase-based searching, personalization, automatic taxonomy, document descriptions, and duplicate detection. A complete system design.",
+        "<a href=\"https://patents.google.com/patent/US9990421\">US9990421</a>: Phrase-based searching in an information retrieval system; <a href=\"https://patents.google.com/patent/US7599914\">US7599914</a>: Phrase-based searching in an information retrieval system; <a href=\"https://patents.google.com/patent/US20110131223\">US20110131223</a>: Detecting spam documents in a phrase based information retrieval system",
+        "<a href=\"https://patents.google.com/patent/US7580921\">US7580921</a>: Phrase identification in an information retrieval system; <a href=\"https://patents.google.com/patent/US8166045\">US8166045</a>: Phrase extraction using subphrase scoring; <a href=\"https://patents.google.com/patent/US20100161617\">US20100161617</a>: Index server architecture using tiered and sharded phrase posting lists",
+        "<a href=\"https://patents.google.com/patent/US9652483\">US9652483</a>: Index server architecture using tiered and sharded phrase posting lists; <a href=\"https://patents.google.com/patent/US7925655\">US7925655</a>: Query scheduling using hierarchical tiers of index servers; <a href=\"https://patents.google.com/patent/US8166021\">US8166021</a>: Query phrasification",
+        "<a href=\"https://patents.google.com/patent/US6411950\">US6411950</a>: Dynamic query expansion; <a href=\"https://patents.google.com/patent/US7584175\">US7584175</a>: Phrase-based generation of document descriptions; <a href=\"https://patents.google.com/patent/US7702614\">US7702614</a>: Index updating using segment swapping",
+        "<a href=\"https://patents.google.com/patent/US8332415\">US8332415</a>: Determining spam in information collected by a source; <a href=\"https://patents.google.com/patent/US11321331\">US11321331</a>: Generating query answers; <a href=\"https://patents.google.com/patent/US7925498\">US7925498</a>: Identifying a synonym with N-gram agreement for a query phrase",
+        "<a href=\"https://patents.google.com/patent/US7567959\">US7567959</a>: Multiple index based information retrieval system; <a href=\"https://patents.google.com/patent/US20100057710\">US20100057710</a>: Generation of search result abstracts; <a href=\"https://patents.google.com/patent/US8037070\">US8037070</a>: Background contextual conversational search",
+        "<a href=\"https://patents.google.com/patent/US7152064\">US7152064</a>: Searching tool and process for unified search using categories and keywords; <a href=\"https://patents.google.com/patent/US5920854\">US5920854</a>: Real-time document collection search engine with phrase indexing"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "Infrastructure: Tiered & Sharded Architecture",
+      "items": [
+        "<strong>Three-tier index server architecture</strong> - Posting lists are split by size. Tier 1 (short lists): each server holds complete posting list. Tier 2 (medium): sharded across multiple servers. Tier 3 (long): sharded even more finely across the largest server set.",
+        "<strong>Efficient query routing</strong> - Rare phrases (high specificity) resolve on one Tier 1 server. Common phrases are distributed across Tier 3 for parallel processing. Query scheduler can skip tiers when phrase co-occurrence already narrows results.",
+        "<strong>Companion systems</strong> - Co-filed patents cover: query scheduling across tiers, index updating via segment swapping (live updates without full rebuilds), phrase extraction via subphrase scoring, and bifurcated relevance scoring across tiers.",
+        "<strong>Document treadmilling</strong> - Live index updates via queue-based invalidation system. New documents enter the index through segment swaps rather than full rebuilds, enabling near-realtime freshness."
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "Spam Detection via Phrase Co-occurrence",
+      "items": [
+        "<strong>Topical coherence test</strong> - A legitimate page on 'dog grooming' contains related phrases like 'brush', 'shampoo', 'coat' in proportions consistent with how real content on that topic is written. The phrase index stores expected co-occurrence rates for every phrase pair.",
+        "<strong>Spam detection mechanism</strong> - For each document: (1) identify top 1-3 most significant phrases, (2) compute expected number of related phrases from corpus statistics, (3) count actual related phrases present, (4) if actual exceeds expected by N standard deviations, flag as spam.",
+        "<strong>Multi-topic spam signature</strong> - A keyword-stuffed page serves phrases from many unrelated topic clusters simultaneously. Each 'most significant' phrase independently shows anomalous related-phrase excess. Multiple independent anomalies = high-confidence spam.",
+        "<strong>Structural vs density detection</strong> - This is fundamentally different from keyword density checks. It measures topical coherence, not word frequency. A medical reference with unusual phrase density is NOT flagged because all its related phrases are internally consistent. A spam page with 'correct' keyword density but serving five topic clusters fails."
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "What This Means for Content Strategy",
+      "items": [
+        "<strong>Write for the phrase ecosystem, not keywords</strong>: Google indexes your page by its phrase graph. A page about 'running shoes' should naturally contain related phrases like 'pronation', 'cushioning', 'midsole', 'gait analysis'. If your page has 'running shoes' 50 times but none of the expected companion phrases, the information gain test reveals it as thin or manipulated content.",
+        "<strong>Topical depth beats keyword density</strong>: The phrase-based system rewards pages that develop a topic's full phrase ecosystem. A 3000-word guide that covers all facets of a topic will have a dense, coherent related-phrase graph. A 500-word page hitting the same keyword 15 times will show anomalous phrase distributions.",
+        "<strong>Cross-topic pages are detectable</strong>: If your page tries to rank for multiple unrelated topics (e.g., both 'dog grooming' and 'cryptocurrency trading'), the phrase co-occurrence test will flag the inconsistency. Each topic cluster's phrases will show anomalous excess relative to the other. Focus pages on coherent topics.",
+        "<strong>Link anchor coherence matters at phrase level</strong>: Links are scored by whether the anchor text's related phrases overlap with the target page's phrase profile. An inbound link with anchor 'best running shoes' from a page about cooking shows zero phrase overlap with your content. Earn links from topically relevant sources.",
+        "<strong>This system predates and enables everything else</strong>: Phrase-based indexing determines what enters the candidate set. NavBoost re-ranks within that set. As Nayak testified: 'you get NavBoost only after they're retrieved in the first place.' Poor phrase-level topical coverage means your page may never enter the ranking pipeline."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Information Gain (Phrase Relatedness)",
+      "source": "Patent US7536408 (Patterson, 2004)",
+      "how": "Measures how strongly two phrases co-occur above random chance. If phrase gk appears with phrase gj 100x more than expected, they are related phrases. The system uses this to determine which phrases define a topic and which documents are topically coherent.",
+      "formula": "<span class=\"cf-fn\">I</span>(j,k) = <span class=\"cf-fn\">A</span>(j,k) / <span class=\"cf-fn\">E</span>(j,k)\n<span class=\"cf-comment\">// A(j,k) = actual co-occurrence rate of phrases gj and gk</span>\n<span class=\"cf-comment\">// E(j,k) = expected rate if statistically independent</span>\n<span class=\"cf-kw\">if</span> I(j,k) > <span class=\"cf-val\">~100</span>: gk is <span class=\"cf-val\">related_phrase</span> of gj\n<span class=\"cf-comment\">// threshold ~100x above random chance</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US7536408\">US7536408</a> (Phrase-based indexing, Patterson, 2004)",
+      "affects": "Affects: which phrases define a topic. All downstream topicality, quality, and spam signals depend on this foundational phrase graph."
+    },
+    {
+      "name": "Spam Phrase Anomaly Detection",
+      "source": "Patent US8078629 (Patterson, 2006)",
+      "how": "For each document, computes expected related-phrase count from corpus median, then compares to actual count. Excess related phrases from unrelated topic clusters flag spam. Multiple independent anomalies across different significant phrases increase confidence.",
+      "formula": "<span class=\"cf-fn\">expected_related</span>(phrase) = <span class=\"cf-fn\">median</span>(\n  related_phrase_count <span class=\"cf-kw\">across</span> all docs containing phrase\n)\n<span class=\"cf-fn\">anomaly</span>(doc, phrase) = <span class=\"cf-val\">actual_count</span> - <span class=\"cf-val\">expected_related</span>\n<span class=\"cf-kw\">if</span> anomaly > <span class=\"cf-val\">N * stddev</span>: <span class=\"cf-kw\">flag</span> spam\n<span class=\"cf-comment\">// checked for top 1-3 significant phrases independently</span>\n<span class=\"cf-comment\">// multiple independent flags = high confidence</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US8078629\">US8078629</a> (Spam detection in phrase-based IR, Patterson, 2006)",
+      "affects": "Affects: spam classification. Pages with anomalous cross-topic phrase distributions are added to spam list and filtered from results."
+    },
+    {
+      "name": "Index Tier Assignment",
+      "source": "Patent US7693813 (Cao, Patterson et al., 2007)",
+      "how": "Phrase posting lists are assigned to server tiers based on list length. Short lists (rare phrases) go to Tier 1 (few servers, complete lists). Long lists (common phrases) go to Tier 3 (many servers, heavily sharded). This optimizes retrieval: rare phrases resolve quickly on one server; common phrases process in parallel.",
+      "formula": "<span class=\"cf-kw\">if</span> posting_list_length < <span class=\"cf-val\">L1</span>: <span class=\"cf-fn\">assign</span>(Tier 1)\n<span class=\"cf-kw\">elif</span> posting_list_length < <span class=\"cf-val\">L2</span>: <span class=\"cf-fn\">assign</span>(Tier 2)\n<span class=\"cf-kw\">else</span>: <span class=\"cf-fn\">assign</span>(Tier 3)\n<span class=\"cf-comment\">// Tier 1: N servers, complete lists</span>\n<span class=\"cf-comment\">// Tier 2: M*N servers, sharded lists</span>\n<span class=\"cf-comment\">// Tier 3: P*M*N servers, heavily sharded</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US7693813\">US7693813</a> (Tiered index architecture, Cao/Patterson et al., 2007)",
+      "affects": "Affects: retrieval speed and index capacity. Determines how the 400B+ document index is distributed across serving infrastructure."
+    }
+  ],
+  "pipeline": {
+    "title": "Phrase-Based Indexing Pipeline",
+    "stages": [
+      {
+        "name": "Phrase Discovery",
+        "detail": "Identify valid phrases from corpus via minimum frequency + information gain thresholds"
+      },
+      {
+        "name": "Relatedness Mapping",
+        "detail": "Compute I(j,k) for all phrase pairs. Build related-phrase graph with primary and secondary connections"
+      },
+      {
+        "name": "Document Indexing",
+        "detail": "For each document: extract valid phrases, store in phrase posting lists with related-phrase metadata"
+      },
+      {
+        "name": "Tier Assignment",
+        "detail": "Assign posting lists to Tier 1/2/3 servers based on list length"
+      },
+      {
+        "name": "Spam Scoring",
+        "detail": "Detect anomalous phrase distributions. Flag documents exceeding expected related-phrase counts"
+      },
+      {
+        "name": "Retrieval",
+        "detail": "Query processing via phrase matching across tiers. Candidate set generation for downstream ranking"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2004",
+      "type": "patent",
+      "title": "Patterson files 7 phrase-based patents in one day",
+      "desc": "July 26, 2004: Anna Patterson files the complete phrase-based indexing system as a family of 7 interconnected patent applications covering identification, indexing, searching, personalization, taxonomy, descriptions, and duplicate detection."
+    },
+    {
+      "year": "2006",
+      "type": "patent",
+      "title": "Phrase-based spam detection filed",
+      "desc": "Patterson files <a href=\"https://patents.google.com/patent/US8078629\">US8078629</a>: using phrase co-occurrence anomalies to detect spam. This is Google's first algorithmic content-quality signal, predating Panda by 5 years."
+    },
+    {
+      "year": "2007",
+      "type": "patent",
+      "title": "Tiered index architecture filed",
+      "desc": "Multi-inventor team (Cao, Eiron, Mazumdar, Patterson, Power, Zunger) files the server architecture family: tiered/sharded posting lists, query scheduling, segment swapping, subphrase scoring, bifurcated relevance."
+    },
+    {
+      "year": "2009",
+      "type": "patent",
+      "title": "Core phrase patents granted",
+      "desc": "<a href=\"https://patents.google.com/patent/US7536408\">US7536408</a> (phrase-based indexing) and US7,603,345 (spam detection parent) granted."
+    },
+    {
+      "year": "2010",
+      "type": "patent",
+      "title": "Tiered architecture patent granted",
+      "desc": "<a href=\"https://patents.google.com/patent/US7693813\">US7693813</a> granted, completing the infrastructure layer of the phrase-based system."
+    },
+    {
+      "year": "2011",
+      "type": "system",
+      "title": "Panda algorithm launches",
+      "desc": "Panda extends phrase-based quality detection with human rater signals. The underlying phrase coherence measurement from 2006 was already operational; Panda adds the quality dimension."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "API leak confirms phrase-level signals",
+      "desc": "The Google Content Warehouse API leak reveals phraseAnchorSpamPenalty, phraseAnchorSpamDays, and phraseAnchorSpamFraq as active signals, confirming the phrase-based spam detection system remains operational 18 years after filing."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Search Central (2024)",
+      "publicClaim": "Google uses hundreds of ranking signals and there is no single most important factor.",
+      "internalSource": "Patent US7536408 (2004)",
+      "internalClaim": "The phrase-based index IS the candidate generation system. If your page's phrase ecosystem doesn't match the query's phrase graph, you never enter the ranking pipeline. Everything else (NavBoost, DeepRank, etc.) operates on candidates this system selects."
+    },
+    {
+      "publicSource": "Google (various)",
+      "publicClaim": "Keyword density is not a ranking factor. Focus on writing naturally.",
+      "internalSource": "Patent US8078629 (2006)",
+      "internalClaim": "While keyword density itself isn't the signal, phrase co-occurrence anomaly detection IS. The system explicitly measures whether a document's phrase distribution matches corpus expectations. Abnormal distributions (from keyword stuffing OR thin content) are detected and flagged."
+    }
+  ]
+}

@@ -1,0 +1,473 @@
+{
+  "id": "seeds",
+  "route": "/seeds",
+  "systems": [
+    "PageRank",
+    "NSR",
+    "Qstar"
+  ],
+  "articles": [
+    {
+      "slug": "what-makes-a-good-seed-site-for-search-engine-web-crawls",
+      "title": "What Makes a Good Seed Site for Search Engine Web Crawls?",
+      "date": "2010",
+      "summary": "Yahoo patent analysis: seed selection criteria including quality, importance, and potential yield. How seed site choice impacts index coverage."
+    },
+    {
+      "slug": "google-trust-rank-patent-granted",
+      "title": "Google Trust Rank Patent Granted",
+      "date": "2009",
+      "summary": "Google patent US7,603,350 by Ramanathan Guha. Trust scores from expert labelers propagate through link graph to re-rank results."
+    },
+    {
+      "slug": "social-trustrank-and-user-annotations-as-anchor-text",
+      "title": "Social TrustRank and User Annotations as Anchor Text",
+      "date": "2007",
+      "summary": "Yahoo patent on Dual TrustRank. Good sites tend to link to good sites. Manual process for determining trusted seed set."
+    },
+    {
+      "slug": "dual-trustrank-user-profiles-and-personalized-rerankings-of-search-results",
+      "title": "Dual TrustRank, User Profiles, and Personalized Rerankings",
+      "date": "2007",
+      "summary": "Two TrustRank systems: one for link structure between content, one between social network members."
+    },
+    {
+      "slug": "trust-and-the-internet-web-search-spam",
+      "title": "Trust and the Internet: Web Search Spam",
+      "date": "2006",
+      "summary": "Challenges TrustRank assumptions. Seed set of good sites as starting point for finding other good sites. Trust-division across outlinks."
+    },
+    {
+      "slug": "move-trust-rank-make-room-trust-buttons",
+      "title": "Move Trust Rank, Make Room for Trust Buttons",
+      "date": "2014",
+      "summary": "Google patent US8,762,394 by Guha. Pages ranked by distance from trusted seed set. Evolution beyond Yahoo TrustRank model."
+    },
+    {
+      "slug": "pagerank-self-serving-links-and-domain-trust",
+      "title": "PageRank, Self-Serving Links, and Domain Trust",
+      "date": "2007",
+      "summary": "Microsoft patents on domain-based spam-resistant ranking. Domain-level trust as alternative to page-level trust propagation."
+    }
+  ],
+  "hero": {
+    "title": "Seed Sites: The Foundation of Google's Trust System",
+    "subtitle": "Seed sites are a curated set of high-quality, human-reviewed web pages that Google uses as starting points for trust propagation across the link graph. Modern PageRank does not count links. It measures distance from these trusted seeds. Pages closer to seed sites rank higher; pages farther away are less trustworthy. Five patents detail the selection criteria: host importance, expected yield, document quality, market distribution, and topical diversity. The 2024 API leak confirmed PageRankNS and nearestSeed as production signals, and HJ Kim's sworn DOJ testimony confirmed that different niches have distinct seed sets. This deep dive covers how seeds are chosen, how distance is computed, and how the seed set is maintained."
+  },
+  "keyInsight": {
+    "label": "Key Insight from DOJ Trial",
+    "text": "Google's modern PageRank does not count links. It measures <strong>distance from trusted seed sites</strong>. Pages closer to seed sites are more authoritative. Pages farther away are less trustworthy. Seed sets are organized by topic, with different niches having distinct seed sets. This was confirmed under oath by Google engineer HJ Kim. Patent <a href=\"https://patents.google.com/patent/US20100114858\">US20100114858</a> reveals the exact 5-step filtering process Google uses to select seeds: <strong>(1)</strong> host importance threshold by market, <strong>(2)</strong> expected yield of new documents, <strong>(3)</strong> document quality filter (spam, porn, corrupted forums), <strong>(4)</strong> market/geographic distribution, <strong>(5)</strong> topical diversity across languages and fields."
+  },
+  "pillars": [
+    {
+      "type": "patent",
+      "title": "8 Patents",
+      "items": [
+        "<strong><a href=\"https://patents.google.com/patent/US9165040\">US9165040</a></strong> - <strong>Ranking using distances in web-link graph</strong>: Core distance algorithm. Defines link length L(q→p) = α + log(outbound_links). Uses k-nearest seeds (k=3-6). Score = e^(-D) exponential decay. Names Google Directory and NYT as example seeds.",
+        "<strong><a href=\"https://patents.google.com/patent/US7603350\">US7603350</a></strong> - <strong>Search result ranking based on trust</strong> (Ramanathan Guha): Google's version of TrustRank. Expert labelers manually identify reputable seed pages. Trust propagates through link graph. Different from Yahoo TrustRank in that it uses distance, not iterative propagation.",
+        "<strong><a href=\"https://patents.google.com/patent/US9400849\">US9400849</a></strong> - <strong>Scalable short paths in web link network</strong>: Topic-specific seed shards for computational efficiency. Medical has medical seeds, sports has sports seeds. Enables niche-specific authority.",
+        "<strong><a href=\"https://patents.google.com/patent/US8762394\">US8762394</a></strong> - <strong>Obtaining recommendations from trusted sources</strong> (Trust buttons): User trust signals supplement seed propagation. Trust is transitive from trusted sources.",
+        "<strong><a href=\"https://patents.google.com/patent/US20100114858\">US20100114858</a></strong> - <strong>Host-based seed selection algorithm</strong>: The selection criteria patent. 5-step filtering: importance threshold, yield analysis, quality filter, market distribution, topical diversity. Selects best document per qualifying host.",
+        "<a href=\"https://patents.google.com/patent/US9558233\">US9558233</a>: Determining a quality measure for a resource; <a href=\"https://patents.google.com/patent/US11106712\">US11106712</a>: Systems and methods for measuring the semantic relevance of keywords; <a href=\"https://patents.google.com/patent/US7606798\">US7606798</a>: Methods and systems for improving a search ranking using location awareness"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "3 Production Signals Confirmed",
+      "items": [
+        "<strong>PageRankNS</strong> (CompositeDoc) - Nearest Seed PageRank. Core Tier 1 signal. 40+ patent cross-references. Measures authority based on proximity to trusted seed pages in your topic shard.",
+        "<strong>nearestSeed</strong> (PerDocData) - Localized network relevance based on topical proximity to seed pages. Tier 2 signal. Confirms topic-specific seeding is active in production.",
+        "<strong>siteAuthority</strong> (CompressedQualitySignals) - Site-level trust score from quality_nsr.SiteAuthority. Aggregates PageRankNS + NSR + trust signals. DOJ-confirmed. Google denied its existence (2016-2019) while it was active internally."
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "Sworn Testimony Confirmation",
+      "items": [
+        "<strong>HJ Kim</strong> (sworn deposition): Modern PageRank measures distance from trusted seeds, not raw link count. Core signal in NSR/PerDocData. Different niches have different seed pages. Seed site distance is a distinct signal from raw PageRank.",
+        "<strong>Pandu Nayak</strong> (VP Search): PageRank is input to Q* quality scoring. Q* uses seed distance as input. Page quality is 'mostly static' and represents 'site-wide trustworthiness.'",
+        "<strong>siteAuthority</strong> - Persistent composite site-level trust score representing domain reputation. Google publicly denied 'domain authority' (2016-2019) while this existed.",
+        "<strong>Q*</strong> - 0-1 site-wide quality score. Below 0.4 = ineligible for featured snippets and rich results. Uses seed distance as input. NOT ML-based (confirmed HJ Kim)."
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Seed Distance Affects Your Rankings",
+      "items": [
+        "<strong>Minimize link chain distance</strong>: Each hop accumulates distance. A direct link from a seed-adjacent site (distance 1) is worth far more than being 5 hops away through a chain of blogs.",
+        "<strong>Target sites close to seeds</strong>: Major news publishers, .gov, .edu, Wikipedia are confirmed/likely seeds. Getting featured in NYT or cited by a university page puts you 1-2 hops from seeds.",
+        "<strong>Outbound link count matters</strong>: Links from pages with fewer outbound links create shorter distances. A homepage link from a site with 10 outlinks passes more 'distance value' than a blogroll with 200 links (link length = α + log(outlinks)).",
+        "<strong>Topic relevance is critical</strong>: Seeds are sharded by niche. A medical seed has no relevance for your sports site. Earn links from authoritative sites IN your niche.",
+        "<strong>Site-wide quality compounds</strong>: siteAuthority operates at domain level. One strong page doesn't fix a weak domain. Build consistent quality across your entire site.",
+        "<strong>Digital PR is the strategy</strong>: Newsworthy content earns links from institutional sites (news, universities, government) that are closest to seed sets. This is the most direct path to reducing seed distance.",
+        "<strong>PBNs are far from seeds</strong>: Private blog networks are typically many hops from seed sites and lack IndyRank (link independence). The exponential decay means distant links carry negligible value.",
+        "<strong>Brand queries help</strong>: queriesForWhichOfficial signal boosts sites that users search for by name. Strong brands naturally accumulate seed-adjacent links."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Link Distance Formula (US9165040)",
+      "source": "Patent (core algorithm)",
+      "how": "Each link in the web graph has a 'length' determined by the source page's outbound link count. More outbound links = longer link length (weaker per-link value). The distance from a seed to any page is the sum of link lengths along the shortest path. This is NOT iterative trust propagation; it's a shortest-path computation.",
+      "formula": "<span class=\"cf-comment\">// Link length between pages q→p</span>\n<span class=\"cf-fn\">L</span>(q → p) = α + log(|q|<sub>out</sub>)\n<span class=\"cf-comment\">// α = -log(d), d = damping factor (≈0.85)</span>\n<span class=\"cf-comment\">// |q|_out = outbound links from source page q</span>\n\n<span class=\"cf-comment\">// Distance from seed s_i to page p</span>\n<span class=\"cf-fn\">D<sub>i</sub></span>(p) = <span class=\"cf-fn\">min</span> Σ <span class=\"cf-fn\">L</span>(q<sub>j</sub> → q<sub>j+1</sub>)\n<span class=\"cf-comment\">// along shortest path: s_i → q1 → q2 → ... → p</span>\n\n<span class=\"cf-comment\">// Final score: k-nearest seeds (k=3 to 6)</span>\n<span class=\"cf-fn\">D</span>(p) = k-th minimum of D<sub>i</sub>(p)\n<span class=\"cf-fn\">Score</span>(p) = e<sup>-D(p)</sup>\n<span class=\"cf-comment\">// Exponential decay: shorter distance = higher score</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US9165040\">US9165040</a> (Producing a ranking for pages using distances in a web-link graph)",
+      "affects": "Affected by: number of hops to nearest seed, outbound link count of intermediary pages, topic relevance of seed shard. Each additional hop and each additional outlink on intermediary pages increases distance."
+    },
+    {
+      "name": "K-Nearest Seeds Algorithm",
+      "source": "Patent US9165040",
+      "how": "Not all seeds matter for a given page. The algorithm computes distance to ALL seeds, then takes only the k-th minimum (k=3 to 6). This prevents anomalies where a page happens to be very close to a single seed but far from all others. It also enables topic-specific scoring: a medical page's score depends on its distance to the closest 3-6 medical seeds, not to sports seeds.",
+      "formula": "<span class=\"cf-comment\">// For each seed s_i with optional weight w_i</span>\n<span class=\"cf-fn\">D<sub>i</sub></span>(s_i) = -log(w_i)\n<span class=\"cf-comment\">// Seed weight affects starting distance</span>\n<span class=\"cf-comment\">// Higher weight w_i → shorter initial distance</span>\n\n<span class=\"cf-comment\">// Final ranking uses k-th minimum</span>\n<span class=\"cf-fn\">D</span>(p) = sort(D<sub>1</sub>(p), D<sub>2</sub>(p), ..., D<sub>n</sub>(p))[k]\n<span class=\"cf-comment\">// k=3: use 3rd-closest seed (suppresses outliers)</span>\n<span class=\"cf-comment\">// k=6: more conservative, requires multiple nearby seeds</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US9165040\">US9165040</a>, <a href=\"https://patents.google.com/patent/US9400849\">US9400849</a> (scalable short paths, topic sharding)",
+      "affects": "Affected by: having multiple seed-adjacent sources (not just one), topic relevance of seeds to your content, seed weighting values"
+    },
+    {
+      "name": "Seed Selection Criteria (US20100114858)",
+      "source": "Patent (5-step algorithm)",
+      "how": "Google selects seeds through a 5-step filtering process. Starting from all candidate hosts, each step eliminates unqualified hosts until only the best remain. The process is market-aware (different thresholds per region) and quality-conscious (spam/porn/forum corruption filtered out).",
+      "formula": "<span class=\"cf-comment\">// Step 1: Market importance threshold</span>\n<span class=\"cf-kw\">filter</span> hosts where PageRank(root) < <span class=\"cf-val\">threshold</span>[market]\n\n<span class=\"cf-comment\">// Step 2: Expected yield of new documents</span>\n<span class=\"cf-kw\">filter</span> hosts where <span class=\"cf-fn\">yield</span>(host) < <span class=\"cf-val\">min_yield</span>\n<span class=\"cf-comment\">// yield = P(discovering new pages via outlinks)</span>\n\n<span class=\"cf-comment\">// Step 3: Document quality filter</span>\n<span class=\"cf-kw\">filter</span> hosts with spam OR porn OR corrupted_forums\n\n<span class=\"cf-comment\">// Step 4: Market/geographic distribution</span>\n<span class=\"cf-fn\">allocate</span> seeds proportionally by market value\n\n<span class=\"cf-comment\">// Step 5: Best document per host</span>\n<span class=\"cf-fn\">select</span> highest_quality_page from each host",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US20100114858\">US20100114858</a> (Host-based seed selection algorithm for web crawlers)",
+      "affects": "Affected by: host PageRank, outlink quality, spam reputation, geographic market, topical coverage"
+    },
+    {
+      "name": "PageRankNS (Production Signal)",
+      "source": "DOJ (HJ Kim deposition) + API Leak",
+      "how": "The production version of seed-based distance ranking. Computes link graph distance from topic-specific trusted seed pages. Shorter path = higher score. Seed sets are sharded by topic, so different niches have different seed pages. Value decays exponentially with each hop.",
+      "formula": "<span class=\"cf-fn\">PageRankNS</span>(url) = <span class=\"cf-fn\">e<sup>-D</sup></span>\n<span class=\"cf-comment\">// D = distance from nearest topic-relevant seeds</span>\n<span class=\"cf-comment\">// Uses k-nearest seeds (k=3-6)</span>\n<span class=\"cf-comment\">// Distance = sum of link lengths along shortest path</span>\n<span class=\"cf-comment\">// Tier 1 core signal, 40+ patent matches</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US9165040\">US9165040</a>, <a href=\"https://patents.google.com/patent/US7603350\">US7603350</a>",
+      "affects": "Affected by: link chain distance to topic-relevant seeds. Natural links from trusted, well-connected sources matter more than link volume."
+    },
+    {
+      "name": "siteAuthority",
+      "source": "DOJ + API Leak",
+      "how": "Persistent composite score at domain level. Converted from quality_nsr.SiteAuthority module, then applied in Q* ranking pipeline. Aggregates PageRankNS, NSR, and other trust signals into a single domain reputation score.",
+      "formula": "<span class=\"cf-fn\">siteAuthority</span>(domain) = <span class=\"cf-fn\">aggregate</span>(\n  <span class=\"cf-val\">PageRankNS</span>, <span class=\"cf-val\">NSR</span>, <span class=\"cf-val\">trust_signals</span>\n)\n<span class=\"cf-comment\">// domain-level, shared across all pages on host</span>\n<span class=\"cf-comment\">// stored in quality_nsr.SiteAuthority module</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US9165040\">US9165040</a>, <a href=\"https://patents.google.com/patent/US9400849\">US9400849</a>",
+      "affects": "Affected by: domain-wide quality. All pages share this score. Consistent quality across entire site improves it. Not per-page."
+    },
+    {
+      "name": "Q* (Quality Score)",
+      "source": "DOJ (Pandu Nayak testimony)",
+      "how": "Site-wide, query-independent score on 0-1 scale. Hand-crafted (confirmed NOT ML). Below 0.4 = ineligible for featured snippets and rich results. Operates at subdomain level. Largely static, representing domain trustworthiness. Inputs include seed distance, engagement signals, E-E-A-T indicators.",
+      "formula": "<span class=\"cf-fn\">Q*</span>(site) = <span class=\"cf-fn\">hand_crafted</span>(\n  <span class=\"cf-val\">seed_distance</span>, <span class=\"cf-val\">engagement</span>, <span class=\"cf-val\">E-E-A-T</span>\n)  <span class=\"cf-comment\">// range: 0.0 - 1.0</span>\n<span class=\"cf-kw\">if</span> Q* &lt; <span class=\"cf-val\">0.4</span>: <span class=\"cf-kw\">block</span> featured_snippets, rich_results\n<span class=\"cf-comment\">// NOT ML-based (confirmed HJ Kim deposition)</span>",
+      "affects": "Affected by: overall site trustworthiness, authority, expertise signals. Changes slowly. The 0.4 threshold is a hard gate for SERP features."
+    }
+  ],
+  "pipeline": {
+    "title": "How Seed Sites Feed Into Rankings",
+    "stages": [
+      {
+        "name": "1. Seed Selection (US20100114858)",
+        "detail": "5-step process: (1) Host importance threshold per market, (2) Expected yield of new documents, (3) Quality filter (spam, porn, corrupted forums), (4) Market/geographic distribution, (5) Select best document per qualifying host. Seeds manually reviewed by experts."
+      },
+      {
+        "name": "2. Topic Sharding (US9400849)",
+        "detail": "Seeds organized into topic-specific shards. Medical, sports, technology, finance each have distinct seed sets. Enables niche-specific authority scoring."
+      },
+      {
+        "name": "3. Distance Computation (US9165040)",
+        "detail": "For each page, compute shortest path to all seeds. Link length = α + log(outlinks). Use k-nearest seeds (k=3-6) for final score. Score = e^(-distance)."
+      },
+      {
+        "name": "4. PageRankNS Signal",
+        "detail": "Production Tier 1 signal. Per-document seed distance stored in CompositeDoc. nearestSeed (Tier 2) provides topical proximity."
+      },
+      {
+        "name": "5. NSR / siteAuthority",
+        "detail": "Aggregated at site level. siteAuthority in quality_nsr combines PageRankNS + NSR + trust signals. Domain-wide reputation score."
+      },
+      {
+        "name": "6. Q* Quality Gate",
+        "detail": "0-1 quality score using seed distance as input. Below 0.4 blocks featured snippets/rich results. Hand-crafted, not ML."
+      },
+      {
+        "name": "7. Seed Tuning",
+        "detail": "System periodically reviews seed quality. Per-seed performance evaluated. Seeds can be re-weighted, replaced, or removed based on contribution to result quality."
+      },
+      {
+        "name": "8. Final Ranking",
+        "detail": "Seed distance combined with NavBoost (engagement), T* (topicality), P* (popularity), Ascorer, and Twiddlers for final SERP position."
+      }
+    ]
+  },
+  "seedSelection": {
+    "title": "How Google Selects Seed Sites",
+    "subtitle": "Patent US20100114858 reveals the exact algorithm Google uses to choose which sites become seeds. The process is a 5-step elimination filter applied to all candidate hosts.",
+    "steps": [
+      {
+        "name": "Step 1: Host Importance Threshold",
+        "detail": "Each candidate host is evaluated by market. A host must exceed an importance threshold specific to its geographic market. Importance is measured by PageRank of the root page, quality/reputation score, and market significance. Different markets (US, EU, Asia) have different thresholds. Sites below threshold are eliminated.",
+        "criteria": [
+          "PageRank of root page",
+          "Quality/reputation score",
+          "Market/geographic significance",
+          "Market-specific threshold (varies by region)"
+        ]
+      },
+      {
+        "name": "Step 2: Expected Yield Analysis",
+        "detail": "Statistical analysis of how many new, undiscovered documents are reachable from this host. Based on past crawl history. Hosts that mostly link to already-indexed content are lower priority. Hosts linking to spam or corrupted content are eliminated. A minimum yield threshold must be met.",
+        "criteria": [
+          "Past crawl experience with host",
+          "Number of new pages likely reachable",
+          "Outlink quality (no spam/corrupted targets)",
+          "Minimum yield threshold"
+        ]
+      },
+      {
+        "name": "Step 3: Document Quality Filter",
+        "detail": "Individual documents on qualifying hosts are evaluated for quality issues. Pages with spam signals, pornographic content, or corrupted forum/guestbook content (user-contributed spam vectors) are disqualified. Pages with too few outlinks to internal pages are deprioritized.",
+        "criteria": [
+          "Spam probability detection",
+          "Pornography detection",
+          "Corrupted forum/guestbook detection",
+          "Outlink density to internal pages"
+        ]
+      },
+      {
+        "name": "Step 4: Market/Geographic Distribution",
+        "detail": "Seeds are allocated proportionally across markets by relative value. The patent defines a market as 'a collection of hosts that all have a common characteristic, generally with respect to users of those hosts.' Markets are geography-based: 'hosts in USA, hosts in China, hosts in Russia.' Seed allocation uses 'proportional market value' based on user request volume and business value (advertising/subscription revenue). This prevents dominant markets from monopolizing seeds: 'hosts in relatively dominant markets from having so much influence that few or no seeds are selected for less dominant markets.'",
+        "criteria": [
+          "Proportional allocation by market value",
+          "User request volume per market",
+          "Advertising/subscription revenue weight",
+          "Language coverage",
+          "Prevention of dominant market monopolization"
+        ]
+      },
+      {
+        "name": "Step 5: Best Document Selection",
+        "detail": "From each qualifying host, the single highest-quality document is selected as the actual seed page. This is typically the homepage or a well-connected hub page. The selected page must have large numbers of useful outgoing links to facilitate discovering other high-quality pages.",
+        "criteria": [
+          "Highest quality page on host",
+          "Large number of useful outgoing links",
+          "Hub connectivity to other quality pages",
+          "Good web connectivity"
+        ]
+      }
+    ]
+  },
+  "seedMaintenance": {
+    "title": "How Seeds Are Maintained and Updated",
+    "items": [
+      {
+        "name": "Periodic Re-crawling",
+        "detail": "The system periodically re-crawls seed pages to detect quality changes. Seeds that degrade (start hosting spam, lose outlinks, go offline) are flagged for review."
+      },
+      {
+        "name": "Seed Tuning via Results",
+        "detail": "Patent US9165040: 'Results can be used for seed tuning.' The system extracts per-seed contribution data from ranked results and evaluates each seed's impact on search quality. Underperforming seeds get lower weights or are replaced."
+      },
+      {
+        "name": "Weight Adjustment",
+        "detail": "Each seed has a weight w_i (0 < w_i ≤ 1). Higher weight = shorter effective starting distance. Weights are tuned based on seed quality and contribution to result quality. Initial distance from seed = -log(w_i)."
+      },
+      {
+        "name": "Vulnerability Control",
+        "detail": "The patent notes that 'having too many seeds can make the system vulnerable to manipulation.' Seed set size is deliberately limited. Seeds are high-value targets for spammers, so the set must resist attacks."
+      },
+      {
+        "name": "Topic Rebalancing",
+        "detail": "As the web evolves, new topic areas emerge and existing ones shift. Seed shards are rebalanced to ensure coverage of emerging fields while maintaining existing topic authority."
+      }
+    ]
+  },
+  "seedExamples": {
+    "title": "Known and Likely Seed Sites",
+    "confirmed": [
+      {
+        "name": "Google Directory",
+        "source": "Patent US9165040",
+        "note": "Explicitly named. Now defunct, likely replaced."
+      },
+      {
+        "name": "The New York Times",
+        "source": "Patent US9165040",
+        "note": "Explicitly named as example seed."
+      }
+    ],
+    "likely": [
+      {
+        "category": "Government",
+        "examples": ".gov domains (whitehouse.gov, cdc.gov, nih.gov)",
+        "reasoning": "High trust, manually curated, extensive outlinks to authoritative content"
+      },
+      {
+        "category": "Education",
+        "examples": ".edu domains (stanford.edu, mit.edu, harvard.edu)",
+        "reasoning": "Academic institutions with long history, deep domain expertise, editorial link practices"
+      },
+      {
+        "category": "News Media",
+        "examples": "Reuters, AP, BBC, Washington Post",
+        "reasoning": "Institutional editorial standards, extensive outlinks, high importance scores"
+      },
+      {
+        "category": "Reference",
+        "examples": "Wikipedia, Britannica",
+        "reasoning": "Comprehensive topic coverage, massive outlink graphs, high connectivity"
+      },
+      {
+        "category": "Medical",
+        "examples": "NIH, WHO, Mayo Clinic, PubMed",
+        "reasoning": "YMYL niche seeds, institutional credibility, topic-specific authority"
+      },
+      {
+        "category": "Financial",
+        "examples": "SEC.gov, Federal Reserve, Wall Street Journal",
+        "reasoning": "YMYL niche seeds, regulatory authority, financial topic coverage"
+      }
+    ],
+    "sizeEstimate": "TrustRank paper (2004): fewer than 200 seed sites can effectively filter most web spam. Google's production set is likely larger but still deliberately constrained to prevent manipulation."
+  },
+  "geographicSeeds": {
+    "title": "Per-Country Seed Selection",
+    "subtitle": "Patent US20100114858 explicitly describes geography-based market segmentation for seed allocation. Each country/region has its own importance threshold, and seeds are distributed proportionally by market value.",
+    "marketDefinition": {
+      "label": "What is a 'Market'?",
+      "text": "The patent defines a market as 'a collection of hosts that all have a common characteristic, generally with respect to users of those hosts. A typical market is geography-based, meaning that the subject matter of documents on the hosts of a market all concern or are focused on users from a particular geographic area.' Examples: 'hosts in USA, hosts in China, hosts in Russia.' Even US sub-regions are used: 'west, mid-west, south, northeast, southwest.'"
+    },
+    "thresholds": {
+      "label": "Market-Specific Importance Thresholds",
+      "text": "Each market has its own PageRank/importance threshold (Patent Claim 3: 'the threshold importance corresponding to each host is a function of a geographic region with which that host is determined to be associated'). A site that qualifies as a seed in the Russian market might not qualify in the US market, and vice versa. This ensures each country has locally relevant seeds rather than being dominated by US-centric sites."
+    },
+    "allocation": {
+      "label": "How Seeds Are Allocated Across Countries",
+      "items": [
+        {
+          "name": "Proportional by market value",
+          "detail": "FIG. 5 in the patent illustrates 'proportional market value, usable to allocate seeds to markets in proportion to the value of those markets.' Higher-traffic markets get more seeds."
+        },
+        {
+          "name": "Value = user traffic + revenue",
+          "detail": "Market value is explicitly based on 'advertising or subscription revenue that is or can be achieved as a result of the user requests.' Countries with more search traffic and ad revenue receive proportionally more seeds."
+        },
+        {
+          "name": "Anti-dominance protection",
+          "detail": "The algorithm prevents dominant markets (e.g., US with high host count) from monopolizing the seed set, ensuring 'less dominant markets' still receive seeds proportional to their value."
+        },
+        {
+          "name": "Language coverage",
+          "detail": "Seeds must cover 'different languages and wide range of fields.' A Japanese-language seed serves the Japan market; a Spanish-language seed serves Spanish-speaking markets."
+        }
+      ]
+    },
+    "production": {
+      "label": "Production Evidence: NavBoost Geographic Slicing",
+      "items": [
+        {
+          "name": "NavBoostLocationSlice (DOJ-confirmed)",
+          "detail": "NavBoost click data is 'segmented by country, language, and device type for local relevance.' The same URL can rank differently in different countries based on local user behavior patterns."
+        },
+        {
+          "name": "locationIdentity signal (API Leak)",
+          "detail": "Demotion applied to 'pages targeting non-matching geographic areas.' If your content targets the US but you're trying to rank in Spain, this signal penalizes you."
+        },
+        {
+          "name": "geotopicality (API Leak)",
+          "detail": "Page-query geographic relevance alignment. Measures whether your content matches the geographic intent of the query."
+        },
+        {
+          "name": "localAuthorityScore (API Leak)",
+          "detail": "Local content authority measurement for geographic-specific queries. Being a local authority in your country's market matters."
+        }
+      ]
+    },
+    "implications": [
+      "Each country has its own seed set with locally relevant authoritative sites (e.g., Le Monde for France, El Pais for Spain, Asahi Shimbun for Japan)",
+      "Local .gov domains serve as country-specific seeds (nih.gov for US health, nhs.uk for UK health)",
+      "A site can be seed-adjacent in one country but distant in another. International SEO requires building authority in each target market separately",
+      "Traffic/popularity drives seed allocation: higher-traffic markets get more seeds, giving them finer-grained trust graphs",
+      "For multi-country SEO: earn links from each country's authoritative institutions, not just US/English-language seeds"
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2004",
+      "type": "academic",
+      "title": "TrustRank Paper Published",
+      "desc": "Stanford/Yahoo: 'Combating Web Spam with TrustRank' introduces seed-based trust propagation. Shows <200 seeds can filter most web spam."
+    },
+    {
+      "year": "2006",
+      "type": "patent",
+      "title": "Google Trust Rank Filed",
+      "desc": "US7,603,350 filed by Ramanathan Guha. Trust scores from seed labelers. Google's approach differs from Yahoo: distance-based, not iterative."
+    },
+    {
+      "year": "2006",
+      "type": "patent",
+      "title": "Link Distance Ranking Patent",
+      "desc": "US9165040: 'Producing a ranking using distances in a web-link graph.' Defines the mathematical framework: link length = α + log(outlinks), k-nearest seeds, exponential decay."
+    },
+    {
+      "year": "2007",
+      "type": "patent",
+      "title": "Yahoo Dual TrustRank",
+      "desc": "US20070112761: parallel trust systems for content and social graphs. Topical TrustRank solves big-site bias by sharding seeds by topic."
+    },
+    {
+      "year": "2009",
+      "type": "patent",
+      "title": "Google Trust Rank Granted",
+      "desc": "US7,603,350 granted. Bill Slawski (SEO by the Sea) analyzes differences from Yahoo TrustRank."
+    },
+    {
+      "year": "2010",
+      "type": "patent",
+      "title": "Seed Selection Algorithm",
+      "desc": "US20100114858: 5-step filtering criteria for choosing optimal seed sites. Host importance, yield analysis, quality filter, market distribution, topical diversity."
+    },
+    {
+      "year": "2014",
+      "type": "patent",
+      "title": "Trust Buttons Patent",
+      "desc": "US8,762,394: explicit trust signals from users supplement seed propagation. Trust is transitive from trusted sources."
+    },
+    {
+      "year": "2015",
+      "type": "patent",
+      "title": "Scalable Short Paths Patent",
+      "desc": "US9400849: seed sets divided into topic-specific shards. Enables niche-specific distance computation at web scale."
+    },
+    {
+      "year": "2016-2019",
+      "type": "denial",
+      "title": "Google Denies Domain Authority",
+      "desc": "Multiple public statements: 'There is no domain authority metric.' Meanwhile Q* and siteAuthority exist internally using seed distance."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "Google API Leak",
+      "desc": "PageRankNS (Tier 1, 40+ patents) and nearestSeed (Tier 2) confirmed in ContentWarehouseAPI. siteAuthority in quality_nsr confirmed."
+    },
+    {
+      "year": "2024-2025",
+      "type": "doj",
+      "title": "DOJ Trial Testimony",
+      "desc": "HJ Kim sworn deposition: PageRank measures distance from trusted seed sites, not raw link count. Different niches have different seed pages."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Public (2016)",
+      "publicClaim": "\"There is no such thing as domain authority that Google would use.\"",
+      "internalSource": "Internal Reality",
+      "internalClaim": "siteAuthority exists as a computed feature in quality_nsr, working alongside Q* quality score. PageRankNS measures seed distance at site level."
+    },
+    {
+      "publicSource": "Google Public (2019)",
+      "publicClaim": "\"We don't use domain authority. We evaluate pages individually.\"",
+      "internalSource": "DOJ Trial (2024)",
+      "internalClaim": "HJ Kim testimony: Page quality is 'mostly static' and represents 'site-wide trustworthiness,' not individual page merit. Q* is query-independent."
+    },
+    {
+      "publicSource": "Google Public (various)",
+      "publicClaim": "\"PageRank is just one of hundreds of signals and not that important anymore.\"",
+      "internalSource": "API Leak (2024)",
+      "internalClaim": "PageRankNS is a Core Tier 1 signal with 40+ patent cross-references. nearestSeed provides localized topical proximity. Both are in the primary CompositeDoc module."
+    }
+  ]
+}

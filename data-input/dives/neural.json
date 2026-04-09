@@ -1,0 +1,230 @@
+{
+  "id": "neural",
+  "route": "/neural",
+  "systems": [
+    "RankEmbed",
+    "DeepRank",
+    "RankBrain",
+    "BERT",
+    "MUM"
+  ],
+  "hero": {
+    "title": "Neural Ranking: ML Systems in Google Search",
+    "subtitle": "Despite Google's public emphasis on AI, the DOJ trial revealed that only RankBrain and DeepRank use machine learning in the core ranking pipeline. RankEmbed uses a dual encoder BERT model trained on 70 days of search logs and 16,000 human rater scores. These ML systems refine hand-crafted signals rather than replacing them."
+  },
+  "keyInsight": {
+    "label": "Key Insight from DOJ Trial",
+    "text": "Only <strong>RankBrain and DeepRank use ML/LLM</strong> in the core ranking pipeline (HJ Kim deposition). All other signals are hand-crafted. RankEmbed BERT uses <strong>dot product similarity, NOT cosine similarity</strong>, trained on exactly <strong>70 days of search logs</strong> combined with <strong>16,000 human quality rater scores</strong>. The ML systems operate only on the top 20-30 results as a refinement layer."
+  },
+  "pillars": [
+    {
+      "type": "patent",
+      "title": "6 Patents",
+      "items": [
+        "ML operates on <strong>top 20-30 results only</strong> (not full index)",
+        "Hand-crafted Q*, P*, T* scores do the heavy lifting",
+        "Word2Vec embeddings: foundational vector representations for neural ranking (<a href=\"https://patents.google.com/patent/US9740680\">US9740680</a>, <a href=\"https://patents.google.com/patent/US9037464\">US9037464</a>)",
+        "LLM pairwise ranking: generative models as rankers via pairwise comparison prompting (<a href=\"https://patents.google.com/patent/US20250124067\">US20250124067</a>)",
+        "Generative summaries for search results with interaction-based revision (<a href=\"https://patents.google.com/patent/US11769017\">US11769017</a>)",
+        "Candidate answer passage extraction using structured/unstructured criteria (<a href=\"https://patents.google.com/patent/US10180964\">US10180964</a>)",
+        "Query interpretation accuracy evaluation via temporal and cluster features (<a href=\"https://patents.google.com/patent/US20230334045\">US20230334045</a>)",
+        "eDeepRank designed for <strong>decomposable analysis</strong> (auditability)",
+        "MUM too computationally expensive for most queries"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "Neural Signals in the API",
+      "items": [
+        "<strong>RankEmbedNearestNeighbors</strong> - Embedding-based retrieval matching queries to documents via vector similarity",
+        "<strong>BertScore</strong> (PerDocData) - BERT-based relevance score stored per document, used in Ascorer signal combination",
+        "<strong>nluAnnotation</strong> - NLU entity annotation data attached to documents for neural query-document matching",
+        "<strong>contentTopicEmbedding</strong> - Dense topic embedding vector for neural topicality scoring beyond keyword matching",
+        "<strong>semanticRelevanceScore</strong> - ML-derived query-document relevance score feeding into final ranking combination"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "ML Signals,  Core",
+      "items": [
+        "<strong>RankEmbed</strong> - Dual encoder embedding queries and documents into shared vector space",
+        "<strong>RankEmbedBERT</strong> - BERT-enhanced dual encoder with dot product similarity",
+        "<strong>DeepRank</strong> - BERT-based neural ranking requiring language + world knowledge",
+        "<strong>eDeepRank</strong> - Enhanced DeepRank, decomposable for engineer auditing",
+        "<strong>RankBrain</strong> - ML system for top 20-30 docs, trained on 13 months of click data",
+        "<strong>BERT</strong> - Bidirectional language model refining hand-crafted T* signals",
+        "<strong>MUM</strong> - Cross-language multi-format model (too expensive for all queries)"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How ML Systems Learn",
+      "items": [
+        "<strong>70 days of search logs</strong> - Exact training window for RankEmbed BERT",
+        "<strong>16,000 human raters</strong> - Score IS (Information Satisfaction) 0-100",
+        "<strong>13 months of click data</strong> - RankBrain training window",
+        "<strong>DotProductSimilarity</strong> - NOT cosine similarity (deliberate choice)",
+        "<strong>RankEmbedNearestNeighbors</strong> - Video content matching via embeddings",
+        "Human rater scores train SpamBrain, HelpfulContent, and MUM too"
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "RankBrain",
+      "source": "DOJ: ML system for top 20-30 docs, 13 months click/query data + IS ratings",
+      "how": "ML system operating on top 20-30 documents only. Trained on 13 months of click/query data, fine-tuned on IS (human rater) scores. Interprets novel/long-tail queries using historical search patterns and unsupervised learning.",
+      "formula": "<span class=\"cf-fn\">RankBrain</span>(query, docs[20-30]) = <span class=\"cf-fn\">ML_rerank</span>(\n<span class=\"cf-val\">click_logs</span>[13_months], <span class=\"cf-val\">IS_scores</span>[16K_raters]\n)  <span class=\"cf-comment\">// top 20-30 docs only, not full index</span>\n<span class=\"cf-comment\">// specializes in novel/long-tail queries</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US20200005149\">US20200005149</a> (learning to rank using neural networks)",
+      "affects": "Affected by: content that satisfies user intent for novel queries. RankBrain helps Google understand new queries, so comprehensive topical coverage helps."
+    },
+    {
+      "name": "DeepRank",
+      "source": "DOJ: BERT-based neural network, language understanding + world knowledge",
+      "how": "BERT-based neural network processing language understanding and world knowledge. Can be decomposed into traditional signal equivalents (eDeepRank). Trained on user interaction data. One of only two LLM-based ranking signals.",
+      "formula": "<span class=\"cf-fn\">DeepRank</span>(query, doc) = <span class=\"cf-fn\">BERT</span>(\n<span class=\"cf-val\">language_understanding</span>, <span class=\"cf-val\">world_knowledge</span>\n)  <span class=\"cf-comment\">// decomposable via eDeepRank for auditability</span>\n<span class=\"cf-comment\">// 1 of only 2 LLM-based ranking signals</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US20200005149\">US20200005149</a> (learning to rank using neural networks)",
+      "affects": "Affected by: content quality that demonstrates genuine expertise. DeepRank \"understands\" content semantically, so write for humans not keywords."
+    },
+    {
+      "name": "RankEmbed",
+      "source": "DOJ: dual encoder, dot product, 70 days logs + 16K IS scores",
+      "how": "Dual encoder embeds queries and documents into shared vector space. Uses dot product similarity (NOT cosine, magnitude matters). Trained on 70 days of search logs + 16K human rater scores. Identifies documents beyond traditional keyword retrieval.",
+      "formula": "<span class=\"cf-fn\">RankEmbed</span>(query, doc) = <span class=\"cf-fn\">dot_product</span>(\n<span class=\"cf-val\">encode</span>(query), <span class=\"cf-val\">encode</span>(doc)\n)  <span class=\"cf-comment\">// NOT cosine: magnitude matters</span>\n<span class=\"cf-comment\">// trained: 70 days logs + 16K IS rater scores</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US20200005149\">US20200005149</a> (learning to rank)",
+      "affects": "Affected by: semantic relevance. Content can rank for queries with zero keyword overlap if semantically similar. Comprehensive, authoritative content gets \"louder\" embeddings."
+    },
+    {
+      "name": "SigmoidCombination",
+      "source": "DOJ: HJ Kim deposition, sigmoid functions for signal blending",
+      "how": "Individual ranking signals normalized and combined using sigmoid functions with threshold engineering. Core signal blending mechanism. Converts raw signal values into normalized scores before linear combination.",
+      "formula": "<span class=\"cf-fn\">combined</span>(signals) = <span class=\"cf-fn\">sum</span>(\nw<sub>i</sub> * <span class=\"cf-fn\">sigmoid</span>(<span class=\"cf-val\">signal_i</span> - <span class=\"cf-val\">threshold_i</span>)\n)  <span class=\"cf-comment\">// diminishing returns past threshold</span>\n<span class=\"cf-comment\">// extreme optimization of 1 signal = low marginal gain</span>",
+      "affects": "Affected by: not directly actionable. But signals are combined non-linearly, so extreme optimization of one signal has diminishing returns. Balance across multiple signals is better."
+    },
+    {
+      "name": "Word2Vec Embeddings",
+      "source": "Patent",
+      "how": "Maps words to dense numeric vectors where semantically similar words are close in vector space. Two architectures: Skip-gram (US9740680) predicts context from target word; CBOW (US9037464) predicts target from context. Foundation for all neural ranking: RankEmbed, DeepRank, and content embeddings all build on Word2Vec-style representations. Tomas Mikolov (Google Brain).",
+      "formula": "<span class=\"cf-fn\">Word2Vec_skipgram</span>(w) = argmax P(<span class=\"cf-val\">context</span> | w)\n<span class=\"cf-fn\">Word2Vec_cbow</span>(w) = argmax P(w | <span class=\"cf-val\">context</span>)\n<span class=\"cf-comment\">// king - man + woman ≈ queen</span>\n<span class=\"cf-comment\">// foundation for RankEmbed, DeepRank, contentTopicEmbedding</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US9740680\">US9740680</a> (Word2Vec Skip-gram), <a href=\"https://patents.google.com/patent/US9037464\">US9037464</a> (Word2Vec CBOW)",
+      "affects": "Affected by: co-occurrence patterns in training corpus. Content using natural language patterns consistent with the training distribution gets more accurate embeddings."
+    },
+    {
+      "name": "LLM Pairwise Ranking",
+      "source": "Patent",
+      "how": "Uses large language models as rankers by presenting document pairs and prompting the LLM to determine which is more relevant. The generative sequence model outputs ranking preferences rather than point scores. Represents the frontier of neural ranking where LLMs replace traditional scoring functions.",
+      "formula": "<span class=\"cf-fn\">pairwiseRank</span>(q, d1, d2) = <span class=\"cf-fn\">LLM</span>(\n<span class=\"cf-val\">prompt</span>: \"Which document better answers query q?\"\n<span class=\"cf-val\">d1</span>, <span class=\"cf-val\">d2</span>\n) &rarr; <span class=\"cf-val\">preference</span>(d1 &gt; d2 | d2 &gt; d1)\n<span class=\"cf-comment\">// generative model as ranker, not scorer</span>\n<span class=\"cf-comment\">// pairwise comparison avoids absolute calibration</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US20250124067\">US20250124067</a> (text ranking with pairwise ranking prompting)",
+      "affects": "Affected by: content quality at a holistic level. LLM rankers evaluate overall document utility, not individual signal optimization."
+    },
+    {
+      "name": "Generative Search Summaries",
+      "source": "Patent",
+      "how": "Generates LLM-powered summaries for search results that can be revised based on user interactions. The system produces initial summaries, then refines them based on which parts users engage with. Enables AI Overviews and other generative SERP features.",
+      "formula": "<span class=\"cf-fn\">genSummary</span>(results) = <span class=\"cf-fn\">LLM</span>(\n<span class=\"cf-val\">top_results</span>, <span class=\"cf-val\">query</span>\n) &rarr; <span class=\"cf-val\">summary_v1</span>\n<span class=\"cf-fn\">revisedSummary</span> = <span class=\"cf-fn\">refine</span>(\n<span class=\"cf-val\">summary_v1</span>, <span class=\"cf-val\">user_interactions</span>\n)  <span class=\"cf-comment\">// interaction-revised summaries</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US11769017\">US11769017</a> (generative summaries for search results)",
+      "affects": "Affected by: content clarity and structure. Well-organized content with clear claims is more likely to be accurately summarized and cited in AI Overviews."
+    }
+  ],
+  "pipeline": {
+    "title": "Neural Ranking in the Pipeline",
+    "stages": [
+      {
+        "name": "Hand-Crafted Scoring",
+        "detail": "Q* + P* + T* via linear weighted formulas"
+      },
+      {
+        "name": "BERT",
+        "detail": "Query understanding, refines T* signals"
+      },
+      {
+        "name": "RankEmbed",
+        "detail": "Dual encoder, dot product similarity"
+      },
+      {
+        "name": "DeepRank",
+        "detail": "BERT-based decomposable re-ranking"
+      },
+      {
+        "name": "RankBrain",
+        "detail": "Final ML adjustment on top 20-30 results"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2013",
+      "type": "patent",
+      "title": "Word2Vec Published",
+      "desc": "Tomas Mikolov (Google Brain) patents Word2Vec: Skip-gram (<a href=\"https://patents.google.com/patent/US9740680\">US9740680</a>) and CBOW (<a href=\"https://patents.google.com/patent/US9037464\">US9037464</a>). Maps words to dense vectors where semantic relationships are preserved. Foundation for RankEmbed, DeepRank, and all neural ranking."
+    },
+    {
+      "year": "2015",
+      "type": "patent",
+      "title": "RankBrain Deployed",
+      "desc": "First ML system in Google Search. Handles novel queries by learning query-document relationships from click logs."
+    },
+    {
+      "year": "2018",
+      "type": "patent",
+      "title": "BERT Integration",
+      "desc": "Bidirectional contextual language model for query understanding. Refines hand-crafted T* signals."
+    },
+    {
+      "year": "2019",
+      "type": "patent",
+      "title": "DeepRank System",
+      "desc": "BERT-based neural ranking requiring language understanding and world knowledge. Used for re-ranking top results."
+    },
+    {
+      "year": "2021",
+      "type": "patent",
+      "title": "MUM Announced",
+      "desc": "Multitask Unified Model: cross-language, multi-format (image/text). Too computationally expensive for all queries."
+    },
+    {
+      "year": "2023",
+      "type": "patent",
+      "title": "Generative Search Summaries (US11769017)",
+      "desc": "Patent on LLM-generated summaries for search results with interaction-based revision. Precursor technology for AI Overviews. Summaries refined based on user engagement patterns."
+    },
+    {
+      "year": "2024",
+      "type": "patent",
+      "title": "LLM Pairwise Ranking (US20250124067)",
+      "desc": "Patent by Zhen Qin on using LLMs as rankers via pairwise comparison prompting. The generative model determines which of two documents better satisfies a query. Represents the shift from scoring functions to generative ranking."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "DOJ Trial: Training Data Revealed",
+      "desc": "RankEmbed trained on exactly 70 days of logs + 16,000 human rater scores. Uses dot product, NOT cosine similarity."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "DOJ: Only 2 Systems Use ML",
+      "desc": "HJ Kim deposition: only RankBrain and DeepRank use ML/LLM. All other signals are hand-crafted."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "Our ranking is powered by advanced AI and machine learning.",
+      "internalSource": "HJ Kim Deposition",
+      "internalClaim": "Only RankBrain and DeepRank use ML/LLM. All other ranking signals are hand-crafted. 100+ raw signals combined via linear weighted formulas, not neural networks."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "BERT understands the nuance and context of every search query.",
+      "internalSource": "DOJ Trial",
+      "internalClaim": "BERT refines hand-crafted T* signals, it doesn't replace them. The ABC framework (Anchors, Body, Clicks) remains the foundation. BERT is an enhancement layer, not the core."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "MUM is 1,000x more powerful than BERT and transforms search.",
+      "internalSource": "DOJ Trial",
+      "internalClaim": "MUM is too computationally expensive for most queries. It processes cross-language and multi-format content but cannot run at the scale needed for all searches."
+    }
+  ]
+}

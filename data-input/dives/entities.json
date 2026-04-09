@@ -1,0 +1,228 @@
+{
+  "id": "entities",
+  "route": "/entities",
+  "systems": [
+    "TopicalitySignal",
+    "YMYL",
+    "QueryUnderstanding",
+    "Entity",
+    "Webref"
+  ],
+  "hero": {
+    "title": "Entity Understanding & Topicality",
+    "subtitle": "Google's entity system connects documents to Knowledge Graph entities via Webref, then computes topicality through the T* score with three sub-signals: what the web says (Anchors), what the page says (Body), and what users say (Clicks). YMYL classification adds stricter authority requirements for health, finance, and safety content."
+  },
+  "keyInsight": {
+    "label": "Key Insight from DOJ Trial",
+    "text": "The T* (Topicality) score is built from exactly <strong>three sub-signals: A* (Anchors), B* (Body), C* (Clicks)</strong>. A* measures \"what the web says about a document\" through link context. B* measures \"what the document says about itself.\" C* measures \"what users say\" through click behavior. This ABC framework is the core of query-document relevance, supplemented by entity-level understanding from the <strong>Webref</strong> system."
+  },
+  "pillars": [
+    {
+      "type": "leak",
+      "title": "Webref & Entity Signals",
+      "items": [
+        "<strong>salienceScores</strong> - Entity prominence within a document",
+        "<strong>kgEntityId</strong> - Knowledge Graph entity ID linked to page",
+        "<strong>kgEntityConfidence</strong> - Confidence of entity-page association",
+        "<strong>topicality</strong> - How central an entity is to the page's content",
+        "<strong>qrefAnnotation</strong> - Query-to-entity mapping via Knowledge Graph",
+        "<strong>author</strong> - Document author(s) as structured data",
+        "<strong>isAuthor</strong> - Boolean for entity authorship attribution"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "T* Score & YMYL",
+      "items": [
+        "<strong>T*</strong> - Topicality score with A*/B*/C* sub-signals",
+        "<strong>A* (Anchors)</strong> - \"What the web says about a document\"",
+        "<strong>B* (Body)</strong> - \"What the document says about itself\"",
+        "<strong>C* (Clicks)</strong> - \"What users say about a document\"",
+        "<strong>titlematchScore</strong> - Query-to-title relevance alignment",
+        "<strong>avgTermWeight</strong> - Content emphasis via font sizing",
+        "<strong>ymylHealthScore</strong> - Health content authority assessment",
+        "<strong>chard</strong> - YMYL domain authority signal"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "7 Patents",
+      "items": [
+        "<strong>Knowledge Graph</strong> - 570M+ entities connected to search",
+        "<strong>Webref</strong> - Bridges documents to KG entities",
+        "<strong>Entity salience</strong> - Not just mentioned, but central to the page",
+        "<strong>E-A-T</strong> - Expertise, Authoritativeness, Trustworthiness",
+        "<strong>QBST</strong> - Memorizes words that appear on relevant pages",
+        "<strong>Knowledge-Based Trust (KBT)</strong> - Research (2015) proposing ranking by factual accuracy. Extracts knowledge triples (subject, predicate, object) and compares against Knowledge Graph/Vault. Tested on 2.8B triples across 119M pages. Never deployed to production Search (confirmed via multiple sources including Mark Traphagen, 2015). The capability for entity-level fact verification exists at scale.",
+        "<strong>Knowledge Vault</strong> - 16 extraction systems building a massive fact database. Automatic triple extraction and cross-referencing. Feeds entity validation pipeline.",
+        "Patent <a href=\"https://patents.google.com/patent/US20120158633A1\">US20120158633</a>: Knowledge Graph based search system. Patent <a href=\"https://patents.google.com/patent/US9547823B2\">US9547823</a>: KG-based content recommendation.",
+        "<strong>Entity-based effectiveness ranking</strong> - Patent <a href=\"https://patents.google.com/patent/US9767159\">US9767159</a> (filed 2014): Ranks resources for entity queries (artist, album, movie) using an effectiveness measure combining: (1) quantity of steps to access content (fewer = higher score), (2) user affinity for publisher (app installed, account exists, usage frequency, social connections), (3) aggregate user behavior. Connects web search with mobile app ecosystems via deep links. Personalizes rankings based on installed apps and user history",
+        "Bill Slawski's extensive analysis of entity extraction patents",
+        "<a href=\"https://patents.google.com/patent/US20030195834\">US20030195834</a>: Automated online purchasing system; <a href=\"https://patents.google.com/patent/US10977573\">US10977573</a>: Distantly supervised wrapper induction for semi-structured documents; <a href=\"https://patents.google.com/patent/US5010478\">US5010478</a>: Entity-attribute value database system with inverse attribute for selectively relating two differ...",
+        "<a href=\"https://patents.google.com/patent/US7257604\">US7257604</a>: System and method for communicating information relating to a network resource"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Entity Understanding Affects Your SEO",
+      "items": [
+        "<strong>Build your T* score across all three pillars</strong>: Topicality is computed from A* (what the web says via anchors), B* (what the page says via body), and C* (what users say via clicks). Most SEOs focus only on B* (on-page). Build A* through strategic link building with topically relevant anchor text. Improve C* by earning satisfied clicks with compelling SERP snippets.",
+        "<strong>Maximize entity salience, not just mentions</strong>: Webref's salienceScores measure how central an entity is to the page, not merely whether it appears. A page that briefly mentions a topic scores low; a page structured around the entity as its core subject scores high. Make your target entity the clear focus of the page through title, headings, opening paragraph, and Schema.org markup.",
+        "<strong>Connect your content to Knowledge Graph entities</strong>: kgEntityId and kgEntityConfidence measure how strongly your page connects to known Knowledge Graph entities. Reference real entities (people, places, organizations, concepts) by their proper names. Use Schema.org markup (Organization, Person, Product) to help Webref confidently link your content to KG entries.",
+        "<strong>Strengthen A* by earning contextually described links</strong>: The DOJ confirmed A* measures \"what the web says about a document\" through anchor text and link context. Links with descriptive, topically relevant surrounding text contribute more to your T* score than naked URLs or generic \"click here\" anchors. Guest posts and citations in contextually relevant articles build the strongest A* signals.",
+        "<strong>Prepare for YMYL scrutiny if your content touches health or finance</strong>: ymylHealthScore and chard are explicit algorithmic signals, not just quality rater guidelines. YMYL content faces stricter authority thresholds. Demonstrate credentials, cite authoritative sources, include author bios with relevant expertise, and ensure factual accuracy. The algorithmic bar is higher regardless of what Google publicly states.",
+        "<strong>Use Schema.org structured data to assist entity disambiguation</strong>: qrefAnnotation maps queries to Knowledge Graph entities. Structured data (Organization, Person, MedicalCondition, FinancialProduct) helps Google's entity recognition system resolve ambiguity. A page about \"Mercury\" ranks differently depending on whether Google associates it with the planet, element, or car brand. Structured data removes guesswork."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "EntityAnnotations",
+      "source": "DOJ: Webref semantic entity recognition and linking",
+      "how": "Webref system identifies entities in content and links them to Knowledge Graph entries. Semantic entity recognition maps text mentions to known entities.",
+      "formula": "<span class=\"cf-fn\">EntityAnnotations</span>(page) = <span class=\"cf-fn\">Webref</span>(\n  <span class=\"cf-val\">text_mentions</span> &rarr; <span class=\"cf-val\">kgEntityId</span>, <span class=\"cf-val\">confidence</span>, <span class=\"cf-val\">salience</span>\n)  <span class=\"cf-comment\">// links text to Knowledge Graph entries</span>\n<span class=\"cf-comment\">// salience: is entity central or just mentioned?</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8812435\">US8812435</a> (entity extraction from documents), <a href=\"https://patents.google.com/patent/US9047295\">US9047295</a> (knowledge graph construction)",
+      "affects": "Affected by: referencing known entities clearly. Use proper names, disambiguate terms. Structured data (Schema.org) helps entity recognition."
+    },
+    {
+      "name": "topicEmbeddingsVersionedData",
+      "source": "DOJ: versioned topic embedding vectors",
+      "how": "Versioned topic vectors that evolve over time as content changes. Semantic classification using embedding space. Pages are mapped to topic clusters.",
+      "formula": "<span class=\"cf-fn\">topicEmbeddings</span>(page, v) = <span class=\"cf-fn\">embed</span>(\n  <span class=\"cf-val\">content</span>[version_v]\n) &rarr; <span class=\"cf-val\">topic_cluster</span>  <span class=\"cf-comment\">// versioned, evolves over time</span>\n<span class=\"cf-comment\">// consistent topical content strengthens vectors</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US9047295\">US9047295</a> (knowledge graph), <a href=\"https://patents.google.com/patent/US8812435\">US8812435</a> (entity extraction)",
+      "affects": "Affected by: consistent topical content. Topic embeddings evolve, so regular quality content on your topic strengthens vectors."
+    },
+    {
+      "name": "site2vecEmbeddingEncoded",
+      "source": "DOJ: site-level vector embedding in semantic space",
+      "how": "Entire domain represented as a single dense vector in semantic space. Aggregated from all page-level embeddings. Captures \"what the site is about\" holistically.",
+      "formula": "<span class=\"cf-fn\">site2vec</span>(domain) = <span class=\"cf-fn\">aggregate</span>(\n  <span class=\"cf-val\">page_embeddings</span>[all_pages]\n) &rarr; <span class=\"cf-val\">dense_vector</span>  <span class=\"cf-comment\">// single site representation</span>\n<span class=\"cf-comment\">// off-topic pages dilute the embedding</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US9047295\">US9047295</a> (knowledge graph construction)",
+      "affects": "Affected by: site-wide topical consistency. All pages contribute to the site vector. Off-topic content dilutes the embedding."
+    },
+    {
+      "name": "asteroidBeltIntents",
+      "source": "DOJ: intent classification for query type and specificity",
+      "how": "Classifies search intent type and specificity. Maps queries to intent categories. Determines which signals and ranking approaches apply to a query.",
+      "formula": "<span class=\"cf-fn\">asteroidBeltIntents</span>(query) = <span class=\"cf-fn\">classify</span>(\n  <span class=\"cf-val\">intent_type</span>, <span class=\"cf-val\">specificity</span>\n) &rarr; <span class=\"cf-val\">signal_routing</span>  <span class=\"cf-comment\">// determines ranking approach</span>\n<span class=\"cf-comment\">// maps queries to intent categories for signal selection</span>",
+      "affects": "Affected by: not directly controllable. But understanding intent categories helps create content that matches how Google classifies related queries."
+    },
+    {
+      "name": "EntityEffectiveness",
+      "source": "Patent US9767159 (Google, filed 2014)",
+      "how": "For entity-specific queries (artist, album, movie, product), ranks resources by an effectiveness measure combining access friction and user affinity. Access friction: how many steps required after clicking to view/play/buy the content (fewer steps = higher rank). User affinity: whether user has publisher's app installed, account/subscription, social connections, usage frequency, explicit preferences. Aggregate behavior: what other users chose for this entity. Connects search with app deep links for personalized entity results.",
+      "formula": "<span class=\"cf-fn\">Effectiveness</span>(resource, user, entity) = <span class=\"cf-fn\">f</span>(\n  <span class=\"cf-val\">steps_to_content</span>,  <span class=\"cf-comment\">// fewer = higher score</span>\n  <span class=\"cf-val\">user_affinity</span>: {\n    <span class=\"cf-val\">app_installed</span>, <span class=\"cf-val\">has_account</span>,\n    <span class=\"cf-val\">usage_frequency</span>, <span class=\"cf-val\">social_connections</span>\n  },\n  <span class=\"cf-val\">aggregate_behavior</span>  <span class=\"cf-comment\">// what others chose</span>\n)\n<span class=\"cf-comment\">// personalizes entity query results via deep links</span>\n<span class=\"cf-comment\">// connects web search with app ecosystems</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US9767159\">US9767159</a> (Ranking search results, 2014)",
+      "affects": "Affected by: content accessibility (direct deep links vs multi-step navigation), user's installed apps and accounts, publisher relationship signals, aggregate user preferences for entity content sources."
+    },
+    {
+      "name": "Knowledge-Based Trust (KBT)",
+      "source": "Research: Google (2015), VLDB",
+      "how": "Research system proposing ranking by factual accuracy instead of link popularity. Extracts knowledge triples (subject, predicate, object) from web pages using information extraction. Compares triples against Knowledge Graph and Knowledge Vault. Pages with more facts matching known truth receive higher trust scores. Pages with factual errors receive lower scores. Tested on 2.8 billion triples across 119 million pages. John Mueller confirmed KBT is research only, not in production Search. However, the capability to verify factual claims against the Knowledge Graph exists and may inform other signals like contentEffort.",
+      "formula": "<span class=\"cf-fn\">KBT</span>(page) = <span class=\"cf-fn\">score</span>(\n  <span class=\"cf-fn\">extract_triples</span>(<span class=\"cf-val\">page</span>)\n  <span class=\"cf-kw\">vs</span>\n  <span class=\"cf-val\">KnowledgeGraph</span> + <span class=\"cf-val\">KnowledgeVault</span>\n)\n<span class=\"cf-comment\">// Triple: (subject, predicate, object)</span>\n<span class=\"cf-comment\">// More correct facts = higher trust</span>\n<span class=\"cf-comment\">// 2.8B triples tested across 119M pages</span>\n<span class=\"cf-comment\">// STATUS: Research only, never deployed to production Search</span>",
+      "patents": "Research: <a href=\"https://www.vldb.org/pvldb/vol8/p938-dong.pdf\">KBT Paper (VLDB 2015)</a>",
+      "affects": "Affected by: factual accuracy of claims, alignment with Knowledge Graph entities, entity attribute correctness. AI-generated content that hallucinates facts would score low."
+    }
+  ],
+  "pipeline": {
+    "title": "Entity & Topicality Pipeline",
+    "stages": [
+      {
+        "name": "Entity Extraction",
+        "detail": "Webref: salience, kgEntityId, confidence"
+      },
+      {
+        "name": "KG Linking",
+        "detail": "Map entities to Knowledge Graph, qrefAnnotation"
+      },
+      {
+        "name": "T* Scoring",
+        "detail": "A* (anchors) + B* (body) + C* (clicks)"
+      },
+      {
+        "name": "YMYL Check",
+        "detail": "ymylHealthScore, chard, ymylNewsScore"
+      },
+      {
+        "name": "Ascorer",
+        "detail": "T* combined with Q* and P* for final ranking"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2010",
+      "type": "patent",
+      "title": "Freebase & Entity Extraction",
+      "desc": "Google acquires Freebase. Entity recognition patents filed for connecting documents to real-world entities."
+    },
+    {
+      "year": "2012",
+      "type": "patent",
+      "title": "Knowledge Graph Launch",
+      "desc": "Google introduces Knowledge Graph with 570M entities. Entity understanding becomes central to search."
+    },
+    {
+      "year": "2015",
+      "type": "patent",
+      "title": "RankBrain: Query Understanding",
+      "desc": "ML system for interpreting novel and ambiguous queries. Connects query intent to entity relationships."
+    },
+    {
+      "year": "2014",
+      "type": "patent",
+      "title": "Entity Effectiveness Ranking (US9767159)",
+      "desc": "Google patents entity-based ranking using effectiveness measure: combines access steps (fewer = better), user affinity (app installed, account, usage, social), and aggregate behavior. Personalizes entity query results via deep links connecting web search with app ecosystems."
+    },
+    {
+      "year": "2018",
+      "type": "patent",
+      "title": "E-A-T & YMYL Classification",
+      "desc": "Quality rater guidelines formalize entity authority. YMYL categories get stricter quality requirements."
+    },
+    {
+      "year": "2015",
+      "type": "patent",
+      "title": "Knowledge-Based Trust Research",
+      "desc": "Google researchers publish KBT: ranking by factual accuracy via knowledge triple extraction. Tested on 2.8B triples across 119M pages. Not deployed to production."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "API Leak: Webref System",
+      "desc": "salienceScores, kgEntityId, kgEntityConfidence, topicality, qrefAnnotation confirmed in ranking."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "DOJ Trial: T* with A/B/C",
+      "desc": "Topicality score uses three sub-signals: Anchors, Body, Clicks. YMYL signals ymylHealthScore, chard confirmed."
+    },
+    {
+      "year": "2025-06",
+      "type": "patent",
+      "title": "ClaimReview Deprecation",
+      "desc": "Google deprecates ClaimReview structured data along with 6 other types. Fact-checking signals shift from publisher-declared markup to algorithmic assessment via models like MUM and contentEffort. Rankings unaffected."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"There is no YMYL algorithm. YMYL is a concept from our quality rater guidelines, not a ranking signal.\"",
+      "internalSource": "DOJ + Leak",
+      "internalClaim": "ymylHealthScore, ymylNewsScore, and chard are explicit algorithmic signals in the ranking pipeline. YMYL is not just guidelines but actual code."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"We match queries to relevant content based on keywords and meaning.\"",
+      "internalSource": "DOJ Trial",
+      "internalClaim": "T* uses exactly three sub-signals (A, B, C). Anchor text (A*) remains critical for relevance. \"What the web says about you\" still outweighs on-page optimization alone."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"Authorship markup (rel=author) is deprecated and not used in ranking.\"",
+      "internalSource": "API Leak",
+      "internalClaim": "author and isAuthor fields exist in the ranking pipeline. Entity-level authorship attribution connects content to Knowledge Graph entities."
+    }
+  ]
+}

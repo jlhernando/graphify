@@ -1,0 +1,259 @@
+{
+  "id": "query-understanding",
+  "route": "/query-understanding",
+  "systems": [
+    "QueryUnderstanding"
+  ],
+  "hero": {
+    "title": "Query Understanding: How Google Interprets Your Search",
+    "subtitle": "Query Understanding happens BEFORE retrieval, making it foundational to everything else. QUS classifies, rewrites, and enriches queries. Tangram/Tetris assembles the SERP. QBST memorizes what terms top pages use. AsteroidBeltIntents assigns multiple intents per document. 11 leak signals and 11 DOJ signals confirm this system."
+  },
+  "keyInsight": {
+    "label": "Key Insight from API Leak + DOJ Trial",
+    "text": "Google classifies every query into <strong>8 Refined Semantic Classes</strong> (Yes/No, Time, Numerical, Procedural, Descriptive, Comparative, List, Entity) and assigns <strong>multiple intents per document</strong> via asteroidBeltIntents. QBST is a <strong>memorization system</strong> that filters pages missing expected terminology BEFORE final ranking. Your content must contain the full constellation of salient terms that top-ranking pages share."
+  },
+  "pillars": [
+    {
+      "type": "leak",
+      "title": "Signals Confirmed",
+      "items": [
+        "<strong>intentScores</strong> - Document intent classification (informational, navigational, transactional)",
+        "<strong>commercialScore</strong> - Commercial/transactional intent detection per page",
+        "<strong>navigationalBoost</strong> - Boost for results matching navigational query intent",
+        "<strong>referenceQueries</strong> - Previously submitted queries referring to a resource",
+        "<strong>snippetBrain</strong> - ML-powered snippet generation and featured snippet selection",
+        "<strong>qrefAnnotation</strong> - Entity annotation linking queries to Knowledge Graph entities",
+        "<strong>webchooserScorer</strong> - Result type selection scorer for SERP features"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "Signals,  Core",
+      "items": [
+        "<strong>QUS</strong> - Central query processing: classifies, rewrites, enriches queries before ranking",
+        "<strong>Tangram</strong> - SERP assembly system: arranges blue links, features, Knowledge Panels, ads",
+        "<strong>Tetris</strong> - Original name for Tangram. Promotes fresh content for time-sensitive queries",
+        "<strong>asteroidBeltIntents</strong> - Multi-intent classification per document",
+        "<strong>OfficialPageTwiddler</strong> - Boosts official/authoritative pages for brand queries",
+        "<strong>YouTubeDensityTwiddler</strong> - Manages video result density to prevent YouTube overrepresentation"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "38 Patents",
+      "items": [
+        "Query rewriting: synonym identification via co-occurrence (<a href=\"https://patents.google.com/patent/US8538984\">US8538984</a>), concept-based term substitution (<a href=\"https://patents.google.com/patent/US9104750\">US9104750</a>), semantic unit extraction from queries (<a href=\"https://patents.google.com/patent/US7249121\">US7249121</a>), combining parameters across related queries (<a href=\"https://patents.google.com/patent/US11762848\">US11762848</a>), query canonicalization (<a href=\"https://patents.google.com/patent/US20200167379\">US20200167379</a>)",
+        "Query parsing: ambiguous query resolution (<a href=\"https://patents.google.com/patent/US7136854\">US7136854</a>), NL query parsing without retraining (<a href=\"https://patents.google.com/patent/US11914627\">US11914627</a>), user-context-based search (<a href=\"https://patents.google.com/patent/US9449105\">US9449105</a>), classifying web blocks by linguistics (<a href=\"https://patents.google.com/patent/US7895148\">US7895148</a>)",
+        "Answer extraction: multi-source short answer scoring (<a href=\"https://patents.google.com/patent/US20230342411\">US20230342411</a>), sentence compression for snippets (<a href=\"https://patents.google.com/patent/US9336186\">US9336186</a>), search result filters from content (<a href=\"https://patents.google.com/patent/US11797626\">US11797626</a>)",
+        "Authority signals: Agent Rank author reputation (<a href=\"https://patents.google.com/patent/US7565358\">US7565358</a>), trust-based ranking (<a href=\"https://patents.google.com/patent/US7603350\">US7603350</a>), authoritative results (<a href=\"https://patents.google.com/patent/US9659064\">US9659064</a>), editorial opinion in ranking (<a href=\"https://patents.google.com/patent/US7096214\">US7096214</a>)",
+        "Document analysis: query-specific duplicate detection (<a href=\"https://patents.google.com/patent/US6615209\">US6615209</a>), document clusters by related words (<a href=\"https://patents.google.com/patent/US7383258\">US7383258</a>), information extraction (<a href=\"https://patents.google.com/patent/US6678681\">US6678681</a>), entity-based query resolution (<a href=\"https://patents.google.com/patent/US7536382\">US7536382</a>)",
+        "Modern AI search: stateful chat search with generative companion (<a href=\"https://patents.google.com/patent/US20240289407\">US20240289407</a>), multi-modal ML (<a href=\"https://patents.google.com/patent/US10789427\">US10789427</a>), AI-generated content pages (<a href=\"https://patents.google.com/patent/US12536233\">US12536233</a>), privacy-preserving personalized LLMs (<a href=\"https://patents.google.com/patent/US20240403564\">US20240403564</a>)",
+        "<a href=\"https://patents.google.com/patent/US6381594\">US6381594</a>: System and method for personalized information filtering and alert generation; <a href=\"https://patents.google.com/patent/US20090164425\">US20090164425</a>: System and method for crawl ordering by search impact; <a href=\"https://patents.google.com/patent/US6778979\">US6778979</a>: System for automatically generating queries",
+        "<a href=\"https://patents.google.com/patent/US7610282\">US7610282</a>: Rank-adjusted content items; <a href=\"https://patents.google.com/patent/US8055669\">US8055669</a>: Search queries improved based on query semantic information; <a href=\"https://patents.google.com/patent/US9852225\">US9852225</a>: Associating features with entities, such as categories of web page documents, and/or weighting su...",
+        "<a href=\"https://patents.google.com/patent/US9552388\">US9552388</a>: System and method for providing search query refinements; <a href=\"https://patents.google.com/patent/US6711568\">US6711568</a>: Method for estimating coverage of web search engines; <a href=\"https://patents.google.com/patent/US20090327283\">US20090327283</a>: Techniques for web site integration",
+        "<a href=\"https://patents.google.com/patent/US20100211566\">US20100211566</a>: Entity-based search results and clusters on maps; <a href=\"https://patents.google.com/patent/US7991780\">US7991780</a>: Performing multiple related searches; <a href=\"https://patents.google.com/patent/US7958109\">US7958109</a>: Intent driven search result rich abstracts",
+        "<a href=\"https://patents.google.com/patent/US7672932\">US7672932</a>: Speculative search result based on a not-yet-submitted search query; <a href=\"https://patents.google.com/patent/US7725485\">US7725485</a>: Generating query suggestions using contextual information"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Query Understanding Affects Your SEO",
+      "items": [
+        "<strong>Map content to Google's 8 Refined Semantic Classes</strong>: Google classifies queries as Yes/No, Time, Numerical, Procedural, Descriptive, Comparative, List, or Entity. Structure your content to explicitly match these formats. A 'how to' query expects Procedural content (numbered steps), while 'best X vs Y' expects Comparative (side-by-side analysis). Mismatching the semantic class means QUS routes your page away from the query.",
+        "<strong>Build multi-intent pages to maximize asteroidBeltIntents coverage</strong>: The DOJ confirmed documents are tagged with a constellation of potential query matches, not a single intent. A comprehensive guide that covers definitions, comparisons, how-tos, and pricing for a topic will be assigned more intents, making it eligible for a wider range of queries from one URL.",
+        "<strong>Align page commercialScore with query intent</strong>: The leak's commercialScore classifies pages by transactional intent. If you are targeting informational queries, minimize aggressive product mentions, pricing CTAs, and affiliate links that inflate your commercial score. Conversely, product pages should include clear pricing, availability, and purchase options to match transactional intent.",
+        "<strong>Secure the OfficialPageTwiddler boost for your brand</strong>: DOJ testimony confirmed OfficialPageTwiddler boosts official pages for navigational queries. Strengthen your brand's association with your domain: consistent branding across platforms, Google Business Profile claiming, Schema.org Organization markup, and building branded search volume. This is how Google identifies your domain as the 'official' result.",
+        "<strong>Optimize for QUS query expansion, not just exact keywords</strong>: QUS performs synonym expansion, entity resolution, and query reformulation before retrieval. Research what synonyms, related terms, and entity associations Google connects to your target queries. Tools like Google's own autocomplete, People Also Ask, and related searches reveal QUS expansion patterns you should cover.",
+        "<strong>Structure content for Tangram SERP feature eligibility</strong>: Tangram (formerly Tetris) assembles the SERP layout based on query classification. To win featured snippets, use concise definition paragraphs (40-60 words). For PAA boxes, structure content as clear Q&A pairs. For video carousels, embed relevant video with proper Schema. Each SERP feature has specific content format requirements that Tangram evaluates.",
+        "<strong>Use referenceQueries to understand how Google associates pages with queries</strong>: The leak confirmed referenceQueries tracks previously submitted queries referring to a resource. Build content that naturally attracts diverse query associations by covering subtopics comprehensively. The more unique queries that lead to clicks on your page, the more referenceQueries strengthen your retrieval for related terms."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "QUS",
+      "source": "DOJ",
+      "how": "Central query processing service that classifies, rewrites, and enriches queries BEFORE retrieval. Performs spell correction, synonym expansion, entity resolution, and intent classification. All downstream ranking depends on QUS output.",
+      "formula": "<span class=\"cf-fn\">QUS</span>(raw_query, ctx) = {\n<span class=\"cf-val\">corrected</span>: <span class=\"cf-fn\">spell_fix</span>(q),\n<span class=\"cf-val\">expanded</span>: <span class=\"cf-fn\">synonyms</span>(q),\n<span class=\"cf-val\">entities</span>: <span class=\"cf-fn\">resolve</span>(q, KG),\n<span class=\"cf-val\">intent</span>: <span class=\"cf-fn\">classify</span>(q)\n}  <span class=\"cf-comment\">// runs BEFORE retrieval</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8903810\">US8903810</a> (query classification), <a href=\"https://patents.google.com/patent/US9152665\">US9152665</a> (query interpretation), <a href=\"https://patents.google.com/patent/US8538984\">US8538984</a> (synonym identification), <a href=\"https://patents.google.com/patent/US9449105\">US9449105</a> (user-context search), <a href=\"https://patents.google.com/patent/US11914627\">US11914627</a> (NL query parsing)",
+      "affects": "Affected by: raw query text, user context (language, location, device), search history, entity database"
+    },
+    {
+      "name": "asteroidBeltIntents",
+      "source": "DOJ+Leak",
+      "how": "Multiple intents assigned per document. Documents tagged with a constellation of potential query matches rather than a single intent. Enables one page to rank for diverse query intents based on its content coverage.",
+      "formula": "<span class=\"cf-fn\">asteroidBeltIntents</span>(doc) = [\n<span class=\"cf-val\">intent_1</span>(w1), <span class=\"cf-val\">intent_2</span>(w2), ..., <span class=\"cf-val\">intent_N</span>(wN)\n]  <span class=\"cf-comment\">// constellation of potential query matches</span>\n<span class=\"cf-comment\">// one page can rank for diverse intents</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8903810\">US8903810</a> (query classification)",
+      "affects": "Affected by: document content breadth, entity mentions, topic coverage, semantic analysis depth"
+    },
+    {
+      "name": "Tangram",
+      "source": "DOJ",
+      "how": "SERP assembly system (formerly called Tetris). Arranges blue links, featured snippets, Knowledge Panels, ads, and video results. Decides what result types to show and in what layout based on query classification and available content.",
+      "formula": "<span class=\"cf-fn\">Tangram</span>(query_class, results) = <span class=\"cf-fn\">assemble</span>(\n<span class=\"cf-val\">blue_links</span>, <span class=\"cf-val\">snippets</span>, <span class=\"cf-val\">KP</span>, <span class=\"cf-val\">ads</span>, <span class=\"cf-val\">video</span>\n)  <span class=\"cf-comment\">// formerly called Tetris</span>\n<span class=\"cf-comment\">// layout driven by query classification</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US9152665\">US9152665</a> (query interpretation), <a href=\"https://patents.google.com/patent/US11797626\">US11797626</a> (search result filters from content)",
+      "affects": "Affected by: query type classification, available result types, ad inventory, content format availability"
+    },
+    {
+      "name": "commercialScore",
+      "source": "Leak",
+      "how": "Per-page commercial/transactional intent score. Classifies how transactional a page's content is. <span class=\"calc-uncertain\">Exact scoring mechanism not confirmed.</span>",
+      "formula": "<span class=\"cf-fn\">commercialScore</span>(page) = <span class=\"cf-fn\">classify_intent</span>(\n<span class=\"cf-val\">product_mentions</span>, <span class=\"cf-val\">pricing</span>, <span class=\"cf-val\">transactional_lang</span>\n) &rarr; <span class=\"cf-val\">commercial_probability</span>\n<span class=\"cf-comment\">// per-page transactional intent classification</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8903810\">US8903810</a> (query classification)",
+      "affects": "Affected by: page content indicators, product mentions, pricing data, transactional language patterns"
+    },
+    {
+      "name": "Synonym Expansion (Hummingbird)",
+      "source": "Patent",
+      "how": "Identifies query term synonyms by analyzing co-occurrence with non-adjacent terms across search logs. When a concept is detected in a query, substitution candidates are drawn from other queries containing that same concept. This is the patent basis for Hummingbird's semantic matching.",
+      "formula": "<span class=\"cf-fn\">synonymScore</span>(t1, t2) = <span class=\"cf-fn\">cooccurrence</span>(t1, t2, non_adjacent) &times; <span class=\"cf-fn\">conceptMatch</span>(t1, t2)\n<span class=\"cf-comment\">// co-occurrence across query logs, not just page content</span>\n<span class=\"cf-fn\">substitute</span>(q, t1) = argmax(<span class=\"cf-fn\">synonymScore</span>(t1, candidates))\n<span class=\"cf-comment\">// concept-aware term substitution</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8538984\">US8538984</a> (synonym identification via co-occurrence), <a href=\"https://patents.google.com/patent/US9104750\">US9104750</a> (concept-based term substitution)",
+      "affects": "Affected by: query log co-occurrence data, concept detection, term frequency, substitution confidence thresholds"
+    },
+    {
+      "name": "Semantic Unit Extraction",
+      "source": "Patent",
+      "how": "Identifies meaningful multi-word phrases (semantic units) within queries by checking how frequently candidate compound terms appear in top-ranked documents. Weighted by document relevance rank. Prevents splitting meaningful phrases into individual keywords.",
+      "formula": "<span class=\"cf-fn\">semanticUnit</span>(terms) = <span class=\"cf-fn\">compound</span>(t_i, t_j) where\n<span class=\"cf-val\">freq</span>(<span class=\"cf-fn\">compound</span>, top_docs) &times; <span class=\"cf-val\">rank_weight</span> &gt; &theta;\n<span class=\"cf-comment\">// compound terms validated against top-ranked documents</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US7249121\">US7249121</a> (semantic units from search queries)",
+      "affects": "Affected by: top-ranked document content, compound term frequency, document relevance weights"
+    },
+    {
+      "name": "Stateful Chat Search",
+      "source": "Patent",
+      "how": "Augments search with a generative companion that maintains conversation state across query turns. Classifies queries using contextual information from prior turns, generates synthetic queries to fill gaps, and combines parameters from related queries sharing a line of inquiry.",
+      "formula": "<span class=\"cf-fn\">statefulSearch</span>(q_t, history) = {\n<span class=\"cf-val\">context</span>: <span class=\"cf-fn\">mergeState</span>(q_1...q_{t-1}),\n<span class=\"cf-val\">synthetic</span>: <span class=\"cf-fn\">generateQuery</span>(q_t, context),\n<span class=\"cf-val\">combined</span>: <span class=\"cf-fn\">mergeParams</span>(q_t, related_queries)\n}  <span class=\"cf-comment\">// generative companion with cross-turn memory</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US20240289407\">US20240289407</a> (search with stateful chat), <a href=\"https://patents.google.com/patent/US11762848\">US11762848</a> (combining multi-query parameters)",
+      "affects": "Affected by: conversation history, query semantic similarity, generative model output, user session state"
+    },
+    {
+      "name": "Short Answer Extraction",
+      "source": "Patent",
+      "how": "Generates featured snippet callouts by scoring candidate passages from multiple sources. Trains a scoring engine on passage quality signals including content, titles, and surrounding context. Sentence compression removes non-essential terms to produce concise answers.",
+      "formula": "<span class=\"cf-fn\">answerScore</span>(passage) = <span class=\"cf-fn\">scoreEngine</span>(\n<span class=\"cf-val\">content</span>, <span class=\"cf-val\">title</span>, <span class=\"cf-val\">context</span>, <span class=\"cf-val\">non_candidates</span>\n)\n<span class=\"cf-fn\">snippet</span> = <span class=\"cf-fn\">compress</span>(top_passage, <span class=\"cf-val\">edge_weights</span>)\n<span class=\"cf-comment\">// multi-source scoring + sentence compression</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US20230342411\">US20230342411</a> (multi-source short answer scoring), <a href=\"https://patents.google.com/patent/US9336186\">US9336186</a> (sentence compression)",
+      "affects": "Affected by: passage content quality, source diversity, title relevance, compression feature weights"
+    },
+    {
+      "name": "Agent Rank",
+      "source": "Patent",
+      "how": "Assigns reputation scores to content agents (authors/creators) based on digital signatures associating them with content. Agent reputation depends on quality and link profiles of their signed content. Multiple agents can contribute to a single page, each scored independently. Feeds into trust-based ranking.",
+      "formula": "<span class=\"cf-fn\">agentRank</span>(agent) = &Sigma; <span class=\"cf-fn\">quality</span>(signed_content) &times; <span class=\"cf-fn\">linkProfile</span>(content)\n<span class=\"cf-fn\">trustRank</span>(page) = f(<span class=\"cf-fn\">agentRank</span>(contributors), <span class=\"cf-val\">seed_trust</span>)\n<span class=\"cf-comment\">// author reputation feeds page trust scoring</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US7565358\">US7565358</a> (Agent Rank), <a href=\"https://patents.google.com/patent/US7603350\">US7603350</a> (trust-based ranking)",
+      "affects": "Affected by: agent digital signatures, content quality signals, link profiles, seed trust set distance"
+    }
+  ],
+  "pipeline": {
+    "title": "Query Understanding Pipeline",
+    "stages": [
+      {
+        "name": "Query Input",
+        "detail": "Raw user query + context (language, location, device, history)"
+      },
+      {
+        "name": "QUS Processing",
+        "detail": "Spell correction, synonym expansion, entity resolution, intent classification"
+      },
+      {
+        "name": "QBST Filtering",
+        "detail": "Salient term matching: pages missing expected terms filtered out"
+      },
+      {
+        "name": "Retrieval",
+        "detail": "Enriched query sent to index with intent weights and entity annotations"
+      },
+      {
+        "name": "Tangram Assembly",
+        "detail": "SERP layout: blue links, featured snippets, PAA, KP, AI Overviews, video"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2003",
+      "type": "patent",
+      "title": "Query Rewriting",
+      "desc": "Early patents on spell correction, synonym expansion, and query reformulation for better retrieval."
+    },
+    {
+      "year": "2004",
+      "type": "patent",
+      "title": "Semantic Units",
+      "desc": "Patent US7249121 on extracting meaningful multi-word phrases from queries by validating compound terms against top-ranked documents."
+    },
+    {
+      "year": "2005",
+      "type": "patent",
+      "title": "Agent Rank",
+      "desc": "Patent US7565358 introduces author/agent reputation scores based on digital signatures and content quality. Precursor to E-E-A-T author signals."
+    },
+    {
+      "year": "2009",
+      "type": "patent",
+      "title": "Entity-Based Queries",
+      "desc": "Google files patents on resolving queries to Knowledge Graph entities (US7536382). Queries become entity lookups."
+    },
+    {
+      "year": "2013",
+      "type": "patent",
+      "title": "Hummingbird / Synonym ID",
+      "desc": "Patent US8538984 on synonym identification via co-occurrence analysis. Enables semantic matching beyond exact keywords. Foundation of the Hummingbird update."
+    },
+    {
+      "year": "2015",
+      "type": "patent",
+      "title": "RankBrain",
+      "desc": "ML system handles 15% of queries Google has never seen. Learns query-document relationships from click patterns."
+    },
+    {
+      "year": "2019",
+      "type": "patent",
+      "title": "BERT Integration",
+      "desc": "BERT processes 1 in 10 queries for contextual understanding. Prepositions and word order now affect meaning."
+    },
+    {
+      "year": "2023",
+      "type": "patent",
+      "title": "Short Answer Extraction",
+      "desc": "Patent US20230342411 on multi-source passage scoring for featured snippet callouts. Trains scoring engine on candidate and non-candidate passages."
+    },
+    {
+      "year": "2024",
+      "type": "patent",
+      "title": "Stateful Chat + AI Pages",
+      "desc": "Patents US20240289407 (search with generative companion maintaining conversation state) and US12536233 (AI-generated content pages tailored per user). Query understanding enters the LLM era."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "API Leak: QUS Pipeline",
+      "desc": "referenceQueries, intentScores, commercialScore, navigationalBoost, snippetBrain, qrefAnnotation all confirmed."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "DOJ: Tangram + QBST",
+      "desc": "QUS processes queries BEFORE retrieval. Tangram/Tetris assembles SERP layout. QBST memorizes salient terms. 8 semantic query classes."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"We don't rewrite queries. We show results for what you typed.\"",
+      "internalSource": "DOJ Trial",
+      "internalClaim": "QUS extensively rewrites queries: spell correction, synonym expansion, entity resolution, and intent reclassification all happen before retrieval. The query you typed is rarely the query that runs."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"Search results are based on relevance, not commercial intent.\"",
+      "internalSource": "API Leak",
+      "internalClaim": "commercialScore explicitly classifies pages by transactional intent. navigationalBoost applies direct ranking boost for branded queries. Intent classification drives result selection."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"We treat all content types equally in search results.\"",
+      "internalSource": "DOJ Trial",
+      "internalClaim": "YouTubeDensityTwiddler explicitly manages video result density. OfficialPageTwiddler boosts brand pages. Tangram optimizes SERP layout per query type. Content types are ranked and slotted differently."
+    }
+  ]
+}

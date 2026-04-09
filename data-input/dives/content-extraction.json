@@ -1,0 +1,178 @@
+{
+  "id": "content-extraction",
+  "route": "/content-extraction",
+  "systems": [
+    "ContentExtraction",
+    "Alexandria"
+  ],
+  "hero": {
+    "title": "Content Extraction: How Google Separates Signal from Noise",
+    "subtitle": "Before Google can rank your content, it must first find it. Content extraction is the foundational step where Google separates main content from boilerplate (navigation, ads, footers, sidebars). The system uses a pipeline remarkably similar to Chrome's open-source DomDistiller engine, based on the Boilerpipe algorithm: DOM traversal, heuristic scoring via link density and text density, content clustering, and metadata extraction. With 3 key patents on boilerplate detection, 5 confirmed leak signals (clutterScore, gibberishScores, vlq, racterScores, numTokens), and DOJ confirmation that Alexandria performs content segmentation, this is the invisible gate that determines what Google actually scores and ranks."
+  },
+  "keyInsight": {
+    "label": "Key Insight from Open Source + API Leak + DOJ Trial",
+    "text": "Google's content extraction logic is hiding in plain sight. Chrome's <strong>DomDistiller</strong> (Reader Mode engine) is open-source Chromium code based on the <strong>Boilerpipe</strong> algorithm (Kohlschutter et al., WSDM 2010). It scores DOM blocks using <strong>link density</strong>, <strong>text density</strong>, and <strong>semantic HTML tags</strong>, then selects the <strong>largest contiguous cluster</strong> of high-scoring blocks as main content. CSS class names containing blacklisted terms like \"comment\", \"ad\", \"sidebar\", \"social\" are penalized. The DOJ trial confirmed <strong>Alexandria</strong> performs this extraction server-side, and the API leak exposed <strong>clutterScore</strong> and <strong>gibberishScores</strong> as downstream quality gates. This means Google's content extraction priorities are publicly auditable through DomDistiller's source code."
+  },
+  "pillars": [
+    {
+      "type": "patent",
+      "title": "16 Patents",
+      "items": [
+        "Patent <a href=\"https://patents.google.com/patent/US8898296\">US8898296</a>: <strong>Detection of Boilerplate Content</strong> (2014) - Client-side DOM analysis classifying nodes into anchor blocks, anchor lists, footer content, and advertisements. Each node receives a likelihood score (20-50 points per trait) toward a boilerplate threshold of 80-100. Anchor blocks detected by: region under 400x400px, aspect ratio exceeding 3:1, less than 20% non-link text.",
+        "Patent <a href=\"https://patents.google.com/patent/US8041713\">US8041713</a>: <strong>Systems and Methods for Analyzing Boilerplate</strong> (2011) - Five detection strategies: frequency analysis across related articles, spatial location analysis (footers, headers, sidebars), markup examination (nearby links, JavaScript, HTML structure), inverse document frequency weighting, and predetermined term lists (\"Copyright\", \"Terms of Service\", \"Help\").",
+        "Patent <a href=\"https://patents.google.com/patent/US7428700\">US7428700</a>: <strong>Vision-Based Document Segmentation (VIPS)</strong> (2008) - Three-stage process: visual block extraction (font properties, colors, tag types), visual separator detection (blank space, lines, color changes), and hierarchical content structure construction. Each block receives a Degree of Coherence (DoC) on a 1-10 scale. Blocks exceeding the threshold become final content units; those below trigger recursive subdivision.",
+        "<a href=\"https://patents.google.com/patent/US20040199771\">US20040199771</a>: Method for tracing a security breach in highly distributed content; <a href=\"https://patents.google.com/patent/US6697821\">US6697821</a>: Content development management system and method; <a href=\"https://patents.google.com/patent/US6785704\">US6785704</a>: Content distribution system for operation over an internetwork including content peering arrangem...",
+        "<a href=\"https://patents.google.com/patent/US7143118\">US7143118</a>: Method and system for alert delivery architecture; <a href=\"https://patents.google.com/patent/US7734730\">US7734730</a>: Content distribution system for operation over an internetwork including content peering arrangem...; <a href=\"https://patents.google.com/patent/US20080134015\">US20080134015</a>: Web Site Structure Analysis",
+        "<a href=\"https://patents.google.com/patent/US9947026\">US9947026</a>: Combining content with a search result; <a href=\"https://patents.google.com/patent/US8332512\">US8332512</a>: Method and system for selecting content based on a user's viral score; <a href=\"https://patents.google.com/patent/US7424478\">US7424478</a>: System and method for selecting content for displaying over the internet based upon some user input",
+        "<a href=\"https://patents.google.com/patent/US20090125511\">US20090125511</a>: Page ranking system employing user sharing data; <a href=\"https://patents.google.com/patent/US6493702\">US6493702</a>: System and method for searching and recommending documents in a collection using share bookmarks; <a href=\"https://patents.google.com/patent/US7716179\">US7716179</a>: DHT-based distributed file system for simultaneous use by millions of frequently disconnected, wo...",
+        "<a href=\"https://patents.google.com/patent/US8676790\">US8676790</a>: Methods and systems for improving search rankings using advertising data"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "5 Signals Confirmed",
+      "items": [
+        "<strong>clutterScore</strong> (QualityNsrNsrData, corroboration 75): Measures page clutter from distracting resources: interstitials, video players, excessive scripts. Google can \"smear\" a clutter penalty found on sampled URLs across a whole cluster of similar pages site-wide.",
+        "<strong>gibberishScores</strong> (QualityNsrNsrData, corroboration 85, 27 matched patents): Detects nonsensical, spun, or auto-generated content through language quality analysis. 7-bit value (0-127). Content failing this gate is flagged before quality scoring begins.",
+        "<strong>vlq</strong> (QualityNsrNsrData): Very Low Quality boolean flag. Content below minimum quality threshold is gated from ranking entirely. Site-level signal.",
+        "<strong>racterScores</strong> (QualityNsrNsrData, 20 matched patents): Content naturalness assessment named after the 1984 AI text generator. Detects machine-generated or templated text patterns. Operates as a quality gate before downstream scoring.",
+        "<strong>numTokens</strong> (PerDocData, Mustang): Token count in document. Documents are truncated at a maximum cap in Mustang. Indicates Google has a hard limit on how much content it processes per page."
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "DOJ Trial Confirmation",
+      "items": [
+        "<strong>Alexandria</strong> confirmed as Google's primary document indexing and content extraction system. Extracts main content and separates boilerplate, navigation, and ads.",
+        "<strong>Content segmentation separates main content from boilerplate</strong>: DOJ trial documentation confirms this as a distinct processing step in the indexing pipeline.",
+        "Content extraction is <strong>Stage 1</strong> of the Content Analysis pipeline, preceding all quality scoring (OriginalContentScore, EffortScore, ConsensusScore).",
+        "The pipeline is: Crawl (Trawler) -> Render (HtmlrenderWebkit) -> <strong>Extract (Alexandria)</strong> -> Index (SegIndexer) -> Score (NSR/Q*)"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Content Extraction Affects Your SEO",
+      "items": [
+        "<strong>Use semantic HTML to send unambiguous signals</strong>: DomDistiller and the patents all score <code>&lt;article&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;blockquote&gt;</code> positively and <code>&lt;nav&gt;</code>, <code>&lt;aside&gt;</code>, <code>&lt;footer&gt;</code>, <code>&lt;header&gt;</code> negatively. Generic <code>&lt;div&gt;</code> wrappers provide zero extraction signal. Wrapping your content in <code>&lt;article&gt;</code> or <code>&lt;main&gt;</code> makes extraction trivial for the algorithm.",
+        "<strong>Your CSS class names are being read</strong>: DomDistiller maintains a blacklist of CSS class/ID substrings: \"comment\", \"ad\", \"share\", \"sidebar\", \"social\", \"footer\", \"widget\", \"promo\", \"related\". Elements with these terms have scores reduced. Never use blacklisted terms for elements that contain your actual content. If your main content wrapper has class=\"sidebar-content\", the algorithm penalizes it.",
+        "<strong>Minimize link density in content areas</strong>: The ratio of characters within <code>&lt;a&gt;</code> tags to total characters is a primary boilerplate signal. Navigation blocks, footer link lists, and affiliate-heavy paragraphs all trigger high link density scores. Keep your content area focused on text with links used sparingly and contextually.",
+        "<strong>Keep main content as one contiguous DOM cluster</strong>: The algorithm does not pick the single best block. It finds the <strong>largest contiguous cluster</strong> of high-scoring blocks. Interrupting your content with sidebars, ad blocks, or widget injections mid-article breaks the cluster and can cause content to be classified as boilerplate. Ads and related content should live outside the main content DOM branch.",
+        "<strong>Flatten your DOM structure</strong>: Excessive <code>&lt;div&gt;</code> nesting dilutes paragraph scoring. The algorithm reads DOM trees, not visual layouts. A sidebar nested inside your main content <code>&lt;div&gt;</code> in the DOM (even if visually separate via CSS) can dilute content scoring. Ensure DOM hierarchy matches content hierarchy.",
+        "<strong>Implement structured data as canonical truth</strong>: DomDistiller prioritizes Schema.org and OpenGraph data for title, author, date, and image disambiguation. The patents confirm metadata extraction as a distinct pipeline stage. Correct implementation of Article/NewsArticle/BlogPosting schema helps the system identify your content and attribute it correctly."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Boilerplate Likelihood Score",
+      "source": "Patent",
+      "how": "Patent US8898296 describes a scoring system where DOM nodes are evaluated against boilerplate traits. Each matching trait adds 20-50 points to a likelihood score. When the score exceeds a threshold (typically 80-100), the node is classified as boilerplate and excluded from content indexing. Four categories are tested: anchor blocks (navigation), anchor lists (linked item sequences), footer content (bottom-positioned elements), and advertisements (out-of-domain resource references).",
+      "formula": "<span class=\"cf-fn\">BoilerplateScore</span>(node) = <span class=\"cf-fn\">sum</span>(\n  <span class=\"cf-val\">anchor_block_traits</span>,\n  <span class=\"cf-val\">anchor_list_traits</span>,\n  <span class=\"cf-val\">footer_traits</span>,\n  <span class=\"cf-val\">ad_traits</span>\n)  <span class=\"cf-comment\">// each trait adds 20-50 points</span>\n<span class=\"cf-kw\">if</span> score >= <span class=\"cf-val\">threshold</span> (80-100):\n  <span class=\"cf-kw\">classify</span> as boilerplate\n  <span class=\"cf-kw\">exclude</span> from content indexing",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8898296\">US8898296</a> (boilerplate detection)",
+      "affects": "Affected by: link density, region dimensions, aspect ratio, non-link text percentage, position in DOM, out-of-domain resource count"
+    },
+    {
+      "name": "Content Block Heuristic Score",
+      "source": "Patent+OpenSource",
+      "how": "DomDistiller (Boilerpipe) assigns each DOM text block a composite score based on multiple heuristics. Link density (characters in anchors vs total characters) is the strongest negative signal. Text density and word count are positive signals. Semantic HTML tags provide fixed bonuses or penalties. CSS class/ID substrings matching the blacklist reduce scores. Blocks are not selected individually; instead the algorithm identifies the largest contiguous cluster of high-scoring blocks, making it robust against interspersed boilerplate.",
+      "formula": "<span class=\"cf-fn\">BlockScore</span>(block) =\n  <span class=\"cf-val\">text_density</span> * <span class=\"cf-val\">word_count_weight</span>\n  - <span class=\"cf-val\">link_density</span> * <span class=\"cf-val\">link_penalty</span>\n  + <span class=\"cf-fn\">tag_score</span>(<span class=\"cf-val\">semantic_html</span>)\n  - <span class=\"cf-fn\">blacklist_penalty</span>(<span class=\"cf-val\">css_class</span>, <span class=\"cf-val\">css_id</span>)\n<span class=\"cf-comment\">// article, main, p, blockquote = positive</span>\n<span class=\"cf-comment\">// nav, aside, footer, header = negative</span>\n<span class=\"cf-comment\">// Blacklist: comment, ad, sidebar, social, widget</span>\n\n<span class=\"cf-fn\">MainContent</span> = <span class=\"cf-fn\">largest_contiguous_cluster</span>(\n  blocks <span class=\"cf-kw\">where</span> BlockScore > <span class=\"cf-val\">threshold</span>\n)",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US7428700\">US7428700</a> (VIPS), <a href=\"https://patents.google.com/patent/US8041713\">US8041713</a> (boilerplate analysis). Open source: <a href=\"https://github.com/chromium/dom-distiller\">chromium/dom-distiller</a>",
+      "affects": "Affected by: link-to-text ratio, continuous text length, semantic HTML tags, CSS class/ID naming, DOM nesting depth, sibling block relationships"
+    },
+    {
+      "name": "clutterScore",
+      "source": "Leak",
+      "how": "Site-level delta signal measuring page clutter from distracting resources: interstitials, auto-playing video, excessive scripts, pop-ups. Google samples a subset of URLs and can \"smear\" the penalty across a whole cluster of similar pages, meaning not every cluttered page needs to be crawled to receive the penalty. Feeds into NSR site quality scoring.",
+      "formula": "<span class=\"cf-fn\">clutterScore</span>(site) = <span class=\"cf-fn\">sample_and_smear</span>(\n  <span class=\"cf-fn\">detect</span>(<span class=\"cf-val\">interstitials</span>, <span class=\"cf-val\">auto_video</span>,\n    <span class=\"cf-val\">excess_scripts</span>, <span class=\"cf-val\">popups</span>)\n  across <span class=\"cf-val\">url_sample</span>\n) <span class=\"cf-kw\">apply_to</span> similar_page_cluster\n<span class=\"cf-comment\">// Site-level: sampled URLs penalize entire clusters</span>\n<span class=\"cf-comment\">// Feeds into NSR quality scoring</span>",
+      "patents": "",
+      "affects": "Affected by: interstitial frequency, auto-playing media, script count, popup behavior, ad density relative to content"
+    }
+  ],
+  "pipeline": {
+    "title": "Content Extraction Pipeline",
+    "stages": [
+      {
+        "name": "DOM Traversal & Block Segmentation",
+        "detail": "The rendered DOM (not raw HTML) is traversed. Pages are divided into logical text blocks representing semantic units: paragraphs, lists, headings. Hidden elements (display:none, visibility:hidden) are discarded immediately."
+      },
+      {
+        "name": "Heuristic Scoring",
+        "detail": "Each block receives scores based on: link density (anchor text ratio, primary boilerplate signal), text density and word count (continuous text scores positive), semantic HTML tag type (article/main positive, nav/aside negative), CSS class/ID blacklist matching (comment, ad, sidebar, social, widget, promo, related)."
+      },
+      {
+        "name": "Content Clustering",
+        "detail": "Rather than selecting individual high-scoring blocks, the algorithm identifies the largest contiguous cluster of high-scoring content blocks. This makes extraction robust against ads or widgets interspersed within content."
+      },
+      {
+        "name": "Metadata Extraction",
+        "detail": "OpenGraph tags, Schema.org microdata (Article, NewsArticle, BlogPosting), and pagination indicators are parsed to extract canonical title, author, publication date, and featured image."
+      },
+      {
+        "name": "Sanitization & Quality Gating",
+        "detail": "Scripts, styles, event handlers stripped. URLs resolved to absolute paths. Content then passes through quality gates: gibberishScores, racterScores, vlq flag. Content failing these gates is excluded before downstream scoring."
+      },
+      {
+        "name": "Handoff to Quality Scoring",
+        "detail": "Clean extracted content enters the quality pipeline: OriginalContentScore, EffortScore, ConsensusScore, and ultimately NSR and Q* scoring. All downstream signals depend on this extraction step being accurate."
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2004",
+      "type": "patent",
+      "title": "Boilerplate Analysis Patent Filed",
+      "desc": "US8041713 filed: five strategies for identifying boilerplate (frequency analysis, spatial location, markup examination, IDF weighting, predetermined term lists)."
+    },
+    {
+      "year": "2008",
+      "type": "patent",
+      "title": "VIPS: Vision-Based Segmentation",
+      "desc": "US7428700 published: visual block extraction, separator detection, hierarchical content structure. Degree of Coherence (DoC) scoring on 1-10 scale."
+    },
+    {
+      "year": "2010",
+      "type": "patent",
+      "title": "Boilerpipe Algorithm Published",
+      "desc": "Kohlschutter et al. publish 'Boilerplate Detection using Shallow Text Features' at WSDM 2010. Achieves 92% F-measure using link density and text density. Becomes foundation for DomDistiller."
+    },
+    {
+      "year": "2012",
+      "type": "patent",
+      "title": "Boilerplate Detection Patent Filed",
+      "desc": "US8898296 filed: DOM node scoring with trait-based likelihood system (20-50 points per trait, 80-100 threshold). Four categories: anchor blocks, anchor lists, footers, advertisements."
+    },
+    {
+      "year": "2014",
+      "type": "patent",
+      "title": "DomDistiller Added to Chromium",
+      "desc": "Google adds DomDistiller to Chromium codebase, making their content extraction algorithm open-source. Powers Chrome Reader Mode on Android and Desktop."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "API Leak: Quality Gate Signals",
+      "desc": "Content Warehouse API leak reveals clutterScore (site-level, smearable), gibberishScores (0-127, 27 matched patents), vlq (boolean quality gate), racterScores (content naturalness), numTokens (document truncation cap)."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "DOJ: Alexandria Confirmed",
+      "desc": "DOJ trial confirms Alexandria as Google's primary content extraction system. Content segmentation (main content vs boilerplate) confirmed as a distinct processing step preceding all quality scoring."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"We look at the entire content of the page when determining relevance.\"",
+      "internalSource": "Patents + DomDistiller",
+      "internalClaim": "Boilerplate (navigation, footers, ads, sidebars) is actively identified and excluded from content scoring. Only the extracted main content cluster feeds into quality signals like OriginalContentScore and ConsensusScore."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"Use whatever HTML structure works for your users. We can understand any layout.\"",
+      "internalSource": "Patents + DomDistiller",
+      "internalClaim": "Semantic HTML tags directly affect extraction scoring. <article> and <main> score positively, <nav> and <aside> score negatively. CSS class names matching the blacklist (\"comment\", \"ad\", \"sidebar\") penalize content blocks. DOM structure is read, not visual layout."
+    }
+  ]
+}

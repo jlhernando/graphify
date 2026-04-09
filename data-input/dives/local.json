@@ -1,0 +1,210 @@
+{
+  "id": "local",
+  "route": "/local",
+  "systems": [
+    "Geo"
+  ],
+  "hero": {
+    "title": "Local & Geographic Ranking",
+    "subtitle": "Google's local ranking system uses geographic signals at multiple levels: page-level geotopicality, site-level local authority, and user-level NavBoost location slicing. The API leak revealed specific signals for physical business presence, geographic content quality, and location-based click data segmentation."
+  },
+  "keyInsight": {
+    "label": "Key Insight from API Leak + DOJ Trial",
+    "text": "NavBoost click data is <strong>sliced by geographic location</strong> (NavBoostLocationSlice), meaning the same page can rank differently in different cities based on local click patterns. <strong>brickAndMortarStrengthScore</strong> measures physical business presence for local queries. <strong>locationIdentity</strong> demotes pages targeting non-matching geographic areas, penalizing fake local content."
+  },
+  "pillars": [
+    {
+      "type": "leak",
+      "title": "Geographic Signals",
+      "items": [
+        "<strong>geoFeatureType</strong> - Geographic feature type classification",
+        "<strong>geoLocationQuality</strong> - Location data quality score",
+        "<strong>localAuthorityScore</strong> - Local content authority measurement",
+        "<strong>localityScore</strong> - Geographic locality relevance",
+        "<strong>locationIdentity</strong> - Demotion for non-matching geo targeting",
+        "<strong>isCovidLocalAuthority</strong> - COVID-specific local authority flag",
+        "<strong>isElectionAuthority</strong> - Election-related local authority"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "Location-Based Ranking",
+      "items": [
+        "<strong>brickAndMortarStrengthScore</strong> - Physical business presence authority",
+        "<strong>geotopicality</strong> - Page-query geographic relevance alignment",
+        "<strong>NavBoostLocationSlice</strong> - Click data segmented by geography",
+        "<strong>NavBoostDeviceSlice</strong> - Click data segmented by device type",
+        "Local click patterns differ from national patterns",
+        "Same URL can rank differently in different locations",
+        "<strong>Local business as top mobile intent</strong> (UPX1087, Mobile vs Desktop Aug 2014): Local business was the top mobile search intent category in 2014. Mobile intents diverge significantly from desktop, with local queries dominating mobile search behavior"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "21 Patents",
+      "items": [
+        "<strong>Venice</strong> (2012) - Local results in organic SERPs",
+        "<strong>Pigeon</strong> (2014) - Distance and prominence as factors",
+        "<strong>Possum</strong> (2017) - Business address diversification",
+        "Google Business Profile signals (hours, reviews, photos)",
+        "Proximity: distance between user and business",
+        "Prominence: how well-known the business is (links, reviews, mentions)",
+        "<strong>Title-based local ranking</strong> - Patent <a href=\"https://patents.google.com/patent/US8122013\">US8122013</a> (Qian, Luk, An, filed 2006): Ranks local business listings by web popularity (webscore). webscore = log10(raw_webscore) * 0.2, where raw_webscore = web document count for business title. Short titles searched as [title AND city], long titles (>=3 words) searched alone. Duplicate business names: webscore divided by number of duplicates. Location Prominence Score combines webscore with authority page ranking, address reference count, reviews, and scraped page references",
+        "<a href=\"https://patents.google.com/patent/US9858291\">US9858291</a>: Detection of related local entities; <a href=\"https://patents.google.com/patent/US20080172374\">US20080172374</a>: Presentation of Local Results; <a href=\"https://patents.google.com/patent/US9792330\">US9792330</a>: Identifying local experts for local search",
+        "<a href=\"https://patents.google.com/patent/US7100034\">US7100034</a>: System for selecting another processor to be the boot strap processor when the default boot strap...; <a href=\"https://patents.google.com/patent/US6647269\">US6647269</a>: Method and system for analyzing advertisements delivered to a mobile unit; <a href=\"https://patents.google.com/patent/US8392394\">US8392394</a>: Merging search results",
+        "<a href=\"https://patents.google.com/patent/US7483881\">US7483881</a>: Determining unambiguous geographic references; <a href=\"https://patents.google.com/patent/US8200694\">US8200694</a>: Identification of implicitly local queries; <a href=\"https://patents.google.com/patent/US8407211\">US8407211</a>: Determining relevance scores for locations",
+        "<a href=\"https://patents.google.com/patent/US7017109\">US7017109</a>: E-service to manage contact information and signature ECards; <a href=\"https://patents.google.com/patent/US20090303036\">US20090303036</a>: Machine-readable representation of geographic information; <a href=\"https://patents.google.com/patent/US7373246\">US7373246</a>: Using boundaries associated with a map view for business location searching",
+        "<a href=\"https://patents.google.com/patent/US6393459\">US6393459</a>: Multicomputer with distributed directory and operating system; <a href=\"https://patents.google.com/patent/US7216123\">US7216123</a>: Methods for ranking nodes in large directed graphs; <a href=\"https://patents.google.com/patent/US6889213\">US6889213</a>: E-service to manage contact information with privacy levels",
+        "<a href=\"https://patents.google.com/patent/US11120090\">US11120090</a>: On-device query rewriting; <a href=\"https://patents.google.com/patent/US6691158\">US6691158</a>: E-service to manage contact information and track contact location; <a href=\"https://patents.google.com/patent/US7974994\">US7974994</a>: Sensitive webpage content detection",
+        "<a href=\"https://patents.google.com/patent/US6633311\">US6633311</a>: E-service to manage and export contact information; <a href=\"https://patents.google.com/patent/US8341156\">US8341156</a>: System and method for identifying erroneous business listings"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Local Ranking Affects Your SEO",
+      "items": [
+        "<strong>Build genuine local engagement for NavBoostLocationSlice</strong>: Click data is sliced by geographic location, meaning the same URL ranks differently in different cities based on local click patterns. To rank in a specific metro, you need clicks and long-dwell engagement from users IN that location. Run geo-targeted campaigns (local ads, community events, local PR) that drive real local users to your site, not just national traffic.",
+        "<strong>Maximize brickAndMortarStrengthScore with a complete GBP</strong>: This DOJ-confirmed signal scores physical business presence. Pure online businesses get zero local boost. Complete your Google Business Profile with verified address, accurate hours, photos of your location, and respond to reviews. NAP (Name, Address, Phone) consistency across citations directly feeds this score.",
+        "<strong>Avoid locationIdentity demotion from fake local pages</strong>: Programmatic location pages targeting cities you have no presence in trigger locationIdentity demotion. Instead of creating 500 city pages with templated content, focus on genuine local content for areas where you have physical presence, local customers, or verifiable local expertise. Quality over geographic breadth.",
+        "<strong>Optimize mobile experience for local queries</strong>: NavBoostDeviceSlice weights mobile engagement ~1.5x for local queries, and approximately 60% of local searches happen on mobile. Mobile page speed, tap target sizing, and click-to-call functionality directly impact whether local mobile users generate the long-click signals that feed your local rankings.",
+        "<strong>Create genuine geotopicality signals in content</strong>: geotopicality measures alignment between page content and query location. Mention specific neighborhoods, landmarks, cross-streets, and local entities naturally in your content. Use LocalBusiness structured data with precise coordinates. Generic content with a city name appended does not build geotopicality; content that demonstrates local knowledge does.",
+        "<strong>Earn localAuthorityScore through local link building</strong>: Local authority is measured separately from general domain authority. Links from local newspapers, chambers of commerce, local business directories, community organizations, and city government sites build localAuthorityScore specifically. A link from your city's newspaper is worth more for local rankings than a link from a national publication."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "brickAndMortarStrengthScore",
+      "source": "DOJ",
+      "how": "Scores physical business locations for local search. Part of LocalWWWInfo module. Likely draws from Google Business Profile data.",
+      "formula": "<span class=\"cf-fn\">brickAndMortarStrength</span>(biz) = <span class=\"cf-fn\">GBPVerified</span>(\n<span class=\"cf-val\">profileCompleteness</span>, <span class=\"cf-val\">NAPConsistency</span>, <span class=\"cf-val\">citationCount</span>\n)  <span class=\"cf-comment\">// 0.0-1.0, LocalWWWInfo module</span>\n<span class=\"cf-kw\">if</span> !physicalAddress: <span class=\"cf-kw\">score = 0</span>\n<span class=\"cf-comment\">// pure online businesses get no local boost</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8700580\">US8700580</a> (local search ranking), <a href=\"https://patents.google.com/patent/US9009177\">US9009177</a> (business listing quality)",
+      "affects": "Affected by: having verified Google Business Profile, NAP consistency, local citations."
+    },
+    {
+      "name": "geotopicality",
+      "source": "DOJ",
+      "how": "Measures alignment between page content and query location. Part of LocalWWWInfo module. Cross-references content topics with geographic signals.",
+      "formula": "<span class=\"cf-fn\">geotopicality</span>(page, query) = <span class=\"cf-fn\">geoAlign</span>(\n<span class=\"cf-val\">contentGeoEntities</span>, <span class=\"cf-val\">queryLocation</span>, <span class=\"cf-val\">structuredGeoData</span>\n)  <span class=\"cf-comment\">// 0.0-1.0, LocalWWWInfo</span>\n<span class=\"cf-comment\">// pages targeting non-matching areas trigger locationIdentity demotion</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8700580\">US8700580</a> (local search ranking)",
+      "affects": "Affected by: including local geographic references in content. Location-specific content, local structured data."
+    },
+    {
+      "name": "NavBoostLocationSlice",
+      "source": "DOJ",
+      "how": "NavBoost slices click data by geographic location. Users in different areas generate different click patterns, leading to location-specific ranking adjustments.",
+      "formula": "<span class=\"cf-fn\">NavBoostLocationSlice</span>(url, geo) = <span class=\"cf-fn\">aggregate</span>(\n<span class=\"cf-val\">clicks[geo]</span>, <span class=\"cf-val\">longClicks[geo]</span>, <span class=\"cf-val\">lastLongClick[geo]</span>\n)  <span class=\"cf-comment\">// per-geography click aggregation</span>\n<span class=\"cf-comment\">// same URL ranks differently in NYC vs LA based on local CTR</span>",
+      "affects": "Affected by: local user engagement. If users in your area click and stay on your site, your local rankings improve."
+    },
+    {
+      "name": "NavBoostDeviceSlice",
+      "source": "DOJ",
+      "how": "NavBoost slices click data by device type (mobile/desktop/tablet). Mobile users may behave differently than desktop for local queries.",
+      "formula": "<span class=\"cf-fn\">NavBoostDeviceSlice</span>(url, device) = <span class=\"cf-fn\">aggregate</span>(\n<span class=\"cf-val\">clicks[device]</span>, <span class=\"cf-val\">dwellTime[device]</span>, <span class=\"cf-val\">bounceRate[device]</span>\n)  <span class=\"cf-comment\">// mobile vs desktop vs tablet</span>\n<span class=\"cf-kw\">if</span> device == mobile &amp;&amp; localQuery: <span class=\"cf-kw\">weight *= 1.5</span>\n<span class=\"cf-comment\">// ~60% of local queries are mobile</span>",
+      "affects": "Affected by: mobile optimization for local searches. Most local queries are mobile."
+    },
+    {
+      "name": "Title-Based Webscore",
+      "source": "Patent US8122013 (Qian, Luk, An, 2006)",
+      "how": "Ranks local business listings by web popularity derived from business title. Searches the web for the business name and counts matching documents as raw webscore. Short titles (<3 words) searched with city qualifier, long titles searched alone. Scaled logarithmically with 0.2 weight. Duplicate business names share webscore equally. Location Prominence Score combines webscore with authority page ranking, address reference count, number of reviews, and scraped page references.",
+      "formula": "<span class=\"cf-fn\">webscore</span>(listing) =\n  <span class=\"cf-fn\">log10</span>(<span class=\"cf-val\">raw_webscore</span>) &times; <span class=\"cf-val\">0.2</span>\n<span class=\"cf-comment\">// raw_webscore = web document count for title</span>\n<span class=\"cf-comment\">// short titles: search [title AND city]</span>\n<span class=\"cf-comment\">// long titles (>=3 words): search [title]</span>\n\n<span class=\"cf-kw\">if</span> duplicates: <span class=\"cf-val\">webscore</span> /= <span class=\"cf-val\">num_duplicates</span>\n\n<span class=\"cf-fn\">LocationProminence</span> = <span class=\"cf-fn\">f</span>(\n  <span class=\"cf-val\">authority_rank</span>, <span class=\"cf-val\">page_rank</span>,\n  <span class=\"cf-val\">address_refs</span>, <span class=\"cf-val\">scraped_refs</span>,\n  <span class=\"cf-val\">reviews</span>, <span class=\"cf-val\">webscore</span>\n)",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US8122013\">US8122013</a> (Title based local search ranking, 2006)",
+      "affects": "Affected by: business name web presence, title length (short vs long), number of web references, duplicate business handling, review count, address citation frequency."
+    }
+  ],
+  "pipeline": {
+    "title": "Local Ranking Pipeline",
+    "stages": [
+      {
+        "name": "Query Detection",
+        "detail": "Local intent identification, geotopicality"
+      },
+      {
+        "name": "Location Signals",
+        "detail": "geoFeatureType, geoLocationQuality, localityScore"
+      },
+      {
+        "name": "Business Verification",
+        "detail": "brickAndMortarStrengthScore, physical presence"
+      },
+      {
+        "name": "NavBoost Location",
+        "detail": "Click data sliced by user geography"
+      },
+      {
+        "name": "Local Ranking",
+        "detail": "localAuthorityScore + proximity + prominence"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2004",
+      "type": "patent",
+      "title": "Local Search Patents",
+      "desc": "Google files patents on geographic relevance in search. Location-aware ranking begins."
+    },
+    {
+      "year": "2006",
+      "type": "patent",
+      "title": "Title-Based Local Ranking (US8122013)",
+      "desc": "Google patents webscore: log10(raw_webscore) * 0.2 for local business listings. Short titles searched with city qualifier, long titles alone. Duplicate names share webscore. Location Prominence Score combines webscore with authority, reviews, and citations."
+    },
+    {
+      "year": "2012",
+      "type": "patent",
+      "title": "Venice Update",
+      "desc": "Local results integrated into organic SERPs. Location-specific queries receive localized results."
+    },
+    {
+      "year": "2014",
+      "type": "patent",
+      "title": "Pigeon Update",
+      "desc": "Major local algorithm update. Distance and location prominence become stronger ranking factors."
+    },
+    {
+      "year": "2017",
+      "type": "patent",
+      "title": "Possum Update",
+      "desc": "Diversifies local results by business address. Filters duplicate businesses at same location."
+    },
+    {
+      "year": "2014",
+      "type": "doj",
+      "title": "Local Business: Top Mobile Intent (UPX1087)",
+      "desc": "Mobile vs Desktop Ranking analysis (Aug 2014): Local business was the top mobile search intent category. Mobile intents diverge significantly from desktop. Mobile search 'already incorporated into many people's life cycle.' Mobile traffic exceeded desktop on weekends."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "API Leak: Geo Signals",
+      "desc": "geoFeatureType, geoLocationQuality, localAuthorityScore, localityScore, locationIdentity confirmed."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "DOJ Trial: NavBoost Location",
+      "desc": "NavBoostLocationSlice segments click data by geography. brickAndMortarStrengthScore measures physical presence."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "Local ranking is primarily based on relevance, distance, and prominence.",
+      "internalSource": "API Leak + DOJ",
+      "internalClaim": "NavBoostLocationSlice means click data is geographically segmented. A page popular in NYC may rank differently in LA. Click-based ranking is location-specific, not just distance-based."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "Any business can rank locally regardless of size.",
+      "internalSource": "DOJ Trial",
+      "internalClaim": "brickAndMortarStrengthScore explicitly measures physical business presence. Pure online businesses without physical locations are disadvantaged for local queries."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "Location pages are fine as long as they provide unique value.",
+      "internalSource": "API Leak",
+      "internalClaim": "locationIdentity demotes pages targeting non-matching geographic areas. Programmatic location pages without genuine local presence trigger demotion signals."
+    }
+  ]
+}

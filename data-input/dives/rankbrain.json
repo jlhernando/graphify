@@ -1,0 +1,145 @@
+{
+  "id": "rankbrain",
+  "route": "/rankbrain",
+  "systems": [
+    "RankBrain"
+  ],
+  "hero": {
+    "title": "RankBrain: ML Query Interpretation",
+    "subtitle": "RankBrain (2015) was Google's first deployment of deep learning in core search ranking. It converts novel, never-before-seen queries into known patterns using word vector embeddings (Word2Vec). Google called it the third most important ranking factor after links and content. Unlike BERT (which understands language), RankBrain interprets intent by mapping unknown queries to known concepts. It remains active alongside BERT/DeepRank, handling all queries cheaply where DeepRank only scores the final 20-30 documents."
+  },
+  "keyInsight": {
+    "label": "Key Insight from DOJ Trial + Patents",
+    "text": "Pandu Nayak confirmed at trial that RankBrain is <strong>still active</strong> but 'DeepRank is taking on more and more of that capability.' RankBrain uses a <strong>feed-forward neural network</strong> (not a Transformer), making it fast and cheap enough to run on <strong>all queries</strong>. The underlying Word2Vec technology (Patent US9740680) converts words into mathematical vectors where <strong>semantic relationships become geometric relationships</strong>. 'King - Man + Woman = Queen' works as vector arithmetic. RankBrain uses this to convert novel queries like 'temperature coefficient of the opposite of night' into 'temperature coefficient of day.'"
+  },
+  "pillars": [
+    {
+      "type": "patent",
+      "title": "Patent Evidence",
+      "items": [
+        "Patent <a href=\"https://patents.google.com/patent/US9740680B1\">US9740680</a>: <strong>Computing numeric representations of words</strong> (Word2Vec) - Mikolov, Chen, Corrado, Dean. Word vectors preserving semantic/syntactic relationships",
+        "Patent <a href=\"https://patents.google.com/patent/US9037464B1\">US9037464</a>: <strong>Word2Vec (earlier filing)</strong> - Same team. Core methodology for computing word embeddings from training corpus",
+        "Patent <a href=\"https://patents.google.com/patent/US9104750B1\">US9104750</a>: <strong>Using concepts as contexts for query term substitutions</strong> - Thomas Strohmann (RankBrain co-creator). Replaces unknown terms with conceptually equivalent known terms",
+        "Word vector dimensions encode relationships: vector('Paris') - vector('France') + vector('Italy') ≈ vector('Rome')",
+        "RankBrain was third most important ranking factor after links and content (Google, 2015)"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "API Leak Signals",
+      "items": [
+        "<strong>RankEmbedNearestNeighbors</strong> - Vector similarity retrieval using RankBrain-era embeddings for concept matching",
+        "<strong>queryTermEmbedding</strong> - Per-query-term embedding vectors stored for concept substitution and nearest-neighbor lookup",
+        "<strong>nluAnnotation</strong> - Natural language understanding annotations enabling RankBrain's concept extraction from queries",
+        "<strong>semanticRelevanceScore</strong> - ML-derived relevance score combining RankBrain concept matching with document features",
+        "<strong>novelQueryClassification</strong> - Classification flag for queries requiring RankBrain rewriting vs. standard keyword matching"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "DOJ Trial Evidence",
+      "items": [
+        "<strong>Pandu Nayak</strong>: RankBrain still active, but 'DeepRank is taking on more and more of that capability'",
+        "RankBrain handles ~15% of never-before-seen queries (original 2015 figure, confirmed at trial)",
+        "RankBrain is computationally cheaper and faster than Transformer-based models like DeepRank",
+        "Trained on 13 months of click data plus human rater judgments",
+        "RankBrain and BERT/DeepRank are complementary, not replacements. Both can be active simultaneously"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How RankBrain Affects Rankings",
+      "items": [
+        "Novel queries mapped to known patterns: RankBrain converts unfamiliar terms to nearest concepts",
+        "Long-tail queries benefit most: unique phrasings resolved to established query patterns",
+        "Concept matching > keyword matching: content covering the underlying concept ranks for related queries",
+        "RankBrain adjusts top 20-30 document scores based on predicted query-document relevance",
+        "Cannot 'optimize for RankBrain' directly. Comprehensive topical coverage helps concept matching",
+        "Content answering questions in multiple phrasings aligns with how RankBrain resolves queries"
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Word2Vec Embedding",
+      "source": "Patent",
+      "how": "Words are converted into dense vectors in high-dimensional space (typically 300 dimensions). The training process (Skip-gram or CBOW) learns vectors where semantically similar words cluster together and relationships are preserved as vector arithmetic. RankBrain uses these embeddings to find the nearest known concept for any unknown query term.",
+      "formula": "<span class=\"cf-fn\">Word2Vec</span>(word) &rarr; <span class=\"cf-val\">vector[300d]</span>\n<span class=\"cf-fn\">similarity</span>(A, B) = <span class=\"cf-fn\">cosine</span>(<span class=\"cf-fn\">vec</span>(A), <span class=\"cf-fn\">vec</span>(B))\n\n<span class=\"cf-comment\">// Semantic arithmetic works:</span>\n<span class=\"cf-fn\">vec</span>('King') - <span class=\"cf-fn\">vec</span>('Man') + <span class=\"cf-fn\">vec</span>('Woman') ≈ <span class=\"cf-fn\">vec</span>('Queen')\n<span class=\"cf-fn\">vec</span>('Paris') - <span class=\"cf-fn\">vec</span>('France') + <span class=\"cf-fn\">vec</span>('Italy') ≈ <span class=\"cf-fn\">vec</span>('Rome')",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US9740680B1\">US9740680</a>, <a href=\"https://patents.google.com/patent/US9037464B1\">US9037464</a>",
+      "affects": "Affected by: training corpus size, vector dimensions, word frequency, co-occurrence patterns"
+    },
+    {
+      "name": "Query Concept Substitution",
+      "source": "Patent",
+      "how": "RankBrain identifies concepts in the query and substitutes unknown terms with known equivalents. Rather than matching keywords, the system finds the underlying concept and maps to queries Google has seen before. The substitution considers the full query context, not just individual words. This is what enables RankBrain to handle the ~15% of never-before-seen queries.",
+      "formula": "<span class=\"cf-fn\">RankBrain</span>(novel_query) =\n  <span class=\"cf-fn\">extract_concepts</span>(<span class=\"cf-val\">query_tokens</span>)\n  &rarr; <span class=\"cf-fn\">find_nearest</span>(<span class=\"cf-val\">concept</span>, <span class=\"cf-val\">known_patterns</span>)\n  &rarr; <span class=\"cf-fn\">substitute</span>(<span class=\"cf-val\">unknown_terms</span>, <span class=\"cf-val\">known_equivalents</span>)\n  &rarr; <span class=\"cf-val\">rewritten_query</span>\n<span class=\"cf-comment\">// 'opposite of night' &rarr; 'day'</span>\n<span class=\"cf-comment\">// Feed-forward NN, runs on ALL queries (cheap)</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US9104750B1\">US9104750</a>",
+      "affects": "Affected by: query novelty, concept coverage in training data, context clarity, embedding quality"
+    },
+    {
+      "name": "RankBrain Re-ranking Score",
+      "source": "DOJ",
+      "how": "After initial retrieval and core ranking produce a candidate list, RankBrain adjusts the scores of top documents. Using the feed-forward neural network, it computes a re-ranking score based on predicted query-document relevance. This score is combined with traditional signals and other ML scores (DeepRank, RankEmbed). RankBrain is cheap enough to run for all queries, unlike DeepRank which only processes the final 20-30.",
+      "formula": "<span class=\"cf-fn\">RankBrainScore</span>(query, doc) =\n  <span class=\"cf-fn\">FFNN</span>(\n    <span class=\"cf-fn\">embed</span>(<span class=\"cf-val\">query</span>),\n    <span class=\"cf-fn\">embed</span>(<span class=\"cf-val\">doc_features</span>)\n  ) &rarr; <span class=\"cf-val\">rerank_adjustment</span>\n<span class=\"cf-comment\">// Feed-forward NN (not Transformer)</span>\n<span class=\"cf-comment\">// Runs for ALL queries (cheap + fast)</span>\n<span class=\"cf-comment\">// Combined with DeepRank, RankEmbed, traditional signals</span>",
+      "patents": "",
+      "affects": "Affected by: query novelty, concept embedding quality, training data (13-month click logs + human raters)"
+    }
+  ],
+  "pipeline": {
+    "title": "RankBrain Processing Pipeline",
+    "stages": [
+      {
+        "name": "Query Vectorization",
+        "detail": "Convert query terms into Word2Vec embeddings in 300-dimensional space"
+      },
+      {
+        "name": "Concept Extraction",
+        "detail": "Identify underlying concepts in the query. Unknown terms mapped to nearest known concepts"
+      },
+      {
+        "name": "Query Rewriting",
+        "detail": "Substitute novel terms with conceptually equivalent known terms for better retrieval"
+      },
+      {
+        "name": "Neural Scoring",
+        "detail": "Feed-forward neural network computes query-document relevance for top candidates"
+      },
+      {
+        "name": "Score Combination",
+        "detail": "RankBrain score combined with DeepRank, RankEmbed, and traditional signals (T*, Q*, P*)"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2013",
+      "type": "patent",
+      "title": "Word2Vec Published",
+      "desc": "Mikolov, Chen, Corrado, Dean publish Word2Vec. Patent US9037464 filed. Words become vectors preserving semantic relationships."
+    },
+    {
+      "year": "2015",
+      "type": "patent",
+      "title": "RankBrain Launched",
+      "desc": "RankBrain deployed spring 2015. Announced October. Handles ~15% of never-seen queries. Called third most important ranking factor."
+    },
+    {
+      "year": "2018",
+      "type": "patent",
+      "title": "Neural Matching Added",
+      "desc": "Neural matching launched, affecting ~30% of queries. 'Super synonym system' complements RankBrain's concept mapping."
+    },
+    {
+      "year": "2019",
+      "type": "patent",
+      "title": "BERT Arrives",
+      "desc": "BERT/DeepRank launched. Complements RankBrain (not replacement). BERT understands context; RankBrain maps concepts."
+    },
+    {
+      "year": "2023",
+      "type": "doj",
+      "title": "DOJ Confirms Active",
+      "desc": "Nayak testifies RankBrain still active. 'DeepRank is taking on more of that capability' but RankBrain remains for efficiency."
+    }
+  ]
+}

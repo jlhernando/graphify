@@ -1,0 +1,143 @@
+{
+  "id": "teragoogle",
+  "route": "/teragoogle",
+  "systems": [
+    "TeraGoogle",
+    "Infrastructure",
+    "Trawler"
+  ],
+  "hero": {
+    "title": "TeraGoogle: The Long-Term Web Archive",
+    "subtitle": "TeraGoogle is Google's petabyte-scale long-term document storage system, the persistent memory of the web. While the serving index (SegIndexer) stores only the most relevant documents for fast retrieval, TeraGoogle maintains the complete historical archive of everything Google has ever crawled. This enables historical data analysis, content change tracking, and recovery of documents removed from the serving index. With perfect 100/100 corroboration across API leak, DOJ evidence, and 20 confirmed patents, TeraGoogle is a Tier 1 infrastructure signal. Its most significant SEO implication: Google remembers everything, including content you've deleted, domain history you've tried to bury, and link patterns that have changed over time."
+  },
+  "keyInsight": {
+    "label": "Key Insight from API Leak + DOJ + Patents",
+    "text": "TeraGoogle achieves <strong>100% corroboration</strong> (Tier 1) across three independent sources. The API leak places it in the <strong>TeraGoogle module</strong> as 'long-term memory storage for secondary indexing.' The DOJ classifies it under <strong>Infrastructure/Storage</strong> as 'long-term document storage for maintaining the full web archive.' Patent <a href=\"https://patents.google.com/patent/US7346839\">US7346839</a> (by Anurag Acharya, Matt Cutts, Jeffrey Dean, Paul Haahr, and others) describes using <strong>historical data</strong> for document scoring, which relies on TeraGoogle's archive. The key implication: Google's ranking system has access to your site's entire history, including past content, historical link profiles, domain ownership changes, and quality trajectory over time."
+  },
+  "pillars": [
+    {
+      "type": "patent",
+      "title": "Patent Evidence (20 Patents)",
+      "items": [
+        "Patent <a href=\"https://patents.google.com/patent/US7346839\">US7346839</a>: <strong>Information retrieval based on historical data</strong> (Acharya, Cutts, Dean, Haahr, Henzinger, Hoelzle, Lawrence, Pfleger, Sercinoglu, Tong) - 56 claims. System scores documents based on history: content changes, link acquisition rate, domain registration, anchor text evolution. Requires TeraGoogle's archive.",
+        "Patent <a href=\"https://patents.google.com/patent/US6285999\">US6285999</a>: <strong>Method for node ranking in a linked database</strong> - PageRank foundation. Historical link data from TeraGoogle enables tracking link graph evolution.",
+        "Patent <a href=\"https://patents.google.com/patent/US7716225\">US7716225</a>: <strong>Reasonable Surfer</strong> - Link valuation model that benefits from historical click pattern data stored in TeraGoogle.",
+        "Patent <a href=\"https://patents.google.com/patent/US7058628\">US7058628</a>: <strong>Systems and methods for providing search results</strong> - Historical document data used for result quality assessment.",
+        "20 patents total, many by Google's founding engineers (Dean, Henzinger, Haahr). These patents consistently reference historical document data that requires persistent storage at web scale."
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "API Leak: TeraGoogle Signal",
+      "items": [
+        "<strong>TeraGoogle</strong> (TeraGoogle module): Long-term memory storage mechanism for secondary indexing. Tier 2 match, 100/100 corroboration, 20 matched patents.",
+        "Categorized under <strong>technical-crawl</strong>, placing it in the infrastructure layer alongside Trawler and SegIndexer.",
+        "The 'secondary indexing' description confirms TeraGoogle as the backup/archive layer behind SegIndexer's serving index.",
+        "20 patent matches indicate TeraGoogle is deeply integrated into Google's document processing and historical analysis systems."
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "DOJ Trial: Infrastructure Confirmation",
+      "items": [
+        "<strong>TeraGoogle</strong> (Storage module, Infrastructure system): Confirmed as 'long-term document storage system for maintaining the full web archive.' Cross-reference evidence.",
+        "Placed under <strong>Infrastructure</strong> system in DOJ documentation, alongside Trawler (crawling), SegIndexer (serving index), and other core systems.",
+        "The 'full web archive' description confirms TeraGoogle stores everything Google has crawled, not just currently-indexed documents.",
+        "Historical document access enables Google to evaluate: domain age, content evolution, link acquisition patterns, penalty history, and ownership changes."
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Historical Data Affects Rankings",
+      "items": [
+        "<strong>Google remembers deleted content</strong>: Pages you've removed, thin content you've replaced, and spam you've cleaned up are still in TeraGoogle. Historical quality trajectory matters.",
+        "<strong>Link acquisition rate is tracked</strong>: Patent US7346839 explicitly scores based on link velocity. Sudden spikes in backlinks are detectable against historical patterns. Natural growth rewarded.",
+        "<strong>Domain history persists</strong>: Buying an expired domain doesn't erase its history. Previous penalties, spam associations, and quality scores from the old owner are accessible via TeraGoogle.",
+        "<strong>Content freshness signals need history</strong>: The Freshness system compares current content against historical versions stored in TeraGoogle to measure meaningful updates vs. cosmetic changes.",
+        "<strong>Anchor text evolution tracked</strong>: Changes in your backlink anchor text profile over time are visible. Sudden pivot to exact-match anchors is detectable against your historical profile.",
+        "<strong>Quality trajectory matters</strong>: A site consistently improving content quality over years builds a positive historical signal. A site that degraded from high-quality to thin content has a negative trajectory.",
+        "<strong>Penalty recovery takes time</strong>: Even after fixing issues, the historical record of problems persists. Recovery requires sustained quality improvement to override historical negative signals.",
+        "<strong>400B+ documents archived</strong>: TeraGoogle stores the complete archive at petabyte scale. Nothing crawled is ever truly forgotten."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Historical Data Scoring (US7346839)",
+      "source": "Patent",
+      "how": "Documents are scored based on multiple types of historical data stored in TeraGoogle. The patent identifies several historical factors: when the document was first indexed, how its content has changed over time, how its link profile has evolved, domain registration and renewal patterns, and anchor text changes. The system generates a score that adjusts the document's ranking based on these temporal patterns.",
+      "formula": "<span class=\"cf-fn\">HistoryScore</span>(doc) = <span class=\"cf-fn\">f</span>(\n  <span class=\"cf-val\">first_indexed_date</span>,\n  <span class=\"cf-val\">content_change_rate</span>,\n  <span class=\"cf-val\">link_acquisition_velocity</span>,\n  <span class=\"cf-val\">domain_registration_history</span>,\n  <span class=\"cf-val\">anchor_text_evolution</span>\n)\n<span class=\"cf-comment\">// Steady growth > sudden spikes</span>\n<span class=\"cf-comment\">// Consistent quality > volatile quality</span>\n<span class=\"cf-comment\">// Historical data from TeraGoogle archive</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US7346839\">US7346839</a> (56 claims, 10 inventors including Cutts, Dean, Haahr)",
+      "affects": "Affected by: domain age, content update patterns, link velocity, registration stability, anchor text consistency"
+    },
+    {
+      "name": "Tiered Storage Architecture",
+      "source": "Leak + DOJ + Infrastructure Deep Dive",
+      "how": "Google uses a tiered storage architecture. SegIndexer maintains the actively-served index in three tiers: Base (high-quality), Zeppelins (mid-tier), and Rafts (low-priority). TeraGoogle sits behind all tiers as the persistent archive. Documents can move between tiers based on quality and freshness, but TeraGoogle always retains the historical record.",
+      "formula": "<span class=\"cf-fn\">Storage</span> = {\n  <span class=\"cf-val\">SegIndexer</span>: {\n    <span class=\"cf-val\">Base</span>:      <span class=\"cf-comment\">// High-quality, fast serving</span>\n    <span class=\"cf-val\">Zeppelins</span>: <span class=\"cf-comment\">// Mid-tier, slower access</span>\n    <span class=\"cf-val\">Rafts</span>:     <span class=\"cf-comment\">// Low-priority, supplemental</span>\n  },\n  <span class=\"cf-val\">TeraGoogle</span>: <span class=\"cf-comment\">// Complete archive, petabytes</span>\n                <span class=\"cf-comment\">// Historical data for all docs</span>\n                <span class=\"cf-comment\">// Never deleted, always accessible</span>\n}",
+      "patents": "",
+      "affects": "Affected by: document quality tier, freshness, crawl frequency. TeraGoogle retains documents even when they drop from serving index."
+    }
+  ],
+  "pipeline": {
+    "title": "TeraGoogle in the Infrastructure Pipeline",
+    "stages": [
+      {
+        "name": "Trawler Crawl",
+        "detail": "Trawler fetches pages from the web. Raw content passed to processing pipeline."
+      },
+      {
+        "name": "Processing & Rendering",
+        "detail": "Content processed, JavaScript rendered (HtmlrenderWebkit), metadata extracted, quality signals computed."
+      },
+      {
+        "name": "WebMirror Deduplication",
+        "detail": "Duplicates detected via SimHash. Canonical URLs selected. Non-canonical pages marked."
+      },
+      {
+        "name": "TeraGoogle Archive",
+        "detail": "ALL processed documents stored in TeraGoogle persistent archive. Historical versions maintained. Nothing is deleted."
+      },
+      {
+        "name": "SegIndexer Tiering",
+        "detail": "Qualifying documents promoted to serving index tiers (Base/Zeppelins/Rafts). Quality and freshness determine tier placement."
+      },
+      {
+        "name": "Historical Analysis",
+        "detail": "Ranking systems query TeraGoogle for historical data: content changes, link evolution, domain history. Feeds US7346839 scoring."
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2003",
+      "type": "patent",
+      "title": "Historical Data Patent Filed",
+      "desc": "US7346839 filed by Acharya, Cutts, Dean, Haahr et al. 56 claims describing historical document scoring. Requires persistent archive (TeraGoogle)."
+    },
+    {
+      "year": "2006",
+      "type": "patent",
+      "title": "Historical Data Patent Granted",
+      "desc": "US7346839 granted. Google can now officially score documents based on content change patterns, link velocity, and domain history."
+    },
+    {
+      "year": "~2010",
+      "type": "patent",
+      "title": "Petabyte-Scale Storage",
+      "desc": "TeraGoogle scales to petabytes to accommodate the growing web. 400B+ documents archived for historical analysis."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "API Leak Confirmation",
+      "desc": "TeraGoogle confirmed as 'long-term memory storage mechanism for secondary indexing.' 100/100 corroboration, 20 matched patents."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "DOJ Infrastructure Evidence",
+      "desc": "DOJ documents confirm TeraGoogle under Infrastructure/Storage as 'long-term document storage system for maintaining the full web archive.'"
+    }
+  ]
+}

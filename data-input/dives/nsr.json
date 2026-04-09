@@ -1,0 +1,191 @@
+{
+  "id": "nsr",
+  "route": "/nsr",
+  "systems": [
+    "NSR"
+  ],
+  "hero": {
+    "title": "NSR: Normalized Site Rank",
+    "subtitle": "NSR is Google's primary site-level quality system with 44 confirmed signals in the API leak and 9 from the DOJ trial. It replaced PageRank as the core authority metric. NSR scores entire domains via sitechunks, measuring topical focus, content quality, link patterns, and user behavior at the site level."
+  },
+  "keyInsight": {
+    "label": "Key Insight from API Leak + DOJ Trial",
+    "text": "NSR is built on <strong>sitechunks</strong>, not individual pages, allowing Google to score entire domains as units. The system uses <strong>site2Vec embeddings</strong> to understand what a site is \"about\" and measures <strong>siteFocusScore</strong> (topical concentration). Sites that stray from their core topic via <strong>siteRadius</strong> get penalized. Chrome's <strong>directFrac</strong> (direct traffic percentage) feeds into authority, meaning brand recognition directly impacts rankings."
+  },
+  "pillars": [
+    {
+      "type": "leak",
+      "title": "Signals Confirmed",
+      "items": [
+        "<strong>siteFocusScore</strong> - How concentrated a site is on specific topics (topical authority)",
+        "<strong>site2Vec</strong> - Site-wide semantic vector for topical understanding",
+        "<strong>siteAuthority / site_pr</strong> - Site-level PageRank and composite trust score",
+        "<strong>chardScores</strong> - Content quality prediction scores across the site",
+        "<strong>vlq / vlqNsr</strong> - Very Low Quality score, severe quality penalty indicator",
+        "<strong>directFrac</strong> - Fraction of direct (type-in) traffic via Chrome data",
+        "<strong>siteRadius</strong> - How far pages deviate from the site's core topic embedding"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "Signals,  Core",
+      "items": [
+        "<strong>siteAuthority</strong> - Persistent composite site-level trust and reputation score",
+        "<strong>NSR</strong> - Normalized Site Rank, successor to PageRank for site quality",
+        "<strong>predictedDefaultNsr</strong> - Baseline quality score from content, behavior, and links",
+        "<strong>authorityPromotion</strong> - Positive boost for high-authority domains",
+        "<strong>unauthoritativeScore</strong> - Direct negative signal for lacking authority",
+        "<strong>site2vecEmbeddingEncoded</strong> - Site-level vector in semantic space",
+        "<strong>PageRankSeedDistance</strong> - Distance from trusted seed sites in link graph"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "3 Patents",
+      "items": [
+        "Site quality prediction via distributed sitechunk analysis",
+        "Topical authority measurement through embedding similarity",
+        "YMYL-specific scoring models (healthScore, ymylNewsV2Score)",
+        "Codename signals: rhubarb, tofu, keto, ewok for quality prediction",
+        "E-E-A-T via encodedAccountableEntity linking sites to known entities",
+        "smallPersonalSite flag for different ranking treatment of niche sites",
+        "<a href=\"https://patents.google.com/patent/US7085753\">US7085753</a>: Method and system for mapping and searching the Internet and displaying the results in a visual form; <a href=\"https://patents.google.com/patent/US7054651\">US7054651</a>: System and method for providing a site specific location of a device; <a href=\"https://patents.google.com/patent/US5956720\">US5956720</a>: Method and apparatus for web site management"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How NSR Affects Your SEO",
+      "items": [
+        "<strong>Maximize siteFocusScore by staying in your lane</strong>: siteFocusScore directly measures topical concentration. Sites that cover a narrow topic deeply score higher than sites that cover everything shallowly. A cooking site that publishes crypto articles dilutes its focus score. If you must cover multiple topics, use separate domains or subdomains that each maintain tight topical focus.",
+        "<strong>Monitor siteRadius to prevent topical drift</strong>: siteRadius measures how far individual pages deviate from your site's core topic embedding (site2Vec). Pages that stray too far from your site's established semantic center are penalized. Before publishing content on a new topic, verify it falls within a reasonable radius of your existing content themes. Expand gradually rather than jumping to unrelated topics.",
+        "<strong>Build directFrac through brand recognition</strong>: directFrac measures the fraction of direct/type-in traffic from Chrome browser data, feeding directly into NSR computation. This means brand-building campaigns, memorable domain names, and repeat visitor strategies have a concrete ranking impact. Newsletters, social media presence, and offline marketing that drive users to type your URL directly into Chrome improve this signal.",
+        "<strong>Maintain quality consistency across sitechunks</strong>: NSR scores sites via sitechunks (URL pattern groups scored independently). One low-quality section (/forum/ or /user-content/) can drag down your entire domain's NSR. Audit content quality by URL pattern. Noindex or remove low-quality sections rather than letting them dilute your site-wide score. Every section must meet the same quality bar.",
+        "<strong>Avoid vlq (Very Low Quality) classification at all costs</strong>: vlq and vlqNsr are severe quality penalty indicators that cap your NSR score. Once triggered, the ceiling on your site's quality score limits rankings across all pages. Thin content, doorway pages, auto-generated pages, and excessive affiliate content are common triggers. Prune aggressively before vlq is applied, because recovery after classification is slow.",
+        "<strong>Leverage predictedDefaultNsr for new sites strategically</strong>: New sites receive a predictedDefaultNsr baseline score derived from content, behavior, and link signals before enough site-specific data accumulates. Launch with your highest-quality content first, earn initial authoritative links, and drive engaged traffic early. The predicted default score sets your starting position and influences how quickly you earn full NSR evaluation.",
+        "<strong>Use encodedAccountableEntity for E-E-A-T signals</strong>: NSR includes E-E-A-T measurement via encodedAccountableEntity, which links sites to known entities. Ensure your site is connected to a recognized entity in Google's Knowledge Graph. Consistent author profiles, organizational schema markup, Wikipedia presence, and verifiable credentials help establish this entity connection.",
+        "<strong>Yandex cross-reference: traffic source diversity and domain-wide ranking velocity</strong>: Yandex tracks organic traffic percentage and penalizes sites that rely solely on one traffic channel. FI_URL_DOMAIN_FRACTION (+0.564, the highest positive factor in Yandex) rewards domains whose names match query terms. Yandex also computes 'average domain ranking across queries' as a quality proxy: if a domain ranks well across many queries, it is likely authoritative. This suggests Google's NSR may similarly encode a 'domain ranking velocity' metric, and traffic source diversity (direct + social + referral + organic) could be an implicit NSR input via Chrome data."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "NSR",
+      "source": "Leak+DOJ",
+      "how": "Host-level quality score computed via sitechunks (URL pattern groups). Successor to raw PageRank for site-level assessment. Normalizes quality scores across the web.",
+      "formula": "<span class=\"cf-fn\">NSR</span>(host) = <span class=\"cf-fn\">normalize</span>(\n<span class=\"cf-val\">sitechunkScores[]</span>, <span class=\"cf-val\">site_pr</span>, <span class=\"cf-val\">directFrac</span>, <span class=\"cf-val\">chardScores</span>\n)  <span class=\"cf-comment\">// normalized 0.0-1.0 across the web</span>\n<span class=\"cf-kw\">if</span> vlq &gt; threshold: <span class=\"cf-kw\">NSR = clamp(NSR, 0, vlqCap)</span>\n<span class=\"cf-comment\">// sitechunks = URL pattern groups scored independently</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US9165040\">US9165040</a> (link graph distances), <a href=\"https://patents.google.com/patent/US9400849\">US9400849</a> (scalable short paths)",
+      "affects": "Affected by: site-wide content quality consistency across URL patterns. Inconsistent quality across sections hurts."
+    },
+    {
+      "name": "site_pr",
+      "source": "Leak",
+      "how": "Aggregated PageRank at domain level. Combines page-level authority into a single domain score. Part of QualityNsrNsrData module.",
+      "formula": "<span class=\"cf-fn\">site_pr</span>(domain) = <span class=\"cf-fn\">aggregate</span>(\n<span class=\"cf-val\">pageRank[page]</span> <span class=\"cf-kw\">for</span> page <span class=\"cf-kw\">in</span> domain.pages\n)  <span class=\"cf-comment\">// QualityNsrNsrData module</span>\n<span class=\"cf-comment\">// all pages contribute; authoritative pages lift entire domain</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US9165040\">US9165040</a> (link graph distances)",
+      "affects": "Affected by: domain-wide link authority. All pages contribute. More authoritative pages lift the whole domain."
+    },
+    {
+      "name": "predictedDefaultNsr",
+      "source": "DOJ",
+      "how": "Default quality score derived from content, behavior, and links. Used as baseline when site-specific data is sparse.",
+      "formula": "<span class=\"cf-fn\">predictedDefaultNsr</span>(site) = <span class=\"cf-fn\">predict</span>(\n<span class=\"cf-val\">contentSignals</span>, <span class=\"cf-val\">behaviorSignals</span>, <span class=\"cf-val\">linkSignals</span>\n)  <span class=\"cf-comment\">// baseline when site-specific data is sparse</span>\n<span class=\"cf-kw\">if</span> site.isNew: <span class=\"cf-kw\">NSR = predictedDefaultNsr</span>\n<span class=\"cf-comment\">// new sites inherit this until enough data accumulates</span>",
+      "affects": "Affected by: foundational site quality signals. New sites start with this predicted score."
+    },
+    {
+      "name": "chardScores",
+      "source": "Leak",
+      "how": "Quality prediction scores based on content analysis. Part of QualityNsrNsrData. Separate from behavioral signals.",
+      "formula": "<span class=\"cf-fn\">chardScores</span>(site) = <span class=\"cf-fn\">contentPredict</span>(\n<span class=\"cf-val\">textQuality[]</span>, <span class=\"cf-val\">structureDepth</span>, <span class=\"cf-val\">originalitySignals</span>\n)  <span class=\"cf-comment\">// content-only, no behavioral input</span>\n<span class=\"cf-comment\">// feeds into NSR alongside behavioral and link signals</span>",
+      "affects": "Affected by: content quality patterns. Consistent, well-structured content across the site."
+    }
+  ],
+  "pipeline": {
+    "title": "NSR Computation Pipeline",
+    "stages": [
+      {
+        "name": "Sitechunks",
+        "detail": "Domain divided into content chunks for distributed scoring"
+      },
+      {
+        "name": "Content Analysis",
+        "detail": "chardScores, gibberishScores, racterScores, articleScoreV2"
+      },
+      {
+        "name": "Topical Modeling",
+        "detail": "site2Vec, siteFocusScore, siteRadius, TopicEmbedding"
+      },
+      {
+        "name": "Authority Signals",
+        "detail": "site_pr, SiteLinkIn/Out, directFrac, PageRankSeedDistance"
+      },
+      {
+        "name": "NSR Score",
+        "detail": "Normalized Site Rank with variance, VLQ flags, YMYL adjustments"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2004",
+      "type": "patent",
+      "title": "PageRank Era",
+      "desc": "Google relies on page-level PageRank. No site-level quality system exists yet."
+    },
+    {
+      "year": "2011",
+      "type": "patent",
+      "title": "Panda Algorithm",
+      "desc": "First site-level quality algorithm. Penalizes thin content farms. Seeds the idea of site-wide scoring."
+    },
+    {
+      "year": "2015",
+      "type": "patent",
+      "title": "Site Quality Rater Guidelines",
+      "desc": "E-A-T framework formalized. Human raters evaluate site-level expertise, authority, trust."
+    },
+    {
+      "year": "2018",
+      "type": "patent",
+      "title": "NSR System Emerges",
+      "desc": "Normalized Site Rank replaces PageRank as the primary site-level quality signal. Operates via sitechunks."
+    },
+    {
+      "year": "2023",
+      "type": "exploit",
+      "title": "Yandex Leak Cross-Reference",
+      "desc": "Yandex's FI_PAGE_QUALITY_HOST and FI_REG_HOST_RANK confirm site-level quality scoring parallel to NSR. FI_URL_DOMAIN_FRACTION (+0.564) is the highest positive factor in Yandex's system, rewarding domain-query lexical matching. Unique visitor count, direct traffic percentage, and average domain ranking across all queries serve as quality proxies. Yandex tracks organic traffic percentage, suggesting traffic source diversity (not just directFrac) may be a Google signal. Metrika counter installation acts as a legitimacy signal, analogous to Chrome data integration."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "API Leak: 44 NSR Signals",
+      "desc": "siteFocusScore, site2Vec, siteAuthority, chardScores, vlq, rhubarb, tofu, keto, ewok and 35 more confirmed."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "DOJ Trial: Site Authority Confirmed",
+      "desc": "siteAuthority, authorityPromotion, unauthoritativeScore, PageRankSeedDistance, site2vecEmbedding revealed."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "We don't have a domain authority score. We evaluate pages individually.",
+      "internalSource": "API Leak + DOJ",
+      "internalClaim": "NSR is literally Normalized Site Rank, a domain-level quality score. siteAuthority, authorityPromotion, and unauthoritativeScore operate at the site level, not page level."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "Topical authority is not a ranking factor. Just create great content.",
+      "internalSource": "API Leak",
+      "internalClaim": "siteFocusScore directly measures topical concentration. siteRadius penalizes pages that deviate from the site's core topic embedding. site2Vec creates topical fingerprints."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "We don't use Chrome data for ranking.",
+      "internalSource": "API Leak",
+      "internalClaim": "directFrac measures the fraction of direct/type-in traffic from Chrome browser data. This feeds directly into NSR site authority computation."
+    }
+  ]
+}

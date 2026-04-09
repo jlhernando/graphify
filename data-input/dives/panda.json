@@ -1,0 +1,194 @@
+{
+  "id": "panda",
+  "route": "/panda",
+  "systems": [
+    "Panda"
+  ],
+  "hero": {
+    "title": "Panda: Content Quality Algorithm",
+    "subtitle": "Panda is Google's foundational content quality algorithm with 6 confirmed signals in the API leak and 4 from the DOJ trial. First launched in 2011 to combat content farms, it introduced the concept of site-level quality assessment. Its signals persist in Google's modern ranking pipeline through the CompressedQualitySignals and QualityPandaModifier modules."
+  },
+  "keyInsight": {
+    "label": "Key Insight from API Leak + DOJ Trial",
+    "text": "Panda's core metric is the <strong>IL/RQ ratio</strong> (Independent Links / Reference Queries), measuring whether a page earns links from diverse domains relative to how often it's queried. The system has three demotion tiers: <strong>pandaDemotion</strong> (full), <strong>babyPandaDemotion</strong> (lighter, for borderline content), and <strong>babyPandaV2Demotion</strong> (targeting rendered content). A separate <strong>lowQuality</strong> ML signal uses site-to-vector embedding to classify overall content quality level."
+  },
+  "pillars": [
+    {
+      "type": "leak",
+      "title": "Signals Confirmed",
+      "items": [
+        "<strong>pandaDemotion</strong> - Quality modifier demotion using IL/RQ ratio",
+        "<strong>independentLinks</strong> - Count of linking root domains (IL in ratio)",
+        "<strong>referenceQueries</strong> - Queries previously categorized as referring to a resource (RQ)",
+        "<strong>Panda</strong> - Core content quality algorithm module",
+        "<strong>babyPandaDemotion</strong> - Lighter demotion for borderline content",
+        "<strong>babyPandaV2Demotion</strong> - V2 iteration targeting rendered content quality"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "Signals,  Core",
+      "items": [
+        "<strong>pandaDemotion</strong> - Site-wide demotion for low-quality content prevalence (core)",
+        "<strong>babyPandaDemotion</strong> - Early Panda iteration demotion signal",
+        "<strong>babyPandaV2Demotion</strong> - Later evolution targeting rendered content quality",
+        "<strong>lowQuality</strong> - ML-based quality score using site-to-vector embedding",
+        "All stored in CompressedQualitySignals module",
+        "Operates at site level, demoting entire domains"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "Quality Assessment Framework",
+      "items": [
+        "Site-level content quality scoring pioneered by Panda in 2011",
+        "Independent Links as diversity metric for link quality",
+        "Reference Queries measure brand/navigational query volume",
+        "IL/RQ ratio: sites with links but few branded searches penalized",
+        "<strong>Phrase-based quality prediction</strong> - Patent <a href=\"https://patents.google.com/patent/US9767157\">US9767157</a> (Navneet Panda, Yun Zhou, filed 2013): Predicts quality scores for new/unseen sites using phrase frequency models built from previously scored sites. Analyzes 2-gram to 5-gram phrase frequencies across all pages on a site. Maps phrase-specific relative frequency (pages containing phrase / total pages) to baseline quality scores. Smoothed scoring: aggregate_score * alpha + neutral_score * (1-alpha), where alpha can be a sigmoid function of phrase frequency. This is how Panda assigns quality scores to sites it hasn't explicitly evaluated",
+        "Three-tier demotion system allows graduated quality penalties",
+        "Evolution from periodic updates to continuous core algorithm"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Panda Affects Your SEO",
+      "items": [
+        "<strong>Optimize your IL/RQ ratio before anything else</strong>: Panda's core metric is Independent Links divided by Reference Queries. A high IL with low RQ (many linking domains but few branded searches) signals potential link manipulation. A low IL with high RQ (brand demand but few editorial links) signals low authority. Build both: earn diverse editorial links AND grow branded search demand through PR, social, and brand marketing simultaneously.",
+        "<strong>Prune thin content to avoid site-wide pandaDemotion</strong>: pandaDemotion operates at the site level, meaning a high ratio of low-quality pages to total pages demotes your entire domain. Audit your site for thin pages (tag pages, empty category pages, auto-generated archives, placeholder content) and either enrich them with substantial content, noindex them, or remove them entirely. The ratio of quality pages to total indexed pages matters.",
+        "<strong>Differentiate babyPanda triggers from full Panda</strong>: babyPandaDemotion is a lighter penalty for borderline content, while babyPandaV2Demotion specifically targets rendered content quality. Pages that look acceptable in HTML but render poorly (broken layouts, missing images, JS errors) can trigger V2. Test how your pages actually render in a headless browser to catch V2-specific issues that static HTML analysis misses.",
+        "<strong>Avoid near-duplicate detection via shingleInfo</strong>: WebMirror uses overlapping word sequences (5-gram shingling) to detect near-duplicate content. Even heavy paraphrasing of existing content may be detected if the sentence structure and word sequence patterns overlap significantly. Create genuinely original content rather than rewriting competitors' articles. Use unique data, original reporting, or novel analytical frameworks.",
+        "<strong>Build lowQuality immunity through site2Vec positioning</strong>: The lowQuality ML signal uses site-to-vector embedding to classify overall content quality level. Your site's position in embedding space is compared against quality models. Sites that cluster near known low-quality patterns (content farms, thin affiliate sites, ad-heavy directories) get classified negatively. Differentiate your site's content patterns from these archetypes through depth, expertise, and editorial standards.",
+        "<strong>Treat Panda as still active despite public claims</strong>: Google publicly stated Panda was replaced by the Helpful Content System in 2022, but the API leak confirms pandaDemotion, babyPandaDemotion, and babyPandaV2Demotion are all active signals in 2024 within the QualityPandaModifier module. Optimize for both Panda's measurable ratio-based signals AND HCU's broader quality assessment. They run in parallel, not as replacements."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "pandaDemotion",
+      "source": "DOJ",
+      "how": "Site-wide demotion signal for low-quality content prevalence. Direct implementation of Panda algorithm. Part of CompressedQualitySignals. Applied at site level.",
+      "formula": "<span class=\"cf-fn\">pandaDemotion</span>(site) = <span class=\"cf-fn\">qualityRatio</span>(\n  <span class=\"cf-val\">lowQualityPages</span> / <span class=\"cf-val\">totalPages</span>\n)  <span class=\"cf-comment\">// CompressedQualitySignals, site-level</span>\n<span class=\"cf-kw\">if</span> ratio &gt; threshold: <span class=\"cf-kw\">demote(site, tier=full)</span>\n<span class=\"cf-comment\">// too many thin pages penalizes entire domain</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8682892\">US8682892</a> (content quality scoring), <a href=\"https://patents.google.com/patent/US9697259\">US9697259</a> (document quality)",
+      "affects": "Affected by: overall site content quality. Too many low-quality pages demotes entire site. Prune thin/low-quality content."
+    },
+    {
+      "name": "lowQuality",
+      "source": "DOJ",
+      "how": "Uses site-to-vector embedding to classify overall content quality level. ML-based assessment. Part of CompressedQualitySignals.",
+      "formula": "<span class=\"cf-fn\">lowQuality</span>(site) = <span class=\"cf-fn\">classify</span>(\n  <span class=\"cf-val\">site2vec(site)</span>, <span class=\"cf-val\">qualityModel</span>\n)  <span class=\"cf-comment\">// ML classification via site embedding</span>\n<span class=\"cf-comment\">// thin content, excessive ads, poor writing detected</span>",
+      "affects": "Affected by: content quality patterns detectable by ML. Thin content, excessive ads, poor writing trigger this."
+    },
+    {
+      "name": "independentLinks",
+      "source": "Leak",
+      "how": "Count of linking root domains. Part of Panda modifier factor (IL/RQ ratio). Higher independent link count relative to other metrics = better.",
+      "formula": "<span class=\"cf-fn\">pandaModifier</span>(page) = <span class=\"cf-val\">IL</span> / <span class=\"cf-val\">RQ</span>\n  <span class=\"cf-comment\">// IL = independentLinks (unique linking root domains)</span>\n  <span class=\"cf-comment\">// RQ = referenceQueries (branded/navigational queries)</span>\n<span class=\"cf-kw\">if</span> IL high &amp;&amp; RQ low: <span class=\"cf-kw\">suspect link manipulation</span>",
+      "affects": "Affected by: diverse, natural link profile from many independent domains. Quantity of unique linking domains matters."
+    },
+    {
+      "name": "Phrase-Based Quality Prediction",
+      "source": "Patent US9767157 (Navneet Panda, Yun Zhou, 2013)",
+      "how": "Predicts quality scores for new or unseen websites using phrase frequency models built from previously evaluated sites. The system analyzes n-gram (2-gram to 5-gram) phrase frequencies across all pages on a site, computing relative frequency as (pages containing phrase / total site pages). These frequencies are mapped to baseline quality scores derived from previously scored sites. A smoothing function prevents extreme scores: smoothed_score = aggregate * alpha + neutral * (1 - alpha), where alpha can be a sigmoid of phrase frequency quotient. This is the mechanism behind Panda's ability to score sites it hasn't explicitly rated, using statistical patterns from evaluated sites as templates.",
+      "formula": "<span class=\"cf-fn\">PhraseRelFreq</span>(phrase, site) =\n  <span class=\"cf-val\">pages_containing</span> / <span class=\"cf-val\">total_pages</span>\n\n<span class=\"cf-fn\">PhraseQuality</span>(phrase) = <span class=\"cf-fn\">model</span>(\n  <span class=\"cf-val\">relFreq</span> &rarr; <span class=\"cf-val\">baseline_score</span>\n)  <span class=\"cf-comment\">// learned from previously scored sites</span>\n<span class=\"cf-comment\">// 2-gram to 5-gram phrase analysis</span>\n\n<span class=\"cf-fn\">SmoothedScore</span> = <span class=\"cf-val\">aggregate</span> &times; <span class=\"cf-val\">&alpha;</span> +\n  <span class=\"cf-val\">neutral</span> &times; (1 - <span class=\"cf-val\">&alpha;</span>)\n<span class=\"cf-comment\">// &alpha; = 0.90, 0.80, 0.75, 0.60 or sigmoid(freq_quotient)</span>\n<span class=\"cf-comment\">// smoothing prevents extreme scores for sparse data</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US9767157\">US9767157</a> (Predicting site quality, Panda & Zhou, 2013)",
+      "affects": "Affected by: phrase diversity and usage patterns across your site. Sites with phrase patterns matching known high-quality sites score better. Repetitive, formulaic content patterns that match low-quality templates are penalized."
+    },
+    {
+      "name": "shingleInfo",
+      "source": "DOJ",
+      "how": "Overlapping word sequences (shingling) detect near-duplicate pages. Identifies content copied or heavily paraphrased from other sources. Part of WebMirror system.",
+      "formula": "<span class=\"cf-fn\">shingleInfo</span>(doc) = <span class=\"cf-fn\">fingerprint</span>(\n  <span class=\"cf-val\">nGrams(doc, n=5)</span>\n).<span class=\"cf-fn\">compare</span>(<span class=\"cf-val\">webIndex</span>)  <span class=\"cf-comment\">// WebMirror near-duplicate detection</span>\n<span class=\"cf-kw\">if</span> overlap &gt; dupThreshold: <span class=\"cf-kw\">flag(nearDuplicate)</span>",
+      "affects": "Affected by: original content. Avoid duplicating content from other sites. Even heavy paraphrasing may be detected."
+    }
+  ],
+  "pipeline": {
+    "title": "Panda Quality Assessment Pipeline",
+    "stages": [
+      {
+        "name": "Content Crawl",
+        "detail": "Pages analyzed for content quality, depth, originality"
+      },
+      {
+        "name": "IL/RQ Ratio",
+        "detail": "independentLinks / referenceQueries = quality modifier"
+      },
+      {
+        "name": "Quality Tier",
+        "detail": "pandaDemotion vs babyPanda vs babyPandaV2"
+      },
+      {
+        "name": "ML Classification",
+        "detail": "lowQuality signal via site-to-vector embedding model"
+      },
+      {
+        "name": "Site Demotion",
+        "detail": "CompressedQualitySignals applied to all pages on domain"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2011",
+      "type": "patent",
+      "title": "Panda Algorithm Launches",
+      "desc": "Major update targeting content farms. Affects ~12% of English queries. Named after engineer Navneet Panda."
+    },
+    {
+      "year": "2012",
+      "type": "patent",
+      "title": "Panda Iterations",
+      "desc": "Multiple Panda updates (2.0-4.0) refine quality assessment. \"Baby Panda\" lighter version deployed for borderline content."
+    },
+    {
+      "year": "2013",
+      "type": "patent",
+      "title": "Phrase-Based Quality Prediction (US9767157)",
+      "desc": "Navneet Panda and Yun Zhou patent phrase-based site quality prediction. Analyzes 2-5 gram phrase frequencies across site pages, maps to quality scores learned from previously evaluated sites. Smoothing function prevents extreme scores. Enables Panda to predict quality for unseen sites without explicit evaluation."
+    },
+    {
+      "year": "2015",
+      "type": "patent",
+      "title": "Panda Into Core",
+      "desc": "Panda integrated into core ranking algorithm. No longer a periodic update, now runs continuously."
+    },
+    {
+      "year": "2018",
+      "type": "patent",
+      "title": "Evolution to HCU Concepts",
+      "desc": "Panda principles evolve toward Helpful Content concepts. Site-level quality assessment becomes more granular."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "API Leak: IL/RQ Ratio",
+      "desc": "pandaDemotion confirmed using Independent Links / Reference Queries ratio. 6 Panda signals in API."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "DOJ Trial: Quality Demotion",
+      "desc": "pandaDemotion, babyPandaDemotion, babyPandaV2Demotion, lowQuality confirmed in CompressedQualitySignals."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"Panda was replaced by the Helpful Content System in 2022.\"",
+      "internalSource": "API Leak",
+      "internalClaim": "pandaDemotion, babyPandaDemotion, and babyPandaV2Demotion are all active signals in 2024. The QualityPandaModifier module is still operational. Panda was never removed, it runs alongside HCU."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"We evaluate individual pages on their own merits.\"",
+      "internalSource": "API Leak + DOJ",
+      "internalClaim": "Panda explicitly operates at the site level. pandaDemotion is a \"site-wide demotion signal for low-quality content prevalence.\" One bad section can demote all pages on a domain."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"Focus on creating helpful content. Specific metrics don't matter.\"",
+      "internalSource": "API Leak",
+      "internalClaim": "The IL/RQ ratio is a precise, measurable formula. independentLinks (unique linking domains) divided by referenceQueries (branded search volume). This specific ratio drives Panda demotion."
+    }
+  ]
+}

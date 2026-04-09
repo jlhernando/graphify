@@ -1,0 +1,260 @@
+{
+  "id": "deeprank",
+  "route": "/deeprank",
+  "systems": [
+    "DeepRank"
+  ],
+  "hero": {
+    "title": "DeepRank: BERT-Based Neural Ranking",
+    "subtitle": "DeepRank is Google's BERT-based neural ranking system with 3 confirmed DOJ signals. It requires both language understanding and world knowledge for relevance scoring. Its enhanced variant, eDeepRank, is uniquely decomposable, allowing engineers to audit exactly why the LLM-based system ranks a page at a given position."
+  },
+  "keyInsight": {
+    "label": "Key Insight from DOJ Trial",
+    "text": "DeepRank is one of only <strong>two ML-based ranking systems</strong> (alongside RankBrain), per Pandu Nayak's testimony. It uses <strong>BERT and transformers</strong> requiring both language understanding and world knowledge. The enhanced <strong>eDeepRank</strong> is uniquely <strong>decomposable</strong>: engineers can audit exactly why the LLM ranks a page at a given position, breaking neural rankings into traditional signal equivalents. This decomposability is unique in ML ranking, designed for accountability."
+  },
+  "pillars": [
+    {
+      "type": "doj",
+      "title": "Signals,  Core",
+      "items": [
+        "<strong>DeepRank</strong> - BERT-based neural ranking requiring language + world knowledge (core)",
+        "<strong>eDeepRank</strong> - Enhanced version with decomposable analysis capability",
+        "<strong>eDeepRankDecomposable</strong> - Engineers can audit why LLM ranks pages (HJ Kim testimony)",
+        "<strong>Processing limit: top 20-30 only</strong> - Both RankBrain and DeepRank are too computationally expensive to scale beyond the top 20-30 ranked documents (Nayak testimony). NavBoost and core ranking signals handle the broad candidate set (tens of thousands). This is why DeepRank is a refinement stage, not a retrieval or broad ranking signal",
+        "One of only two ML systems in ranking (with RankBrain)",
+        "Can decompose into traditional signal equivalents",
+        "Trained on user data (click patterns and engagement)",
+        "<strong>Nayak (PXR0357)</strong>: DeepRank signals can be decomposed into 'signals that resembled traditional signals.' Combining neural + traditional signals improved results beyond either alone",
+        "<strong>Pre-DeepRank context</strong> (UPX0197, Lehman 2019): Before BERT/DeepRank, Google relied on 'memorization systems much larger than any current ML model.' DeepRank represents the shift from memorization-based ranking to language understanding",
+        "<strong>Generalization system</strong> (Mehta FOF 97): DeepRank is classified as a 'generalization' system alongside RankBrain, RankEmbed, RankBERT, and MUM. These systems are 'designed to fill holes in [click] data' by generalizing from data-rich to data-sparse situations. Older signals use up to 1 trillion examples; DeepRank requires only ~1 billion (FOF 98). DeepRank 'not only gives significant relevance gains but ties ranking more tightly to language understanding'",
+        "<strong>Behavioral embedding paradigm</strong> (UPX0205, Research All-Hands Apr 2015): Pre-DeepRank concept: 'Instead of describing what each result is about, describe it based on the people who took it.' Users described by past actions, not demographics. 'Behavioral similarity' matching. At Google's scale, 'even the most obscure choice would have been exercised by thousands of people.' This is the conceptual foundation for embedding users and documents in shared behavioral space"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "eDeepRank Transparency Design (PXR0356, HJ Kim Feb 2025)",
+      "items": [
+        "<strong>eDeepRank is an LLM system</strong> using BERT/transformers that decomposes LLM-based signals into components to make them more transparent",
+        "<strong>Almost every signal aside from RankBrain and DeepRank is hand-crafted</strong>. These two are the only LLM-based ranking signals",
+        "<strong>Hand-crafting advantage</strong>: 'if anything breaks Google knows what to fix. Google wants their signals to be fully transparent'",
+        "<strong>Microsoft contrast</strong>: 'Microsoft builds very complex systems using ML techniques to optimize functions. So it's hard to fix things.' Google deliberately avoids this approach for ranking"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "Lehman's Deep ML Prediction (UPX0197, Grushetsky Email Jan 2019)",
+      "items": [
+        "<strong>Lehman prediction</strong>: 'Within the near future, a deep ML system will clearly outperform Google's 20-year accumulation of relevance algorithms'",
+        "<strong>BERT subsumed past work</strong>: 'deep ML (in the form of BERT) abruptly subsumed essentially all preceding work' in web answers",
+        "<strong>Unsupervised learning replacing feedback</strong>: 'huge amounts of user feedback can be largely replaced by unsupervised learning from raw text'",
+        "<strong>Pre-DeepRank memorization</strong>: 'we rely on memorization systems that are much larger than any current ML model'",
+        "<strong>Grushetsky response</strong>: need to 'deconstruct the various reasons why we often prefer our own artisanal ranking systems over an essentially end-to-end deep system'",
+        "<strong>Concerns raised</strong>: predictability of changes, anticipating errors, working at scale, avoiding over-reliance on metrics, team morale"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "Neural Ranking Signals",
+      "items": [
+        "<strong>mustangRankEmbedInfo</strong> - Deep learning embedding vectors in Mustang",
+        "<strong>compressedDocEmbedding</strong> - Compressed document embeddings for retrieval",
+        "<strong>pageEmbeddings</strong> - Page-level semantic vector encoding",
+        "<strong>STS</strong> - Semantic Text Scores, aggregate understanding",
+        "<strong>rankEmbedInfo</strong> - RankEmbed integration for neural scoring",
+        "DeepRank and RankEmbed share the neural ranking infrastructure"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "5 Patents",
+      "items": [
+        "Transformer attention: the \"Attention Is All You Need\" sequence transduction mechanism underlying BERT and DeepRank (<a href=\"https://patents.google.com/patent/US10452978\">US10452978</a>)",
+        "RAG response generation: retrieval-augmented generation combining search results with LLM output (<a href=\"https://patents.google.com/patent/US20240346256\">US20240346256</a>)",
+        "Activity log training: using user activity logs to train semantic matching models for ranking (<a href=\"https://patents.google.com/patent/US20230267277\">US20230267277</a>)",
+        "Knowledge panel triggering: topicality scoring to determine when to show knowledge panels (<a href=\"https://patents.google.com/patent/US10922326\">US10922326</a>)",
+        "Media consumption history: personalizing knowledge cards using media consumption patterns (<a href=\"https://patents.google.com/patent/US20240037137\">US20240037137</a>)"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How DeepRank Affects Your SEO",
+      "items": [
+        "<strong>Write for semantic relevance, not keyword density</strong>: DeepRank uses BERT cross-attention between query and document representations. It understands meaning, not just term matching. Content that naturally addresses the topic with contextually appropriate language scores better than keyword-stuffed pages. Focus on answering the query's intent comprehensively.",
+        "<strong>Demonstrate world knowledge in your content</strong>: The DOJ confirmed DeepRank requires both language understanding AND world knowledge. Pages that demonstrate factual depth, reference related concepts, and show contextual understanding of the topic score higher than surface-level content. Include specific details, examples, and connections between concepts.",
+        "<strong>Optimize for the decomposable signals eDeepRank maps to</strong>: eDeepRank breaks neural scores into traditional signal equivalents: content relevance, authority, freshness, and engagement. This means improving any of these traditional signals also improves your DeepRank score. The neural model is not a black box; it reflects and amplifies the same signals Google has always used.",
+        "<strong>Generate positive user engagement signals to retrain DeepRank</strong>: DeepRank is trained on user click data and engagement patterns. Its relevance scoring degrades without fresh click signals. Creating content that earns satisfied clicks (long dwell time, low bounce rate) provides the training data that reinforces your rankings in the next model update.",
+        "<strong>Target semantic gaps between query and existing results</strong>: DeepRank's BERT encoding creates embedding vectors in a shared space. When existing top results don't fully address query intent (partial semantic matches), there's an opportunity. Create content that is a closer semantic match to the full query intent, and DeepRank's cross-attention mechanism will reward it.",
+        "<strong>Build comprehensive document embeddings through content depth</strong>: compressedDocEmbedding and pageEmbeddings encode your page as a dense vector. Thin, shallow content produces weak embedding signals. Deep, comprehensive content creates richer vectors that can match a wider range of related queries in the neural scoring pipeline."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "DeepRank",
+      "source": "DOJ",
+      "how": "BERT-based neural ranking system requiring both language understanding and world knowledge. One of only 2 ML systems in ranking (with RankBrain), per Pandu Nayak testimony. Uses transformer cross-attention between query and document representations to produce relevance scores.",
+      "formula": "<span class=\"cf-fn\">DeepRank</span>(q, d) = <span class=\"cf-fn\">BERT_crossattn</span>(\n<span class=\"cf-val\">query_repr</span>, <span class=\"cf-val\">doc_repr</span>\n) &rarr; <span class=\"cf-val\">relevance_score</span>\n<span class=\"cf-comment\">// requires language understanding + world knowledge</span>\n<span class=\"cf-comment\">// 1 of only 2 ML systems in ranking (Nayak testimony)</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US20200005149\">US20200005149</a> (learning to rank), <a href=\"https://patents.google.com/patent/US10963505\">US10963505</a> (neural ranking), <a href=\"https://patents.google.com/patent/US10452978\">US10452978</a> (Transformer attention), <a href=\"https://patents.google.com/patent/US20230267277\">US20230267277</a> (activity log training for semantic matching)",
+      "affects": "Affected by: query-document semantic alignment, BERT training data, user click patterns, world knowledge embeddings"
+    },
+    {
+      "name": "eDeepRank",
+      "source": "DOJ",
+      "how": "Enhanced DeepRank designed to be decomposable. Engineers can audit exactly why the LLM ranks a page at a given position. Breaks down neural relevance scores into interpretable components that map to traditional signal equivalents.",
+      "formula": "<span class=\"cf-fn\">eDeepRank</span>(q, d) = <span class=\"cf-fn\">DeepRank</span>(q, d) + <span class=\"cf-fn\">decompose</span>(\n<span class=\"cf-val\">relevance</span>, <span class=\"cf-val\">authority</span>, <span class=\"cf-val\">freshness</span>, ...\n)  <span class=\"cf-comment\">// maps neural score to traditional signals</span>\n<span class=\"cf-comment\">// engineers can audit why LLM ranks a page</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US20200005149\">US20200005149</a> (learning to rank), <a href=\"https://patents.google.com/patent/US10963505\">US10963505</a> (neural ranking)",
+      "affects": "Affected by: same inputs as DeepRank, plus decomposition architecture for transparency"
+    },
+    {
+      "name": "eDeepRankDecomposable",
+      "source": "DOJ",
+      "how": "Breaks neural ranking scores into traditional signal equivalents for engineering audits. HJ Kim testimony confirmed this capability. Allows teams to understand which aspects of a page (content relevance, authority, freshness) drive the neural score.",
+      "formula": "<span class=\"cf-fn\">Decompose</span>(neural_score) = {\n<span class=\"cf-val\">content_relevance</span>: w1, <span class=\"cf-val\">authority</span>: w2,\n<span class=\"cf-val\">freshness</span>: w3, <span class=\"cf-val\">engagement</span>: w4\n}  <span class=\"cf-comment\">// traditional signal equivalents</span>\n<span class=\"cf-comment\">// confirmed by HJ Kim testimony</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US10963505\">US10963505</a> (neural ranking)",
+      "affects": "Affected by: neural model architecture, signal decomposition layer, traditional signal mappings"
+    },
+    {
+      "name": "compressedDocEmbedding",
+      "source": "Leak",
+      "how": "Compressed document vector representations used in the neural scoring pipeline. Documents encoded into dense vectors for efficient similarity computation and retrieval. <span class=\"calc-uncertain\">Exact embedding dimensions and compression method not confirmed.</span>",
+      "formula": "<span class=\"cf-fn\">DocEmbed</span>(doc) = <span class=\"cf-fn\">compress</span>(\n<span class=\"cf-fn\">BERT_encode</span>(<span class=\"cf-val\">doc_content</span>)\n) &rarr; <span class=\"cf-val\">dense_vector</span>[d]\n<span class=\"cf-comment\">// similarity = dot_product(query_vec, doc_vec)</span>\n<span class=\"cf-comment\">// compression reduces storage for 400B+ docs</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US20200005149\">US20200005149</a> (learning to rank)",
+      "affects": "Affected by: document content, embedding model version, compression algorithm, vector dimensionality"
+    },
+    {
+      "name": "Transformer Attention",
+      "source": "Patent",
+      "how": "The core mechanism behind DeepRank. Multi-head self-attention allows the model to attend to different positions in the input sequence simultaneously. Query, key, and value projections enable the model to learn which parts of a document are relevant to which parts of a query. The Vaswani et al. architecture (\"Attention Is All You Need\") replaced recurrence with pure attention, enabling parallel training at scale.",
+      "formula": "<span class=\"cf-fn\">Attention</span>(Q, K, V) = <span class=\"cf-fn\">softmax</span>(\nQ &times; K<sup>T</sup> / &radic;d_k\n) &times; V\n<span class=\"cf-fn\">MultiHead</span> = <span class=\"cf-fn\">concat</span>(\n<span class=\"cf-val\">head_1</span>, ..., <span class=\"cf-val\">head_h</span>\n) &times; W<sup>O</sup>\n<span class=\"cf-comment\">// foundation for BERT, DeepRank, RankEmbed</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US10452978\">US10452978</a> (Transformer attention, Vaswani et al.)",
+      "affects": "Affected by: input sequence length, attention head count, model dimensionality. DeepRank's cross-attention between query and document builds directly on this architecture."
+    },
+    {
+      "name": "RAG for Search",
+      "source": "Patent",
+      "how": "Retrieval-Augmented Generation combines traditional search retrieval with LLM generation. The system retrieves relevant documents via the ranking pipeline, then feeds them as context to a generative model that produces responses. This is the architecture behind AI Overviews: search results as grounding context for LLM output. Nayak (PXR0357) confirmed FastSearch (RankEmbed-only) is used as RAG for the Gemini app.",
+      "formula": "<span class=\"cf-fn\">RAG</span>(query) = <span class=\"cf-fn\">LLM</span>(\nquery, <span class=\"cf-fn\">retrieve</span>(query, index)\n) &rarr; <span class=\"cf-val\">grounded_response</span>\n<span class=\"cf-comment\">// retrieve → rank → generate with context</span>\n<span class=\"cf-comment\">// FastSearch (RankEmbed-only) used as RAG for Gemini</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US20240346256\">US20240346256</a> (RAG response generation)",
+      "affects": "Affected by: retrieval quality determines generation quality. Content that ranks well in RankEmbed is more likely to be cited in AI Overviews and Gemini responses."
+    }
+  ],
+  "pipeline": {
+    "title": "DeepRank Scoring Pipeline",
+    "stages": [
+      {
+        "name": "BERT Encoding",
+        "detail": "Bidirectional transformer encodes query + document"
+      },
+      {
+        "name": "Cross-Attention",
+        "detail": "Query-document interaction via transformer layers"
+      },
+      {
+        "name": "Neural Score",
+        "detail": "Relevance prediction from language + world knowledge"
+      },
+      {
+        "name": "Decomposition",
+        "detail": "eDeepRank breaks score into auditable signal equivalents"
+      },
+      {
+        "name": "Score Fusion",
+        "detail": "Merged with Mustang, NavBoost, and other signals"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2015",
+      "type": "patent",
+      "title": "RankBrain Launches",
+      "desc": "First ML ranking signal. Processes only top 20-30 documents (too expensive to scale further). Trained on 13 months of click/query data, cross-language and cross-locale. Fine-tuned using IS rating data. Specializes in long-tail and novel queries. Uses unsupervised learning. One of only two ML systems in ranking."
+    },
+    {
+      "year": "2017",
+      "type": "patent",
+      "title": "Transformer: Attention Is All You Need (US10452978)",
+      "desc": "Vaswani et al. patent the Transformer architecture. Multi-head self-attention replaces recurrence, enabling parallel training at scale. Foundation for BERT, DeepRank, RankEmbed, MUM, and all modern neural ranking."
+    },
+    {
+      "year": "2018",
+      "type": "patent",
+      "title": "BERT Arrives",
+      "desc": "Bidirectional transformers revolutionize NLP. Google begins integrating BERT into search ranking."
+    },
+    {
+      "year": "2019",
+      "type": "patent",
+      "title": "DeepRank Deployed",
+      "desc": "BERT-based neural ranking system requiring both language understanding and world knowledge."
+    },
+    {
+      "year": "2021",
+      "type": "patent",
+      "title": "eDeepRank",
+      "desc": "Enhanced DeepRank designed for decomposable analysis. Engineers can audit exactly why pages rank."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "DOJ Trial: LLM Ranking",
+      "desc": "Pandu Nayak testified DeepRank uses BERT/transformers. Only two systems use ML: RankBrain and DeepRank."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "DOJ: Decomposable Audit",
+      "desc": "HJ Kim testified eDeepRank is decomposable: engineers can audit exactly why the LLM ranks a page."
+    },
+    {
+      "year": "2025",
+      "type": "doj",
+      "title": "DOJ Remedies: eDeepRank Transparency (PXR0356)",
+      "desc": "HJ Kim interview (Feb 2025): eDeepRank uses BERT/transformers to decompose LLM signals into transparent components. Almost every signal except RankBrain and DeepRank is hand-crafted. Google deliberately chooses transparency over complex ML: 'if anything breaks Google knows what to fix.' Contrasts with Microsoft's approach of complex ML optimization that is 'hard to fix.'"
+    },
+    {
+      "year": "2019",
+      "type": "doj",
+      "title": "Lehman's Deep ML Prediction (UPX0197)",
+      "desc": "Eric Lehman predicted 'a deep ML system will clearly outperform Google's 20-year accumulation of relevance algorithms.' BERT 'abruptly subsumed essentially all preceding work' in web answers. Grushetsky responded with concerns about predictability, scale, metrics over-reliance, and team morale."
+    },
+    {
+      "year": "2024",
+      "type": "patent",
+      "title": "RAG for Search (US20240346256)",
+      "desc": "Patent on retrieval-augmented generation for search: combining ranked results as context for LLM response generation. Architecture behind AI Overviews. Nayak confirmed FastSearch (RankEmbed-only) used as RAG for Gemini app."
+    },
+    {
+      "year": "2025",
+      "type": "doj",
+      "title": "DOJ Remedies: Neural + Traditional Combination (PXR0357)",
+      "desc": "Nayak interview (Jan 2025): BERT-based DeepRank ML signals can be decomposed into signals resembling traditional signals. Combining traditional and ML-predicted signals produced better outcomes than either alone."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"AI is deeply integrated throughout our search ranking.\"",
+      "internalSource": "DOJ Trial",
+      "internalClaim": "Only TWO systems use ML in ranking: RankBrain and DeepRank. NavBoost is a table lookup. Q* is hand-crafted. The vast majority of Google's ranking is NOT AI/ML-based, despite marketing claims."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"Our neural models are black boxes that we can't fully explain.\"",
+      "internalSource": "DOJ Trial",
+      "internalClaim": "eDeepRank is specifically designed to be decomposable. Engineers CAN audit exactly why the LLM ranks a page. Google built explainability into DeepRank, contradicting the \"black box\" narrative used to avoid transparency."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"BERT understands content like a human would.\"",
+      "internalSource": "DOJ Trial",
+      "internalClaim": "DeepRank requires retraining on user data. Its \"understanding\" degrades without fresh click signals. The system learns statistical patterns from user behavior, not genuine comprehension."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"Google Search is powered by sophisticated machine learning throughout the ranking process.\"",
+      "internalSource": "DOJ Remedies PXR0356 (HJ Kim, Feb 2025) + UPX0197 (Grushetsky, Jan 2019)",
+      "internalClaim": "Almost every ranking signal aside from RankBrain and DeepRank is hand-crafted. Google deliberately chose 'artisanal' hand-tuned systems over end-to-end ML because 'if anything breaks Google knows what to fix.' Internally, Google contrasted itself with Microsoft, whose complex ML systems are 'hard to fix.'"
+    }
+  ]
+}

@@ -1,0 +1,180 @@
+{
+  "id": "webref",
+  "route": "/webref",
+  "systems": [
+    "Webref"
+  ],
+  "hero": {
+    "title": "Webref: Entity Recognition & Linking",
+    "subtitle": "Webref is Google's entity annotation system with 5 confirmed signals in the API leak and 1 from the DOJ trial. It connects page content to Knowledge Graph entities, measuring entity salience, confidence, and topicality. Webref is how Google understands what a page is \"about\" at the entity level, not just the keyword level."
+  },
+  "keyInsight": {
+    "label": "Key Insight from API Leak + DOJ Trial",
+    "text": "Webref assigns each entity on a page a <strong>salienceScore</strong> measuring how central it is to the content (not just whether it appears). It links entities to the Knowledge Graph via <strong>kgEntityId</strong> with a <strong>kgEntityConfidence</strong> score. The <strong>topicality</strong> signal measures how relevant an entity is to the overall page theme. Critically, <strong>qrefAnnotation</strong> links queries directly to Knowledge Graph entities, enabling Google to match user intent to entity-annotated pages."
+  },
+  "pillars": [
+    {
+      "type": "leak",
+      "title": "Signals Confirmed",
+      "items": [
+        "<strong>salienceScores</strong> - Entity prominence measurement within a document",
+        "<strong>kgEntityId</strong> - Knowledge Graph entity identifier linked to page content",
+        "<strong>kgEntityConfidence</strong> - Confidence score for entity-page association",
+        "<strong>topicality</strong> - How central an entity is to the page's overall theme",
+        "<strong>qrefAnnotation</strong> - Query-to-Knowledge Graph entity linking for intent matching"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "Signal Confirmed",
+      "items": [
+        "<strong>EntityAnnotations</strong> - Semantic entity recognition and linking in documents",
+        "Part of PerDocData module (per-document metadata)",
+        "Connects page content to structured Knowledge Graph data",
+        "Enables entity-based retrieval beyond keyword matching",
+        "Foundation for Knowledge Panels and rich results",
+        "Cross-referenced with Webref module in the API leak"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "20 Patents",
+      "items": [
+        "Entity salience: centrality measurement beyond mere mention",
+        "Entity disambiguation via context-aware neural models",
+        "Knowledge Graph with billions of entity relationships",
+        "Cross-document entity co-reference resolution",
+        "Entity-based query understanding via qrefAnnotation",
+        "Structured data extraction from unstructured web content",
+        "<a href=\"https://patents.google.com/patent/US9875320\">US9875320</a>: Providing search results based on sorted properties; <a href=\"https://patents.google.com/patent/US11055312\">US11055312</a>: Selecting content using entity properties; <a href=\"https://patents.google.com/patent/US7747648\">US7747648</a>: World modeling using a relationship network with communication channels to entities",
+        "<a href=\"https://patents.google.com/patent/US8176055\">US8176055</a>: Content entity management; <a href=\"https://patents.google.com/patent/US10198491\">US10198491</a>: Computerized systems and methods for extracting and storing information regarding entities; <a href=\"https://patents.google.com/patent/US7970766\">US7970766</a>: Entity type assignment",
+        "<a href=\"https://patents.google.com/patent/US7769740\">US7769740</a>: Systems and methods of ranking attention; <a href=\"https://patents.google.com/patent/US10108700\">US10108700</a>: Question answering to populate knowledge base; <a href=\"https://patents.google.com/patent/US7333976\">US7333976</a>: Methods and systems for processing contact information",
+        "<a href=\"https://patents.google.com/patent/US9305108\">US9305108</a>: Semantic selection and purpose facilitation; <a href=\"https://patents.google.com/patent/US9355140\">US9355140</a>: Associating an entity with a search query; <a href=\"https://patents.google.com/patent/US9135238\">US9135238</a>: Disambiguation of named entities",
+        "<a href=\"https://patents.google.com/patent/US6735585\">US6735585</a>: Method for search engine generating supplemented search not included in conventional search resul...; <a href=\"https://patents.google.com/patent/US8392443\">US8392443</a>: Refining search queries; <a href=\"https://patents.google.com/patent/US7036010\">US7036010</a>: Method and apparatus for a secure communications session with a remote system via an access-contr...",
+        "<a href=\"https://patents.google.com/patent/US20090242620\">US20090242620</a>: Ratings Using Machine-Readable Representations; <a href=\"https://patents.google.com/patent/US6134532\">US6134532</a>: System and method for optimal adaptive matching of users to most relevant entity and information ...; <a href=\"https://patents.google.com/patent/US10482139\">US10482139</a>: Structured user graph to support querying and predictions",
+        "<a href=\"https://patents.google.com/patent/US9116982\">US9116982</a>: Identifying interesting commonalities between entities; <a href=\"https://patents.google.com/patent/US20080279369\">US20080279369</a>: System and method for n-dimensional encryption"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Webref Affects Your SEO",
+      "items": [
+        "<strong>Make your primary entity the salient focus, not just a mention</strong>: Webref's salienceScores measure how central an entity is to your content, not merely whether it appears. A page that mentions 'Tesla' once in passing scores low salience. A page structured entirely around Tesla, with the entity in the title, H1, opening paragraph, and throughout the content, scores high. Structure content so the primary entity is unmistakably the focal point.",
+        "<strong>Use proper names and disambiguate entities for higher kgEntityConfidence</strong>: Webref links text mentions to Knowledge Graph nodes via kgEntityId with a confidence score. Use full, unambiguous entity names on first reference ('Apple Inc.' not just 'Apple,' 'Mercury (planet)' not just 'Mercury'). Add contextual clues that help disambiguation: industry terms, related entities, and geographic context. Higher confidence means stronger entity-query matching.",
+        "<strong>Implement Schema.org markup to accelerate Knowledge Graph linking</strong>: Despite Google publicly saying Schema is not a ranking factor, the leak shows kgEntityId directly links page content to Knowledge Graph entities, and qrefAnnotation matches queries to entity-annotated pages. Schema markup (Organization, Person, Product, Article) gives Webref explicit entity signals rather than requiring inference from unstructured text. This is a direct pathway to entity-based retrieval.",
+        "<strong>Build topicality by clustering content around core entities</strong>: Webref's topicality signal measures how relevant an entity is to the overall page theme. Pages that cover multiple unrelated entities dilute topicality for each one. Create focused content where all discussed entities relate to a central theme. A page about 'Python programming' should discuss related entities (Django, Flask, data science) rather than unrelated ones.",
+        "<strong>Strengthen site2vec by maintaining domain-level entity consistency</strong>: The leak's site2vecEmbeddingEncoded aggregates all page-level embeddings into a single domain vector. Publishing content about entities outside your domain's core topic dilutes the site vector. A medical information site that publishes entertainment content weakens its entity authority. Keep your domain's entity graph coherent and tightly clustered.",
+        "<strong>Target entity-based queries by earning a Knowledge Panel</strong>: qrefAnnotation links queries directly to Knowledge Graph entities. If your brand or organization has a Knowledge Panel, queries mentioning your entity get directly matched to your content. To earn and strengthen a Knowledge Panel: claim it via Google, maintain consistent entity information across authoritative sources (Wikipedia, Wikidata, Crunchbase), and use Schema.org Organization markup with your official site.",
+        "<strong>Build entity co-occurrence patterns through consistent topical publishing</strong>: topicEmbeddingsVersionedData shows topic vectors evolve over time. Each time you publish quality content around your core entities, the version updates strengthen those associations. A site that publishes weekly about 'machine learning' with consistent references to related entities (neural networks, transformers, TensorFlow) builds progressively stronger entity vectors with each Webref version update."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "EntityAnnotations",
+      "source": "DOJ",
+      "how": "Webref system identifies and links entities in content to Knowledge Graph entries. Maps text mentions to known entity IDs. Semantic understanding layer.",
+      "formula": "<span class=\"cf-fn\">EntityAnnotations</span>(doc) = <span class=\"cf-fn\">webref</span>(\n  <span class=\"cf-val\">mentions[]</span>\n).<span class=\"cf-fn\">linkToKG</span>(<span class=\"cf-val\">kgEntityId</span>, <span class=\"cf-val\">kgEntityConfidence</span>)\n<span class=\"cf-comment\">// each mention mapped to Knowledge Graph node with confidence</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8812435\">US8812435</a> (entity extraction), <a href=\"https://patents.google.com/patent/US9047295\">US9047295</a> (knowledge graph)",
+      "affects": "Affected by: reference known entities clearly, use proper names, disambiguate terms. Structured data helps."
+    },
+    {
+      "name": "topicEmbeddingsVersionedData",
+      "source": "DOJ",
+      "how": "Versioned topic vectors evolving with content changes. Semantic classification in embedding space. Pages mapped to topic clusters. Vectors updated as content changes.",
+      "formula": "<span class=\"cf-fn\">topicEmbeddings</span>(page, v) = <span class=\"cf-fn\">embed</span>(\n  <span class=\"cf-val\">entities[]</span>, <span class=\"cf-val\">topicClusters</span>\n).<span class=\"cf-fn\">version</span>(<span class=\"cf-val\">v</span>)  <span class=\"cf-comment\">// versioned, evolves with content changes</span>\n<span class=\"cf-comment\">// consistent topical publishing strengthens vectors over time</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US9047295\">US9047295</a> (knowledge graph)",
+      "affects": "Affected by: consistent topical publishing. Regular quality content strengthens your topic vectors over time."
+    },
+    {
+      "name": "site2vecEmbeddingEncoded",
+      "source": "DOJ",
+      "how": "Entire domain as single dense vector in semantic space. Aggregated from all page-level embeddings. Captures holistic site meaning. Part of QualityNsrPQData in NSR.",
+      "formula": "<span class=\"cf-fn\">site2vec</span>(domain) = <span class=\"cf-fn\">aggregate</span>(\n  <span class=\"cf-val\">pageEmbedding(p)</span> <span class=\"cf-kw\">for</span> p <span class=\"cf-kw\">in</span> domain.pages\n)  <span class=\"cf-comment\">// QualityNsrPQData, single dense vector per domain</span>\n<span class=\"cf-comment\">// off-topic pages dilute the site vector</span>",
+      "affects": "Affected by: site-wide topical consistency. Off-topic content dilutes your site vector."
+    }
+  ],
+  "pipeline": {
+    "title": "Webref Entity Annotation Pipeline",
+    "stages": [
+      {
+        "name": "Entity Detection",
+        "detail": "NLP identifies entity mentions in page content"
+      },
+      {
+        "name": "KG Linking",
+        "detail": "kgEntityId maps mentions to Knowledge Graph nodes"
+      },
+      {
+        "name": "Confidence & Salience",
+        "detail": "kgEntityConfidence + salienceScores per entity"
+      },
+      {
+        "name": "Topicality",
+        "detail": "How central each entity is to the page's theme"
+      },
+      {
+        "name": "Query Matching",
+        "detail": "qrefAnnotation links queries to KG entities for retrieval"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2012",
+      "type": "patent",
+      "title": "Knowledge Graph Launch",
+      "desc": "Google introduces the Knowledge Graph with 570 million entities. \"Things not strings\" becomes the mantra."
+    },
+    {
+      "year": "2014",
+      "type": "patent",
+      "title": "Entity Salience Patents",
+      "desc": "Google patents entity salience scoring. Measuring how central an entity is to a document, not just presence."
+    },
+    {
+      "year": "2016",
+      "type": "patent",
+      "title": "Webref System",
+      "desc": "Entity annotation and linking system formalized. Connects page content to Knowledge Graph entities at scale."
+    },
+    {
+      "year": "2019",
+      "type": "patent",
+      "title": "Neural Entity Linking",
+      "desc": "BERT-based entity disambiguation. Context-aware linking resolves ambiguous entity mentions."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "API Leak: 5 Webref Signals",
+      "desc": "salienceScores, kgEntityId, kgEntityConfidence, topicality, qrefAnnotation confirmed in RepositoryWebref module."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "DOJ Trial: Entity Annotations",
+      "desc": "EntityAnnotations confirmed as Webref semantic entity recognition and linking system."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"Just write naturally. You don't need to optimize for entities.\"",
+      "internalSource": "API Leak",
+      "internalClaim": "salienceScores directly measure entity prominence. kgEntityConfidence scores how well entities are recognized. topicality measures entity centrality. Entity optimization directly impacts how Google understands your content."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"Schema markup helps us understand your content but isn't a ranking factor.\"",
+      "internalSource": "API Leak",
+      "internalClaim": "Webref's kgEntityId directly links page content to Knowledge Graph entities. Pages with clear entity associations get matched to entity-based queries via qrefAnnotation. Entity recognition IS a ranking pathway."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"We understand content holistically, not through individual signals.\"",
+      "internalSource": "API Leak + DOJ",
+      "internalClaim": "Webref produces granular per-entity scores: salienceScores (prominence), kgEntityConfidence (linking certainty), topicality (centrality). Each entity on a page is individually scored and linked."
+    }
+  ]
+}

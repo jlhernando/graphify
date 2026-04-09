@@ -1,0 +1,198 @@
+{
+  "id": "knowledge-construction",
+  "route": "/knowledge-construction",
+  "systems": [
+    "Knowledge Graph",
+    "Fact Repository",
+    "Entity Recognition"
+  ],
+  "hero": {
+    "title": "Knowledge Graph Construction: How Google Builds Its Fact Repository",
+    "subtitle": "Before Knowledge Panels, entity embeddings, or featured snippets can work, Google must extract facts from the web, corroborate them across documents, resolve entity synonyms, and identify central entities. This dive covers the upstream construction pipeline: 8 patents spanning seed-fact bootstrapping, dependency-pattern extraction, co-occurrence graphs, and anchor-text synonym discovery."
+  },
+  "keyInsight": {
+    "label": "Key Insight from Patents",
+    "text": "Google's Knowledge Graph is not manually curated. It is built by a <strong>bootstrapping loop</strong>: seed facts generate dependency-parse patterns, patterns extract new facts from the corpus, and each fact is <strong>corroborated by counting how many documents independently support it</strong>. Entity synonyms are discovered via anchor text frequency (how many pages link to the entity's source using a given name). The system handles the long tail: rare entities with few mentions are extracted using patterns learned from common entities."
+  },
+  "pillars": [
+    {
+      "type": "patent",
+      "title": "15 Patents",
+      "items": [
+        "<strong>Seed fact bootstrapping</strong> (<a href=\"https://patents.google.com/patent/US9672251\">US9672251</a>) - Start with known (subject, attribute, object) triples. Find sentences expressing each fact, compute dependency parse graphs, extract minimal sub-graphs spanning subject/attribute/object tokens, replace tokens with variables to create reusable patterns.",
+        "<strong>Pattern application at corpus scale</strong> - Apply dependency-parse patterns across the entire document corpus. Any sentence matching a pattern's graph structure yields a new candidate fact. Patterns are scored by frequency (how many extractions) and coherence (average pairwise distance between extracted attribute vectors).",
+        "<strong>Template-based extraction</strong> (<a href=\"https://patents.google.com/patent/US8812435\">US8812435</a>) - Complementary approach for structured sources: extract title patterns (how entity names appear in document titles) and contextual patterns (how attribute-value pairs appear in infobox/table structures). Apply both patterns to discover new entities and facts from template-heavy pages like Wikipedia.",
+        "<strong>Long-tail entity coverage</strong> - Dependency-parse patterns learned from common entities (millions of mentions) transfer to rare entities (tens of mentions). A pattern learned from 'Barack Obama was born in Honolulu' applies to any sentence matching the same syntactic structure.",
+        "<a href=\"https://patents.google.com/patent/US8825471\">US8825471</a>: Unsupervised extraction of facts; <a href=\"https://patents.google.com/patent/US7454398\">US7454398</a>: Support for object search; <a href=\"https://patents.google.com/patent/US20090063550\">US20090063550</a>: Fact-based indexing for natural language search",
+        "<a href=\"https://patents.google.com/patent/US8812509\">US8812509</a>: Inferring attributes from search queries; <a href=\"https://patents.google.com/patent/US10467256\">US10467256</a>: Automatic query pattern generation; <a href=\"https://patents.google.com/patent/US20090327223\">US20090327223</a>: Query-driven web portals",
+        "<a href=\"https://patents.google.com/patent/US10452694\">US10452694</a>: Information extraction from question and answer websites; <a href=\"https://patents.google.com/patent/US8347202\">US8347202</a>: Determining geographic locations for place names in a fact repository; <a href=\"https://patents.google.com/patent/US10346485\">US10346485</a>: Semi structured question answering system",
+        "<a href=\"https://patents.google.com/patent/US8751498\">US8751498</a>: Finding and disambiguating references to entities on web pages; <a href=\"https://patents.google.com/patent/US20090282010\">US20090282010</a>: Creation and enrichment of search based taxonomy for finding information from semistructured data; <a href=\"https://patents.google.com/patent/US20090076799\">US20090076799</a>: Coreference Resolution In An Ambiguity-Sensitive Natural Language Processing System",
+        "<a href=\"https://patents.google.com/patent/US7590628\">US7590628</a>: Determining document subject by using title and anchor text of related documents"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "2 Patents",
+      "items": [
+        "<strong>Hypothesis testing across the corpus</strong> (<a href=\"https://patents.google.com/patent/US8954412\">US8954412</a>) - Strip noise words from a query, search the fact repository AND document corpus for matching terms, generate hypothetical facts (candidate attribute values), count how many documents independently support each hypothesis.",
+        "<strong>Containment filter</strong> - A fact is only presented if it is not a substring of another fact with equal or greater document support. Prevents partial answers when the full answer has equal backing.",
+        "<strong>Central entity identification</strong> (<a href=\"https://patents.google.com/patent/US9009192\">US9009192</a>) - Build a global entity co-occurrence graph weighted by pointwise mutual information (PMI). For a target document, filter the graph to retain only entities found in that document. Entities with no connections to other document entities are removed (they are peripheral, not topically central).",
+        "<strong>Central entity scoring</strong> - Combines: sum of outgoing edge weights in the filtered graph, query log frequency, frequency in target resource, and corpus-wide frequency. Central entities define what the page is 'about'."
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "4 Patents",
+      "items": [
+        "<strong>Anchor text synonym discovery</strong> (<a href=\"https://patents.google.com/patent/US8738643\">US8738643</a>) - Find the source document(s) for an entity. Collect all anchor texts from pages linking to it. Normalize, filter (blacklist 'click here', etc.), score by frequency and proportion. 'IBM', 'Big Blue', 'International Business Machines' are discovered as synonyms for the same entity.",
+        "<strong>Knowledge panel contextualization</strong> (<a href=\"https://patents.google.com/patent/US11720577\">US11720577</a>) - Standard panels show static facts. This system detects context terms in the query (e.g., 'Taylor Swift albums') and reshapes the panel to show relationship knowledge elements (each album with metadata) ranked above generic entity facts.",
+        "<strong>Quote search via Knowledge Graph</strong> (<a href=\"https://patents.google.com/patent/US9727617\">US9727617</a>) - Match query to KG entities, traverse relationship edges to find associated entities, retrieve quotes from a quote database, score by relevance + recency + frequency.",
+        "<strong>Answer passage scoring</strong> (<a href=\"https://patents.google.com/patent/US10019513\">US10019513</a>) - Offline: cluster question phrases from the corpus, extract answer sections, build weighted answer-term vectors per cluster. Online: match incoming question to a cluster, score candidate passages against the pre-computed answer-term vector."
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Knowledge Construction Affects Your SEO",
+      "items": [
+        "<strong>Structure your facts for extraction</strong>: Google's template-based extraction (US8812435) works best on structured content: tables, definition lists, clear attribute-value pairs. If your page contains facts about an entity, present them in patterns that machines can parse (schema markup, consistent formatting, clear subject-predicate-object structure).",
+        "<strong>Be the corroboration source</strong>: Facts are validated by counting independent document support (US8954412). If your site is one of the documents that corroborates a fact, you become part of the fact's provenance chain. Original research, data, and primary sources contribute to fact corroboration.",
+        "<strong>Anchor text shapes entity identity</strong>: Entity synonyms are discovered via inbound anchor text (US8738643). If you want your brand recognized as an entity, ensure inbound links use your brand name as anchor text, not generic 'click here'. Multiple name variants in anchors teach Google your entity's alternative names.",
+        "<strong>Central entity clarity matters</strong>: Pages with too many unrelated entities will have their central entity identification diluted (US9009192). The PMI-based graph filtering removes entities that don't connect to others in the document. Focus each page on a coherent entity cluster.",
+        "<strong>Question-answer patterns are pre-computed</strong>: Google clusters question phrases and pre-builds answer-term vectors (US10019513). If your content naturally answers common questions with the terms Google expects, it scores higher for featured snippets. Study 'People Also Ask' patterns to understand what answer-term vectors look like for your topic."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Dependency Pattern Coherence Score",
+      "source": "Patent US9672251 (Whang, Halevy et al.)",
+      "how": "Each extraction pattern is scored by combining extraction frequency with semantic coherence. Coherence measures whether the attributes extracted by a pattern are semantically related (using high-dimensional vector distances). Incoherent patterns that extract random attributes are penalized.",
+      "formula": "<span class=\"cf-fn\">pattern_score</span>(p) = <span class=\"cf-fn\">frequency</span>(p) &times; <span class=\"cf-fn\">coherence</span>(p)\n<span class=\"cf-comment\">// frequency = total extractions by pattern p</span>\n<span class=\"cf-fn\">coherence</span>(p) = <span class=\"cf-fn\">avg</span>(\n  <span class=\"cf-fn\">pairwise_distance</span>(attr_vectors)\n)  <span class=\"cf-comment\">// lower distance = more coherent = better</span>\n<span class=\"cf-kw\">if</span> pattern_score > <span class=\"cf-val\">threshold</span>: <span class=\"cf-kw\">apply</span> pattern corpus-wide",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US9672251\">US9672251</a> (Fact extraction via dependency patterns)",
+      "affects": "Affects: which facts enter the Knowledge Graph. High-coherence patterns produce reliable facts; low-coherence patterns are discarded."
+    },
+    {
+      "name": "Central Entity Score (PMI Graph)",
+      "source": "Patent US9009192 (Bar-Yossef, Matias et al.)",
+      "how": "Identifies which entities on a page are topically central versus peripheral. Builds a global entity co-occurrence graph weighted by PMI, then filters to the page's entities. Entities with no connections to other page entities are removed. Survivors are scored by edge weight sum + query frequency + document frequency.",
+      "formula": "<span class=\"cf-fn\">PMI</span>(A,B) = <span class=\"cf-fn\">log</span>(\n  P(A,B) / (P(A) &times; P(B))\n)  <span class=\"cf-comment\">// high PMI = entities strongly co-occur</span>\n<span class=\"cf-fn\">central_score</span>(entity, doc) = \n  <span class=\"cf-fn\">sum</span>(edge_weights_in_filtered_graph) +\n  &alpha; &times; <span class=\"cf-val\">query_frequency</span> +\n  &beta; &times; <span class=\"cf-val\">doc_frequency</span> +\n  &gamma; &times; <span class=\"cf-val\">corpus_frequency</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US9009192\">US9009192</a> (Central entity identification)",
+      "affects": "Affects: what Google thinks your page is 'about'. Peripheral entities are filtered out. Central entities determine topicality and Knowledge Graph association."
+    },
+    {
+      "name": "Fact Corroboration Count",
+      "source": "Patent US8954412 (Zhao, Czuba)",
+      "how": "Counts independent document support for each hypothetical fact. A candidate fact (subject + attribute value) is corroborated if N or more documents contain both the subject entity and the candidate value in meaningful proximity. Containment filter ensures partial facts don't shadow complete answers.",
+      "formula": "<span class=\"cf-fn\">support</span>(fact) = <span class=\"cf-fn\">count</span>(\n  docs <span class=\"cf-kw\">where</span> subject AND value\n  appear in contextual proximity\n)\n<span class=\"cf-kw\">if</span> support > <span class=\"cf-val\">threshold</span>: fact = <span class=\"cf-val\">corroborated</span>\n<span class=\"cf-kw\">if</span> fact &sub; longer_fact AND\n  support(longer_fact) &ge; support(fact):\n  <span class=\"cf-kw\">suppress</span> shorter fact",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US8954412\">US8954412</a> (Corroborating facts in electronic documents)",
+      "affects": "Affects: which facts are presented as answers. Original data sources that independently confirm facts contribute to corroboration count."
+    },
+    {
+      "name": "Entity Synonym Score",
+      "source": "Patent US8738643 (Czuba)",
+      "how": "Discovers alternative names for entities by analyzing anchor text of inbound links to the entity's source documents. Each anchor text variant is scored by frequency and proportion relative to all anchors. Variants above threshold become synonyms; below-threshold candidates are blacklisted.",
+      "formula": "<span class=\"cf-fn\">synonym_score</span>(name, entity) = \n  &alpha; &times; <span class=\"cf-fn\">frequency</span>(name_in_anchors) +\n  &beta; &times; <span class=\"cf-fn\">proportion</span>(name / total_anchors)\n<span class=\"cf-kw\">if</span> score > <span class=\"cf-val\">min_threshold</span>: add as synonym\n<span class=\"cf-kw\">else</span>: add to blacklist",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US8738643\">US8738643</a> (Learning synonymous object names from anchor texts)",
+      "affects": "Affects: entity resolution. Whether Google recognizes 'IBM', 'Big Blue', and 'International Business Machines' as the same entity depends on anchor text patterns across the web."
+    }
+  ],
+  "pipeline": {
+    "title": "Knowledge Graph Construction Pipeline",
+    "stages": [
+      {
+        "name": "Seed Facts",
+        "detail": "Start with known (subject, attribute, object) triples from hand-crafted rules or existing KG"
+      },
+      {
+        "name": "Pattern Extraction",
+        "detail": "Generate dependency-parse patterns from seed facts + template patterns from structured sources"
+      },
+      {
+        "name": "Corpus-Scale Application",
+        "detail": "Apply patterns across document corpus to extract candidate facts"
+      },
+      {
+        "name": "Corroboration",
+        "detail": "Count independent document support for each candidate fact. Filter by containment"
+      },
+      {
+        "name": "Entity Resolution",
+        "detail": "Discover synonyms via anchor text. Merge entity variants. Build central entity graph"
+      },
+      {
+        "name": "Knowledge Panel Generation",
+        "detail": "Contextualize panels by query terms. Rank relationship knowledge elements above static facts"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2005",
+      "type": "patent",
+      "title": "Brin files pattern bootstrapping (US6678681)",
+      "desc": "Sergey Brin's DIPRE (Dual Iterative Pattern Relation Extraction) patent: extract entity tuples from web text by bootstrapping patterns from seed examples. Foundation for all later extraction work."
+    },
+    {
+      "year": "2008",
+      "type": "patent",
+      "title": "Zhao files fact learning from documents (US8812435)",
+      "desc": "Template-based extraction using title and contextual patterns from structured sources like Wikipedia infoboxes."
+    },
+    {
+      "year": "2009",
+      "type": "patent",
+      "title": "Zhao/Czuba file fact corroboration (US8954412)",
+      "desc": "Hypothesis testing across the corpus: generate candidate facts, count independent document support, filter by containment."
+    },
+    {
+      "year": "2011",
+      "type": "patent",
+      "title": "Bar-Yossef/Matias file central entity identification (US9009192)",
+      "desc": "PMI-weighted co-occurrence graph for determining which entities on a page are topically central versus peripheral."
+    },
+    {
+      "year": "2012",
+      "type": "system",
+      "title": "Knowledge Graph launched publicly",
+      "desc": "Google announces the Knowledge Graph with 500 million entities and 3.5 billion facts. Built using the extraction, corroboration, and synonym systems patented 2005-2011."
+    },
+    {
+      "year": "2013",
+      "type": "patent",
+      "title": "Czuba files entity synonym discovery (US8738643)",
+      "desc": "Anchor text analysis across inbound links to discover alternative entity names. Enables query-entity matching regardless of name variant."
+    },
+    {
+      "year": "2013",
+      "type": "patent",
+      "title": "Whang/Halevy file dependency-pattern extraction (US9672251)",
+      "desc": "Bootstrapping loop: seed facts generate dependency-parse patterns, patterns extract new facts, scored by frequency and coherence."
+    },
+    {
+      "year": "2016",
+      "type": "patent",
+      "title": "Knowledge panel contextualization (US11720577)",
+      "desc": "Context-sensitive knowledge panels that reshape content based on query terms. 'Taylor Swift albums' shows album-focused panel, not generic Taylor Swift bio."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "API leak confirms KG integration depth",
+      "desc": "The Google Content Warehouse API leak reveals entityId, topicEmbedding, kgEntityId, and knowledgeResultType fields, confirming deep Knowledge Graph integration with ranking signals."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google (various)",
+      "publicClaim": "Google uses structured data and schema markup to understand entities on your page.",
+      "internalSource": "Patents US9672251, US8812435, US9009192",
+      "internalClaim": "Schema markup is one signal, but the primary entity understanding comes from dependency-parse extraction, template matching, co-occurrence graphs, and anchor text analysis. The system was designed to work on unstructured text at corpus scale, not just pages with markup."
+    },
+    {
+      "publicSource": "Google Search Central",
+      "publicClaim": "Knowledge Panels are automatically generated from various sources across the web.",
+      "internalSource": "Patent US11720577",
+      "internalClaim": "Knowledge Panels are not just aggregated facts. The system actively reshapes panel content based on query context, relationship traversal, and personalization signals. The 'same' entity shows different panels depending on query terms."
+    }
+  ]
+}

@@ -1,0 +1,265 @@
+{
+  "id": "pipeline",
+  "route": "/pipeline",
+  "systems": [
+    "RankingArchitecture",
+    "Twiddlers",
+    "Mustang",
+    "RankEmbed",
+    "TopicalitySignal"
+  ],
+  "hero": {
+    "title": "Google's Ranking Pipeline: From Crawl to SERP",
+    "subtitle": "The DOJ trial revealed Google's complete ranking architecture: a modular pipeline from crawling through indexing, retrieval, scoring, and multiple re-ranking stages. 100+ raw signals are combined via linear weighted formulas into three top-level scores (Q*, P*, T*), then refined by Twiddlers and ML systems."
+  },
+  "keyInsight": {
+    "label": "Key Insight from DOJ Trial",
+    "text": "Only <strong>RankBrain and DeepRank use LLM/ML technologies</strong>. All other ranking signals are <strong>hand-crafted</strong> (HJ Kim deposition). 100+ raw signals are combined via <strong>linear weighted formulas</strong> into top-level scores. <strong>Sigmoid functions and threshold engineering</strong> handle signal blending. 16,000 human raters score IS (0-100) which trains RankBrain, SpamBrain, HelpfulContent, and MUM."
+  },
+  "pillars": [
+    {
+      "type": "patent",
+      "title": "2 Patents",
+      "items": [
+        "0-1 scale, query-independent",
+        "Hand-crafted, not ML",
+        "Feeds: NSR, siteAuthority, OriginalContentScore, EffortScore",
+        "Below 0.4: ineligible for rich results",
+        "Represents domain trustworthiness",
+        "<a href=\"https://patents.google.com/patent/US9734211\">US9734211</a>: Personalizing search results; <a href=\"https://patents.google.com/patent/US7783639\">US7783639</a>: Determining quality of linked documents"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "User Interaction Signals",
+      "items": [
+        "Combines NavBoost click data with anchor metrics",
+        "goodClicks, badClicks, lastLongestClicks",
+        "Chrome data: visits, scrolls, form submissions",
+        "directFrac: brand/type-in traffic fraction",
+        "13 months of click data retention"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "Query-Document Relevance",
+      "items": [
+        "Three sub-signals: <strong>A</strong>nchors, <strong>B</strong>ody, <strong>C</strong>licks",
+        "<strong>A</strong>: \"What the web says about a document\" (anchor text)",
+        "<strong>B</strong>: \"What the document says about itself\" (on-page content)",
+        "<strong>C</strong>: Click-based topicality from user behavior",
+        "QBST memorizes words on relevant pages",
+        "<strong>100+ raw signals with aggregate top-level scores</strong> (PXR0357, Nayak Jan 2025): Google uses over 100 raw signals. Top-level signals are aggregates of other raw signals. Combines into a single score determining document rank ('Final IR')",
+        "<strong>Debugging interface reveals pipeline</strong> (PXR0357): Internal debugging interface shows query expansion/decomposition and table of blue links with scores per top-level signal. Engineers can inspect how each signal contributes to final ranking",
+        "<strong>Google avoids predicting clicks</strong> (PXR0357): Google avoids simply 'predicting clicks' because clicks are easily manipulated and a poor proxy for user experience. Deliberate design choice to not optimize ranking directly for click prediction"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "Ranking Impact and Secrecy",
+      "items": [
+        "<strong>Ranking is an 'extreme outlier' in business impact</strong> (UPX0219, Eric Lehman May 2020): 'Ranking is an extreme outlier in business impact.' Ranking changes directly affect Google's core revenue",
+        "<strong>Search features depend on web results</strong> (UPX0219): 'Many search features use web results to understand what a query is about and trigger accordingly.' Web ranking is the foundation for other Google products",
+        "<strong>Search technology spreads across Google</strong> (UPX0219): 'Technologies developed in search spread out across the company to Ads, YouTube, Play.' Search ranking R&D is Google's core competitive advantage",
+        "<strong>Manipulation attempts are well-funded</strong> (UPX0204, Eric Lehman Nov 2018): 'Attempts to manipulate search results are continuous, sophisticated, and well-funded.' Internal acknowledgment of the SEO arms race",
+        "<strong>Click secrecy policy</strong> (UPX0204): 'Do not discuss the use of clicks in search, except on a need-to-know basis. Google has a public position.' Deliberate policy to hide click signal usage from public",
+        "<strong>Political bias secrecy</strong> (UPX0204): 'Do not discuss political bias in search in writing.' Internal policy to avoid written documentation of political bias considerations"
+      ]
+    }
+  ],
+  "pillarsExtraHeading": "Twiddler Stages",
+  "pillarsExtra": [
+    {
+      "type": "leak",
+      "title": "Process Hundreds of URLs",
+      "items": [
+        "Run before main scoring on larger candidate set",
+        "<strong>PredocTwiddlers</strong> - Apply broad filters and boosters",
+        "<strong>DMCAFilter</strong> - Remove copyright-infringing content",
+        "<strong>BadURLsCategorizer</strong> - Filter problematic URLs",
+        "<strong>BlogCategorizer</strong> - Identify and classify blog content"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "Refine Top 20-30 Results",
+      "items": [
+        "Run on final candidate set only (expensive operations)",
+        "<strong>FreshnessTwiddler</strong> - Boost fresh content for time-sensitive queries",
+        "<strong>QualityBoost</strong> - Boost high-quality results",
+        "<strong>OfficialPageTwiddler</strong> - Boost official/brand pages",
+        "<strong>YouTubeDensityTwiddler</strong> - Control YouTube result proportion"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "Neural Refinement",
+      "items": [
+        "<strong>RankEmbed</strong> - Dual encoder with dot product similarity (not cosine)",
+        "Trained on exactly 70 days of search logs + human rater scores",
+        "<strong>DeepRank</strong> - Decomposable BERT/Transformer analysis",
+        "<strong>RankBrain</strong> - Query understanding for novel queries",
+        "<strong>16,000 raters</strong> score IS (0-100) to train these systems"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How the Ranking Pipeline Affects Your SEO",
+      "items": [
+        "<strong>Optimize for each pipeline stage sequentially</strong>: Your page must survive Mustang retrieval (T* topicality), Ascorer scoring (Q* + P* + T*), PredocTwiddlers (dedup, diversity), LazyTwiddlers (quality boost, freshness), NavBoost (click re-ranking), and ML refinement (RankEmbed, DeepRank). A page with perfect content but no click engagement fails at NavBoost. A page with great clicks but poor topicality fails at Mustang. Diagnose which stage is filtering you out.",
+        "<strong>Balance across Q*, P*, and T* rather than over-optimizing one</strong>: The linear weighted formula combines 100+ signals into three top-level scores. No single signal dominates (HJ Kim deposition). A page with excellent T* (topicality) but zero P* (popularity/engagement) will lose to a page with moderate scores across all three. Distribute optimization effort: content relevance (T*), site quality and trust (Q*), and user engagement signals (P*).",
+        "<strong>Target OfficialPageTwiddler for brand queries</strong>: LazyTwiddlers include OfficialPageTwiddler, which boosts official brand pages in the top 20-30 results. For your own brand terms, ensure your homepage and key landing pages are clearly identifiable as the official source. Use Organization schema, consistent branding, verified social profiles, and a Knowledge Panel to signal official status.",
+        "<strong>Align with FreshnessTwiddler for time-sensitive content</strong>: FreshnessTwiddler boosts recent content for queries with time-sensitive intent. If your content has a freshness component (news, trends, seasonal topics, annual guides), update it with genuine new information before the relevant period. Simply changing the publication date without substantive updates does not trigger freshness signals since the pipeline distinguishes significantUpdate from cosmetic changes.",
+        "<strong>Understand that most ranking is hand-crafted, not AI</strong>: Only RankBrain and DeepRank use ML/LLM technologies (HJ Kim deposition). Everything else is hand-crafted signals combined via linear weighted formulas with sigmoid functions. This means ranking is more predictable and mechanistic than Google implies. Signals have specific thresholds and weights tuned by engineers. Below Q* 0.4, you are ineligible for rich results. These are concrete thresholds you can measure against.",
+        "<strong>Earn IS (Information Satisfaction) scores from rater patterns</strong>: 16,000 human raters score IS on a 0-100 scale, which trains RankBrain, SpamBrain, HelpfulContent, and MUM. These raters follow public Quality Rater Guidelines. Study the guidelines to understand what a high IS score looks like: expertise signals, comprehensive answers, good page experience, and trustworthy sourcing. Your content should satisfy a trained rater's checklist."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Mustang",
+      "source": "DOJ: Initial retrieval and first-pass scoring",
+      "how": "First-pass scoring system operating at massive scale. Reduces 400B indexed documents to tens of thousands of candidates using lightweight signals (T* topicality, basic quality filters). Mehta opinion (FOF 31, Nayak): 'the GSE must include a retrieval system that narrows the volume of responsive links to tens of thousands, as opposed to millions.' Then 'must decide which results are worth scoring at a more granular level, and then score those hundreds of sites to determine which top 10 or so should be surfaced to the user.' Google classifies queries into more than two dozen 'level-one' classifications (FOF 34).",
+      "formula": "<span class=\"cf-fn\">Mustang</span>(query) = <span class=\"cf-fn\">retrieve</span>(\n  <span class=\"cf-val\">Alexandria</span>[400B docs], <span class=\"cf-val\">T*</span>, <span class=\"cf-val\">quality_filters</span>\n) &rarr; <span class=\"cf-val\">tens of thousands</span>  <span class=\"cf-comment\">// Nayak: narrows millions to tens of thousands</span>\n&rarr; <span class=\"cf-fn\">score</span>(<span class=\"cf-val\">hundreds</span>) &rarr; <span class=\"cf-val\">top 10</span>  <span class=\"cf-comment\">// then scores hundreds for final 10</span>\n<span class=\"cf-comment\">// 2 dozen+ level-one query classifications (FOF 34)</span>",
+      "affects": "Affected by: basic relevance signals. Title-query match, body content relevance, basic topicality. Must pass this filter to be considered at all. Query classification determines which signals and features apply."
+    },
+    {
+      "name": "Twiddlers",
+      "source": "DOJ: Late-stage re-ranking filters",
+      "how": "Series of re-ranking functions applied post-Mustang. PredocTwiddlers (hundreds of URLs, fast heuristics for dedup/diversity). LazyTwiddlers (top 20-30 results, full metadata, fine-grained adjustments). Each twiddler is a separate mini-algorithm.",
+      "formula": "<span class=\"cf-fn\">PredocTwiddlers</span>(candidates) &rarr; <span class=\"cf-fn\">filter</span>(\n  <span class=\"cf-val\">dedup</span>, <span class=\"cf-val\">diversity</span>, <span class=\"cf-val\">DMCA</span>\n)  <span class=\"cf-comment\">// hundreds of URLs, fast heuristics</span>\n<span class=\"cf-fn\">LazyTwiddlers</span>(top_results) &rarr; <span class=\"cf-fn\">refine</span>(\n  <span class=\"cf-val\">full_metadata</span>\n)  <span class=\"cf-comment\">// top 20-30 only, expensive ops</span>",
+      "affects": "Affected by: different for each twiddler. OfficialPageTwiddler boosts brand pages. FreshnessTwiddler promotes recent content. YouTubeDensityTwiddler manages video density."
+    },
+    {
+      "name": "SuperRoot",
+      "source": "DOJ: Query coordination system",
+      "how": "Orchestration layer managing search pipeline flow. Routes queries through QUS > Mustang > Ascorer > Twiddlers > Tangram. Not a ranking signal itself but controls which signals are applied when.",
+      "formula": "<span class=\"cf-fn\">SuperRoot</span>(query) &rarr; <span class=\"cf-fn\">route</span>(\n  QUS &rarr; Mustang &rarr; Ascorer &rarr; Twiddlers &rarr; Tangram\n)  <span class=\"cf-comment\">// orchestration, not a ranking signal</span>\n<span class=\"cf-comment\">// controls which signals apply at each stage</span>",
+      "affects": "Affected by: not directly actionable. Understanding the pipeline helps optimize for the right stage."
+    },
+    {
+      "name": "LocalInterConnectivity",
+      "source": "Patent US6725259 (Google, filed 2003)",
+      "how": "Re-ranks initial search results based on inter-connectivity within the result set. Documents frequently cited by other high-scoring documents in the result set receive boosted rankings. Removes documents from same/affiliated hosts to prevent manipulation, then calculates LocalScore from the OldScores of linking documents. Final score combines original ranking with local connectivity support. The top k backlinking documents contribute, with a sensitivity parameter m controlling how strongly high-authority cross-references dominate.",
+      "formula": "<span class=\"cf-fn\">LocalScore</span>(x) = <span class=\"cf-fn\">sum</span>(\n  <span class=\"cf-fn\">OldScore</span>(<span class=\"cf-val\">BackSet</span>(i))<sup>m</sup>\n  <span class=\"cf-kw\">for</span> i <span class=\"cf-kw\">in</span> <span class=\"cf-val\">top_k</span>\n)  <span class=\"cf-comment\">// k = top backlinking docs in result set</span>\n<span class=\"cf-comment\">// m = sensitivity parameter (1-3)</span>\n<span class=\"cf-comment\">// same-host links excluded (anti-manipulation)</span>\n\n<span class=\"cf-fn\">NewScore</span>(x) = (<span class=\"cf-val\">a</span> + <span class=\"cf-fn\">LocalScore</span> / <span class=\"cf-val\">MaxLS</span>) &times;\n  (<span class=\"cf-val\">b</span> + <span class=\"cf-fn\">OldScore</span> / <span class=\"cf-val\">MaxOS</span>)\n<span class=\"cf-comment\">// combines original score with local connectivity</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US6725259\">US6725259</a> (Ranking search results by reranking based on local inter-connectivity, 2003)",
+      "affects": "Affected by: how many other top-ranking pages cite your page, the authority of those citing pages, host diversity of backlinks within the result set. Pages that are 'hubs' cited by multiple result-set documents benefit."
+    },
+    {
+      "name": "LinearWeightedFormula",
+      "source": "DOJ: 100+ signals combined via linear weights",
+      "how": "100+ raw signals combined into top-level scores using linear weighted formulas. Nayak (PXR0357, Jan 2025): 'Top-level signals are a linear combination of log of individual raw signals.' Signals are log-transformed before linear combination, and 'formulated such that their impact on ranking is monotonic relative to the signal.' HJ Kim (PXR0356, Feb 2025): engineers 'take a sigmoid or other function and figure out the threshold.' For most signals, Google takes relevant data and performs a regression. In the extreme, hand-crafting means manually picking the midpoint. Google's baseline was Okapi BM25.",
+      "formula": "<span class=\"cf-fn\">Score</span>(doc) = <span class=\"cf-fn\">sum</span>(\n  w<sub>i</sub> * <span class=\"cf-fn\">sigmoid</span>(<span class=\"cf-fn\">log</span>(<span class=\"cf-val\">raw_signal_i</span>))\n  <span class=\"cf-kw\">for</span> i <span class=\"cf-kw\">in</span> <span class=\"cf-val\">100+ signals</span>\n)  <span class=\"cf-comment\">// log-transform then sigmoid (Nayak PXR0357)</span>\n<span class=\"cf-comment\">// monotonicity constraint on all signals</span>\n<span class=\"cf-comment\">// weights tuned by engineers, NOT learned</span>\n<span class=\"cf-comment\">// baseline: Okapi BM25 style ranking</span>",
+      "affects": "Affected by: performing well across multiple signals. No single signal dominates. Balanced optimization across quality, relevance, and engagement."
+    }
+  ],
+  "pipeline": {
+    "title": "Complete Ranking Pipeline",
+    "stages": [
+      {
+        "name": "GoogleBot",
+        "detail": "Crawls web, discovers URLs"
+      },
+      {
+        "name": "Multiverse",
+        "detail": "Multiple document feeds"
+      },
+      {
+        "name": "Alexandria",
+        "detail": "Indexing system, 400B docs"
+      },
+      {
+        "name": "Mustang",
+        "detail": "Retrieval: millions → tens of thousands (Nayak, Mehta FOF 31)"
+      },
+      {
+        "name": "Ascorer",
+        "detail": "Scores hundreds of candidates: Q* + P* + T* → top 10 (Mehta FOF 31)"
+      },
+      {
+        "name": "Predoc Twiddlers",
+        "detail": "Process hundreds of URLs"
+      },
+      {
+        "name": "Lazy Twiddlers",
+        "detail": "Refine top 20-30 results"
+      },
+      {
+        "name": "NavBoost",
+        "detail": "Early-stage click filter: culls tens of thousands to hundreds (not a final twiddler). Cannot rank docs without click history"
+      },
+      {
+        "name": "ML Refinement",
+        "detail": "RankEmbed, DeepRank, RankBrain"
+      },
+      {
+        "name": "SERP Delivery",
+        "detail": "SRP served in 4 chunks: header, body, footer, late footer (UPX2022). Logged-in users +350ms latency. Mobile +50ms server-side"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "Mehta Opinion: Pipeline Architecture Confirmed (Aug 2024)",
+      "desc": "Judge Mehta's opinion confirmed the full pipeline: retrieval narrows responsive links from millions to 'tens of thousands' (Nayak, FOF 31), then 'score those hundreds of sites to determine which top 10 or so should be surfaced.' Google uses 2 dozen+ 'level-one' query classifications (FOF 34). 78% of users search within only one vertical in short sessions (FOF 34). Only RankBrain and DeepRank use ML; all other signals are hand-crafted. LLMs are 'additional signals that get balanced' against others (Nayak, FOF 102)."
+    },
+    {
+      "year": "2017",
+      "type": "doj",
+      "title": "Google vs Bing: Serving Architecture (UPX2022, DX0099)",
+      "desc": "Internal analysis: SRP delivered in exactly 4 chunks (header, body, footer, late footer). Bing ~300ms faster server-side. Logged-in queries cost ~350ms extra (Bing: ~100ms). Mobile adds ~50ms server-side. Google SRP payload double Bing's size (~207kb vs ~112kb). Click tracking uses ~50-100 compressed bytes/URL via onmousedown rwt() rewrite. Project Folly launched to close gap. v2-xs model (2024): latency cut from 1628ms to 1370ms while doubling model size (PXR0037)."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "Rankable Gemini Suggestions (PXR0109)",
+      "desc": "Gemini in Search exec review: 'Provide rankable Gemini suggestions depending on query.' Implies Gemini outputs enter the ranking pipeline as candidates alongside organic results, not bypassing it."
+    },
+    {
+      "year": "2018",
+      "type": "doj",
+      "title": "Ranking for Research: Secrecy and Scope (UPX0204)",
+      "desc": "Eric Lehman's internal document: 'Attempts to manipulate search results are continuous, sophisticated, and well-funded.' Policies: 'Do not discuss the use of clicks in search, except on a need-to-know basis' and 'Do not discuss political bias in search in writing.' Lists 18 search quality aspects."
+    },
+    {
+      "year": "2020",
+      "type": "doj",
+      "title": "Ranking as Extreme Business Outlier (UPX0219)",
+      "desc": "Eric Lehman (May 2020): 'Ranking is an extreme outlier in business impact.' 'Many search features use web results to understand what a query is about and trigger accordingly.' 'Technologies developed in search spread out across the company to Ads, YouTube, Play.' Ranking is Google's core competitive engine."
+    },
+    {
+      "year": "2025",
+      "type": "doj",
+      "title": "Pipeline Debugging Interface Revealed (PXR0357)",
+      "desc": "Nayak interview (Jan 2025): Described internal debugging interface showing query expansion/decomposition and table of blue links with per-signal scores. Over 100 raw signals aggregate into top-level scores. Google deliberately avoids 'predicting clicks' because clicks are easily manipulated and a poor proxy for user experience."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"Our ranking is powered by advanced AI and machine learning.\"",
+      "internalSource": "HJ Kim Deposition",
+      "internalClaim": "Only RankBrain and DeepRank use ML/LLM. The vast majority of signals are hand-crafted. 100+ raw signals combined via linear weighted formulas."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"We use over 200 ranking factors.\"",
+      "internalSource": "DOJ Trial Evidence (Nayak testimony)",
+      "internalClaim": "Nayak testified there are 'maybe over a hundred' signals, down from historical 200+. Three top-level scores (Q*, P*, T*) dominate. T* has only 3 sub-signals (A, B, C). Most claimed \"factors\" are sub-components of these three scores. Even Google's own VP contradicts the 200+ marketing claim."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"We don't use clicks to rank search results.\"",
+      "internalSource": "DOJ Trial Exhibit UPX0204 (Eric Lehman, Nov 2018)",
+      "internalClaim": "'Do not discuss the use of clicks in search, except on a need-to-know basis. Google has a public position.' Internal secrecy policy explicitly designed to maintain the public denial of click usage in ranking."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"Our search results are not politically biased. Algorithms don't have political leanings.\"",
+      "internalSource": "DOJ Trial Exhibit UPX0204 (Eric Lehman, Nov 2018)",
+      "internalClaim": "'Do not discuss political bias in search in writing.' The policy to avoid written discussion of political bias suggests awareness of bias considerations that contradict the public position of neutrality."
+    }
+  ]
+}

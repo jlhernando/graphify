@@ -1,0 +1,153 @@
+{
+  "id": "rendering",
+  "route": "/rendering",
+  "systems": [
+    "Rendering",
+    "Trawler",
+    "TeraGoogle",
+    "SegIndexer"
+  ],
+  "hero": {
+    "title": "Rendering: Google's Headless WebKit Pipeline",
+    "subtitle": "Google renders JavaScript-heavy pages using a headless WebKit engine (HtmlrenderWebkitHeadless) before indexing. This is the only signal in Rankpedia with 100% corroboration: confirmed independently by both the 2024 API leak and DOJ trial documentation. With 41 associated patents spanning two decades, the rendering system determines whether your JavaScript-rendered content, SPAs, and dynamic elements are visible to Google. Pages that fail rendering are indexed with only their raw HTML, missing critical content, structured data, and internal links that depend on JavaScript execution."
+  },
+  "keyInsight": {
+    "label": "Key Insight from API Leak + DOJ Trial",
+    "text": "The rendering signal <strong>HtmlrenderWebkitHeadless</strong> has <strong>perfect 100/100 corroboration</strong>, the highest in Rankpedia. The API leak exposed it in the <strong>HtmlrenderWebkit</strong> module, while DOJ trial documentation confirmed it under the <strong>Indexing</strong> system. This dual confirmation means Google's headless rendering is not just real but central to their indexing pipeline. The system determines what content Google actually sees on JavaScript-dependent pages. With 41 patents covering rendering optimization, resource scheduling, and content extraction, Google has invested heavily in solving the 'JavaScript rendering problem' at web scale."
+  },
+  "pillars": [
+    {
+      "type": "patent",
+      "title": "6 Patents",
+      "items": [
+        "Patent <a href=\"https://patents.google.com/patent/US9418171\">US9418171</a>: <strong>Rendering web pages</strong> - Methods for efficiently rendering web pages in a headless browser environment for search indexing",
+        "Patent <a href=\"https://patents.google.com/patent/US7987293\">US7987293</a>: <strong>Browser-based content processing</strong> - Techniques for executing JavaScript and extracting rendered DOM content at scale",
+        "Patent <a href=\"https://patents.google.com/patent/US7346606\">US7346606</a>: <strong>Resource scheduling for rendering</strong> - Prioritizing which pages to render based on crawl importance and content change signals",
+        "Patent <a href=\"https://patents.google.com/patent/US6988135\">US6988135</a>: <strong>Content extraction from rendered pages</strong> - Extracting meaningful content from JavaScript-rendered DOM trees",
+        "41 patents total spanning from early 2000s to 2020s. The volume reflects the engineering complexity of rendering the entire web's JavaScript",
+        "<a href=\"https://patents.google.com/patent/US7136875\">US7136875</a>: Serving advertisements based on content; <a href=\"https://patents.google.com/patent/US20110145730\">US20110145730</a>: Utilization of Browser Space"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "API Leak: Rendering System",
+      "items": [
+        "<strong>HtmlrenderWebkitHeadless</strong> (HtmlrenderWebkit module): The core rendering signal. Headless WebKit engine executes JavaScript on crawled pages",
+        "Tier 1 trust level, core signal status, 100/100 corroboration score",
+        "Module name 'HtmlrenderWebkit' confirms Google uses a WebKit-based engine (same family as Safari), not Chromium/Blink for rendering",
+        "The signal is categorized under <strong>technical-crawl</strong>, placing it in the crawling/indexing pipeline rather than ranking",
+        "Rendering is a prerequisite step: if content isn't rendered, it can't be indexed or ranked"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "DOJ Trial: Indexing Confirmation",
+      "items": [
+        "<strong>HtmlrenderWebkitHeadless</strong> confirmed under <strong>Indexing</strong> system in DOJ documentation",
+        "Cross-referenced with API leak evidence, achieving 100% corroboration",
+        "DOJ evidence places rendering within the broader indexing pipeline: Crawl (Trawler) -> Render (HtmlrenderWebkit) -> Index (SegIndexer/Alexandria)",
+        "Trial documents confirm rendering is a distinct, resource-intensive step separate from crawling",
+        "Rendering capacity is finite: Google must decide which pages are worth the computational cost of full JavaScript execution"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Rendering Affects SEO",
+      "items": [
+        "<strong>Server-side rendering (SSR) eliminates risk</strong>: Pre-rendered HTML ensures Google sees all content without depending on JavaScript execution",
+        "<strong>Rendering budget exists</strong>: Google has finite rendering capacity. High-authority pages get rendered more frequently and thoroughly",
+        "<strong>Critical content in JS = risky</strong>: If your primary content, internal links, or structured data require JavaScript, rendering failures mean invisible content",
+        "<strong>Hydration timing matters</strong>: Content that loads after initial render may be missed. Ensure critical content is in the initial DOM or early hydration",
+        "<strong>WebKit vs Chromium differences</strong>: Google's renderer uses WebKit, not Chromium. Some Chromium-specific JavaScript APIs may not work identically",
+        "<strong>Resource loading affects rendering</strong>: Blocked CSS/JS resources can prevent proper rendering. Ensure robots.txt doesn't block critical assets",
+        "<strong>SPA navigation issues</strong>: Single-page applications using client-side routing must handle server-side rendering or pre-rendering for Google's crawler",
+        "<strong>Rendering delay = indexing delay</strong>: JavaScript-dependent pages may take longer to appear in search results due to the two-phase indexing process (crawl, then render)"
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Two-Phase Indexing Pipeline",
+      "source": "DOJ+Leak",
+      "how": "Google indexes pages in two phases. Phase 1: raw HTML is crawled and parsed for links and basic content. Phase 2: the page is queued for rendering, where JavaScript is executed in a headless WebKit browser to extract the fully-rendered DOM. Content only visible after JavaScript execution is only indexed after Phase 2 completes.",
+      "formula": "<span class=\"cf-fn\">Phase1</span>(url) = <span class=\"cf-fn\">parse</span>(\n  <span class=\"cf-val\">raw_html</span>(url)\n)\n<span class=\"cf-comment\">// Immediate: links, meta tags, static content</span>\n\n<span class=\"cf-fn\">Phase2</span>(url) = <span class=\"cf-fn\">render</span>(\n  <span class=\"cf-val\">url</span>,\n  <span class=\"cf-val\">WebKit_headless</span>\n)\n<span class=\"cf-comment\">// Delayed: JS-rendered content, dynamic elements</span>\n<span class=\"cf-comment\">// Requires rendering budget allocation</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US9418171\">US9418171</a>, <a href=\"https://patents.google.com/patent/US7987293\">US7987293</a>",
+      "affects": "Affected by: page authority (rendering priority), JavaScript complexity, resource availability, crawl budget"
+    },
+    {
+      "name": "Rendering Priority Allocation",
+      "source": "Leak+Patent",
+      "how": "Not all pages are rendered. Google allocates rendering resources based on page importance, content change frequency, and crawl priority. High-authority pages with frequent content changes get rendered more often. Low-authority pages with stable content may rarely get re-rendered.",
+      "formula": "<span class=\"cf-fn\">RenderPriority</span>(url) =\n  <span class=\"cf-fn\">f</span>(\n    <span class=\"cf-val\">page_authority</span>,\n    <span class=\"cf-val\">content_change_rate</span>,\n    <span class=\"cf-val\">crawl_priority</span>,\n    <span class=\"cf-val\">JS_complexity</span>\n  )\n<span class=\"cf-comment\">// Higher authority = more frequent rendering</span>\n<span class=\"cf-comment\">// Higher change rate = re-render priority</span>\n<span class=\"cf-comment\">// Complex JS = more rendering resources needed</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US7346606\">US7346606</a>",
+      "affects": "Affected by: PageRank, site authority, content freshness signals, JavaScript execution cost"
+    }
+  ],
+  "pipeline": {
+    "title": "Rendering Pipeline",
+    "stages": [
+      {
+        "name": "Crawl (Trawler)",
+        "detail": "Trawler fetches raw HTML. Static content and links extracted immediately. Page queued for rendering if JavaScript detected."
+      },
+      {
+        "name": "Render Queue",
+        "detail": "Pages prioritized for rendering based on authority, freshness, and content change signals. High-priority pages rendered first."
+      },
+      {
+        "name": "Headless WebKit Execution",
+        "detail": "HtmlrenderWebkitHeadless loads the page in a headless WebKit browser. JavaScript executed, resources loaded, DOM constructed."
+      },
+      {
+        "name": "Rendered DOM Extraction",
+        "detail": "Fully rendered DOM content extracted via Alexandria's content extraction pipeline: block segmentation, heuristic scoring, content clustering. Text, links, structured data, images, meta tags identified. Boilerplate separated. Compared against raw HTML for delta. See Content Extraction dive."
+      },
+      {
+        "name": "Content Indexing (SegIndexer)",
+        "detail": "Rendered content sent to SegIndexer/Alexandria for indexing. Content only visible via JS now searchable."
+      },
+      {
+        "name": "Re-render Scheduling",
+        "detail": "Pages scheduled for periodic re-rendering based on content change patterns. Dynamic pages re-rendered more frequently."
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2002",
+      "type": "patent",
+      "title": "Early Content Extraction",
+      "desc": "US6988135: Methods for extracting meaningful content from web pages, foundational work for rendering pipeline."
+    },
+    {
+      "year": "2009",
+      "type": "patent",
+      "title": "Browser-Based Processing",
+      "desc": "US7987293: Techniques for executing JavaScript in headless browsers at search engine scale."
+    },
+    {
+      "year": "2015",
+      "type": "patent",
+      "title": "Modern Rendering System",
+      "desc": "Google announces improved rendering capabilities. Most JavaScript frameworks now supported for indexing."
+    },
+    {
+      "year": "2019",
+      "type": "patent",
+      "title": "Evergreen Googlebot",
+      "desc": "Google upgrades from Chrome 41 to evergreen (latest Chrome). Rendering gap significantly reduced for modern web frameworks."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "WebKit Confirmed",
+      "desc": "API leak reveals HtmlrenderWebkitHeadless in HtmlrenderWebkit module. WebKit-based, not Chromium. Tier 1 core signal."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "DOJ Confirmation",
+      "desc": "DOJ trial documentation independently confirms HtmlrenderWebkitHeadless under Indexing system. 100% corroboration achieved."
+    }
+  ]
+}

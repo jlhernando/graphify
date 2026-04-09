@@ -1,0 +1,158 @@
+{
+  "id": "content-analysis",
+  "route": "/content-analysis",
+  "systems": [
+    "ContentAnalysis",
+    "YMYL"
+  ],
+  "hero": {
+    "title": "ContentAnalysis: Consensus and Quality Scoring",
+    "subtitle": "ContentAnalysis is Google's system for evaluating page content beyond traditional relevance matching. Its most significant confirmed signal is ConsensusScore, which measures how content aligns with, contradicts, or remains neutral to established web consensus on a topic. For debunking queries ('is X true?'), results are heavily consensus-aligned. For political and subjective topics, Google intentionally mixes perspectives. The system also encompasses OriginalContentScore, EffortScore, and content structure evaluation."
+  },
+  "keyInsight": {
+    "label": "Key Insight from DOJ Trial + API Leak",
+    "text": "The DOJ trial revealed Google's <strong>ConsensusScore</strong>: a per-page metric that counts passages agreeing with, contradicting, or neutral to web consensus. This means <strong>Google actively measures whether your content aligns with established knowledge</strong>. The <strong>DebunkingQueryClassifier</strong> detects queries like 'is the earth flat' and forces consensus-only results. For subjective topics, Google <strong>intentionally mixes consensus and non-consensus content</strong>. The API leak separately confirmed <strong>OriginalContentScore</strong> (0-127 scale), <strong>EffortScore</strong> (LLM-estimated), and <strong>gibberishScores</strong> as content quality gates."
+  },
+  "pillars": [
+    {
+      "type": "doj",
+      "title": "DOJ Trial: ConsensusScore",
+      "items": [
+        "<strong>ConsensusScore</strong>: Counts passages that agree with, contradict, or are neutral to web consensus per page",
+        "Generates a per-page consensus score affecting ranking eligibility per query",
+        "<strong>Debunking queries</strong>: 'Is earth flat?', 'Do vaccines cause autism?' trigger consensus-only results",
+        "<strong>Political/subjective topics</strong>: Google intentionally mixes consensus, neutral, and non-consensus content",
+        "<strong>DebunkingQueryClassifier</strong>: Query classifier detecting debunking intent. Part of broader medical/news/YMYL classification"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "API Leak: Content Quality Signals",
+      "items": [
+        "<strong>OriginalContentScore</strong> (0-127): Measures content originality. Higher scores for unique, non-derivative content",
+        "<strong>EffortScore</strong>: LLM-estimated content effort level. Distinguishes low-effort from high-effort content production",
+        "<strong>gibberishScores</strong>: Detects nonsensical, auto-generated, or spam content through language quality analysis",
+        "<strong>vlq</strong> (Very Low Quality): Boolean flag for content failing minimum quality threshold",
+        "<strong>clutterScore</strong>: Measures page clutter (ads, popups, distracting elements) relative to content",
+        "<strong>racterScores</strong>: Content naturalness assessment. Detects machine-generated or templated text patterns"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Content Quality Affects Rankings",
+      "items": [
+        "<strong>Consensus alignment matters for factual topics</strong>: Medical, scientific, and factual content must align with established consensus",
+        "<strong>Originality scored 0-127</strong>: Derivative content (rewritten articles, aggregation) scores lower. Original research scores higher",
+        "<strong>LLM detects content effort</strong>: EffortScore uses language models to estimate whether content was carefully produced",
+        "<strong>Gibberish detection filters AI slop</strong>: gibberishScores catch low-quality AI-generated content",
+        "<strong>Page experience impacts quality</strong>: clutterScore penalizes pages with excessive ads or poor layout",
+        "<strong>Topic sensitivity varies handling</strong>: Factual queries enforce consensus. Subjective queries allow diversity"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "Quality Signal Architecture",
+      "items": [
+        "ContentAnalysis feeds into <strong>NSR</strong> and <strong>Q*</strong> scoring pipelines",
+        "OriginalContentScore, EffortScore, and gibberishScores are <strong>pre-computed during indexing</strong> (Multiverse phase)",
+        "ConsensusScore is <strong>query-dependent</strong>: same page can score differently for different queries",
+        "YMYL topics receive <strong>amplified ConsensusScore weight</strong>: health misinformation penalized more heavily",
+        "Content signals combine with <strong>E-E-A-T</strong>: Experience, Expertise, Authoritativeness, Trustworthiness",
+        "<strong>Gibberish content identification</strong> - Patent <a href=\"https://patents.google.com/patent/US8554769\">US8554769</a> (Thakur, Karanjkar, Levin, Brants, filed 2009): Two-pronged gibberish detection. (1) Language model score: 5-gram LM evaluates probability of word sequences per paragraph, aggregates gibberish ratio (gibberish_terms / total_terms). (2) Query stuffing score: compares frequent terms against query index, Si = Li/index(Ti). Final score = min(LM_score, query_stuffing_score). Actions: remove, demote, or leave unchanged based on thresholds"
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "ConsensusScore",
+      "source": "DOJ",
+      "how": "Google analyzes individual passages in a page's content and classifies each as agreeing with, contradicting, or neutral to the established web consensus on the topic. The per-page ConsensusScore aggregates these passage-level classifications. For factual/scientific queries, high consensus alignment improves ranking. For debunking queries, only consensus-aligned results are shown. For subjective topics, a mix of perspectives is maintained.",
+      "formula": "<span class=\"cf-fn\">ConsensusScore</span>(page, topic) =\n  <span class=\"cf-fn\">count</span>(<span class=\"cf-val\">agree_passages</span>) -\n  <span class=\"cf-fn\">count</span>(<span class=\"cf-val\">contradict_passages</span>) +\n  <span class=\"cf-fn\">neutral_weight</span> * <span class=\"cf-fn\">count</span>(<span class=\"cf-val\">neutral</span>)\n<span class=\"cf-comment\">// Debunking queries: consensus-only results</span>\n<span class=\"cf-comment\">// Political queries: intentional perspective mixing</span>\n<span class=\"cf-comment\">// YMYL health: amplified consensus weight</span>",
+      "patents": "",
+      "affects": "Affected by: passage-level topic alignment, query classification (debunking vs. subjective), YMYL category"
+    },
+    {
+      "name": "Content Quality Composite",
+      "source": "Leak",
+      "how": "Multiple content quality signals are computed during indexing and combined into an overall content quality assessment. OriginalContentScore (0-127) measures uniqueness, EffortScore estimates production quality via LLM, gibberishScores detect nonsensical text, and vlq flags very low quality content. These combine to form the content component of the Q* quality score.",
+      "formula": "<span class=\"cf-fn\">ContentQuality</span>(page) =\n  <span class=\"cf-fn\">f</span>(\n    <span class=\"cf-val\">OriginalContentScore</span> / 127,\n    <span class=\"cf-val\">EffortScore</span>,\n    1 - <span class=\"cf-val\">gibberishScore</span>,\n    1 - <span class=\"cf-val\">clutterScore</span>,\n    !<span class=\"cf-val\">vlq</span>\n  ) &rarr; <span class=\"cf-fn\">Q*</span> input\n<span class=\"cf-comment\">// OriginalContentScore: 0-127 scale</span>\n<span class=\"cf-comment\">// vlq = true: content below minimum quality</span>\n<span class=\"cf-comment\">// Pre-computed during Multiverse indexing phase</span>",
+      "patents": "",
+      "affects": "Affected by: content originality, production effort, language quality, page layout, content-to-ads ratio"
+    },
+    {
+      "name": "Gibberish Detection Score",
+      "source": "Patent US8554769 (Thakur et al., 2009)",
+      "how": "Two-pronged gibberish detection system. Language model score: applies 5-gram language model to each text segment, calculates probability of word sequences. Segments with low probability flagged as gibberish. LM score aggregates gibberish paragraph ratio weighted by per-segment gibberish scores. Query stuffing score: identifies frequently occurring terms, checks if phrases containing them match queries in the search index. Si = Li/index(Ti) where Li = hits and index(Ti) = total queries. Final score = min(LM_score, query_stuffing_score). Threshold determines action: remove from index, demote ranking, or leave unchanged.",
+      "formula": "<span class=\"cf-fn\">LM_score</span> = <span class=\"cf-fn\">f</span>(\n  <span class=\"cf-val\">gibberish_terms</span> / <span class=\"cf-val\">total_terms</span>,\n  <span class=\"cf-fn\">sum</span>(<span class=\"cf-fn\">score</span>(<span class=\"cf-val\">gibberish_segments</span>))\n)\n<span class=\"cf-comment\">// 5-gram language model per paragraph</span>\n\n<span class=\"cf-fn\">QueryStuffing</span> = <span class=\"cf-fn\">f</span>(\n  (<span class=\"cf-val\">S1</span> + <span class=\"cf-val\">S2</span>) / 2,\n  <span class=\"cf-fn\">max</span>(<span class=\"cf-val\">S1</span>, <span class=\"cf-val\">S2</span>)\n)\n<span class=\"cf-comment\">// Si = Li / index(Ti) per frequent term</span>\n\n<span class=\"cf-fn\">GibberishScore</span> = <span class=\"cf-fn\">min</span>(\n  <span class=\"cf-val\">LM_score</span>, <span class=\"cf-val\">QueryStuffing</span>\n)\n<span class=\"cf-comment\">// min() ensures both signals must agree</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US8554769\">US8554769</a> (Identifying gibberish content, 2009)",
+      "affects": "Affected by: text naturalness (LM probability), keyword stuffing density, query index matching ratio. Foundation for gibberishScores signal in API leak."
+    }
+  ],
+  "pipeline": {
+    "title": "Content Analysis Pipeline",
+    "stages": [
+      {
+        "name": "Content Extraction",
+        "detail": "Alexandria extracts main content, separating it from boilerplate, navigation, ads. Uses DomDistiller-style pipeline: DOM traversal, heuristic scoring (link density, text density, semantic HTML), content clustering. See Content Extraction dive for full algorithm details."
+      },
+      {
+        "name": "Quality Scoring",
+        "detail": "OriginalContentScore, EffortScore, gibberishScores, clutterScore computed during indexing"
+      },
+      {
+        "name": "Passage Classification",
+        "detail": "Individual passages classified as agreeing with, contradicting, or neutral to topic consensus"
+      },
+      {
+        "name": "Query Classification",
+        "detail": "At query time, DebunkingQueryClassifier determines consensus enforcement level"
+      },
+      {
+        "name": "ConsensusScore Computation",
+        "detail": "Per-page ConsensusScore computed relative to the specific query's topic and intent"
+      },
+      {
+        "name": "Quality Integration",
+        "detail": "Content quality signals feed into NSR and Q*. YMYL topics receive amplified quality weighting"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2011",
+      "type": "patent",
+      "title": "Panda: First Content Quality",
+      "desc": "Panda update first systematically evaluates content quality at scale. Site-wide quality scoring begins."
+    },
+    {
+      "year": "2009",
+      "type": "patent",
+      "title": "Gibberish Detection Patent (US8554769)",
+      "desc": "Google patents two-pronged gibberish detection: 5-gram language model scoring + query stuffing detection. GibberishScore = min(LM_score, QueryStuffing_score). Foundation for gibberishScores API signal. Thresholds determine remove/demote/pass actions."
+    },
+    {
+      "year": "2018",
+      "type": "patent",
+      "title": "E-A-T Emphasis",
+      "desc": "Medic update raises content quality standards. E-A-T becomes critical for YMYL content evaluation."
+    },
+    {
+      "year": "2022",
+      "type": "patent",
+      "title": "Helpful Content System",
+      "desc": "HCU uses ML classifiers to detect content created primarily for search engines. Folded into core March 2024."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "Quality Signals Exposed",
+      "desc": "API leak reveals OriginalContentScore (0-127), EffortScore (LLM-estimated), gibberishScores, vlq flag."
+    },
+    {
+      "year": "2025",
+      "type": "doj",
+      "title": "ConsensusScore Revealed",
+      "desc": "DOJ trial reveals ConsensusScore: passage-level agreement with web consensus. DebunkingQueryClassifier forces consensus for factual queries."
+    }
+  ]
+}

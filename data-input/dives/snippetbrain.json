@@ -1,0 +1,177 @@
+{
+  "id": "snippetbrain",
+  "route": "/snippetbrain",
+  "systems": [
+    "SnippetBrain"
+  ],
+  "hero": {
+    "title": "SnippetBrain: ML-Powered Snippet Generation",
+    "subtitle": "SnippetBrain is Google's machine learning system for generating and selecting search result snippets. It determines which text excerpt from a page best answers the user's query and how to present it. The API leak confirmed it as a named ML system with dedicated signals. SnippetBrain works at the intersection of ranking and presentation: snippet quality affects both click-through rate and whether a result qualifies for featured snippet position. The EmptySnippetFilter removes results entirely if no suitable snippet can be generated."
+  },
+  "keyInsight": {
+    "label": "Key Insight from API Leak + System Architecture",
+    "text": "SnippetBrain is more than snippet formatting. It's a <strong>ranking signal in disguise</strong>. The API leak revealed <strong>snippetPrefixCharCount</strong> as a character-level metric for snippet construction, and the system itself as a named ML module. The <strong>EmptySnippetFilter</strong> Twiddler removes results that lack viable snippets, meaning <strong>snippet-unfriendly content can be filtered from results entirely</strong>. Combined with the Q* 0.4 threshold for featured snippets, SnippetBrain gates both visibility and presentation quality. It connects to PassageRanking for passage-level snippet extraction and to Glue for user-facing result assembly."
+  },
+  "pillars": [
+    {
+      "type": "leak",
+      "title": "API Leak Signals",
+      "items": [
+        "<strong>SnippetBrain</strong> (SnippetBrain module): Named ML-powered snippet generation system confirmed in API",
+        "<strong>snippetPrefixCharCount</strong> (PerDocData): Character counts for snippet prefix, used in snippet construction",
+        "<strong>WebChooserScorer</strong> (Mustang): Feature names for snippet scoring and selection within retrieval",
+        "<strong>EmptySnippetFilter</strong>: Twiddler that removes results lacking viable snippets from final results",
+        "Snippets are not just presentation. They affect whether a result appears at all"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "5 Patents",
+      "items": [
+        "ML model selects optimal text passage for snippet based on query-passage relevance",
+        "Snippet generation considers: passage relevance, passage length, readability, completeness",
+        "Featured snippet selection requires Q* >= 0.4 AND high passage-level relevance score",
+        "Snippet text extracted using BERT-based passage understanding (shared with PassageRanking)",
+        "Dynamic snippet generation: different queries produce different snippets from the same page",
+        "SnippetBrain has 6 associated patents covering selection, scoring, and presentation",
+        "<strong>Phrase-based snippet generation</strong> - Patent <a href=\"https://patents.google.com/patent/US8010539\">US8010539</a> (Blair-Goldensohn et al., filed 2008): Generates entity snippets from review sentiment phrases. Extracts sentiment using POS tagging (Adjective+Noun patterns), scores by frequency: Freq(phrase) * (1 + log(review_count)). Eliminates redundancy via Jaccard overlap threshold (0.5). Ranks phrases by sentiment score (-5 to +5) and frequency for snippet display",
+        "<a href=\"https://patents.google.com/patent/US9087130\">US9087130</a>: Generating snippets for prominent users for information retrieval queries; <a href=\"https://patents.google.com/patent/US8380707\">US8380707</a>: Session-based dynamic search snippets; <a href=\"https://patents.google.com/patent/US8145617\">US8145617</a>: Generation of document snippets based on queries and search results",
+        "<a href=\"https://patents.google.com/patent/US8073830\">US8073830</a>: Expanded text excerpts"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Snippets Affect Rankings",
+      "items": [
+        "<strong>EmptySnippetFilter removes results</strong>: If SnippetBrain can't extract a viable snippet, the result may be filtered entirely",
+        "<strong>Featured snippet eligibility</strong>: Q* >= 0.4 required. Clear, direct-answer passages win featured position",
+        "<strong>Click-through impact</strong>: Better snippets drive higher CTR, which feeds back into NavBoost signals",
+        "<strong>Query-specific snippets</strong>: The same page shows different snippets for different queries. Content structure matters",
+        "<strong>Passage structure helps</strong>: Clear topic sentences, well-structured paragraphs, and direct answers improve snippet quality",
+        "<strong>Character count optimization</strong>: snippetPrefixCharCount suggests Google measures snippet text length. Too short or too long reduces quality"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "System Connections",
+      "items": [
+        "SnippetBrain receives scored passages from <strong>PassageRanking</strong> system",
+        "Snippet quality gates feed into <strong>SuperRoot</strong> orchestration for final result assembly",
+        "Featured snippet position gated by <strong>Q* threshold</strong> (0.4 minimum from Q* system)",
+        "<strong>Glue</strong> integrates snippet data with user interaction signals for result presentation",
+        "<strong>Tangram</strong> uses SnippetBrain output for final SERP layout decisions"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "DOJ Exhibits: Previews as Learning Mechanism",
+      "items": [
+        "<strong>Preview virtuous cycle</strong> (UPX1115, Search Quality All Hands 2018): 'Better result previews can lead to happier users and more informed user interactions. This improves the training data for models used in ranking and language understanding.' Cycle: improved previews -> informed interactions -> better training data -> better models -> better previews",
+        "<strong>Previews as dual-purpose learning signals</strong> (UPX0228, Google is Magical): Result previews serve dual purpose: help users choose AND generate learning signals. 'Titles and snippets provide background. Answer is a click.' Bland UI was actually optimal for learning: explicit preference signals from users choosing between results"
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Snippet Selection Score",
+      "source": "Leak+Patent",
+      "how": "For each query-document pair, SnippetBrain scores candidate passages from the document to select the optimal snippet. The score combines query-passage semantic relevance, passage completeness (does it answer the query?), readability, and length appropriateness. The winning passage becomes the search result snippet.",
+      "formula": "<span class=\"cf-fn\">SnippetScore</span>(query, passage) =\n  <span class=\"cf-fn\">relevance</span>(<span class=\"cf-val\">query</span>, <span class=\"cf-val\">passage</span>) *\n  <span class=\"cf-fn\">completeness</span>(<span class=\"cf-val\">passage</span>) *\n  <span class=\"cf-fn\">readability</span>(<span class=\"cf-val\">passage</span>) *\n  <span class=\"cf-fn\">length_fit</span>(<span class=\"cf-val\">charCount</span>)\n<span class=\"cf-comment\">// Best passage wins snippet position</span>\n<span class=\"cf-comment\">// No viable passage = EmptySnippetFilter removes result</span>",
+      "patents": "",
+      "affects": "Affected by: passage clarity, direct answer quality, text length, query-passage alignment"
+    },
+    {
+      "name": "Featured Snippet Eligibility",
+      "source": "DOJ+Leak",
+      "how": "Featured snippet position (position zero) requires passing two gates: the page must have Q* >= 0.4, and SnippetBrain must identify a passage that directly and completely answers the query. The passage score must exceed a featured snippet threshold. YMYL topics have additional quality requirements.",
+      "formula": "<span class=\"cf-fn\">FeaturedSnippet</span>(query, doc) =\n  <span class=\"cf-fn\">Q*</span>(doc) >= <span class=\"cf-val\">0.4</span> AND\n  <span class=\"cf-fn\">SnippetScore</span>(query, best_passage) >\n    <span class=\"cf-val\">featured_threshold</span> AND\n  <span class=\"cf-fn\">direct_answer</span>(<span class=\"cf-val\">passage</span>) = <span class=\"cf-val\">true</span>\n<span class=\"cf-comment\">// YMYL topics require higher thresholds</span>\n<span class=\"cf-comment\">// Multiple formats: paragraph, list, table</span>",
+      "patents": "",
+      "affects": "Affected by: Q* score, passage quality, direct answer detection, query type, YMYL classification"
+    },
+    {
+      "name": "Phrase-Based Snippet Generation",
+      "source": "Patent US8010539 (Blair-Goldensohn et al., 2008)",
+      "how": "Generates entity snippets (hotels, restaurants, products) by extracting sentiment phrases from reviews. Uses POS tagging to identify sentiment patterns (Adjective+Noun, Adverb+Adjective+Noun). Ranks phrases by frequency weighted by review occurrence. Eliminates redundant phrases using Jaccard token overlap with 0.5 threshold. Groups by noun phrase, selects top-ranked sentiment phrases per group for display.",
+      "formula": "<span class=\"cf-fn\">PhraseFreq</span>(phrase) =\n  <span class=\"cf-val\">freq</span>(phrase) &times;\n  (1 + <span class=\"cf-fn\">log</span>(<span class=\"cf-val\">review_count</span>(phrase)))\n<span class=\"cf-comment\">// weighted by number of reviews containing phrase</span>\n\n<span class=\"cf-fn\">JaccardOverlap</span>(p1, p2) =\n  <span class=\"cf-val\">common_tokens</span> / <span class=\"cf-val\">unique_tokens</span>\n<span class=\"cf-kw\">if</span> overlap &gt; <span class=\"cf-val\">0.5</span>: <span class=\"cf-kw\">deduplicate</span>(p1, p2)\n<span class=\"cf-comment\">// sentiment scale: -5 (negative) to +5 (positive)</span>\n<span class=\"cf-comment\">// POS patterns: A+N, R+A+N, M+V+A+N</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US8010539\">US8010539</a> (Phrase based snippet generation, 2008)",
+      "affects": "Affected by: review volume and diversity, sentiment phrase frequency, phrase uniqueness (Jaccard < 0.5), domain-specific sentiment lexicon matching."
+    }
+  ],
+  "pipeline": {
+    "title": "SnippetBrain Processing Pipeline",
+    "stages": [
+      {
+        "name": "Document Retrieval",
+        "detail": "Mustang retrieves candidate documents. Each document enters snippet evaluation"
+      },
+      {
+        "name": "Passage Identification",
+        "detail": "BERT-based passage segmentation identifies candidate snippet passages within each document"
+      },
+      {
+        "name": "Query-Passage Scoring",
+        "detail": "SnippetBrain ML model scores each candidate passage against the query for relevance and completeness"
+      },
+      {
+        "name": "Snippet Selection",
+        "detail": "Highest-scoring passage selected. Character count and readability validated (snippetPrefixCharCount)"
+      },
+      {
+        "name": "Empty Snippet Filter",
+        "detail": "Results without viable snippets removed by EmptySnippetFilter Twiddler"
+      },
+      {
+        "name": "Featured Snippet Gate",
+        "detail": "Best snippet checked against Q* >= 0.4 threshold and featured snippet quality bar"
+      },
+      {
+        "name": "SERP Assembly",
+        "detail": "Selected snippets passed to Tangram for final SERP layout with formatting decisions"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2008",
+      "type": "patent",
+      "title": "Phrase-Based Snippet Generation (US8010539)",
+      "desc": "Google patents sentiment phrase extraction for entity snippets. POS tagging identifies Adjective+Noun patterns from reviews. Frequency weighted by log(review_count). Jaccard overlap (>0.5) eliminates redundant phrases. Foundation for review-based snippet generation."
+    },
+    {
+      "year": "2014",
+      "type": "patent",
+      "title": "Featured Snippets Launch",
+      "desc": "Google introduces featured snippets (position zero). Snippet quality becomes a ranking factor."
+    },
+    {
+      "year": "2017",
+      "type": "patent",
+      "title": "ML Snippet Selection",
+      "desc": "SnippetBrain deployed as ML-powered snippet generation, replacing rule-based extraction."
+    },
+    {
+      "year": "2020",
+      "type": "patent",
+      "title": "Featured Snippet Deduplication",
+      "desc": "Google removes duplicate listing when a page appears as featured snippet. Position zero now replaces position one."
+    },
+    {
+      "year": "2018",
+      "type": "doj",
+      "title": "Preview Virtuous Cycle (UPX1115)",
+      "desc": "Search Quality All Hands 2018: 'Better result previews can lead to happier users and more informed user interactions. This improves the training data for models used in ranking and language understanding.' Ranking engineers care about previews because they feed the learning loop."
+    },
+    {
+      "year": "2020",
+      "type": "doj",
+      "title": "Previews as Learning Signals (UPX0228)",
+      "desc": "Lehman (Google is Magical): Result previews serve dual purpose: help users choose AND generate learning signals. 'Titles and snippets provide background. Answer is a click.' Bland UI was optimal for learning: maximized signal clarity from user preference choices."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "SnippetBrain Confirmed",
+      "desc": "API leak confirms SnippetBrain as named ML system with snippetPrefixCharCount signal and EmptySnippetFilter."
+    }
+  ]
+}

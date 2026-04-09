@@ -1,0 +1,205 @@
+{
+  "id": "link-spam",
+  "route": "/link-spam",
+  "systems": [
+    "LinkSpam",
+    "LinkQuality"
+  ],
+  "hero": {
+    "title": "Link Spam & Quality: How Google Evaluates Links",
+    "subtitle": "Google classifies link sources as HIGH/MEDIUM/LOW quality. The Reasonable Surfer model weights links by click probability. SpamBrain detects anchor manipulation, link velocity spikes, and topic mismatches. This deep dive consolidates 22 leak signals across link analysis and link spam avoidance, with 493 combined patents."
+  },
+  "keyInsight": {
+    "label": "Key Insight from API Leak + DOJ Trial",
+    "text": "Google tracks <strong>anchor spam velocity</strong> via phraseAnchorSpamDays (time to discover 80% of spam phrases) and <strong>phraseAnchorSpamRate</strong>. The <strong>Reasonable Surfer model</strong> (US7716225) means links in main content, with larger fonts, in relevant context pass more value than sidebar/footer links. <strong>spamRank</strong> is binary (0 or 65535) and measures your tendency to link TO spam sites, not just receive spam links."
+  },
+  "pillars": [
+    {
+      "type": "leak",
+      "title": "10 Signals",
+      "items": [
+        "<strong>sourceType</strong> - Link source classified as HIGH, MEDIUM, or LOW quality",
+        "<strong>trustedAnchors</strong> - Anchor text from trusted/authoritative sources",
+        "<strong>anchorFontsize</strong> - Font size as proxy for link prominence and importance",
+        "<strong>freshdocsLink</strong> - Link value multiplier favoring newer linking pages",
+        "<strong>siteLinkIn / siteLinkOut</strong> - Inbound and outbound link counts at site level",
+        "<strong>numOffdomainAnchors</strong> - Count of unique external anchor texts",
+        "<strong>independentLinks</strong> - Links from editorially independent sources"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "12 Signals",
+      "items": [
+        "<strong>phraseAnchorSpamPenalty</strong> - Combined demotion for spammy anchor patterns",
+        "<strong>phraseAnchorSpamDays</strong> - Days to discover 80% of spam phrases (velocity)",
+        "<strong>phraseAnchorSpamFraq</strong> - Fraction of anchors matching spam phrase patterns",
+        "<strong>phraseAnchorSpamRate</strong> - Rate of spam phrase accumulation over time",
+        "<strong>spamRank</strong> - Binary (0/65535): links to known spammers",
+        "<strong>anchorSpamWeight</strong> - Weight assigned to spammy anchor patterns",
+        "<strong>spamWordScore</strong> - Presence of known spam terms in anchor text"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "11 Patents",
+      "items": [
+        "Reasonable Surfer (US7716225): click probability weighting by position, size, context",
+        "Enhanced Reasonable Surfer (US8117209): additional context signals",
+        "Link context evaluation (US9305099): topical relevance of surrounding content",
+        "Link spam detection: spam farm effective mass metric with trust propagation from seed set (<a href=\"https://patents.google.com/patent/US7533092\">US7533092</a>)",
+        "Manipulated article detection: dense bipartite subgraph analysis identifying doorway/target cluster patterns (<a href=\"https://patents.google.com/patent/US7302645\">US7302645</a>)",
+        "Related documents via backlink/forwardlink sets: host-normalized link scoring for discovering spam link patterns (<a href=\"https://patents.google.com/patent/US6754873\">US6754873</a>)",
+        "Anchor text distribution analysis across linking domains",
+        "Link velocity and pattern detection for unnatural building",
+        "Inverse TrustRank: distance FROM known spam sources",
+        "<a href=\"https://patents.google.com/patent/US20090198673\">US20090198673</a>: Forum Mining for Suspicious Link Spam Sites Detection; <a href=\"https://patents.google.com/patent/US20100100564\">US20100100564</a>: System and method for spam identification; <a href=\"https://patents.google.com/patent/US7908277\">US7908277</a>: Annotating links in a document based on the ranks of documents pointed to by the links",
+        "<a href=\"https://patents.google.com/patent/US8370340\">US8370340</a>: User location reputation system; <a href=\"https://patents.google.com/patent/US7979417\">US7979417</a>: Embedded communication of link information"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Link Spam Detection Affects Your SEO",
+      "items": [
+        "<strong>Respect the velocity window of phraseAnchorSpamDays</strong>: This signal measures how many days it takes to discover 80% of your spam-pattern anchor phrases. Natural link profiles accumulate anchor diversity slowly over months or years. If you acquire 50 links with similar anchor text in 2 weeks, the compressed timeline triggers phraseAnchorSpamRate flags. Pace link acquisition to mirror natural patterns: varied anchors, spread over months, from diverse source types.",
+        "<strong>Audit outbound links to avoid spamRank (binary death)</strong>: spamRank is binary, 0 or 65535, and measures whether you link TO known spam sites. A single value of 65535 means confirmed spam association. Regularly audit your outbound links, especially in user-generated content (comments, forums, directories). Use nofollow on untrusted outbound links. One bad outbound link neighborhood can flip this binary signal.",
+        "<strong>Prioritize links that pass Reasonable Surfer weighting</strong>: US7716225 weights links by click probability based on position, font size, and context. A link in main content with normal or large font in a relevant paragraph passes far more value than a sidebar blogroll or footer link list. When earning links, prioritize editorial in-content placements over template-based links.",
+        "<strong>Diversify sourceType to earn HIGH classification</strong>: Google classifies link sources as HIGH, MEDIUM, or LOW quality. Links from editorially independent sources (independentLinks) with high domain authority earn HIGH classification. Guest posts on low-authority blogs, directory submissions, and forum profiles are classified LOW. Focus effort on fewer HIGH-sourceType links rather than volume of LOW-sourceType links.",
+        "<strong>Avoid anchor text concentration that triggers phraseAnchorSpamFraq</strong>: This signal measures the fraction of your anchors matching spam phrase patterns. If 40% of your backlinks use the exact same commercial anchor text, the fraction triggers demotion regardless of link quality. Maintain anchor diversity: brand name (40-50%), URL (20-30%), generic (15-20%), and exact-match keywords (under 5-10%).",
+        "<strong>Monitor anchorMismatchDemotion between link text and page topic</strong>: Links with anchor text that does not match the destination page's topic trigger anchorMismatchDemotion. If sites link to your shoe store page with anchor text about \"best crypto wallets,\" this mismatch signals manipulation. Ensure anchor text from linking sites naturally describes what your page is actually about.",
+        "<strong>Use trustedAnchors as your quality benchmark</strong>: Google tracks trustedAnchors separately, meaning anchor text from authoritative/trusted sources. These anchors carry disproportionate weight in T* topicality scoring. A single anchor from a trusted source (news sites, academic institutions, government sites) can establish topical authority more effectively than hundreds of anchors from untrusted sources."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "phraseAnchorSpamPenalty",
+      "source": "Leak",
+      "how": "Combined demotion for spammy anchor text patterns. An explicit penalty signal, not just \"ignoring\" links as Google publicly claimed post-Penguin 4.0. Aggregates multiple spam indicators (count, rate, fraction) into a single demotion value.",
+      "formula": "<span class=\"cf-fn\">phraseAnchorSpamPenalty</span>(site) = <span class=\"cf-fn\">aggregate</span>(\n<span class=\"cf-val\">spamCount</span>, <span class=\"cf-val\">spamRate</span>, <span class=\"cf-val\">spamFraq</span>\n) &rarr; <span class=\"cf-val\">demotion_value</span>\n<span class=\"cf-comment\">// explicit penalty, NOT just \"ignoring\" links</span>\n<span class=\"cf-comment\">// contradicts post-Penguin 4.0 public claims</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US9002867\">US9002867</a> (spam detection), <a href=\"https://patents.google.com/patent/US7603350\">US7603350</a> (trust ranking)",
+      "affects": "Affected by: anchor text pattern diversity, spam phrase concentration, link building velocity, source quality"
+    },
+    {
+      "name": "spamRank",
+      "source": "Leak",
+      "how": "Binary signal (0 or 65535). Measures a site's tendency to link TO spam sites, not just receive spam links. Outbound link hygiene directly measured. A single value of 65535 indicates confirmed spam association.",
+      "formula": "<span class=\"cf-fn\">spamRank</span>(site) = <span class=\"cf-kw\">if</span> <span class=\"cf-fn\">links_to_spam</span>(\n<span class=\"cf-val\">outbound_links</span>, <span class=\"cf-val\">spam_db</span>\n): <span class=\"cf-val\">65535</span> <span class=\"cf-kw\">else</span> <span class=\"cf-val\">0</span>\n<span class=\"cf-comment\">// binary: measures OUTBOUND link hygiene</span>\n<span class=\"cf-comment\">// linking TO spam sites, not receiving spam</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US9002867\">US9002867</a> (spam detection), <a href=\"https://patents.google.com/patent/US7603350\">US7603350</a> (trust ranking)",
+      "affects": "Affected by: outbound link destinations, linking to known spam domains, link neighborhood quality"
+    },
+    {
+      "name": "phraseAnchorSpamDays",
+      "source": "Leak",
+      "how": "Time (in days) to discover 80% of spam phrases in a site's anchor text profile. Velocity-based detection of unnatural link building. Natural link acquisition accumulates anchor diversity slowly; spam campaigns compress the timeline.",
+      "formula": "<span class=\"cf-fn\">phraseAnchorSpamDays</span>(site) = <span class=\"cf-fn\">days_to_80pct</span>(\n<span class=\"cf-val\">spam_phrases</span>(anchor_profile)\n)  <span class=\"cf-comment\">// velocity detection: natural = slow</span>\n<span class=\"cf-kw\">if</span> days &lt; <span class=\"cf-val\">threshold</span>: <span class=\"cf-kw\">flag</span> unnatural_building\n<span class=\"cf-comment\">// spam campaigns compress the timeline</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US9002867\">US9002867</a> (spam detection)",
+      "affects": "Affected by: link acquisition speed, anchor text diversity timeline, spam phrase accumulation rate"
+    },
+    {
+      "name": "sourceType",
+      "source": "Leak",
+      "how": "Link sources classified as HIGH, MEDIUM, or LOW quality. Determines how much ranking value each link passes. Classification based on linking domain's authority, trust, and editorial independence. Reasonable Surfer model further adjusts per-link weight.",
+      "formula": "<span class=\"cf-fn\">sourceType</span>(link) = <span class=\"cf-fn\">classify</span>(\n<span class=\"cf-val\">domain_authority</span>, <span class=\"cf-val\">trust</span>, <span class=\"cf-val\">editorial_independence</span>\n) &rarr; {<span class=\"cf-val\">HIGH</span>, <span class=\"cf-val\">MEDIUM</span>, <span class=\"cf-val\">LOW</span>}\n<span class=\"cf-fn\">link_value</span> *= <span class=\"cf-fn\">ReasonableSurfer</span>(<span class=\"cf-val\">position</span>, <span class=\"cf-val\">font</span>, <span class=\"cf-val\">context</span>)\n<span class=\"cf-comment\">// per-link weight adjusted by click probability</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US7603350\">US7603350</a> (trust ranking), <a href=\"https://patents.google.com/patent/US9002867\">US9002867</a> (spam detection)",
+      "affects": "Affected by: linking domain authority, editorial independence, domain trust score, link context"
+    },
+    {
+      "name": "Spam Farm Detection",
+      "source": "Patent",
+      "how": "Two complementary approaches to detecting link manipulation networks. (1) Spam farm metric: propagates trust from a curated seed set through the link graph. Pages that receive link equity primarily from untrusted sources (not reachable from seeds) are flagged. The effective mass metric measures how much of a site's link equity comes from spam farm structures. (2) Manipulated article detection: identifies dense bipartite subgraphs where doorway pages (low quality, link-heavy) point to target pages (the beneficiaries). Clustering reveals doorway/target patterns invisible at the individual link level.",
+      "formula": "<span class=\"cf-fn\">spamFarmScore</span>(page) = <span class=\"cf-fn\">effectiveMass</span>(\n<span class=\"cf-val\">link_equity</span> - <span class=\"cf-fn\">trustPropagation</span>(<span class=\"cf-val\">seed_set</span>)\n)  <span class=\"cf-comment\">// equity from untrusted sources = spam signal</span>\n\n<span class=\"cf-fn\">manipulatedCluster</span>(pages) = <span class=\"cf-fn\">detectBipartite</span>(\n<span class=\"cf-val\">doorway_set</span>, <span class=\"cf-val\">target_set</span>\n)  <span class=\"cf-comment\">// dense doorway→target = link scheme</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US7533092\">US7533092</a> (spam farm detection via trust propagation), <a href=\"https://patents.google.com/patent/US7302645\">US7302645</a> (cluster-based manipulated article detection)",
+      "affects": "Affected by: link graph topology, trust seed distance, bipartite clustering density. Natural link profiles have distributed, diverse link sources with clear trust paths."
+    }
+  ],
+  "pipeline": {
+    "title": "Link Evaluation Pipeline",
+    "stages": [
+      {
+        "name": "Link Discovery",
+        "detail": "Crawl finds link, extracts anchor, font, position, context"
+      },
+      {
+        "name": "Source Classification",
+        "detail": "sourceType: HIGH/MED/LOW based on domain authority and trust"
+      },
+      {
+        "name": "Reasonable Surfer",
+        "detail": "Click probability: position, font size, relevance, prominence"
+      },
+      {
+        "name": "Spam Detection",
+        "detail": "phraseAnchorSpam*, spamRank, anchorMismatch, velocity checks"
+      },
+      {
+        "name": "T* Anchors",
+        "detail": "Clean anchor signals feed into T* topicality score"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2003",
+      "type": "patent",
+      "title": "Reasonable Surfer",
+      "desc": "Google patents US7716225: not all links are equal. Links weighted by click probability based on position, size, font, and context."
+    },
+    {
+      "year": "2005",
+      "type": "patent",
+      "title": "Spam Farm & Manipulated Article Detection",
+      "desc": "Patents US7533092 (spam farm effective mass metric via trust propagation from seed set) and US7302645 (cluster-based manipulated article detection using dense bipartite subgraph analysis). Foundation for SpamBrain's link scheme detection."
+    },
+    {
+      "year": "2005",
+      "type": "patent",
+      "title": "TrustRank Inverse",
+      "desc": "Inverse seed propagation from known spam sites. Distance from spam seeds measures spam contamination."
+    },
+    {
+      "year": "2012",
+      "type": "patent",
+      "title": "Penguin Algorithm",
+      "desc": "Targets exact-match anchor text manipulation, link schemes, and unnatural link patterns. Kills the link building industry."
+    },
+    {
+      "year": "2016",
+      "type": "patent",
+      "title": "Real-Time Penguin",
+      "desc": "Penguin integrated into core algorithm. Link spam penalties now per-page and per-link instead of site-wide."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "API Leak: 22 Link Signals",
+      "desc": "phraseAnchorSpamPenalty, spamRank, anchorSpamWeight, phraseAnchorSpamDays (velocity), sourceType (HIGH/MED/LOW), trustedAnchors all confirmed."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "DOJ: Anchors in T* Formula",
+      "desc": "Anchor text (A) confirmed as sub-signal of T* topicality. \"What the web says about a document.\" Reasonable Surfer model confirmed."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"We ignore spammy links rather than penalizing for them.\" (2016, post-Penguin 4.0)",
+      "internalSource": "API Leak",
+      "internalClaim": "phraseAnchorSpamPenalty is an explicit demotion signal. anchorSpamWeight actively penalizes. spamRank (binary 0/65535) penalizes for outbound links to spam."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"All links are treated equally. There's no concept of link quality tiers.\"",
+      "internalSource": "API Leak",
+      "internalClaim": "sourceType explicitly classifies sources as HIGH, MEDIUM, or LOW quality. Reasonable Surfer model weights by click probability. anchorFontsize tracks prominence."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"Link building speed doesn't matter. Build links naturally at any pace.\"",
+      "internalSource": "API Leak",
+      "internalClaim": "phraseAnchorSpamDays measures time to discover 80% of spam phrases. phraseAnchorSpamRate tracks accumulation velocity. Rapid link building triggers spam detection."
+    }
+  ]
+}

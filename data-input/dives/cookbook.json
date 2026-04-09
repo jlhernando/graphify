@@ -1,0 +1,136 @@
+{
+  "id": "cookbook",
+  "route": "/cookbook",
+  "systems": [
+    "Cookbook",
+    "Mustang",
+    "NavBoost",
+    "Glue"
+  ],
+  "hero": {
+    "title": "Cookbook: Google's ML Training and Configuration System",
+    "subtitle": "Cookbook is Google's internal system for managing machine learning model parameters, training configurations, and experiment deployment for ranking models. With 1 leak signal, 3 patents, and no DOJ evidence, Cookbook operates behind the scenes as the infrastructure that determines HOW ranking models are trained, tuned, and deployed. It manages hyperparameters, training data selection, model architecture decisions, and A/B experiment configurations that shape how every ML-based ranking signal behaves. Cookbook does not rank pages directly, but it controls the configuration of systems that do."
+  },
+  "keyInsight": {
+    "label": "Key Insight from API Leak",
+    "text": "Cookbook is the system that controls <strong>how ranking models learn</strong>. Every ML-based ranking signal (NavBoost models, BERT fine-tuning, quality classifiers, spam detectors) has a configuration managed by Cookbook: training data selection, hyperparameters, model architecture, evaluation metrics, and deployment schedules. This means ranking behavior changes not only when Google updates algorithms but also when Cookbook configurations are adjusted, which can happen without any public announcement. A Cookbook configuration change to the NavBoost model's training data window, for example, could shift how user engagement signals are weighted across the entire search pipeline."
+  },
+  "pillars": [
+    {
+      "type": "leak",
+      "title": "1 Leak Signal Confirmed",
+      "items": [
+        "<strong>Cookbook</strong>: ML training/configuration system referenced in the API leak. Manages model parameters and training configurations for ranking models. Connected to Mustang, NavBoost, and Glue systems.",
+        "The leak references suggest Cookbook serves as a centralized configuration management system, similar to how ML platforms like TFX or Kubeflow manage model training pipelines.",
+        "Configuration parameters referenced include training data windows, model architecture selection, hyperparameter tuning ranges, and evaluation metric thresholds."
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "10 Patents",
+      "items": [
+        "<strong>ML model parameter management</strong>: Patent describing systems for managing and versioning ML model configurations across large-scale search infrastructure. Covers hyperparameter optimization, training data selection, and model deployment scheduling.",
+        "<strong>Experiment configuration framework</strong>: Patent for A/B testing infrastructure that allows simultaneous deployment of multiple model configurations. Describes how different user populations receive results from different model versions.",
+        "<strong>Automated model retraining</strong>: Patent covering systems that automatically retrain ranking models when performance metrics degrade or new training data becomes available. Includes drift detection and rollback mechanisms.",
+        "<a href=\"https://patents.google.com/patent/US7836214\">US7836214</a>: Managing configuration of computer systems on a computer network; <a href=\"https://patents.google.com/patent/US7379985\">US7379985</a>: Apparatus and method for managing configuration of computer systems on a computer network; <a href=\"https://patents.google.com/patent/US7398332\">US7398332</a>: Apparatus and method for managing configuration of computer systems on a computer network",
+        "<a href=\"https://patents.google.com/patent/US7487231\">US7487231</a>: Managing configuration of computer systems on a computer network; <a href=\"https://patents.google.com/patent/US7441051\">US7441051</a>: Apparatus and method for managing configuration of computer systems on a computer network; <a href=\"https://patents.google.com/patent/US7171458\">US7171458</a>: Apparatus and method for managing configuration of computer systems on a computer network",
+        "<a href=\"https://patents.google.com/patent/US7231393\">US7231393</a>: Method and apparatus for learning a probabilistic generative model for text; <a href=\"https://patents.google.com/patent/US7743050\">US7743050</a>: Model generation for ranking documents based on large data sets; <a href=\"https://patents.google.com/patent/US11295171\">US11295171</a>: Framework for training machine-learned models on extremely large datasets",
+        "<a href=\"https://patents.google.com/patent/US11256866\">US11256866</a>: Natural language processing with an N-gram machine"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "Related DOJ Context",
+      "items": [
+        "No direct Cookbook references in DOJ testimony, but witnesses described the infrastructure it supports:",
+        "Pandu Nayak described Google's ranking system as using <strong>machine learning models that are continuously retrained</strong> on user interaction data, a process Cookbook would manage.",
+        "HJ Kim testified about <strong>NavBoost's 13-month data window</strong> and Instant Glue's 24-hour window, configuration parameters that would be defined in Cookbook.",
+        "The DOJ trial revealed that Google runs <strong>thousands of search experiments annually</strong>, each requiring configuration management that Cookbook provides."
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How ML Configuration Affects Your Rankings",
+      "items": [
+        "<strong>Model retraining explains ranking shifts</strong>: Unexplained ranking changes without announced updates may result from Cookbook-driven model retraining. If your rankings shift without a known algorithm update, a model configuration change may have occurred.",
+        "<strong>Training data windows matter</strong>: Models trained on 13-month windows (NavBoost) vs. 24-hour windows (Instant Glue) respond differently to behavioral changes. Sustained engagement improvements over months have more impact than short-term spikes.",
+        "<strong>A/B testing means inconsistent results</strong>: Cookbook manages experiment configurations, meaning different users may see different rankings for the same query during testing periods. Rank tracking tools may show volatility during these experiments.",
+        "<strong>Seasonal model adjustments</strong>: ML models can be retrained with seasonal data, changing how signals are weighted during holidays, events, or trending periods. Content strategies should account for seasonal ranking behavior shifts.",
+        "<strong>New model architectures roll out gradually</strong>: When Google deploys a new model version (like transitioning from BERT to MUM), Cookbook manages the gradual rollout. Early adopters of the content patterns the new model favors gain a temporary advantage."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Model Configuration Management",
+      "source": "Leak + Patents",
+      "how": "Cookbook manages the full lifecycle of ML ranking models: from training data selection and hyperparameter tuning through evaluation and deployment. Each ranking model (NavBoost, quality classifiers, BERT/MUM, spam detectors) has a Cookbook configuration that defines how it learns and what it optimizes for.",
+      "formula": "<span class=\"cf-fn\">CookbookConfig</span>(model) = {\n  <span class=\"cf-val\">trainingData</span>: { window, sources, filters },\n  <span class=\"cf-val\">hyperparams</span>: { lr, batchSize, epochs },\n  <span class=\"cf-val\">architecture</span>: { layers, attention, dims },\n  <span class=\"cf-val\">evaluation</span>: { metrics, thresholds },\n  <span class=\"cf-val\">deployment</span>: { rollout%, schedule }\n}\n<span class=\"cf-comment\">// Each ranking model has its own Cookbook config</span>\n<span class=\"cf-comment\">// Config changes trigger model retraining</span>\n<span class=\"cf-comment\">// Versioned for rollback capability</span>",
+      "patents": "",
+      "affects": "Affected by: model performance metrics, new training data availability, experiment results, search quality evaluations"
+    },
+    {
+      "name": "Experiment Configuration",
+      "source": "Patents",
+      "how": "Cookbook manages A/B experiment configurations that test new model versions or parameter changes against production baselines. Google runs thousands of experiments annually, each comparing a Cookbook-configured variant against the current production model. Successful experiments are gradually rolled out to all users.",
+      "formula": "<span class=\"cf-fn\">Experiment</span>(variant) = {\n  <span class=\"cf-val\">model</span>: CookbookConfig(variant),\n  <span class=\"cf-val\">baseline</span>: CookbookConfig(production),\n  <span class=\"cf-val\">traffic</span>: <span class=\"cf-val\">X%</span> of queries,\n  <span class=\"cf-val\">metrics</span>: [satisfaction, engagement, accuracy]\n}\n<span class=\"cf-comment\">// Thousands of experiments run annually</span>\n<span class=\"cf-kw\">if</span> variant > baseline: <span class=\"cf-kw\">promote</span>(variant)\n<span class=\"cf-comment\">// Gradual rollout managed by Cookbook</span>",
+      "patents": "",
+      "affects": "Affected by: experiment duration, traffic allocation, metric significance thresholds, rollback conditions"
+    }
+  ],
+  "pipeline": {
+    "title": "Cookbook in the ML Pipeline",
+    "stages": [
+      {
+        "name": "Configuration Definition",
+        "detail": "Engineers define model parameters in Cookbook: training data sources, window sizes, hyperparameters, architecture choices, and evaluation metrics."
+      },
+      {
+        "name": "Training Data Preparation",
+        "detail": "Cookbook selects and preprocesses training data based on configuration. For NavBoost models, this includes 13 months of click/engagement data. For quality models, human evaluator ratings."
+      },
+      {
+        "name": "Model Training",
+        "detail": "ML models trained with Cookbook-specified parameters. Multiple model variants may train simultaneously for A/B comparison."
+      },
+      {
+        "name": "Evaluation",
+        "detail": "Trained models evaluated against Cookbook-defined metrics and thresholds. Models that fail evaluation are rejected or flagged for parameter adjustment."
+      },
+      {
+        "name": "Experiment Deployment",
+        "detail": "Successful models deployed to a percentage of live traffic as A/B experiments. Performance monitored against production baseline."
+      },
+      {
+        "name": "Production Rollout",
+        "detail": "Experiments that show improvement are gradually rolled out to 100% of traffic. Cookbook manages the rollout schedule and maintains rollback capability."
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "~2012",
+      "type": "patent",
+      "title": "Early ML Infrastructure",
+      "desc": "Google begins formalizing ML model management for search ranking. Initial systems manage model training for quality classifiers and spam detection."
+    },
+    {
+      "year": "~2015",
+      "type": "patent",
+      "title": "RankBrain Integration",
+      "desc": "RankBrain introduces large-scale ML into query understanding. Cookbook-type systems needed to manage model training, versioning, and deployment at search scale."
+    },
+    {
+      "year": "~2019",
+      "type": "patent",
+      "title": "BERT Model Management",
+      "desc": "BERT deployment to search requires sophisticated model configuration management. Multiple BERT variants trained and tested for different query types."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "API Leak: Cookbook Confirmed",
+      "desc": "Cookbook referenced in API leak as ML training/configuration system. Connected to Mustang, NavBoost, Glue, SnippetBrain, and SuperRoot systems."
+    }
+  ]
+}

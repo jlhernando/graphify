@@ -1,0 +1,210 @@
+{
+  "id": "queryclassification",
+  "route": "/queryclassification",
+  "systems": [
+    "QueryClassification",
+    "Mustang",
+    "Qstar"
+  ],
+  "hero": {
+    "title": "QueryClassification: Google's Query Intent Detection System",
+    "subtitle": "QueryClassification is the system that determines query type (navigational, informational, transactional, local) and routes queries through appropriate ranking configurations. With 2 DOJ signals, no patents, and no leak evidence, it operates as a critical gating mechanism that determines which SERP features appear and which ranking signals are activated. A navigational query triggers site links and brand signals; an informational query activates featured snippets and PAA; a transactional query shows shopping results and ads. QueryClassification decides before any ranking happens."
+  },
+  "keyInsight": {
+    "label": "Key Insight from DOJ Trial",
+    "text": "QueryClassification operates <strong>before ranking begins</strong>, making it one of the most consequential systems in the pipeline. Its output determines which branch of the ranking architecture is activated: navigational queries weight brand signals and <strong>queriesForWhichOfficial</strong> heavily; informational queries activate <strong>BERT/MUM semantic matching</strong> and snippet generation; transactional queries trigger <strong>commercial intent signals</strong> and shopping integrations. This means the same page can rank very differently depending on how Google classifies the query, even if the page content is identical. Understanding query classification helps explain why rankings shift between query variations."
+  },
+  "pillars": [
+    {
+      "type": "doj",
+      "title": "DOJ Trial: Sworn Testimony",
+      "items": [
+        "<strong>Query intent classification</strong>: Google categorizes queries into navigational, informational, transactional, and local intents. Each category activates different ranking signal configurations and SERP feature sets. Confirmed in testimony about the ranking pipeline.",
+        "<strong>SERP feature gating</strong>: Query classification directly determines which SERP features are eligible. Featured snippets only appear for informational queries. Shopping results only for transactional. Site links primarily for navigational. This gating happens before Tangram assembly."
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "UPX1044: Personalization Is Rare (Gomes/Sullivan, Nov 2018)",
+      "items": [
+        "<strong>Danny Sullivan</strong>: 'Personalization is rare and light' - Query itself is the dominant signal, not user profile",
+        "<strong>No demographic profiling</strong>: Google confirmed no demographic data is used in search ranking or query classification",
+        "<strong>Top Stories never personalized</strong>: News results are not tailored to individual user preferences"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "Related Leak Evidence",
+      "items": [
+        "No direct QueryClassification signals in the API leak, but related systems confirm classification outputs are used throughout the pipeline:",
+        "<strong>queriesForWhichOfficial</strong> (PerDocData): Pages recognized as the official result for navigational queries. Directly depends on QueryClassification identifying a query as navigational.",
+        "<strong>isNavigational</strong>: Query-level flag used by NavBoost and Twiddlers. Navigational queries receive different engagement thresholds than informational ones.",
+        "<strong>queryTopicality</strong>: Topic matching between query and document, calibrated differently by query type."
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "21 Patents",
+      "items": [
+        "No patents directly mapped to QueryClassification as a named system. Query classification is likely covered under broader query understanding patents.",
+        "<strong>Webref</strong> (entity resolution): Entity detection in queries feeds into classification. Queries mentioning known entities are more likely navigational.",
+        "<strong>BERT/MUM</strong>: Neural language models interpret query semantics, which aids intent classification for ambiguous queries.",
+        "Query classification is a well-studied area in IR research. Google's implementation likely combines ML classifiers with heuristic rules (query length, entity presence, modifier words like 'buy' or 'how to').",
+        "<strong>Machine translation for query expansion</strong> - Patent <a href=\"https://patents.google.com/patent/US20080319962\">US20080319962</a> (Riezler, Vasserman, filed 2008): Uses statistical machine translation to expand queries with context-aware synonyms. Three training approaches: question-answer pairs, query-snippet pairs (from click logs), and phrase-paraphrase pairs (via back-translation). p(paraphrase|input) = max_trans[p(translated|input) * p(paraphrase|translated)]. Context maps prevent incorrect expansions (e.g., 'ship' expands to 'send' not 'boat' in 'how to ship a box')",
+        "<strong>Semantic interpretation evaluation</strong> - Patent <a href=\"https://patents.google.com/patent/US10353964\">US10353964</a> (Google, filed 2015): Evaluates ambiguous query intent by generating canonical query templates for each semantic interpretation. Substitutes entity references with disambiguated versions, then compares result set similarity (Jaccard intersection, keyword frequency, ranking order) between original and modified queries. Higher similarity indicates the interpretation likely matches user intent",
+        "<a href=\"https://patents.google.com/patent/US20090299964\">US20090299964</a>: Presenting search queries related to navigational search queries; <a href=\"https://patents.google.com/patent/US8412699\">US8412699</a>: Fresh related search suggestions; <a href=\"https://patents.google.com/patent/US20100262615\">US20100262615</a>: Generating Improved Document Classification Data Using Historical Search Results",
+        "<a href=\"https://patents.google.com/patent/US8046350\">US8046350</a>: Systems and methods for detecting commercial queries; <a href=\"https://patents.google.com/patent/US20100179929\">US20100179929</a>: SYSTEM FOR FINDING QUERIES AIMING AT TAIL URLs; <a href=\"https://patents.google.com/patent/US20080065617\">US20080065617</a>: Search entry system with query log autocomplete",
+        "<a href=\"https://patents.google.com/patent/US8140562\">US8140562</a>: Method and system for displaying real time trends; <a href=\"https://patents.google.com/patent/US20110060736\">US20110060736</a>: Query Revision Using Known Highly-Ranked Queries; <a href=\"https://patents.google.com/patent/US6502091\">US6502091</a>: Apparatus and method for discovering context groups and document categories by mining usage logs",
+        "<a href=\"https://patents.google.com/patent/US9740780\">US9740780</a>: Autocompletion using previously submitted query data; <a href=\"https://patents.google.com/patent/US20100205198\">US20100205198</a>: Search query disambiguation; <a href=\"https://patents.google.com/patent/US8346757\">US8346757</a>: Determining query terms of little significance",
+        "<a href=\"https://patents.google.com/patent/US7487145\">US7487145</a>: Method and system for autocompletion using ranked results; <a href=\"https://patents.google.com/patent/US6826564\">US6826564</a>: Scalable and programmable query distribution and collection in a network of queryable devices; <a href=\"https://patents.google.com/patent/US20100257164\">US20100257164</a>: Search queries with shifting intent",
+        "<a href=\"https://patents.google.com/patent/US20090119289\">US20090119289</a>: Method and System for Autocompletion Using Ranked Results; <a href=\"https://patents.google.com/patent/US8838587\">US8838587</a>: Propagating query classifications; <a href=\"https://patents.google.com/patent/US7409383\">US7409383</a>: Locating meaningful stopwords or stop-phrases in keyword-based retrieval systems",
+        "<a href=\"https://patents.google.com/patent/US9213748\">US9213748</a>: Generating related questions for search queries; <a href=\"https://patents.google.com/patent/US9213748B1\">US9213748B1</a>: Generating related questions for search queries"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "8 Refined Query Semantic Classes (Candour Exploit)",
+      "source": "Candour Exploit (Mark Williams-Cook, Dec 2024)",
+      "items": [
+        "Google endpoint exploit revealed 8 'Refined Query Semantic Classes' used to categorize queries",
+        "1. Short fact - queries seeking brief factual answers",
+        "2. Boolean - yes/no or true/false questions",
+        "3. Instruction - how-to and procedural queries",
+        "4. Definition - what-is queries seeking definitions",
+        "5. Reason - why queries seeking explanations",
+        "6. Comparison - queries comparing two or more items",
+        "7. Consequence - queries about outcomes or effects",
+        "8. Other - queries not fitting above categories",
+        "Significant portion of queries classified as 'short fact' or 'Boolean'",
+        "Classification impacts SERP layout, featured snippet eligibility, and ranking approach",
+        "YMYL queries (health, financial) receive different ranking criteria and stricter evaluation"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Query Classification Affects Your Traffic",
+      "items": [
+        "<strong>Map your keywords by intent</strong>: Before optimizing, understand how Google classifies each target query. Check SERPs for feature patterns: site links = navigational, featured snippets = informational, shopping = transactional. Optimize for the intent Google assigns.",
+        "<strong>Navigational queries are winner-take-all</strong>: If Google classifies a query as navigational, the brand/official site dominates. Competing for someone else's brand name is nearly impossible. Focus on owning your own brand queries.",
+        "<strong>Informational queries unlock rich features</strong>: Featured snippets, PAA, and Knowledge Panels only appear for informational classifications. Structure content with clear answers, headers, and lists to capture these features.",
+        "<strong>Transactional queries have commercial signals</strong>: For queries classified as transactional, product schema, pricing, availability, and reviews become ranking factors. E-commerce sites should ensure structured data is complete.",
+        "<strong>Mixed-intent queries are opportunities</strong>: Some queries have ambiguous classification (e.g., 'best laptop' could be informational or transactional). Google may show both types of results, giving you a chance to appear with the right content format.",
+        "<strong>Local intent is geographic</strong>: Queries classified as local trigger the map pack and local results. For local businesses, Google Business Profile optimization and local citations matter more than traditional SEO.",
+        "<strong>Query modifiers shift classification</strong>: Adding 'how to,' 'what is,' or 'best' changes classification. Target long-tail variations that match your content's intent alignment."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Query Intent Classification",
+      "source": "DOJ",
+      "how": "Queries are classified into primary intent categories before entering the ranking pipeline. The classification determines which ranking configuration is activated, which signals are weighted most heavily, and which SERP features are eligible. Classification likely uses a combination of ML models (BERT-based), entity detection (Webref), query pattern matching, and historical click data.",
+      "formula": "<span class=\"cf-fn\">queryClass</span>(query) = <span class=\"cf-fn\">classify</span>(\n  <span class=\"cf-val\">semantics</span>(query),   <span class=\"cf-comment\">// BERT/MUM analysis</span>\n  <span class=\"cf-val\">entities</span>(query),     <span class=\"cf-comment\">// Webref entity detection</span>\n  <span class=\"cf-val\">patterns</span>(query),     <span class=\"cf-comment\">// modifier words, length</span>\n  <span class=\"cf-val\">clickHistory</span>(query)  <span class=\"cf-comment\">// NavBoost navigation patterns</span>\n)\n<span class=\"cf-comment\">// Output: navigational | informational | transactional | local</span>\n<span class=\"cf-comment\">// Some queries get mixed classification</span>",
+      "patents": "",
+      "affects": "Affected by: query wording, entity presence, historical user behavior for this query, geographic context"
+    },
+    {
+      "name": "SERP Feature Gating",
+      "source": "DOJ",
+      "how": "Based on query classification, specific SERP features are enabled or disabled before Tangram assembles the layout. This gating reduces computation (no need to evaluate snippet quality for navigational queries) and improves relevance (transactional queries get shopping results, not Wikipedia articles).",
+      "formula": "<span class=\"cf-fn\">eligibleFeatures</span>(queryClass) =\n  <span class=\"cf-kw\">switch</span>(queryClass) {\n    <span class=\"cf-val\">navigational</span>: [siteLinks, knowledgePanel]\n    <span class=\"cf-val\">informational</span>: [featuredSnippet, PAA, KP, images]\n    <span class=\"cf-val\">transactional</span>: [shopping, ads, reviews, prices]\n    <span class=\"cf-val\">local</span>: [mapPack, localBusiness, reviews]\n  }\n<span class=\"cf-comment\">// Tangram only assembles eligible features</span>",
+      "patents": "",
+      "affects": "Affected by: query classification output. Features not eligible for the query class will never appear regardless of content quality."
+    },
+    {
+      "name": "Semantic Interpretation Evaluation",
+      "source": "Patent US10353964 (Google, 2015)",
+      "how": "Evaluates multiple semantic interpretations for ambiguous queries by generating canonical query templates for each interpretation. For each candidate intent, the system creates a modified query with disambiguated entity references and runs it against the index. Result set similarity between original and modified queries (measured via Jaccard intersection, keyword frequency overlap, or ranking order comparison) indicates which interpretation best matches user intent. Higher similarity means the interpretation aligns with what the original query already retrieves, confirming it as the likely intent.",
+      "formula": "<span class=\"cf-fn\">IntentScore</span>(interpretation) =\n  <span class=\"cf-fn\">similarity</span>(\n    <span class=\"cf-fn\">results</span>(<span class=\"cf-val\">original_query</span>),\n    <span class=\"cf-fn\">results</span>(<span class=\"cf-fn\">modify</span>(<span class=\"cf-val\">query</span>, <span class=\"cf-val\">interpretation</span>))\n  )\n\n<span class=\"cf-fn\">Jaccard</span> = |<span class=\"cf-val\">R_orig</span> &cap; <span class=\"cf-val\">R_mod</span>| /\n  |<span class=\"cf-val\">R_orig</span> &cup; <span class=\"cf-val\">R_mod</span>|\n<span class=\"cf-comment\">// or keyword frequency, or rank order comparison</span>\n<span class=\"cf-comment\">// highest similarity = most likely user intent</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US10353964\">US10353964</a> (Evaluating semantic interpretations, 2015)",
+      "affects": "Affected by: query ambiguity, entity presence, result set diversity. Ambiguous queries benefit most from multi-interpretation evaluation."
+    },
+    {
+      "name": "Context-Aware Query Expansion",
+      "source": "Patent US20080319962 (Riezler, Vasserman, 2008)",
+      "how": "Expands queries with context-aware synonyms using statistical machine translation (SMT). Trained on three parallel corpora: question-answer pairs (FAQ documents), query-snippet pairs (click-through logs filtered by dwell time), and phrase-paraphrase pairs (via back-translation through pivot language). Context maps store left/right word context to prevent incorrect expansions. The system 'translates' a query into a paraphrased version, extracting synonyms by comparing original and translated word-by-word.",
+      "formula": "<span class=\"cf-fn\">p</span>(paraphrase | input) =\n  <span class=\"cf-fn\">max</span><sub>trans</sub>[\n    <span class=\"cf-fn\">p</span>(<span class=\"cf-val\">translated</span> | <span class=\"cf-val\">input</span>) &times;\n    <span class=\"cf-fn\">p</span>(<span class=\"cf-val\">paraphrase</span> | <span class=\"cf-val\">translated</span>)\n  ]\n<span class=\"cf-comment\">// trained via EM on parallel corpora</span>\n\n<span class=\"cf-fn\">Expand</span>(query) = query <span class=\"cf-kw\">OR</span>\n  <span class=\"cf-fn\">synonym</span>(term, <span class=\"cf-val\">context</span>)\n<span class=\"cf-comment\">// context prevents: 'ship' -> 'boat'</span>\n<span class=\"cf-comment\">// context allows: 'ship' -> 'send' (in 'how to ship a box')</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US20080319962\">US20080319962</a> (Machine translation for query expansion, 2008)",
+      "affects": "Affected by: query context (surrounding words), training corpus quality (Q&A pairs, click logs), synonym disambiguation. Long-tail queries benefit most from expansion."
+    }
+  ],
+  "pipeline": {
+    "title": "QueryClassification in the Ranking Pipeline",
+    "stages": [
+      {
+        "name": "Query Received",
+        "detail": "Raw query string received by SuperRoot. Spelling correction, query expansion, and tokenization applied."
+      },
+      {
+        "name": "Entity Detection",
+        "detail": "Webref identifies entities in the query. Known entities (brands, people, places) influence classification toward navigational or local intent."
+      },
+      {
+        "name": "Intent Classification",
+        "detail": "QueryClassification assigns primary intent: navigational, informational, transactional, or local. Mixed intents possible for ambiguous queries."
+      },
+      {
+        "name": "Pipeline Configuration",
+        "detail": "Based on classification, RankingArchitecture activates the appropriate signal configuration. Different signal weights for each intent category."
+      },
+      {
+        "name": "SERP Feature Gating",
+        "detail": "Eligible SERP features determined by classification. Only features matching the query intent are candidates for Tangram assembly."
+      },
+      {
+        "name": "Ranking Execution",
+        "detail": "Mustang retrieval, Ascorer scoring, and Twiddler adjustments execute with the intent-specific configuration selected by QueryClassification."
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "~2008",
+      "type": "patent",
+      "title": "Universal Search and Intent",
+      "desc": "Google launches Universal Search, blending web, image, video, and news results. Query classification becomes essential for deciding which verticals to include."
+    },
+    {
+      "year": "2008",
+      "type": "patent",
+      "title": "Query Expansion via Machine Translation (US20080319962)",
+      "desc": "Google patents context-aware query expansion using statistical machine translation. Trained on Q&A pairs, query-snippet click logs, and back-translated paraphrases. Context maps prevent incorrect synonym expansion. p(paraphrase|input) computed via EM on parallel corpora."
+    },
+    {
+      "year": "2015",
+      "type": "patent",
+      "title": "Semantic Interpretation Evaluation (US10353964)",
+      "desc": "Google patents multi-interpretation query disambiguation. Generates canonical query templates per interpretation, compares result set similarity (Jaccard, keyword frequency, ranking order) between original and modified queries. Higher similarity indicates correct user intent interpretation."
+    },
+    {
+      "year": "~2012",
+      "type": "patent",
+      "title": "Knowledge Graph Integration",
+      "desc": "Knowledge Graph launch makes entity-based query classification more important. Queries about known entities trigger Knowledge Panels."
+    },
+    {
+      "year": "2019",
+      "type": "patent",
+      "title": "BERT for Query Understanding",
+      "desc": "BERT enables better semantic understanding of query intent, improving classification accuracy for ambiguous and long-tail queries."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "DOJ Trial: Classification Confirmed",
+      "desc": "Query intent classification confirmed as a pre-ranking system that gates SERP features and determines which ranking signal configurations are activated."
+    },
+    {
+      "year": "2018",
+      "type": "doj",
+      "title": "Personalization Confirmed as Rare (UPX1044)",
+      "desc": "Danny Sullivan and Gomes (Nov 2018): 'Personalization is rare and light.' Query is the dominant signal. No demographic profiling used in search. Top Stories never personalized. Confirms query classification, not user profiling, drives ranking configuration."
+    },
+    {
+      "year": "2024",
+      "type": "exploit",
+      "title": "Candour: 8 Query Semantic Classes Revealed",
+      "desc": "Mark Williams-Cook (Candour Agency) endpoint exploit exposed Google's 8 Refined Query Semantic Classes: Short fact, Boolean, Instruction, Definition, Reason, Comparison, Consequence, Other. Most queries fell into 'short fact' or 'Boolean' categories."
+    }
+  ]
+}

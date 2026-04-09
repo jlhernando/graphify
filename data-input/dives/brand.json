@@ -1,0 +1,152 @@
+{
+  "id": "brand",
+  "route": "/brand",
+  "systems": [
+    "Brand"
+  ],
+  "hero": {
+    "title": "Brand: Navigational Query Signals & Entity Recognition",
+    "subtitle": "Brand is a ranking signal that determines how Google handles branded queries, recognizes brand entities, and differentiates navigational from generic search intent. With 1 DOJ signal (queriesForWhichOfficial), 1 patent on brand search volume as a quality proxy, and no direct leak signals, Brand works through the OfficialPageTwiddler to boost recognized brand domains. While partially covered in the Authority deep dive, this deep dive focuses specifically on how Google identifies brand entities, classifies branded queries, and applies navigational boosts that dramatically alter ranking behavior for brand-related searches."
+  },
+  "keyInsight": {
+    "label": "Key Insight from DOJ Trial",
+    "text": "The <strong>queriesForWhichOfficial</strong> signal in PerDocData maps specific brand queries to their official URLs. When a query is classified as navigational, the <strong>OfficialPageTwiddler</strong> applies a significant ranking boost to the matched official domain, making it nearly impossible for non-brand pages to outrank the official site. This means brand recognition in Google's system is binary: either your domain is mapped as the official source for a brand query, or it is not. Google measures brand strength through <strong>directFrac</strong> (Chrome type-in traffic) and brand search volume, creating a feedback loop where established brands with more direct traffic receive stronger brand signals."
+  },
+  "pillars": [
+    {
+      "type": "doj",
+      "title": "DOJ Trial: Brand Query Mechanics",
+      "items": [
+        "<strong>queriesForWhichOfficial</strong> (PerDocData): Maps brand queries to official URLs. When a user searches for a brand name, this signal identifies which domain is the authoritative source.",
+        "<strong>OfficialPageTwiddler</strong>: Twiddler function that applies a ranking boost to official brand pages for navigational queries. Confirmed in sworn testimony as a deliberate ranking override.",
+        "Navigational query classification triggers special treatment: brand queries receive different SERP layout via Tangram, often including sitelinks, Knowledge Panel, and suppressed competitor results.",
+        "The DOJ trial revealed that Google's brand signal advantages established brands through the DataScaleAdvantage cycle: more brand searches generate better click data, which reinforces the brand's official mapping."
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "Related Leak Evidence",
+      "items": [
+        "No direct Brand-specific signals in the API leak, but related signals feed brand recognition:",
+        "<strong>navigationalBoost</strong> (QueryUnderstanding): Direct ranking boost applied when a query is classified as navigational. Brand queries are the primary trigger.",
+        "<strong>siteAuthority</strong>: Domain trust score that correlates with brand strength. Official brand domains accumulate higher siteAuthority through consistent engagement.",
+        "<strong>intentScores</strong>: Query intent classification that distinguishes navigational (brand) from informational and transactional queries. Drives whether brand treatment is applied.",
+        "<strong>commercialScore</strong>: Per-page commercial intent detection. Brand pages with transactional intent get different treatment than brand informational pages."
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "2 Patents",
+      "items": [
+        "<strong>Brand search volume as quality proxy</strong>: Patent evidence that the volume of branded searches for a domain is used as a trust and quality indicator. More brand searches signal legitimacy.",
+        "<strong>directFrac</strong>: Chrome data measuring what fraction of a site's traffic comes from direct/type-in navigation. High directFrac indicates strong brand recognition.",
+        "<strong>chromeInTotal</strong>: Total Chrome browser visits at site level. Combined with directFrac, provides a real-world measure of brand strength independent of search rankings.",
+        "Entity recognition via <strong>Webref</strong>: Brand entities are linked to Knowledge Graph entries. The kgEntityId mapping determines whether a brand is a recognized entity versus just a keyword.",
+        "Official page classification through pattern matching on domain ownership, WHOIS data, and entity-domain association in the Knowledge Graph.",
+        "<strong>Knowledge panel triggering</strong> - Patent <a href=\"https://patents.google.com/patent/US10922326\">US10922326</a> (Google, filed 2012): System for triggering knowledge panels when query references a factual entity. Entity identification from query + search results, confidence scoring, multi-source data aggregation (Knowledge Graph, Wikipedia, IMDB). Triggering criteria: entity prominence, structured data availability, estimated user experience improvement. Panel content prioritized by source authority, information freshness, and frequency across sources. Critical for brand SERP presentation",
+        "<a href=\"https://patents.google.com/patent/US10394816\">US10394816</a>: Detecting product lines within product search queries"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Brand Signals Affect Your SEO",
+      "items": [
+        "<strong>Build branded search volume deliberately</strong>: Google uses brand search volume as a quality proxy. Run campaigns that drive people to search for your brand name specifically. Podcast mentions, PR, social media, and offline advertising all generate brand queries that strengthen your queriesForWhichOfficial mapping.",
+        "<strong>Increase direct traffic through Chrome</strong>: directFrac and chromeInTotal measure type-in traffic via Chrome. High direct traffic ratios signal brand strength. Build email lists, browser bookmarks, and habitual visitors rather than relying solely on search traffic.",
+        "<strong>Establish your Knowledge Graph entity</strong>: Brand recognition depends on Webref linking your brand to a Knowledge Graph entity. Use Schema.org Organization markup, maintain a consistent brand presence across authoritative sources, and ensure your brand appears in Wikipedia/Wikidata to establish entity status.",
+        "<strong>Own your brand SERP</strong>: For navigational queries, Google shows sitelinks, Knowledge Panel, and social profiles. Ensure your official site has clear site structure for sitelinks generation. Claim your Google Business Profile. Link your official social accounts in structured data.",
+        "<strong>Protect against brand query hijacking</strong>: Competitors bidding on your brand name in ads can appear above your organic result. While OfficialPageTwiddler boosts organic results, paid ads still appear above. Monitor brand SERP and consider brand bidding defensively.",
+        "<strong>Differentiate brand vs generic content</strong>: Pages targeting branded queries should be clearly branded (homepage, about, product pages). Pages targeting generic queries should focus on topical authority instead. Google treats these query types with entirely different ranking logic."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "queriesForWhichOfficial",
+      "source": "DOJ",
+      "how": "Brand signal stored in PerDocData that maps specific navigational/brand queries to their official URLs. When a user searches for a brand name, Google looks up whether a URL is the official source for that query. If matched, OfficialPageTwiddler applies a significant ranking boost.",
+      "formula": "<span class=\"cf-fn\">queriesForWhichOfficial</span>(url) = <span class=\"cf-fn\">match</span>(\n  <span class=\"cf-val\">brand_queries</span> &rarr; <span class=\"cf-val\">official_url</span>\n)  <span class=\"cf-comment\">// navigational query to source mapping</span>\n<span class=\"cf-kw\">if</span> match: <span class=\"cf-fn\">OfficialPageTwiddler</span>(boost)\n<span class=\"cf-comment\">// official domain nearly always ranks #1 for brand queries</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8762394\">US8762394</a> (trust buttons for official sources)",
+      "affects": "Affected by: strong brand recognition, branded search volume, Knowledge Graph entity status, Schema.org Organization markup, consistent branding across the web."
+    },
+    {
+      "name": "Brand Strength Score",
+      "source": "Patent+Leak",
+      "how": "Composite brand strength derived from Chrome direct traffic data and branded search volume. directFrac measures what fraction of a site's visits come from direct navigation (typing the URL or using bookmarks). chromeInTotal measures total Chrome browser visits. Combined, these provide a real-world brand strength measure independent of search rankings.",
+      "formula": "<span class=\"cf-fn\">BrandStrength</span>(domain) = <span class=\"cf-fn\">f</span>(\n  <span class=\"cf-val\">directFrac</span>,      <span class=\"cf-comment\">// direct/type-in traffic fraction (Chrome)</span>\n  <span class=\"cf-val\">chromeInTotal</span>,   <span class=\"cf-comment\">// total Chrome browser visits</span>\n  <span class=\"cf-val\">brand_search_vol</span> <span class=\"cf-comment\">// volume of branded queries</span>\n)\n<span class=\"cf-comment\">// feeds into siteAuthority and Q* quality scoring</span>",
+      "patents": "",
+      "affects": "Affected by: direct traffic campaigns, brand awareness marketing, memorable domain names, email marketing driving direct visits, offline advertising generating brand searches."
+    },
+    {
+      "name": "Knowledge Panel Triggering",
+      "source": "Patent US10922326 (Google, 2012)",
+      "how": "System for deciding when to display a knowledge panel in the SERP for an entity query. Identifies entities from query text and search results using NER. Scores entity relevance and confidence. Evaluates panel quality based on: information completeness, source authority, data freshness, and query-entity match strength. Compares against triggering threshold. Aggregates data from multiple sources (Knowledge Graph, Wikipedia, IMDB, official websites). Panel content prioritized by: source authority, freshness, and frequency across sources. For brand entities, this determines whether a Knowledge Panel appears alongside organic results.",
+      "formula": "<span class=\"cf-fn\">PanelTrigger</span>(query) =\n  <span class=\"cf-fn\">entityConfidence</span>(query) &times;\n  <span class=\"cf-fn\">panelQuality</span>(\n    <span class=\"cf-val\">completeness</span>,\n    <span class=\"cf-val\">authority</span>,\n    <span class=\"cf-val\">freshness</span>,\n    <span class=\"cf-val\">match_strength</span>\n  )\n<span class=\"cf-kw\">if</span> score &gt; <span class=\"cf-val\">threshold</span>:\n  <span class=\"cf-kw\">display knowledge panel</span>\n<span class=\"cf-comment\">// multi-source: KG, Wikipedia, IMDB, official site</span>\n<span class=\"cf-comment\">// content ranked by authority + freshness</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US10922326\">US10922326</a> (Triggering knowledge panels, 2012)",
+      "affects": "Affected by: entity recognition in Knowledge Graph, structured data quality, Wikipedia/Wikidata presence, entity notability, multi-source coverage. Brand entities with strong KG presence trigger panels more reliably."
+    }
+  ],
+  "pipeline": {
+    "title": "Brand Signal Pipeline",
+    "stages": [
+      {
+        "name": "Query Classification",
+        "detail": "QUS classifies query as navigational, informational, or transactional. Brand name queries classified as navigational."
+      },
+      {
+        "name": "Entity Resolution",
+        "detail": "Webref resolves brand name to Knowledge Graph entity (kgEntityId). Determines if brand is a recognized entity."
+      },
+      {
+        "name": "Official URL Lookup",
+        "detail": "queriesForWhichOfficial maps brand query to official domain. PerDocData stores the brand-to-URL mapping."
+      },
+      {
+        "name": "OfficialPageTwiddler",
+        "detail": "Twiddler applies significant ranking boost to matched official domain. Near-guaranteed #1 for branded navigational queries."
+      },
+      {
+        "name": "SERP Assembly",
+        "detail": "Tangram assembles brand SERP: sitelinks, Knowledge Panel, social profiles, branded features."
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2009",
+      "type": "patent",
+      "title": "Brand Search Volume Patent",
+      "desc": "Google files patent using branded search volume as a quality and trust proxy. Sites that generate brand searches are treated as more authoritative."
+    },
+    {
+      "year": "2011",
+      "type": "patent",
+      "title": "Vince Update",
+      "desc": "Major algorithm update favoring established brands for broad, competitive queries. Brands start dominating head terms in SERPs."
+    },
+    {
+      "year": "2012",
+      "type": "patent",
+      "title": "Knowledge Panel Triggering Patent (US10922326)",
+      "desc": "Google patents knowledge panel triggering for entity queries. NER-based entity identification, multi-source data aggregation (KG, Wikipedia, IMDB), quality threshold for panel display. Content prioritized by authority and freshness. Foundation for brand Knowledge Panels."
+    },
+    {
+      "year": "2015",
+      "type": "patent",
+      "title": "Knowledge Graph Brand Entities",
+      "desc": "Brand entities integrated into Knowledge Graph. Branded queries trigger Knowledge Panels with structured business information."
+    },
+    {
+      "year": "2019",
+      "type": "patent",
+      "title": "Chrome Direct Traffic Signals",
+      "desc": "directFrac and chromeInTotal begin measuring brand strength through real browser navigation data. Direct traffic becomes a brand quality signal."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "DOJ Trial: queriesForWhichOfficial",
+      "desc": "Brand query mapping confirmed in sworn testimony. OfficialPageTwiddler revealed as deliberate brand boost mechanism. DataScaleAdvantage reinforces brand dominance."
+    }
+  ]
+}

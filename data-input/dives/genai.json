@@ -1,0 +1,321 @@
+{
+  "id": "genai",
+  "route": "/genai",
+  "systems": [
+    "GenAI",
+    "FastSearch"
+  ],
+  "hero": {
+    "title": "AI Overviews & Generative Search",
+    "subtitle": "Google's AI Overviews use Retrieval Augmented Generation (RAG) to combine Gemini LLM reasoning with real-time web content. FastSearch, a simplified retrieval system using only RankEmbed signals, grounds the AI responses. AI Mode maintains conversational context across queries. Strong correlation exists between top-3 organic results and AI Overview citations."
+  },
+  "keyInsight": {
+    "label": "Key Insight from Patents + DOJ Trial",
+    "text": "<strong>FastSearch is NOT traditional Search.</strong> DOJ remedies revealed it uses <strong>only RankEmbed signals</strong> (no link authority, no NavBoost) from a curated index subset. Google admitted <strong>\"the resulting quality is lower than Search's fully ranked web results.\"</strong> Two RAG approaches exist: <strong>generate-then-corroborate</strong> vs. <strong>retrieve-then-generate</strong>. Traditional SEO remains the <strong>\"entry ticket\"</strong> to AI Overview citations, as top-3 organic results strongly correlate with cited sources."
+  },
+  "pillars": [
+    {
+      "type": "patent",
+      "title": "16 Patents",
+      "items": [
+        "Patent <a href=\"https://patents.google.com/patent/US11769017B1\">US11769017</a>: <strong>Generative summaries for search results</strong> - Foundational AI Overviews patent",
+        "Patent <a href=\"https://patents.google.com/patent/US20240289407A1\">US20240289407</a>: <strong>Search with stateful chat</strong> - AI Mode architecture",
+        "Patent <a href=\"https://patents.google.com/patent/US20240346256A1\">US20240346256</a>: <strong>RAG model</strong> for response generation",
+        "Patent <a href=\"https://patents.google.com/patent/US20230342411A1\">US20230342411</a>: <strong>Short answer generation</strong> with multi-source validation",
+        "Patent <a href=\"https://patents.google.com/patent/US20240403564A1\">US20240403564</a>: <strong>Privacy-preserving personalized LLMs</strong>",
+        "Patent <a href=\"https://patents.google.com/patent/US11663201B2\">US11663201</a>: <strong>Generating query variants</strong> using trained generative model - Core query fan-out patent for RAG retrieval",
+        "Patent <a href=\"https://patents.google.com/patent/US11762848B2\">US11762848</a>: <strong>Combining multi-query parameters</strong> across shared line of inquiry - Query clustering and fusion",
+        "Patent <a href=\"https://patents.google.com/patent/US10346415B2\">US10346415</a>: <strong>Determining question and answer alternatives</strong> - Multi-topic decomposition with search verification",
+        "Patent <a href=\"https://patents.google.com/patent/US8954412B1\">US8954412</a>: <strong>Corroborating facts in electronic documents</strong> - Threshold-based fact verification by counting supporting documents",
+        "Patent <a href=\"https://patents.google.com/patent/US10019513B1\">US10019513</a>: <strong>Weighted answer terms for scoring</strong> - Term-weight passage scoring for answer extraction",
+        "Patent <a href=\"https://patents.google.com/patent/US10180964B1\">US10180964</a>: <strong>Candidate answer passages</strong> - Passage selection criteria for citation eligibility",
+        "<a href=\"https://patents.google.com/patent/US8086600\">US8086600</a>: Interleaving search results; <a href=\"https://patents.google.com/patent/US7827170\">US7827170</a>: Systems and methods for demoting personalized search results based on personal information; <a href=\"https://patents.google.com/patent/US9779139\">US9779139</a>: Context-based filtering of search results",
+        "<a href=\"https://patents.google.com/patent/US8775439\">US8775439</a>: Identifying entities using search results; <a href=\"https://patents.google.com/patent/US7451129\">US7451129</a>: System and method for providing preferred language ordering of search results"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "API Leak Signals",
+      "items": [
+        "<strong>RankEmbedNearestNeighbors</strong> - Embedding-based retrieval used by FastSearch for AI grounding document selection",
+        "<strong>SnippetBrainSelectedText</strong> - Pre-extracted answer passages from documents, fed into AI Overview generation pipeline",
+        "<strong>contentTopicality</strong> - Per-document topicality scores determining relevance for AI Overview citation selection",
+        "<strong>salientTerms</strong> - Key entity and concept terms extracted by Webref, used for query-document alignment in RAG retrieval",
+        "<strong>experimentalQstarSignal</strong> - Quality gate signals filtering which sources are eligible for AI Overview citation"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "DOJ Evidence",
+      "items": [
+        "<strong>FastSearch</strong> - Separate system from Search for AI grounding (Elizabeth Reid affidavit). Nayak (PXR0357, Jan 2025): FastSearch uses only RankEmbed signals as RAG retrieval for Gemini app",
+        "Uses only <strong>RankEmbed</strong> signals, not full ranking stack. RankEmbed 'performs poorly for tail queries' (Nayak PXR0357), meaning AI Overviews may have weaker grounding for uncommon searches",
+        "Retrieves fewer documents from curated index subset",
+        "Google admitted lower quality than full Search results",
+        "Prioritizes semantic matching over authority metrics",
+        "Court ordered sharing of GenAI training data in remedies",
+        "<strong>SGE/AI Overviews in Mehta opinion</strong> (FOF 101, 109): Google developed Search Generative Experience leveraging AI to 'add generative AI into the search results to enhance them' (Elizabeth Reid). Transformers technology 'allowed Google to rely on less user data and still improve its ranking of search results.' But LaMDA/PaLM/PaLM2 'were not built with user data' (FOF 100), while MUM WAS trained on web corpus + click data",
+        "<strong>LLM search stack rebuild</strong> - Nayak (PXR0357, Jan 2025): Google is 're-thinking their search stack from the ground-up with LLM taking a more prominent role.' Considering how fundamental components (ranking, retrieval, displaying SERP) can be reimagined with LLMs. LLMs can improve query interpretation and summarizing presentation of results. Computation time of LLMs is a key consideration depending on use case. ML training windows shrinking (90→60 days). Suggests fundamental architectural shift beyond adding AI features to existing pipeline",
+        "<strong>AI Overviews metrics</strong> (PXR0037, Board Update Q2 2024): 61M DAU, 239M MAU. +1.4% inslice en-US SUNs growth, +0.18% overall US SUNs. Multisearch: 99M MAU (3.6x YTD). Latency: 1628ms to 1370ms while doubling model size (v2-xs). 'People who use AI Overviews actually use Search more' (PXR0038)",
+        "<strong>Core ranking integrated into AIO</strong> (PXR0038): 'AI Overviews use a customized Gemini model, which works in tandem with our existing Search systems, like our quality and ranking systems and the Google Knowledge Graph.' 'We've integrated our core web ranking systems into this experience.' AIO clicks are 'higher quality' with more time spent on sites",
+        "<strong>Search grounding architecture</strong> (PXR0153, Anthropic Grounding Oct 2024): Vertex translates prompt into Search query, retrieves URLs + snippets (160 chars), model generates grounded response with recitation/corroboration checking. Two-tier quality: Gemini app gets KG, oneboxes, RelQ; Vertex gets web results only; Anthropic gets same as Vertex 'if not less.' Over 1,000 enterprise customers since May 2024",
+        "<strong>Publisher controls and grounding monetization</strong> (PXR0026, Apr 2024): 6 options for publisher control granularity over SGE. Architecture separates indexing, ranking, display, grounding, training. 'Do not say this opts them out of training, as we don't want to get into the details of distinction between Gemini training and SGE training, and KITE/MUM.' Grounding 'evolving into a space for monetization.' Recommendation: 'silently update, no public announcement'",
+        "<strong>NavBoost queries as Gemini pre-training data</strong> (PXR0095, Gemini v3-xs 2024): 'Append anonymized NavBoost Queries for selected documents.' Sessions data as distinct pre-training source. YouTube corpus explored. 80B/160B indie publisher tokens filtered from GCC. Search-specific data kept separate from what 'cloud/other customers cannot use'",
+        "<strong>Rankable Gemini suggestions</strong> (PXR0109, exec review): 'Provide rankable Gemini suggestions depending on query.' Implies LLM outputs treated as ranking candidates alongside organic results. Design principles: 'North star is a product users find valuable,' 'Preserve ads revenue,' 'Preserve a healthy ecosystem'",
+        "<strong>No Search cannibalization from Gemini</strong> (PXR0116, May 2024): Internal study found 'no statistically significant impact to overall mobile Search usage from adopting the Gemini Chat App.' Non-significant lift in queries/SUNs. Slight query shift from AGA to Chrome via Gemini fallback search",
+        "<strong>Three existential threats</strong> (PXR0113, Search Entry Points May 2023): (1) New AI access points (chatbots, LLMs), (2) Search intent shifting to mobile apps (>90% user time), (3) iOS 1P search experiences. Strategic response: embed Google Search into third-party apps and AI chatbots. TAM: 180B+ annual queries. Pilot with up to 15 partners",
+        "<strong>Search as corpus business</strong> (PXR0105, Reid Email May 2024): 'We thought we were in the finding business. Little did we know, we were also in the corpus business.' Search grounding = RAG via Google's index. 'Unprecedented effort across three PAs (Cloud, Core, Search).' Quora built chatbot powered by Search grounding",
+        "<strong>Magi: LLM Superpowers for Search</strong> (PXR0034, Sep 2023): Framework mapping LLM capabilities to Search: Synthesis (condense info, stitch sources), Creation (generate drafts, enable customization), Reliability (high quality, sources for verification), Breadth (multiformat, rich 1P data, authoritative voices), Conversation (stateful progression, collaboration)"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "Optimization Path",
+      "items": [
+        "Top-3 organic ranking strongly correlates with AI Overview citation",
+        "Semantic alignment with user intent matters more than backlinks for FastSearch",
+        "Comprehensive topic coverage enables extraction by RAG pipeline",
+        "Logical information architecture aids rapid content extraction",
+        "Two RAG modes: generate-then-corroborate, retrieve-then-generate",
+        "Query fan-out: LLM generates synthetic queries for broader retrieval"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "Gemini Grounding Pipeline: Live Interception (Apr 2026)",
+      "source": "Rankpedia Research - Gemini Protobuf Interception (Apr 2026)",
+      "items": [
+        "Live interception of Gemini's StreamGenerate endpoint reveals per-citation grounding scores",
+        "Each grounding entry contains: [passage_text, char_offsets], [type, verified_boolean, relevance_score], [[source_url, title, favicon]]",
+        "Relevance score is a 0-1 float measuring semantic similarity between Gemini's generated passage and the source document passage",
+        "Verified boolean indicates whether Google successfully confirmed the cited passage exists in the source at fetch time",
+        "Score distribution from 12 captured citations: range 0.063-0.923, mean 0.668",
+        "Strong correlation: verified=true entries average 0.83 score vs verified=false at 0.39",
+        "Specialist/authoritative sites score highest (motor.mapfre.es=0.923, carwow.co.uk=0.863)",
+        "Low-authority sites get near-zero scores (webuyanycarusa.com=0.063)",
+        "Character offset mapping enables exact source-to-response text highlighting in Gemini UI",
+        "Confirms PXR0153 two-tier grounding architecture: these scores likely determine Tier 1 (Gemini app) vs Tier 2 (Vertex/third-party) citation quality",
+        "FastSearch (RankEmbed-based RAG) confirmed as retrieval mechanism (PXR0357 Nayak), grounding score is the post-retrieval relevance filter",
+        "Main endpoint: /_/BardChatUi/data/assistant.lamda.BardFrontendService/StreamGenerate",
+        "Response format: batchexecute-wrapped streaming JSON with embedded grounding metadata",
+        "<strong>CRITICAL: Grounding scores do NOT verify factual accuracy.</strong> Source comparison revealed a hallucinated claim ('6 sillas infantiles') scored 0.945 verified=true when the actual source said only '3 ISOFIX'. The score measures SEMANTIC EMBEDDING SIMILARITY (vector distance), not truth. Passages about 'SUV premium con asientos ISOFIX' and 'SUV de gama alta con sillas infantiles' are close in embedding space despite different facts",
+        "Cross-language grounding fails: webuyanycarusa.com scored 0.063 because the source was in English while Gemini's response was in Spanish about entirely different cars. Embedding distance across languages is too large for meaningful grounding",
+        "Same domain can score very differently per passage: coches.net scored 0.945 for one passage and 0.545 for another. Grounding is passage-level, not site-level, unlike Q* which is site-level",
+        "The 'verified' flag correlates with #:~:text URL fragments: verified=true entries typically have text fragment selectors in the source URL, suggesting Google uses Scroll-to-Text to confirm passage existence at the cited location",
+        "Updated dataset: 17 citations captured across 12 unique domains. Score distribution: 0.063-0.946, mean 0.630. Verified=true avg 0.831 vs verified=false avg 0.404"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "Query Fan-Out & Source Selection Pipeline (Apr 2026)",
+      "source": "Rankpedia Research - Gemini Network Interception + Patent Analysis (Apr 2026)",
+      "items": [
+        "<strong>Expanded dataset: 32 citations across 22 domains, 9 responses.</strong> Score distribution: 0.063-0.956, mean 0.733. High-confidence flag on 75% (24/32). All responses used Gemini 3 Flash model with mode fbb127bbb056c959 (Fast)",
+        "<strong>Search queries are 100% server-side.</strong> Full browser network interception confirmed ZERO Google Search requests from the client. The entire query fan-out pipeline (reformulation, search, retrieval, grounding) runs server-side within the StreamGenerate endpoint",
+        "<strong>Query fan-out patent chain identified:</strong> US11663201 (variant query generation via neural net) -> US20240346256 (RAG vector retrieval) -> US20230342411 (multi-source consensus scoring) -> US11769017 (grounded summary with citations). User prompt is decomposed into multiple search-optimized queries server-side",
+        "<strong>Google text fragments prove Google Search involvement:</strong> 53% of citation URLs contain #:~:text= fragments (Google's Scroll-to-Text feature), confirming Gemini uses Google Search to find and locate specific passages within source pages",
+        "<strong>Grounding score is NOT word overlap.</strong> Pearson correlation between grounding score and literal word overlap is only 0.199 (weak). High scores (0.9+) can have 0% word match. Confirms pure embedding/semantic similarity, not lexical matching",
+        "<strong>Source selection is two-stage:</strong> (1) Sites must first rank in Google Search for Gemini's reformulated queries, (2) Then passage-level embedding similarity determines the grounding score. Sites with specific factual data (prices, specs) score higher (PcComponentes 0.951, Back Market 0.956) vs generic overviews (REVEL 0.399, ELLE 0.490)",
+        "<strong>Cross-language retrieval:</strong> Spanish-language queries pull sources from both .es and .co.uk/.com domains. Embedding similarity works across languages but degrades significantly (webuyanycarusa.com scored 0.063 for English content vs Spanish response)",
+        "<strong>Follow-up messages skip search:</strong> 4 of 9 captured responses had zero citations. These were conversation follow-ups where Gemini answered from context without triggering new search. Only first messages in a conversation thread reliably trigger grounding",
+        "<strong>sourceWeight=50 on all citations</strong> suggests a fixed retrieval cutoff (top 50 search results?) or a constant configuration value. sourceType=1 for web search results, sourceType=2 also observed",
+        "<strong>New query fan-out patents:</strong> US11663201 (generative query variants, 2018), US11762848 (combining multi-query parameters, 2022), US10346415 (multi-topic decomposition, 2016), US9002817 (interleaved multi-engine results), US20090198644 (learned rewrite policies with sequential providers)",
+        "<strong>Authority is irrelevant for citation selection.</strong> yourcar.es (small Spanish car blog, ranked #7 in organic Google for 'coches maletero grande 2026') was cited by Gemini alongside major sites like Carwow and PcComponentes. Because FastSearch uses only RankEmbed signals (no link authority, no NavBoost, no PageRank per PXR0357), a small topically-focused blog and a major publication are equally eligible. Organic rank position doesn't matter once retrieved; only the grounding score determines citation",
+        "<strong>Implication for SEO:</strong> To get cited by Gemini, sites need (1) rank in Google Search for likely query reformulations (even position 7+ is sufficient), and (2) have content that is semantically aligned with what Gemini will generate. Topical specificity and factual density matter more than domain authority for AI citations"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "5 Patents",
+      "items": [
+        "<strong>Grounding score = Cosine similarity</strong> (US20240346256): Patent describes generating feature vectors from query and source content, then computing cosine similarity. Two-stage selection: (1) similarity must exceed predetermined threshold, (2) top-K sources by highest similarity. This maps directly to the 0-1 float scores we intercepted in StreamGenerate responses",
+        "<strong>HighConfidence flag = Accuracy threshold</strong> (US20230342411): Patent describes accuracy scoring with threshold-based filtering: 'display passage if score > threshold, hide if below.' Trained with sigmoidal cross-entropy loss across multiple thresholds. Maps to the boolean highConfidence field (True when score > ~0.6)",
+        "<strong>Fact corroboration = Verified flag</strong> (US8954412): Patent creates hypothetical facts, counts supporting documents, accepts fact if support > threshold. May map to the verified boolean and the #:~:text= URL fragments used to confirm passage existence at source",
+        "<strong>Citation ordering = Pairwise ranking</strong> (US20250124067): LLM performs pairwise comparisons between retrieved sources, generating relative rankings. Determines citation display order",
+        "<strong>Adaptive grounding</strong> (US11769017): Patent describes tracking user interactions with cited sources and REVISING LLM output based on which documents were accessed. Explains why follow-up queries in a conversation may change citation patterns",
+        "<strong>Three scoring layers identified:</strong> (1) Embedding similarity for source retrieval (US20240346256), (2) Accuracy/consensus scoring for citation threshold (US20230342411, US8954412), (3) Pairwise ranking for citation ordering (US20250124067). Our interception captures layer 1 (the cosine similarity score) and layer 2 (the highConfidence threshold)"
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "FastSearch Retrieval",
+      "source": "DOJ",
+      "how": "FastSearch retrieves documents for AI Overview grounding using only RankEmbed semantic signals. It searches a curated subset of the full index, prioritizing semantic query-document alignment over traditional authority metrics. This makes topically relevant pages with modest backlinks competitive.",
+      "formula": "<span class=\"cf-fn\">FastSearch</span>(query) = <span class=\"cf-fn\">RankEmbed</span>(\n  <span class=\"cf-val\">curated_index</span>,\n  <span class=\"cf-fn\">semantic_match</span>(<span class=\"cf-val\">query</span>, <span class=\"cf-val\">doc</span>)\n)\n<span class=\"cf-comment\">// NO link authority, NO NavBoost</span>\n<span class=\"cf-comment\">// Google: \"quality is lower than Search\"</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US11769017B1\">US11769017</a> (generative summaries)",
+      "affects": "Affected by: RankEmbed model quality, curated index coverage, semantic alignment"
+    },
+    {
+      "name": "AI Overview Generation",
+      "source": "Patent",
+      "how": "The AI Overview pipeline uses RAG to combine LLM reasoning with retrieved web content. Patent US11769017 describes controls for when to invoke the LLM, how many results to feed it, and text-per-result limits based on latency requirements. Query fan-out generates synthetic queries for broader document retrieval.",
+      "formula": "<span class=\"cf-fn\">AIOverview</span>(query) = <span class=\"cf-fn\">Gemini</span>(\n  <span class=\"cf-val\">query</span>,\n  <span class=\"cf-fn\">FastSearch</span>(<span class=\"cf-val\">query</span> + <span class=\"cf-fn\">fan_out</span>(<span class=\"cf-val\">synthetic_queries</span>)),\n  <span class=\"cf-val\">latency_budget</span>\n) &rarr; <span class=\"cf-val\">summary + citations</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US11769017B1\">US11769017</a>, <a href=\"https://patents.google.com/patent/US20240346256A1\">US20240346256</a>, <a href=\"https://patents.google.com/patent/US20230342411A1\">US20230342411</a>",
+      "affects": "Affected by: Gemini model, FastSearch results, latency budget, query complexity"
+    },
+    {
+      "name": "AI Mode Context",
+      "source": "Patent",
+      "how": "AI Mode maintains a persistent context window linking searches across multiple queries. It references prior interactions (clicks, queries, refinements) to dynamically interpret user intent. Patent US20240289407 describes a 'generative companion' that generates synthetic queries using LLMs.",
+      "formula": "<span class=\"cf-fn\">AIMode</span>(query, context) = <span class=\"cf-fn\">Gemini</span>(\n  <span class=\"cf-val\">current_query</span>,\n  <span class=\"cf-val\">conversation_history</span>,\n  <span class=\"cf-fn\">FastSearch</span>(<span class=\"cf-fn\">rewrite</span>(<span class=\"cf-val\">query</span>, <span class=\"cf-val\">context</span>))\n)\n<span class=\"cf-comment\">// stateful: references prior clicks, queries, refinements</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US20240289407A1\">US20240289407</a> (stateful chat search)",
+      "affects": "Affected by: conversation history, user click patterns, query refinements"
+    },
+    {
+      "name": "Pairwise LLM Ranking",
+      "source": "Patent",
+      "how": "Next-generation ranking patent (2025) using LLM-based pairwise comparison. Instead of scoring documents individually, the model compares pairs of candidate passages and determines relative ranking. Represents a shift from pointwise/listwise to pairwise LLM ranking.",
+      "formula": "<span class=\"cf-fn\">PairwiseRank</span>(q, d1, d2) = <span class=\"cf-fn\">LLM</span>(\n  <span class=\"cf-val\">\"Which passage better answers: \"</span> + q,\n  <span class=\"cf-val\">passage_1</span>, <span class=\"cf-val\">passage_2</span>\n) &rarr; <span class=\"cf-val\">relative_order</span>\n<span class=\"cf-comment\">// shift from pointwise to pairwise ranking</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US20250124067A1\">US20250124067</a> (pairwise ranking prompting)",
+      "affects": "Affected by: LLM model quality, passage extraction, query understanding"
+    },
+    {
+      "name": "Query Fan-Out & Grounding",
+      "source": "Patent + Interception",
+      "how": "Gemini decomposes the user's natural language prompt into multiple search-optimized queries (fan-out), executes them server-side via Google Search, retrieves source passages, then computes embedding similarity between generated text and source content. The grounding score (0-1) determines citation eligibility. Score has 0.199 correlation with word overlap, confirming pure semantic/vector similarity. 53% of citations use Google text fragments for passage-level source verification.",
+      "formula": "<span class=\"cf-fn\">FanOut</span>(prompt) = <span class=\"cf-fn\">LLM_Decompose</span>(<span class=\"cf-val\">prompt</span>)\n  &rarr; [<span class=\"cf-val\">query_1</span>, <span class=\"cf-val\">query_2</span>, ... <span class=\"cf-val\">query_n</span>]\n\n<span class=\"cf-fn\">Sources</span> = <span class=\"cf-fn\">GoogleSearch</span>(<span class=\"cf-val\">queries</span>) &rarr; top ~50\n\n<span class=\"cf-fn\">GroundingScore</span>(<span class=\"cf-val\">passage</span>, <span class=\"cf-val\">source</span>) =\n  <span class=\"cf-fn\">CosineSim</span>(<span class=\"cf-fn\">Embed</span>(<span class=\"cf-val\">passage</span>), <span class=\"cf-fn\">Embed</span>(<span class=\"cf-val\">source</span>))\n<span class=\"cf-comment\">// Score: 0-1 float, highConf threshold ~0.6</span>\n<span class=\"cf-comment\">// Pearson(score, word_overlap) = 0.199</span>\n<span class=\"cf-comment\">// NOT factual accuracy, purely semantic</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US11663201B2\">US11663201</a> (query variants), <a href=\"https://patents.google.com/patent/US11762848B2\">US11762848</a> (multi-query fusion), <a href=\"https://patents.google.com/patent/US10346415B2\">US10346415</a> (multi-topic decomposition)",
+      "affects": "Affected by: Query decomposition quality, Google Search ranking for reformulated queries, embedding model, passage extraction quality"
+    }
+  ],
+  "pipeline": {
+    "title": "AI Overview Generation Pipeline",
+    "stages": [
+      {
+        "name": "Query Classification",
+        "detail": "Determine if query warrants AI Overview (not all queries trigger it)"
+      },
+      {
+        "name": "Query Fan-Out",
+        "detail": "LLM generates synthetic related queries for broader retrieval"
+      },
+      {
+        "name": "FastSearch Retrieval",
+        "detail": "RankEmbed-only retrieval from curated index subset"
+      },
+      {
+        "name": "Content Extraction",
+        "detail": "Key passages extracted from retrieved documents"
+      },
+      {
+        "name": "Gemini Generation",
+        "detail": "LLM synthesizes answer from retrieved content within latency budget"
+      },
+      {
+        "name": "Citation Linking",
+        "detail": "Generated text linked to source documents for attribution"
+      },
+      {
+        "name": "Quality Check",
+        "detail": "Output validated against factual consistency checks"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2023",
+      "type": "patent",
+      "title": "SGE Launch",
+      "desc": "Search Generative Experience launches in Labs. Patent US11769017 filed for generative summaries."
+    },
+    {
+      "year": "2023",
+      "type": "patent",
+      "title": "Short Answer Patents",
+      "desc": "Patent US20230342411: multi-source answer validation. Consensus-based accuracy checking."
+    },
+    {
+      "year": "2024",
+      "type": "patent",
+      "title": "AI Overviews Launch",
+      "desc": "SGE rebranded to AI Overviews. RAG patent US20240346256 filed. Global rollout begins."
+    },
+    {
+      "year": "2024",
+      "type": "patent",
+      "title": "AI Mode Patent",
+      "desc": "Patent US20240289407: stateful chat search with persistent context window and synthetic query generation."
+    },
+    {
+      "year": "2023",
+      "type": "doj",
+      "title": "Three Existential AI Threats Identified (PXR0113)",
+      "desc": "Google identified three threats (May 2023): AI chatbot access points, search intent shifting to apps (>90% user time), iOS 1P search. Strategy: embed Search into third-party apps and AI chatbots. TAM: 180B+ queries/year."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "AI Overviews: 61M DAU, Core Ranking Integrated (PXR0037, PXR0038)",
+      "desc": "Board update Q2 2024: AI Overviews at 61M DAU, 239M MAU. Multisearch: 99M MAU. Latency 1628ms to 1370ms while doubling model (v2-xs). AIO uses 'customized Gemini model in tandem with quality and ranking systems and Knowledge Graph' (PXR0038). AIO clicks are 'higher quality.'"
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "Search Grounding: Two-Tier Quality (PXR0153, PXR0105)",
+      "desc": "Search grounding launched May 2024 on Vertex AI. Gemini app gets full KG/oneboxes/RelQ; Vertex/Anthropic get 'web results only' with lower quality. 160-char snippets. 1,000+ enterprise customers. Reid: 'We were also in the corpus business.' Grounding 'evolving into a space for monetization' (PXR0026)."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "Publisher Controls: Silent Architecture (PXR0026)",
+      "desc": "6 options for publisher SGE opt-out. Architecture separates indexing/ranking/display/grounding/training. KITE and MUM named as distinct training systems. Recommendation: 'silently update, no public announcement.' 'Do not say this opts them out of training.' Grounding being monetized."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "No Search Cannibalization from Gemini (PXR0116)",
+      "desc": "Internal study (May 2024): 'No statistically significant impact to overall mobile Search usage from adopting the Gemini Chat App.' Non-significant lift in queries. Gemini adoption reinforces search usage, not replaces it."
+    },
+    {
+      "year": "2025",
+      "type": "doj",
+      "title": "FastSearch Revealed + LLM Stack Rebuild (PXR0357)",
+      "desc": "DOJ remedies reveal FastSearch as separate system using only RankEmbed for Gemini RAG on Vertex AI and Gemini app for grounding. Lower quality admitted. Nayak: Google 're-thinking search stack from ground-up with LLM.' Fundamental components (ranking, retrieval, SERP display) being reimagined. LLMs improve query interpretation and result summarization, but computation time is key constraint. Training windows shrinking (90→60 days)."
+    },
+    {
+      "year": "2025",
+      "type": "patent",
+      "title": "Pairwise LLM Ranking",
+      "desc": "Patent US20250124067: LLM-based pairwise comparison ranking. Next-gen approach to neural ranking."
+    },
+    {
+      "year": "2026",
+      "type": "exploit",
+      "title": "Grounding Pipeline Scores Intercepted",
+      "desc": "Live protobuf interception of Gemini's StreamGenerate endpoint reveals per-citation relevance scores (0-1), verified flags, and character offset mapping. Confirms PXR0153 two-tier grounding architecture. Score range 0.063-0.923 across 12 citations, with verified=true averaging 0.83."
+    },
+    {
+      "year": "2026",
+      "type": "exploit",
+      "title": "Query Fan-Out Pipeline Mapped (32 citations)",
+      "desc": "Extended interception to 9 responses, 32 citations across 22 domains. Confirmed search queries are 100% server-side (zero Google Search calls from browser). 53% of citation URLs contain Google text fragments (#:~:text=), proving Google Search involvement. Grounding score has only 0.199 correlation with word overlap, confirming pure embedding similarity. Patent chain mapped: US11663201 (query variants) -> US20240346256 (RAG) -> US20230342411 (multi-source scoring) -> US11769017 (grounded citations)."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"AI Overviews are powered by the same high-quality search results you trust.\"",
+      "internalSource": "DOJ Trial + PXR0153",
+      "internalClaim": "FastSearch uses only RankEmbed (no link authority, no NavBoost, no Q*) from a curated index subset. Google admitted the resulting quality is lower. Furthermore, Google deliberately gives Gemini app better search results than Vertex/Anthropic: 'much richer results with KG, oneboxes, and RelQ' vs 'web results only' for third parties."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"Our AI deeply understands your query to provide the best answer.\"",
+      "internalSource": "Patent Analysis",
+      "internalClaim": "The generate-then-corroborate approach means Gemini sometimes generates the answer FIRST and then finds supporting content. The quality depends on FastSearch retrieving relevant documents, which uses a simplified signal set."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"Publishers can control how their content appears in AI features using existing tools like nosnippet.\"",
+      "internalSource": "PXR0026 (Publisher Controls, Apr 2024)",
+      "internalClaim": "Internal recommendation: 'Silently update, no public announcement.' 'Do not say this opts them out of training, as we don't want to get into the details of distinction between Gemini training and SGE training, and KITE/MUM.' Grounding is 'evolving into a space for monetization.' Google deliberately obscures the distinction between display, grounding, and training."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"AI Overviews include citations so you can verify the information and explore further.\"",
+      "internalSource": "Rankpedia Research - Gemini Grounding Interception (Apr 2026)",
+      "internalClaim": "Live interception reveals grounding scores measure semantic embedding similarity, NOT factual accuracy. A hallucinated claim ('6 child seats') scored 0.945 verified=true when the source only mentioned 3 ISOFIX anchors. The embedding vectors for 'SUV premium con asientos ISOFIX' and 'SUV con 6 sillas infantiles' are close in vector space despite containing different facts. Citations create false confidence in unverified claims."
+    }
+  ]
+}

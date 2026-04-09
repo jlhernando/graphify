@@ -1,0 +1,184 @@
+{
+  "id": "content-structure",
+  "route": "/content-structure",
+  "systems": [
+    "ContentStructure"
+  ],
+  "hero": {
+    "title": "Content Structure: How Google Reads Your Page",
+    "subtitle": "Google evaluates not just what you write, but how you structure it. OnsiteProminence measures where a page sits in your site hierarchy. TitleQualityScore predicts how well your title works in search results. ImageLayoutScore evaluates visual content placement. With 8 leak signals, 1 DOJ signal, and 289 patents on page structure analysis."
+  },
+  "keyInsight": {
+    "label": "Key Insight from API Leak + DOJ Trial",
+    "text": "<strong>onsiteProminence</strong> tracks how prominently a page is linked from your homepage and site structure, meaning your internal linking hierarchy directly affects ranking. <strong>titleQualityScore</strong> predicts title presentation quality, and Google WILL rewrite your title if it scores poorly. <strong>pageClassification</strong> categorizes pages by type (article, product, forum, etc.), affecting which ranking signals apply."
+  },
+  "pillars": [
+    {
+      "type": "leak",
+      "title": "Signals Confirmed",
+      "items": [
+        "<strong>onsiteProminence</strong> - Page prominence within site structure and internal linking",
+        "<strong>titleQualityScore</strong> - Title presentation quality prediction for search results",
+        "<strong>titleSize</strong> - Title length tracking (too long triggers rewrite)",
+        "<strong>snippetPrefixCharCount</strong> - Character count for snippet extraction quality",
+        "<strong>imageLayoutScore</strong> - Visual content placement and layout quality",
+        "<strong>numImages</strong> - Image count on page (content richness signal)",
+        "<strong>tagPageScore</strong> - Tag/category page quality scoring",
+        "<strong>pageClassification</strong> - Page type categorization (article, product, forum)"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "1 Signal Confirmed",
+      "items": [
+        "<strong>avgTermWeight</strong> - Term importance weighting within document content",
+        "<strong>Three Pillars</strong> - Body (document content) is the first pillar of ranking",
+        "<strong>titlematchScore</strong> - Query-to-title relevance alignment measurement",
+        "Passage-level indexing confirmed: individual sections rank independently",
+        "Content segmentation separates main content from boilerplate"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "3 Patents",
+      "items": [
+        "Page segmentation and main content block identification (VIPS)",
+        "Passage-level indexing and independent passage ranking",
+        "Title quality evaluation and automatic title rewriting",
+        "Featured snippet extraction from structured content",
+        "Image-text relationship and layout quality scoring",
+        "Internal link structure analysis for content hierarchy",
+        "<a href=\"https://patents.google.com/patent/US6665837\">US6665837</a>: Method for identifying related pages in a hyperlinked database; <a href=\"https://patents.google.com/patent/US20100049709\">US20100049709</a>: Generating Succinct Titles for Web URLs; <a href=\"https://patents.google.com/patent/US7716569\">US7716569</a>: Framework for providing visual context to WWW hyperlinks"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Content Structure Affects Your SEO",
+      "items": [
+        "<strong>Maximize onsiteProminence through strategic internal linking</strong>: Pages linked from your homepage and top-level navigation receive higher prominence scores. Your most important content should be reachable within 1-2 clicks from the homepage. Restructure your navigation and add contextual internal links from high-prominence pages to push ranking weight to target pages.",
+        "<strong>Prevent title rewrites by optimizing titleQualityScore</strong>: Google rewrites titles that score poorly on this signal. Keep titles under 60 characters, avoid keyword stuffing, and ensure the title accurately reflects page content. When Google rewrites your title, it often reduces CTR. Check Search Console for title discrepancies.",
+        "<strong>Place target terms in headings to boost avgTermWeight</strong>: The DOJ confirmed that terms in titles receive the highest weight, followed by headings (H1-H6), then body text. Font size and bold formatting also factor in. Use your primary keyword in the H1, secondary keywords in H2s, and ensure heading hierarchy is semantic, not decorative.",
+        "<strong>Optimize for passage-level indexing</strong>: Google indexes and ranks individual page sections independently. Structure content with clear H2/H3 sections that each answer a specific question. Each passage should be self-contained enough to serve as a featured snippet. This means a single well-structured page can rank for multiple queries.",
+        "<strong>Score well on imageLayoutScore by integrating visuals with text</strong>: This signal evaluates image placement relative to text content. Place relevant images near the text they illustrate, use descriptive alt text, and maintain a good image-to-text ratio. Pages with no images score lower on content richness (numImages is tracked separately).",
+        "<strong>Avoid tagPageScore penalties on taxonomy pages</strong>: Google specifically scores tag and category pages for quality. Auto-generated tag pages with thin content or duplicate listings hurt your site. Either make taxonomy pages genuinely useful with unique descriptions and curated content, or noindex low-value tag pages."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "onsiteProminence",
+      "source": "Leak",
+      "how": "Tracks how prominently a page is linked from the homepage and site structure. Internal linking hierarchy directly affects ranking weight. Pages linked from the homepage or top-level navigation receive higher prominence scores than those buried deep in the site.",
+      "formula": "<span class=\"cf-fn\">onsiteProminence</span>(page) = <span class=\"cf-fn\">link_depth</span>(\n<span class=\"cf-val\">homepage</span>, page, <span class=\"cf-val\">nav_structure</span>\n)  <span class=\"cf-comment\">// closer to homepage = higher score</span>\n<span class=\"cf-kw\">if</span> in_top_nav: <span class=\"cf-kw\">boost</span> prominence\n<span class=\"cf-comment\">// internal linking hierarchy = ranking weight</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8818982\">US8818982</a> (page segmentation)",
+      "affects": "Affected by: homepage link placement, internal link depth, navigation structure, breadcrumb hierarchy"
+    },
+    {
+      "name": "titleQualityScore",
+      "source": "Leak",
+      "how": "Predicts title presentation quality for search results. Low scores trigger automatic title rewriting by Google. Evaluates title length (via titleSize), keyword stuffing, relevance to page content, and readability for SERP display.",
+      "formula": "<span class=\"cf-fn\">titleQualityScore</span>(page) = <span class=\"cf-fn\">evaluate</span>(\n<span class=\"cf-val\">titleSize</span>, <span class=\"cf-val\">keyword_density</span>, <span class=\"cf-val\">content_match</span>\n)\n<span class=\"cf-kw\">if</span> score &lt; <span class=\"cf-val\">threshold</span>: <span class=\"cf-kw\">rewrite</span> title_for_SERP\n<span class=\"cf-comment\">// Google rewrites low-quality titles automatically</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8818982\">US8818982</a> (page segmentation)",
+      "affects": "Affected by: title length, keyword density, content-title alignment, readability, SERP display fitness"
+    },
+    {
+      "name": "avgTermWeight",
+      "source": "DOJ",
+      "how": "Term importance weighting within a document. Measures where terms appear (title, headings, body text) and their visual prominence (font size, bold, etc.). Terms in titles and headings receive higher weight than body text occurrences.",
+      "formula": "<span class=\"cf-fn\">avgTermWeight</span>(term, doc) = <span class=\"cf-fn\">weighted_avg</span>(\n<span class=\"cf-val\">title_weight</span> * freq_title,\n<span class=\"cf-val\">heading_weight</span> * freq_h1_h6,\n<span class=\"cf-val\">body_weight</span> * freq_body\n)  <span class=\"cf-comment\">// title &gt; heading &gt; body</span>\n<span class=\"cf-comment\">// visual prominence (font size, bold) also factors</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8818982\">US8818982</a> (page segmentation), <a href=\"https://patents.google.com/patent/US8645362\">US8645362</a> (resource load times)",
+      "affects": "Affected by: term position (title > heading > body), font size, HTML tag hierarchy, term frequency"
+    },
+    {
+      "name": "imageLayoutScore",
+      "source": "Leak",
+      "how": "Evaluates visual content placement and layout quality on the page. Assesses how images are positioned relative to text content and overall page structure. <span class=\"calc-uncertain\">Exact scoring criteria not confirmed.</span>",
+      "formula": "<span class=\"cf-fn\">imageLayoutScore</span>(page) = <span class=\"cf-fn\">eval_layout</span>(\n<span class=\"cf-val\">img_positions</span>, <span class=\"cf-val\">text_proximity</span>, <span class=\"cf-val\">numImages</span>\n)  <span class=\"cf-comment\">// image-text relationship quality</span>\n<span class=\"cf-comment\">// combined with numImages for content richness</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8818982\">US8818982</a> (page segmentation)",
+      "affects": "Affected by: image placement, image-text relationship, layout structure, visual content quality"
+    }
+  ],
+  "pipeline": {
+    "title": "Content Structure Evaluation Pipeline",
+    "stages": [
+      {
+        "name": "Page Parse",
+        "detail": "HTML segmentation via DomDistiller-style heuristics: link density, text density, semantic HTML tags, CSS class blacklists. Separates main content from nav, footer, sidebar, ads. See Content Extraction dive for the full algorithm."
+      },
+      {
+        "name": "Title Analysis",
+        "detail": "titleQualityScore, titleSize, query-title match"
+      },
+      {
+        "name": "Content Scoring",
+        "detail": "avgTermWeight, pageClassification, passage extraction"
+      },
+      {
+        "name": "Visual Layout",
+        "detail": "imageLayoutScore, numImages, content richness"
+      },
+      {
+        "name": "Site Context",
+        "detail": "onsiteProminence, tagPageScore, internal hierarchy"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2005",
+      "type": "patent",
+      "title": "Page Segmentation",
+      "desc": "Google patents methods for identifying main content blocks vs boilerplate (headers, footers, navigation). VIPS algorithm (US7428700). Later formalized in DomDistiller (Chromium) and boilerplate detection patents (US8898296, US8041713)."
+    },
+    {
+      "year": "2009",
+      "type": "patent",
+      "title": "Featured Snippets Precursor",
+      "desc": "Patents on extracting and presenting direct answers from page content. Structured extraction from HTML."
+    },
+    {
+      "year": "2013",
+      "type": "patent",
+      "title": "Title Quality Signals",
+      "desc": "Google begins rewriting search titles when original titles are low quality, too long, or keyword-stuffed."
+    },
+    {
+      "year": "2019",
+      "type": "patent",
+      "title": "Passage Ranking",
+      "desc": "Google patents passage-level indexing and ranking. Individual sections of a page can rank independently."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "API Leak: 8 Structure Signals",
+      "desc": "onsiteProminence, titleQualityScore, snippetPrefixCharCount, imageLayoutScore, numImages, pageClassification confirmed."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "DOJ: Three Pillars",
+      "desc": "Body (document content) confirmed as first of Three Pillars. avgTermWeight measures term importance within document."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"We don't rewrite page titles. We use what webmasters provide.\"",
+      "internalSource": "API Leak",
+      "internalClaim": "titleQualityScore actively evaluates titles. Low-scoring titles are rewritten for search results. titleSize tracks length violations."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"Internal linking structure doesn't significantly affect rankings.\"",
+      "internalSource": "API Leak",
+      "internalClaim": "onsiteProminence measures how prominently a page is linked from the homepage and site structure. Pages buried deep in site hierarchy receive less ranking weight."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"Images are primarily for user experience, not a ranking factor.\"",
+      "internalSource": "API Leak",
+      "internalClaim": "imageLayoutScore and numImages are tracked as ranking signals. Visual content quality and placement directly affect content quality scoring."
+    }
+  ]
+}

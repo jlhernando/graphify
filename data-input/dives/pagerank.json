@@ -1,0 +1,181 @@
+{
+  "id": "pagerank",
+  "route": "/pagerank",
+  "systems": [
+    "PageRank",
+    "IndyRank"
+  ],
+  "hero": {
+    "title": "PageRank: Link Authority Mechanics",
+    "subtitle": "PageRank (Patent US6285999, Larry Page, 1998) models a random web surfer who clicks links with probability 0.85 and teleports randomly with probability 0.15. A page's PageRank equals the probability that this surfer lands on it. The modern system has evolved far beyond the original formula: the Reasonable Surfer model (US7716225) weights links by click probability, and PageRank_NS measures distance from trusted seed sites rather than raw link flow. The API leak revealed 7 active PageRank variants."
+  },
+  "keyInsight": {
+    "label": "Key Insight from API Leak + DOJ Trial",
+    "text": "The 2024 API leak revealed <strong>seven PageRank variants</strong> still active internally: pagerank, pagerank_ns, homepagePagerankNs, ToolbarPageRank, rawPagerank, pagerank2, and firstCoveragePagerank. The production version is <strong>PageRank_NS (Nearest Seed)</strong>, which measures distance from trusted seed sites, not just link counting. HJ Kim confirmed PageRank feeds into <strong>Q* (Quality)</strong> as one of 'over 100 raw signals.' Pandu Nayak clarified: 'Most of Google's quality signal is derived from the webpage itself,' placing PageRank as important but not dominant. The original patent <strong>expired September 2019</strong>."
+  },
+  "pillars": [
+    {
+      "type": "patent",
+      "title": "4 Patents",
+      "items": [
+        "Patent <a href=\"https://patents.google.com/patent/US6285999B1\">US6285999</a>: <strong>Original PageRank</strong> (Larry Page, Stanford) - Random surfer model, damping factor 0.85, iterative eigenvector computation",
+        "Patent <a href=\"https://patents.google.com/patent/US7716225B1\">US7716225</a>: <strong>Reasonable Surfer</strong> (Dean, Anderson, Battle) - Links weighted by click probability. Font size, position, color, context all affect weight",
+        "Patent <a href=\"https://patents.google.com/patent/US9165040B1\">US9165040</a>: <strong>Seed-based distance ranking</strong> (Hajaj) - Shortest distances from diversified trusted seed pages, not raw link flow",
+        "Patent <a href=\"https://patents.google.com/patent/US8117209B1\">US8117209</a>: <strong>Reasonable Surfer update</strong> - Enhanced user behavior and feature data for link weighting",
+        "Original patent expired Sept 2019. Assigned to Stanford (not Google). Stanford received 1.8M Google shares for exclusive license"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "API Leak: 7 PageRank Variants",
+      "items": [
+        "<strong>pagerank</strong>: Base/classic PageRank score",
+        "<strong>pagerank_ns</strong>: PageRank-NearestSeeds (production version). Distance from trusted seed sites",
+        "<strong>homepagePagerankNs</strong>: Homepage-specific PageRank_NS. Trust anchor for all pages on domain",
+        "<strong>ToolbarPageRank</strong>: Legacy metric, no longer public since 2016, still computed internally",
+        "<strong>rawPagerank</strong>: Basic unmodified PageRank from pure link structure",
+        "<strong>pagerank2</strong>: Updated version (exact differences unknown)",
+        "<strong>firstCoveragePagerank</strong>: PageRank captured when Google first discovers a page",
+        "<strong>IndyRank</strong>: Backlink independence/diversity. Many unrelated sources > cluster of related sites"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "DOJ Trial Evidence",
+      "items": [
+        "<strong>Pandu Nayak</strong>: PageRank is 'a single signal relating to distance from a known good source, used as input to Q*'",
+        "'Most of Google's quality signal is derived from the webpage itself' (PageRank important but not dominant)",
+        "<strong>HJ Kim</strong>: PageRank_NS feeds into NSR (Normalized Site Rank) computation",
+        "PageRank is one of 'over 100 raw signals' (Nayak testimony)",
+        "Q* (Quality) and P* (Popularity) are the two top-level ranking signals. PageRank contributes to Q*",
+        "<strong>HJ Kim (PXR0356, Feb 2025)</strong>: Confirmed PageRank is 'a single signal relating to distance from a known good source,' used as 'an input to the Quality score.' Reinforces that PageRank is one component of Q*, not a standalone ranking factor"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "Reasonable Surfer: What Affects Link Value",
+      "items": [
+        "<strong>Font size</strong>: Larger anchor text = higher click probability = more PageRank passed",
+        "<strong>Position</strong>: Links near top of page carry more weight. Footer/sidebar links devalued",
+        "<strong>Color/styling</strong>: Differently colored links, bold/italic styling affects perceived importance",
+        "<strong>Context</strong>: Words surrounding the anchor text affect link weight",
+        "<strong>Topical relevance</strong>: Anchor topic matching page topic increases weight",
+        "<strong>Click data</strong>: Actual user click frequency on a link affects its PageRank flow",
+        "<strong>Internal vs external</strong>: Same-domain links weighted differently from cross-domain",
+        "<strong>Outbound count</strong>: Fewer outbound links = more PageRank per link (dilution effect)",
+        "<strong>Yandex cross-reference:</strong> Yandex's FI_PAGE_RANK_BONUS applies dynamically to almost all 2+ word queries, giving links additional weight for less-frequent search terms. This suggests Google may similarly weight link authority differently by query length: for short head terms, brand/click signals dominate; for long-tail, links may matter more. Non-commercial link ratio is explicitly tracked in Yandex (confirming IndyRank's editorial independence concept)"
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Classic PageRank Formula",
+      "source": "Patent",
+      "how": "Each page's PageRank equals the probability that a random web surfer lands on it. With probability d (0.85), the surfer follows a random link. With probability (1-d), the surfer teleports to any random page. PageRank is computed iteratively until convergence, corresponding to the principal eigenvector of the normalized link matrix.",
+      "formula": "<span class=\"cf-fn\">PR</span>(A) = (1-d)/N + d * (\n  <span class=\"cf-fn\">PR</span>(<span class=\"cf-val\">T1</span>)/<span class=\"cf-fn\">C</span>(<span class=\"cf-val\">T1</span>) +\n  <span class=\"cf-fn\">PR</span>(<span class=\"cf-val\">T2</span>)/<span class=\"cf-fn\">C</span>(<span class=\"cf-val\">T2</span>) + ... +\n  <span class=\"cf-fn\">PR</span>(<span class=\"cf-val\">Tn</span>)/<span class=\"cf-fn\">C</span>(<span class=\"cf-val\">Tn</span>)\n)\n<span class=\"cf-comment\">// d = 0.85 (damping factor)</span>\n<span class=\"cf-comment\">// C(Ti) = outbound links from page Ti</span>\n<span class=\"cf-comment\">// Iterative until convergence (eigenvector)</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US6285999B1\">US6285999</a>",
+      "affects": "Affected by: inbound link count, linking page quality, outbound link dilution, link graph structure"
+    },
+    {
+      "name": "Reasonable Surfer Model",
+      "source": "Patent",
+      "how": "Replaces the random surfer (equal probability of clicking any link) with a reasonable surfer (varying probabilities based on link features). Links pass different amounts of PageRank based on the probability a real user would click them. Factors include font size, position, color, anchor text, context, topical relevance, and actual click data.",
+      "formula": "<span class=\"cf-fn\">LinkWeight</span>(link) = <span class=\"cf-fn\">P_click</span>(\n  <span class=\"cf-val\">font_size</span>, <span class=\"cf-val\">position</span>,\n  <span class=\"cf-val\">color</span>, <span class=\"cf-val\">anchor_text</span>,\n  <span class=\"cf-val\">context</span>, <span class=\"cf-val\">topical_match</span>,\n  <span class=\"cf-val\">actual_clicks</span>\n)\n<span class=\"cf-fn\">PR_passed</span> = <span class=\"cf-fn\">PR</span>(source) * <span class=\"cf-fn\">LinkWeight</span> / <span class=\"cf-fn\">sum</span>(weights)\n<span class=\"cf-comment\">// Not all links are equal</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US7716225B1\">US7716225</a>, <a href=\"https://patents.google.com/patent/US8117209B1\">US8117209</a>",
+      "affects": "Affected by: link prominence, position, styling, topical relevance, actual user click behavior"
+    },
+    {
+      "name": "PageRank_NS (Nearest Seed)",
+      "source": "Patent+Leak",
+      "how": "The production PageRank variant. Instead of pure link-flow, measures shortest distance from diversified trusted seed pages to each page in the graph. Each topic/niche has its own seed set. Pages closer to seeds rank higher. This is NOT the same as TrustRank (which propagates trust like classic PageRank). This is a distance-based algorithm.",
+      "formula": "<span class=\"cf-fn\">PageRankNS</span>(page) =\n  <span class=\"cf-fn\">min_distance</span>(\n    <span class=\"cf-val\">page</span>,\n    <span class=\"cf-fn\">seed_set</span>(<span class=\"cf-val\">topic</span>)\n  )\n<span class=\"cf-comment\">// Shorter distance = higher authority</span>\n<span class=\"cf-comment\">// Topic-specific seed sets (medical ≠ sports)</span>\n<span class=\"cf-comment\">// Feeds into Q* and NSR computation</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US9165040B1\">US9165040</a>",
+      "affects": "Affected by: link path to seed sites, seed set selection, link quality, topical alignment"
+    }
+  ],
+  "pipeline": {
+    "title": "PageRank Computation Pipeline",
+    "stages": [
+      {
+        "name": "Link Graph Construction",
+        "detail": "Trawler crawls web, Alexandria builds link graph. Billions of pages, trillions of links"
+      },
+      {
+        "name": "Seed Selection",
+        "detail": "Diversified trusted seed sets selected per topic/niche (e.g., NYT, Wikipedia, .gov sites)"
+      },
+      {
+        "name": "Distance Computation",
+        "detail": "PageRank_NS computed as shortest distance from seeds, weighted by Reasonable Surfer link probabilities"
+      },
+      {
+        "name": "Homepage Propagation",
+        "detail": "homepagePagerankNs computed first. Acts as trust anchor for all pages on domain"
+      },
+      {
+        "name": "IndyRank Assessment",
+        "detail": "Backlink independence measured. Many unrelated sources > cluster of related sites"
+      },
+      {
+        "name": "Feed into Q*",
+        "detail": "PageRank_NS and related signals feed into Q* (Quality score) alongside content and spam signals"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "1998",
+      "type": "patent",
+      "title": "Original PageRank",
+      "desc": "Larry Page files US6285999 at Stanford. Random surfer model with d=0.85 damping factor."
+    },
+    {
+      "year": "2004",
+      "type": "patent",
+      "title": "Reasonable Surfer",
+      "desc": "US7716225 filed. Links weighted by click probability. Font size, position, context all matter."
+    },
+    {
+      "year": "2006",
+      "type": "patent",
+      "title": "Seed-Based Distance",
+      "desc": "US9165040 filed. PageRank_NS measures distance from trusted seeds, not raw link flow."
+    },
+    {
+      "year": "2016",
+      "type": "patent",
+      "title": "Toolbar PageRank Hidden",
+      "desc": "ToolbarPageRank removed from public view. Still computed internally."
+    },
+    {
+      "year": "2019",
+      "type": "patent",
+      "title": "Patent Expires",
+      "desc": "Original PageRank patent (US6285999) expires September 2019. Algorithm continues internally."
+    },
+    {
+      "year": "2023",
+      "type": "exploit",
+      "title": "Yandex Leak Cross-Reference",
+      "desc": "Yandex leak confirms active PageRank with BM25 for anchor+body relevance (not TF*IDF). FI_LINK_RELEV evaluates link relevance per-query (dynamic, not static). FI_PAGE_RANK_BONUS applies extra link authority weight for 2+ word queries, suggesting link importance is query-length dependent. Homepage links weighted higher than deep page links. Top-100 PageRank sites carry disproportionate weight. Wikipedia links confirmed as a strong quality signal."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "7 Variants Revealed",
+      "desc": "API leak reveals 7 active PageRank variants: pagerank, pagerank_ns, homepage, toolbar, raw, v2, firstCoverage."
+    },
+    {
+      "year": "2025",
+      "type": "doj",
+      "title": "DOJ: Input to Q*",
+      "desc": "Nayak confirms PageRank is 'a single signal' feeding into Q*. One of 'over 100 raw signals.'"
+    },
+    {
+      "year": "2025",
+      "type": "doj",
+      "title": "HJ Kim Confirms Distance-Based Definition (PXR0356)",
+      "desc": "HJ Kim (DOJ Remedies Exhibit PXR0356, Feb 2025): PageRank is 'a single signal relating to distance from a known good source,' used as 'an input to the Quality score.' Confirms PageRank_NS (distance from seeds) is the production variant."
+    }
+  ]
+}

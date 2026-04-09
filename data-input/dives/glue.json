@@ -1,0 +1,180 @@
+{
+  "id": "glue",
+  "route": "/glue",
+  "systems": [
+    "Glue"
+  ],
+  "hero": {
+    "title": "Glue: The Super Query Log",
+    "subtitle": "Glue is Google's comprehensive SERP interaction tracking system with 2 leak signals and 3 DOJ signals. It extends NavBoost beyond blue links to ALL search features, capturing every user interaction with the search results page. Instant Glue provides real-time signals with ~10 minute latency for breaking news and trending queries."
+  },
+  "keyInsight": {
+    "label": "Key Insight from DOJ Trial",
+    "text": "Glue is <strong>NavBoost for everything that isn't a blue link</strong>. It captures query metadata, SERP layout, click patterns, <strong>mouseover events</strong>, dwell time per result, <strong>scroll depth</strong>, and query reformulations. <strong>Instant Glue</strong> provides real-time signals with ~10 minute latency on 24-hour data windows, used for breaking news. The system learns which SERP features satisfy user intent for specific query types, directly controlling feature placement."
+  },
+  "pillars": [
+    {
+      "type": "doj",
+      "title": "Signals,  Core",
+      "items": [
+        "<strong>Glue</strong> - Super query log extending NavBoost to all SERP features (sworn testimony)",
+        "<strong>Instant Glue</strong> - Real-time pipeline with ~10 min latency on 24h data windows",
+        "<strong>GlueSERPInteractions</strong> - Full interaction logging: clicks, hovers, scroll, dwell, reformulations",
+        "Captures SERP layout configuration for each query",
+        "Learns which features satisfy intent per query type",
+        "Feeds Tangram SERP assembly system for feature placement"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "Signals Confirmed",
+      "items": [
+        "<strong>Glue</strong> - Universal search results assembly using user behavior signals",
+        "<strong>socialEngagementSignal</strong> - Social media engagement measurement for result integration",
+        "<strong>GlueVoterTokenBitmapMessage</strong> - User de-duplication system for all SERP features. Uses 4 uint64s as a 256-bit bitmap to aggregate distinct voter tokens in the Glue pipeline. Extends NavBoost's voterTokenCount concept beyond blue links to Knowledge Panels, video carousels, image packs, People Also Ask, and AI Overviews. Stores a single uint64 voterToken when only one user contributed, or subRange (string list) bitmap components for multiple tokens. Enables approximate distinct-user counting across all SERP feature types",
+        "Glue module handles SERP feature decisions based on interaction data",
+        "Social engagement directly influences search result treatment",
+        "Connected to SocialGraphApiProto for social data integration"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "Related Patents",
+      "items": [
+        "Universal Search blending algorithms for mixed result types",
+        "User interaction heatmaps for SERP layout optimization",
+        "Feature satisfaction measurement per query category",
+        "Real-time trending signal detection for news and events",
+        "Query reformulation tracking to measure result satisfaction",
+        "Cross-feature cannibalization analysis for optimal placement"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Glue Affects Your SEO",
+      "items": [
+        "<strong>Optimize for all SERP interactions, not just clicks</strong>: Glue tracks mouseovers, scroll depth, dwell time per result, and query reformulations. A result that gets hovered but not clicked sends a different signal than one that is skipped entirely. Compelling meta descriptions and rich snippets that attract attention (even without clicks) build positive Glue signals for your listing.",
+        "<strong>Reduce query reformulations after users visit your page</strong>: When a user clicks your result and then returns to Google to reformulate their query, Glue records this as a dissatisfaction signal. Ensure your content fully answers the query so users do not need to search again. Cover the topic comprehensively and address common follow-up questions on the same page.",
+        "<strong>Maximize dwell time through engaging content structure</strong>: GlueSERPInteractions logs dwell time per result. Longer engagement signals content satisfaction. Use clear formatting, progressive disclosure, visual elements, and compelling writing to keep users engaged. Front-load the answer to prevent immediate bounces, then provide depth for users who want more.",
+        "<strong>Leverage chromeScrollingIntensity by creating scroll-worthy content</strong>: Chrome measures scroll depth, scroll speed, and pause patterns. High scroll depth combined with reading pauses (not rapid scrolling) signals engaged reading. Structure long-form content with clear sections, embedded visuals, and progressive value to encourage deep scrolling with genuine reading behavior.",
+        "<strong>Target SERP features that Glue data favors for your queries</strong>: Glue learns which SERP features satisfy user intent per query type. If your target queries consistently show featured snippets, video carousels, or image packs, optimize for those specific features. The Tangram system uses Glue data to assemble SERPs, so matching the format users prefer for that query type increases your chances of appearing.",
+        "<strong>Build social engagement signals for Glue integration</strong>: The API leak confirmed socialEngagementSignal as a Glue system signal connected to SocialGraphApiProto. Despite Google publicly denying social signals matter, social media engagement demonstrably feeds into SERP feature decisions. Content with strong social engagement gets additional consideration in Glue's feature placement logic.",
+        "<strong>React quickly to trending queries for Instant Glue advantages</strong>: Instant Glue operates with 10-minute latency on 24-hour data windows and feeds into Tangram SERP assembly. For breaking news and trending topics, the first content to generate positive user engagement signals in the Instant Glue pipeline gets a real-time ranking advantage that compounds as more users interact with it."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Glue",
+      "source": "DOJ",
+      "how": "Internal super query log warehouse extending NavBoost to ALL SERP features (not just blue links). Captures query metadata, SERP layout, interaction signals (clicks, hovers, dwell time), query interpretation data.",
+      "formula": "<span class=\"cf-fn\">Glue</span>(query) = <span class=\"cf-fn\">logWarehouse</span>(\n  <span class=\"cf-val\">clicks</span>, <span class=\"cf-val\">hovers</span>, <span class=\"cf-val\">dwellTime</span>, <span class=\"cf-val\">scrollDepth</span>, <span class=\"cf-val\">reformulations</span>\n)  <span class=\"cf-comment\">// extends NavBoost to ALL SERP features</span>\n<span class=\"cf-comment\">// not just blue links: images, videos, knowledge panels, featured snippets</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8661029\">US8661029</a> (click signals), <a href=\"https://patents.google.com/patent/US8874555\">US8874555</a> (search result modification)",
+      "affects": "Affected by: all SERP interactions matter, not just clicks. Hovers, scroll depth, time on page all feed into Glue."
+    },
+    {
+      "name": "Instant Glue",
+      "source": "DOJ",
+      "how": "Real-time pipeline variant with ~10-minute latency on 24-hour data windows. Used for breaking news and trending queries. Feeds into Tangram for SERP assembly.",
+      "formula": "<span class=\"cf-fn\">InstantGlue</span>(query, t) = <span class=\"cf-fn\">realTimeAggregate</span>(\n  <span class=\"cf-val\">interactions[t-24h..t]</span>\n)  <span class=\"cf-comment\">// ~10 min latency, 24h sliding window</span>\n<span class=\"cf-kw\">output</span> &rarr; <span class=\"cf-fn\">Tangram</span>(<span class=\"cf-val\">SERP assembly</span>)\n<span class=\"cf-comment\">// breaking news and trending queries use this path</span>",
+      "affects": "Affected by: speed on trending topics. Real-time engagement signals update rankings within minutes."
+    },
+    {
+      "name": "GlueSERPInteractions",
+      "source": "DOJ",
+      "how": "Logs everything: query text, user location/device, SERP layout, click patterns, mouseover events, dwell time per result, scroll depth, query reformulations.",
+      "formula": "<span class=\"cf-fn\">GlueSERPInteractions</span>(session) = {\n  <span class=\"cf-val\">queryText</span>, <span class=\"cf-val\">location</span>, <span class=\"cf-val\">device</span>, <span class=\"cf-val\">serpLayout</span>,\n  <span class=\"cf-val\">clicks[]</span>, <span class=\"cf-val\">mouseover[]</span>, <span class=\"cf-val\">dwellTime[]</span>, <span class=\"cf-val\">scrollDepth</span>, <span class=\"cf-val\">reformulations[]</span>\n}  <span class=\"cf-comment\">// comprehensive per-session interaction log</span>",
+      "affects": "Affected by: holistic user experience. Every interaction is tracked and feeds ranking."
+    },
+    {
+      "name": "chromeScrollingIntensity",
+      "source": "DOJ",
+      "how": "Chrome browser scrolling depth and intensity measurement. Content engagement signal from Chrome user data. Measures how much users actually read.",
+      "formula": "<span class=\"cf-fn\">chromeScrollingIntensity</span>(url) = <span class=\"cf-fn\">measure</span>(\n  <span class=\"cf-val\">scrollDepth%</span>, <span class=\"cf-val\">scrollSpeed</span>, <span class=\"cf-val\">pausePatterns</span>\n)  <span class=\"cf-comment\">// Chrome user data, content engagement proxy</span>\n<span class=\"cf-comment\">// high scroll depth + pauses = engaged reading</span>",
+      "affects": "Affected by: creating engaging content that users scroll through. Long-form content that holds attention."
+    }
+  ],
+  "pipeline": {
+    "title": "Glue Data Pipeline",
+    "stages": [
+      {
+        "name": "SERP Interaction",
+        "detail": "Clicks, hovers, scroll depth, dwell time, reformulations"
+      },
+      {
+        "name": "Glue Warehouse",
+        "detail": "Super query log aggregating all SERP feature interactions"
+      },
+      {
+        "name": "Instant Glue",
+        "detail": "Real-time pipeline: ~10 min latency, 24h data windows"
+      },
+      {
+        "name": "Feature Decisions",
+        "detail": "Which SERP features appear for which query types"
+      },
+      {
+        "name": "Tangram",
+        "detail": "SERP assembly: blue links, features, ads layout"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2008",
+      "type": "patent",
+      "title": "Universal Search",
+      "desc": "Google launches blended search results mixing web, images, news, video. Need to track cross-feature interactions emerges."
+    },
+    {
+      "year": "2012",
+      "type": "patent",
+      "title": "Search Plus Your World",
+      "desc": "Personalized results integration. User interaction tracking expanded beyond clicks to social signals."
+    },
+    {
+      "year": "2016",
+      "type": "patent",
+      "title": "Glue System Built",
+      "desc": "Internal super query log warehouse created to extend NavBoost beyond blue links to all SERP features."
+    },
+    {
+      "year": "2020",
+      "type": "patent",
+      "title": "Instant Glue Deployed",
+      "desc": "Real-time pipeline delivering fresh user signals with ~10 minute latency on 24-hour data windows."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "DOJ Trial: Glue Revealed",
+      "desc": "Pandu Nayak testified about Glue as super query log. Captures clicks, hovers, dwell time, scroll depth, SERP layout."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "API Leak: Social Signals",
+      "desc": "socialEngagementSignal in Glue system confirmed. Social media engagement feeds into SERP feature decisions."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"We don't track individual user behavior for ranking purposes.\"",
+      "internalSource": "DOJ Trial",
+      "internalClaim": "Glue captures comprehensive per-query interaction data: clicks, mouseovers, scroll depth, dwell time per result, query reformulations, device type, and user location. All fed back into ranking."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"SERP features are determined by query type and content availability.\"",
+      "internalSource": "DOJ Trial",
+      "internalClaim": "Glue explicitly learns which features satisfy user intent for specific query types based on interaction patterns. Feature placement is driven by behavioral data, not just content matching."
+    },
+    {
+      "publicSource": "Google Public",
+      "publicClaim": "\"We don't use social signals for ranking.\"",
+      "internalSource": "API Leak",
+      "internalClaim": "socialEngagementSignal is a confirmed leak signal in the Glue system, directly measuring social media engagement for search result integration."
+    }
+  ]
+}
