@@ -177,5 +177,19 @@
       "title": "ABC Framework Confirmed",
       "desc": "HJ Kim confirms T* = Anchors + Body + Clicks. Anchor text is one of three foundational pillars of Google's topicality scoring."
     }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Search Central (link guidelines)",
+      "publicClaim": "All links are treated equally as signals. Google evaluates links based on the content they point to and the context of the linking page.",
+      "internalSource": "API Leak: sourceType (HIGH/MEDIUM/LOW) + homepage trust tiers",
+      "internalClaim": "The API leak reveals a three-tier anchor quality system (TYPE_HIGH_QUALITY, TYPE_MEDIUM_QUALITY, TYPE_LOW_QUALITY) with additional homepage trust classification (FULLY_TRUSTED to NOT_TRUSTED). Links are explicitly unequal. The Reasonable Surfer model (US7716225) further weights links by click probability, meaning links in prominent positions on high-quality pages pass dramatically more value than sidebar links on low-quality pages."
+    },
+    {
+      "publicSource": "Google (public statements on anchor text)",
+      "publicClaim": "Anchor text helps us understand what a page is about. It is one of many signals we use.",
+      "internalSource": "DOJ: HJ Kim deposition (PXR0356) + T* = Anchors + Body + Clicks",
+      "internalClaim": "Anchor text is not 'one of many signals.' It is one of THREE sub-signals comprising T* (Topicality), which is a top-level pillar of Ascorer. HJ Kim confirmed T* = Anchors + Body + Clicks. Anchor text is structurally one-third of the core relevance score, making it far more important than 'one of many' implies."
+    }
   ]
 }

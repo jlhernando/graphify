@@ -165,5 +165,13 @@
       "title": "AI Overview Integration",
       "desc": "Tangram integrates AI-generated overviews (MAGIT/Gemini) into search results, fundamentally changing SERP layout for informational queries."
     }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google (public documentation on search features)",
+      "publicClaim": "SERP features like Knowledge Panels, People Also Ask, and Featured Snippets appear when they are helpful to users. They are designed to improve the search experience.",
+      "internalSource": "DOJ: Tangram (evolved from 'Tetris') + ads co-optimization",
+      "internalClaim": "Tangram arranges 'blue links, universal features, and ads for optimal space and UX' (DOJ). SERP features compete with organic results for limited screen real estate. Each feature added (Knowledge Panel, PAA, AI Overview) pushes organic results further down the page. The system name 'Tetris' (fitting pieces into limited space) reveals the fundamental trade-off: SERP features serve users but also reduce organic visibility, and the layout optimization considers both user experience AND revenue objectives."
+    }
   ]
 }

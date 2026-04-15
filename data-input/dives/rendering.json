@@ -67,6 +67,14 @@
   ],
   "calculations": [
     {
+      "name": "JavaScript Execution Cost Model",
+      "source": "Inferred from rendering budget + patents",
+      "how": "Not all JavaScript is equally expensive to render. Google must balance rendering completeness against computational cost. Pages with heavy frameworks (React, Angular, Vue with SSR-only content), excessive API calls, or long-running scripts consume more rendering budget. The cost model determines whether rendering a page is 'worth it' relative to the quality signal improvement from seeing the full DOM.",
+      "formula": "<span class=\"cf-fn\">RenderROI</span>(url) =\n  <span class=\"cf-fn\">signal_improvement</span>(\n    <span class=\"cf-val\">rendered_DOM</span> - <span class=\"cf-val\">raw_HTML</span>\n  ) / <span class=\"cf-fn\">execution_cost</span>(\n    <span class=\"cf-val\">JS_complexity</span>,\n    <span class=\"cf-val\">resource_count</span>,\n    <span class=\"cf-val\">timeout_risk</span>\n  )\n<span class=\"cf-comment\">// high ROI: SSR fallback with minor JS enhancements</span>\n<span class=\"cf-comment\">// low ROI: SPA where raw HTML is empty shell</span>\n<span class=\"cf-comment\">// timeout: partial DOM indexed if render exceeds budget</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US7346606\">US7346606</a> (resource scheduling for rendering)",
+      "affects": "Affected by: JS framework complexity, resource load count, timeout probability. SSR eliminates rendering cost entirely."
+    },
+    {
       "name": "Two-Phase Indexing Pipeline",
       "source": "DOJ+Leak",
       "how": "Google indexes pages in two phases. Phase 1: raw HTML is crawled and parsed for links and basic content. Phase 2: the page is queued for rendering, where JavaScript is executed in a headless WebKit browser to extract the fully-rendered DOM. Content only visible after JavaScript execution is only indexed after Phase 2 completes.",
@@ -148,6 +156,26 @@
       "type": "doj",
       "title": "DOJ Confirmation",
       "desc": "DOJ trial documentation independently confirms HtmlrenderWebkitHeadless under Indexing system. 100% corroboration achieved."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Developers (Googlebot documentation)",
+      "publicClaim": "Googlebot uses the latest version of Chromium to render pages. We keep it evergreen and up-to-date with Chrome releases.",
+      "internalSource": "API Leak: HtmlrenderWebkitHeadless in HtmlrenderWebkit module",
+      "internalClaim": "The API leak reveals the rendering engine is WebKit-based (HtmlrenderWebkitHeadless), not Chromium/Blink. WebKit and Blink diverged in 2013 and have different JavaScript engine implementations (JavaScriptCore vs V8). Pages that work perfectly in Chrome may render differently in Google's WebKit-based indexing pipeline."
+    },
+    {
+      "publicSource": "Google Search Central (JavaScript SEO guidelines)",
+      "publicClaim": "Google can render and index JavaScript content. We support modern JavaScript frameworks and dynamic content.",
+      "internalSource": "DOJ + Leak: Rendering budget + priority allocation",
+      "internalClaim": "Rendering is a resource-constrained, priority-based system. High-authority pages get rendered frequently; low-authority pages may rarely be re-rendered. Google must decide which pages are 'worth the computational cost of full JavaScript execution.' Pages that fail rendering are indexed with raw HTML only, missing JS-dependent content, links, and structured data."
+    },
+    {
+      "publicSource": "Google (public guidance on web development)",
+      "publicClaim": "Server-side rendering and client-side rendering are both supported. Choose whatever works best for your users.",
+      "internalSource": "Two-phase indexing pipeline + rendering priority allocation",
+      "internalClaim": "Client-side rendered content enters a delayed second phase (render queue) while server-side content is indexed immediately in phase 1. The render queue is priority-sorted by page authority and content change rate. Low-authority SPAs with client-side rendering face significant indexing delays compared to SSR equivalents. The technical choice directly impacts indexing speed and completeness."
     }
   ]
 }

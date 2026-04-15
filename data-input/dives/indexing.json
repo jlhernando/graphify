@@ -194,5 +194,19 @@
       "title": "Reid Affidavit",
       "desc": "Elizabeth Reid declares index tiering and crawl scheduling as Google's 'most guarded secrets.'"
     }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Search Central (indexing documentation)",
+      "publicClaim": "Google discovers and indexes pages automatically. Submit your sitemap and Google will crawl and index your pages.",
+      "internalSource": "DOJ: Elizabeth Reid on index tiering + importance rank thresholds",
+      "internalClaim": "Elizabeth Reid called index tiering and crawl scheduling Google's 'most guarded secrets.' Only a fraction of discovered URLs make it to the searchable index. Pages must pass importance rank thresholds, quality gates, and duplicate detection. Submitting a sitemap does not guarantee indexing. Pages can be discovered but deliberately excluded based on predicted query utility."
+    },
+    {
+      "publicSource": "Google (public statements on crawl equity)",
+      "publicClaim": "Googlebot treats all sites fairly. We crawl sites based on their importance and how often they change.",
+      "internalSource": "DOJ: HJ Kim on engagement-driven crawl frequency + tiered storage",
+      "internalClaim": "HJ Kim confirmed crawl frequency is driven by engagement signals, not just content changes. Sites with higher NavBoost engagement get crawled more frequently. The three-tier storage system (Base/Zeppelins/Rafts) determines retrieval latency: high-quality pages on flash storage are retrieved faster than low-quality pages on HDDs. 'Fairness' is structurally impossible when crawl frequency and retrieval speed are engagement-dependent."
+    }
   ]
 }

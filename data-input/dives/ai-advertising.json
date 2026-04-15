@@ -1,0 +1,259 @@
+{
+  "id": "ai-advertising",
+  "route": "/llm/ai-advertising",
+  "systems": ["AIAdvertising"],
+  "hero": {
+    "title": "AI Advertising: Paid Placement in LLM Responses",
+    "subtitle": "AI search platforms are rapidly monetizing through advertising, fundamentally changing how paid content appears in conversational results. Google AI Overviews show ads in <a href=\"https://searchengineland.com/google-ai-overviews-ads-growth-2025-468721\">25.5% of AI-generated SERPs</a> (up 394% YoY). OpenAI launched <a href=\"https://techcrunch.com/2026/02/09/chatgpt-rolls-out-ads/\">ChatGPT ads in February 2026</a> at <a href=\"https://www.adweek.com/media/exclusive-openai-confirms-200000-minimum-commitment-for-chatgpt-ads/\">$60 CPM with a $200K minimum</a>, projecting $1B in 2026 revenue scaling to $25B by 2029. Microsoft <a href=\"https://www.searchinfluence.com/blog/bing-ai-performance-report-copilot-citations/\">Copilot ads achieve 73% higher CTR</a> than traditional search. <a href=\"https://www.perplexity.ai/hub/blog/why-we-re-experimenting-with-advertising\">Perplexity tested sponsored follow-up questions</a> in November 2024 but abandoned advertising entirely by February 2026, citing user trust concerns. AI Overviews <a href=\"https://ahrefs.com/blog/ai-overviews-ctr/\">reduce organic CTR by 61%</a> and paid CTR by 68%, forcing a structural shift from click-based to impression-based monetization. The <a href=\"https://www.ftc.gov/legal-library/browse/rules/consumer-review-fairness-act\">FTC requires 'double disclosure'</a> for AI-generated sponsored content. The AI search ad market is projected to reach <a href=\"https://www.emarketer.com/content/ai-search-ad-spending-will-climb-with-consumer-adoption\">$25.9B by 2029, representing 13.6% of all search ad spending</a>."
+  },
+  "keyInsight": {
+    "label": "Key Insight",
+    "text": "AI advertising creates a <strong>fundamentally different monetization model</strong> from traditional search ads. Instead of bidding on keywords for link placement, advertisers now pay for <strong>contextual presence inside AI-generated answers</strong>. Google embeds ads at the bottom of AI Overviews (<a href=\"https://searchengineland.com/google-ai-overviews-ads-growth-2025-468721\">25.5% of queries</a>). OpenAI charges <strong><a href=\"https://www.adweek.com/media/exclusive-openai-confirms-200000-minimum-commitment-for-chatgpt-ads/\">$60 CPM</a></strong> (3x Meta's rates) for ChatGPT ads, reaching 800M weekly users. Microsoft Copilot delivers <strong><a href=\"https://www.searchinfluence.com/blog/bing-ai-performance-report-copilot-citations/\">73% higher CTR</a></strong> with ads inside conversational responses. The critical tension: <strong><a href=\"https://www.perplexity.ai/hub/blog/why-we-re-experimenting-with-advertising\">Perplexity abandoned ads entirely</a></strong> after finding that sponsored answers eroded user trust in response integrity. This tension between monetization and trust will define whether AI advertising follows Google's ad-dominant model or a subscription-first approach."
+  },
+  "pillars": [
+    {
+      "type": "leak",
+      "title": "Google AI Overviews Advertising",
+      "items": [
+        "<strong>Coverage expansion</strong>: Ads alongside AI Overviews rose from 3% in January 2025 to <a href=\"https://searchengineland.com/google-ai-overviews-ads-growth-2025-468721\">25.5% by late 2025, a 394% year-over-year increase</a>. Ads appear at the bottom of AI Overview SERPs, labeled 'Sponsored.' Commercial query categories reached ~40% ad presence before Google recalibrated in early 2026",
+        "<strong>AI Mode launch</strong>: <a href=\"https://blog.google/products/search/ai-mode-search/\">Google AI Mode reached 75M users</a> by December 2025, a 4x increase since May 2025 launch. Processes over 1B monthly queries across 100M active users (US and India). Usage jumped from 0.25% to over 1% of searches between May-July 2025, one of the fastest adoption rates in Google search history",
+        "<strong>CTR devastation</strong>: <a href=\"https://ahrefs.com/blog/ai-overviews-ctr/\">AI Overviews reduce organic CTR by 61%</a> (from 1.76% to 0.61%) and paid CTR by 68% (from 19.7% to 6.34%), per Seer Interactive September 2025 study. Ahrefs research (December 2025) shows 58% lower average CTR for top-ranking pages. Only 8% of users click organic results below an AI Overview vs 15% without one (Pew Research, July 2025)",
+        "<strong>Citation advantage</strong>: <a href=\"https://www.brightedge.com/\">Being cited in an AI Overview yields 35% more organic clicks and 91% more paid clicks</a> compared to non-cited results. Google search impressions climbed 49% post-AIO launch while CTR dropped 30%. The impression-to-click ratio fundamentally shifted",
+        "<strong>Shopping integration</strong>: Google launched shopping ads with Direct Offers inside AI Mode, monetizing AI search at the same rate as traditional search ads. Showroom Ads (April 2026) replicate in-store shopping experience digitally, with <a href=\"https://www.searchinfluence.com/blog/bing-ai-performance-report-copilot-citations/\">53% increase in purchase rates after Copilot engagement, 294% for shopping-intent interactions</a>",
+        "<strong>2026 roadmap</strong>: Dedicated bidding strategies and reporting for AI Overview and AI Mode placements expected. Embedded ads in UK opening to all advertisers. AI Mode ads currently in closed US trials. <a href=\"https://www.semrush.com/blog/semrush-ai-overviews-study/\">AI Overviews appear on 48% of all queries</a> as of March 2026"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "ChatGPT Advertising Launch",
+      "items": [
+        "<strong>Official launch</strong>: OpenAI announced January 16, 2026 that ChatGPT would begin displaying ads. <a href=\"https://techcrunch.com/2026/02/09/chatgpt-rolls-out-ads/\">Testing began February 9, 2026</a> for logged-in adults in the US on free and Go tiers. Ads appear at the bottom of answers, clearly labeled 'Sponsored'",
+        "<strong>Pricing structure</strong>: CPM-based pricing at approximately <a href=\"https://www.adweek.com/media/exclusive-openai-confirms-200000-minimum-commitment-for-chatgpt-ads/\">$60 per 1,000 impressions with a minimum commitment of $200,000</a> for beta program. Approximately 3x Meta's average CPM rates, significantly higher than Google Display Network. ChatGPT Ads hit $100M ARR in under two months",
+        "<strong>Revenue projections</strong>: <a href=\"https://www.wheresyoured.at/oai_docs/\">Internal OpenAI documents</a> project free user monetization generating $1B in 2026, scaling to $25B by 2029. OpenAI targets up to 20% of revenue from advertising. Annualized revenue reached $25B by February 2026",
+        "<strong>Financial necessity</strong>: <a href=\"https://www.wheresyoured.at/oai_docs/\">Inference costs reaching $8.4B in 2025, projected $14.1B in 2026</a>. Cumulative cash burn projected at $17B in 2026. Advertising monetizes the ~95% of 800M weekly users on the free tier",
+        "<strong>User protections</strong>: Pro, Business, and Enterprise subscriptions remain ad-free. Users under 18 see no ads. Ads excluded near politics, health, and mental health topics. OpenAI states ads do not influence ChatGPT answers and conversations remain private from advertisers",
+        "<strong>Ad format</strong>: Initial rollout in ChatGPT Search rather than main conversational threads. 'Sponsored Answer' appears alongside organic response, labeled and visually separated. Similar in concept to traditional PPC but more contextually integrated"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "Microsoft Copilot Advertising",
+      "items": [
+        "<strong>Performance data</strong>: <a href=\"https://www.searchinfluence.com/blog/bing-ai-performance-report-copilot-citations/\">Copilot generates 73% higher CTR and 16% stronger conversion rates</a> vs traditional search advertising. Customer journeys 33% shorter. Lower-funnel ad types show 69% stronger CTR and 76% higher conversion rates compared to traditional search",
+        "<strong>Ad placement</strong>: Performance Max campaigns appear beneath Copilot AI-generated responses, labeled 'Microsoft Advertising' and 'Sponsored.' Assets run across Bing search, partner sites, and Copilot conversational search. Copilot available free to all Microsoft Advertising users in 16 languages",
+        "<strong>Brand visibility</strong>: <a href=\"https://metricusapp.com/ai-platform-comparison-brands/\">Copilot has 20.0% brand mention rate with the best average citation position of 1.9</a> across AI platforms (March 2026). 75% of Google Ads campaigns now use AI Mode for at least part of their optimization"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "Perplexity's Advertising Experiment and Reversal",
+      "items": [
+        "<strong>Launch (November 2024)</strong>: <a href=\"https://www.perplexity.ai/hub/blog/why-we-re-experimenting-with-advertising\">Perplexity began testing sponsored follow-up questions</a>. Two formats: sponsored questions in 'Related Questions' section (40% of queries) where AI generates approved answers when clicked, and video ads alongside answers, labeled 'sponsored.' Initial partners: Indeed, Whole Foods Market, Universal McCann, PMG",
+        "<strong>Trust principle</strong>: Answers to sponsored questions still generated by Perplexity's AI, not written by sponsors. Ad content clearly labeled. Perplexity tried to preserve answer integrity while monetizing the discovery layer",
+        "<strong>Pause (October 2025)</strong>: Perplexity stopped accepting new advertisers. Head of advertising sales Taz Patel departed August 2025. Internal metrics presumably showed negative impact on user trust or engagement",
+        "<strong>Full abandonment (February 2026)</strong>: Perplexity eliminated all advertising. Executive told FT: 'A user needs to believe this is the best possible answer. Once advertisements appear, users begin to second-guess whether responses maintain integrity.' Repositioned subscriptions as primary business model",
+        "<strong>Industry signal</strong>: Perplexity's reversal demonstrates the fundamental tension between AI answer trust and advertising monetization. The company concluded that even clearly labeled, non-invasive ads undermined user confidence in AI-generated responses. This contrasts sharply with Google and OpenAI's ad-forward strategies"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "Cost Structures and Market Economics",
+      "items": [
+        "<strong>ChatGPT vs Google pricing</strong>: ChatGPT charges <a href=\"https://www.adweek.com/media/exclusive-openai-confirms-200000-minimum-commitment-for-chatgpt-ads/\">~$60 CPM</a> (impression-based) vs Google Ads average CPC of $4.51 (click-based). ChatGPT's minimum $200K commitment creates enterprise-only access. Google Ads CPC rose 10-25% in 2026 with average CPC climbing ~45% over two years",
+        "<strong>AI search ad market</strong>: <a href=\"https://www.emarketer.com/content/ai-search-ad-spending-will-climb-with-consumer-adoption\">US AI search ad spending projected at $2.08B in 2026, growing to $25.9B by 2029 (13.6% of all search ad spending)</a>. Global AI in advertising market: $11.17B in 2025, $14.12B in 2026, projected $36.34B by 2030 at 28.4% CAGR",
+        "<strong>Broader AI marketing market</strong>: Grand View Research projects $82.23B by 2030 at 25.0% CAGR. Market Research Future projects $215.03B by 2035 at 24.50% CAGR. North America holds largest share, Asia-Pacific fastest-growing region",
+        "<strong>Platform comparison (brand mention rates, March 2026)</strong>: <a href=\"https://metricusapp.com/ai-platform-comparison-brands/\">Google Gemini leads at 21.4% mention rate (avg position 2.5). Copilot 20.0% (position 1.9). Perplexity 11.4% (position 1.3, best citation position). ChatGPT most selective at 7.9% (position 2.0)</a>. 55% of AI Overview citations come from the first 30% of page content",
+        "<strong>Zero-click economics</strong>: <a href=\"https://sparktoro.com/blog/2024-zero-click-search-study-for-every-1000-us-google-searches-only-374-clicks-go-to-the-open-web-in-the-eu-its-360/\">93% of Google AI Mode sessions end without a click</a>. <a href=\"https://seranking.com/blog/ai-traffic-research-study/\">AI search traffic grew 527% YoY</a> (early 2024 to early 2025). 63% of enterprise marketers plan AI search budgets for 2026. The shift from CTR to 'reference rates' as primary KPI redefines advertising value measurement"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "Regulatory Framework",
+      "items": [
+        "<strong>FTC double disclosure</strong>: AI-generated content now requires disclosure that content is both sponsored AND AI-created. Virtual endorsers subject to same rules as human endorsers. Penalty cap of $51,744 per incident for FTC ad disclosure violations",
+        "<strong>Fake review ban</strong>: <a href=\"https://www.ftc.gov/legal-library/browse/rules/consumer-review-fairness-act\">FTC Consumer Review Rule</a> bans creating or promoting fake reviews, testimonials, or celebrity endorsements. Includes AI-generated reviews and testimonials. January 2026: FTC issued first warning letters under this rule to ten companies",
+        "<strong>AI-generated endorsement scrutiny</strong>: If the audience cannot reasonably identify that an endorsement was generated or amplified by AI, the program likely violates FTC guidance. The FTC Endorsement Guides treat virtual endorsers the same as human endorsers regarding material connection disclosure",
+        "<strong>Platform compliance approaches</strong>: OpenAI labels ads separately, claims no influence on answers. Google labels 'Sponsored' within AI Overviews. <a href=\"https://www.perplexity.ai/hub/blog/why-we-re-experimenting-with-advertising\">Perplexity abandoned ads</a> partly due to regulatory and trust complexity. The evolving regulatory landscape creates compliance risk for all AI advertising models"
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "AI Overview Ad Penetration Rate",
+      "source": "Industry Data (<a href=\"https://searchengineland.com/google-ai-overviews-ads-growth-2025-468721\">Search Engine Land</a>)",
+      "how": "Measures the percentage of AI Overview SERPs that include advertising placements. Tracked from 3% in January 2025 to <a href=\"https://searchengineland.com/google-ai-overviews-ads-growth-2025-468721\">25.5% by late 2025 (394% increase)</a>. Commercial query categories reached approximately 40% before recalibration. Indicates Google's monetization velocity for AI-generated results.",
+      "formula": "<span class=\"cf-fn\">AIOAdRate</span>(t) = \n  <span class=\"cf-val\">queries_with_ads</span>(t) /\n  <span class=\"cf-val\">total_aio_queries</span>(t)\n<span class=\"cf-comment\">// Jan 2025: 3%</span>\n<span class=\"cf-comment\">// Nov 2025: 25.5% (394% YoY)</span>\n<span class=\"cf-comment\">// commercial queries peaked ~40%</span>\n<span class=\"cf-comment\">// recalibrated early 2026</span>",
+      "patents": "",
+      "affects": "Affected by: query commercial intent, ad inventory availability, Google monetization strategy. Higher penetration = more revenue but potential user trust erosion."
+    },
+    {
+      "name": "AI Overview CTR Impact",
+      "source": "Seer Interactive + <a href=\"https://ahrefs.com/blog/ai-overviews-ctr/\">Ahrefs</a>",
+      "how": "Quantifies the click-through rate reduction caused by AI Overviews appearing on SERPs. <a href=\"https://ahrefs.com/blog/ai-overviews-ctr/\">Organic CTR drops 61%</a> (1.76% to 0.61%), paid CTR drops 68% (19.7% to 6.34%). Ahrefs confirms 58% lower CTR for top-ranking pages with AI Overviews. <a href=\"https://www.brightedge.com/\">Citation within AIO partially offsets: +35% organic clicks, +91% paid clicks when cited</a>.",
+      "formula": "<span class=\"cf-fn\">CTRImpact</span>(query) =\n  <span class=\"cf-fn\">if</span> <span class=\"cf-val\">has_aio</span>(query):\n    <span class=\"cf-val\">organic_ctr</span> &times; <span class=\"cf-val\">0.39</span>\n    <span class=\"cf-val\">paid_ctr</span> &times; <span class=\"cf-val\">0.32</span>\n  <span class=\"cf-fn\">if</span> <span class=\"cf-val\">cited_in_aio</span>:\n    <span class=\"cf-val\">organic_ctr</span> &times; <span class=\"cf-val\">1.35</span>\n    <span class=\"cf-val\">paid_ctr</span> &times; <span class=\"cf-val\">1.91</span>\n<span class=\"cf-comment\">// net effect: fewer total clicks</span>\n<span class=\"cf-comment\">// but citation = significant uplift</span>",
+      "patents": "",
+      "affects": "Affected by: AI Overview presence, citation inclusion, query type. Fundamentally reshapes the value equation for both organic and paid search investment."
+    },
+    {
+      "name": "ChatGPT Ad Revenue Projection",
+      "source": "<a href=\"https://www.wheresyoured.at/oai_docs/\">OpenAI Internal Documents</a>",
+      "how": "OpenAI's internal projections for free-user monetization through advertising. <a href=\"https://www.adweek.com/media/exclusive-openai-confirms-200000-minimum-commitment-for-chatgpt-ads/\">$60 CPM pricing with $200K minimum commitment</a>. Targets ~95% of 800M weekly users (free tier). Revenue targets: $1B in 2026, scaling to $25B by 2029. Advertising targeted at up to 20% of total revenue.",
+      "formula": "<span class=\"cf-fn\">ChatGPTAdRevenue</span>(year) =\n  <span class=\"cf-val\">free_users</span> &times;\n  <span class=\"cf-val\">sessions_per_user</span> &times;\n  <span class=\"cf-val\">ads_per_session</span> &times;\n  <span class=\"cf-val\">cpm</span> / <span class=\"cf-val\">1000</span>\n<span class=\"cf-comment\">// CPM: ~$60 (3x Meta rates)</span>\n<span class=\"cf-comment\">// 2026 target: $1B</span>\n<span class=\"cf-comment\">// 2029 target: $25B</span>\n<span class=\"cf-comment\">// min commitment: $200K</span>",
+      "patents": "",
+      "affects": "Affected by: free tier user base size, session frequency, CPM rates, advertiser demand. Sustainability depends on maintaining user growth while introducing ads without Perplexity-style trust erosion."
+    },
+    {
+      "name": "Copilot Ad Performance Multiplier",
+      "source": "<a href=\"https://www.searchinfluence.com/blog/bing-ai-performance-report-copilot-citations/\">Microsoft Research</a> (Nov 2024 - May 2025)",
+      "how": "Microsoft's research showing Copilot ads outperform traditional search ads across multiple metrics. <a href=\"https://www.searchinfluence.com/blog/bing-ai-performance-report-copilot-citations/\">CTR 73% higher, conversion rates 16% stronger, customer journeys 33% shorter</a>. Lower-funnel comparisons even stronger: 69% CTR uplift, 76% conversion uplift. Suggests conversational context improves ad relevance and user engagement.",
+      "formula": "<span class=\"cf-fn\">CopilotMultiplier</span> =\n  <span class=\"cf-val\">copilot_ctr</span> / <span class=\"cf-val\">traditional_ctr</span>\n  = <span class=\"cf-val\">1.73</span>\n  <span class=\"cf-val\">copilot_cvr</span> / <span class=\"cf-val\">traditional_cvr</span>\n  = <span class=\"cf-val\">1.16</span>\n  <span class=\"cf-val\">copilot_journey</span> / <span class=\"cf-val\">traditional_journey</span>\n  = <span class=\"cf-val\">0.67</span>\n<span class=\"cf-comment\">// lower funnel: 1.69x CTR, 1.76x CVR</span>\n<span class=\"cf-comment\">// conversational context = better matching</span>",
+      "patents": "",
+      "affects": "Affected by: conversational context depth, query commercial intent, ad format integration quality. Higher performance may justify premium pricing for conversational ad placements."
+    },
+    {
+      "name": "AI Search Ad Market Growth",
+      "source": "<a href=\"https://www.emarketer.com/content/ai-search-ad-spending-will-climb-with-consumer-adoption\">eMarketer</a>",
+      "how": "Tracks the projected growth of AI-specific search advertising market. <a href=\"https://www.emarketer.com/content/ai-search-ad-spending-will-climb-with-consumer-adoption\">US AI search ad spending: $1B (2025), $2.08B (2026), $25.9B (2029, 13.6% of all search spending)</a>. Global AI advertising market: $11.17B (2025), $14.12B (2026), $36.34B (2030). CAGR of 28.4-36.6% depending on scope definition.",
+      "formula": "<span class=\"cf-fn\">AIAdMarket</span>(year) =\n  <span class=\"cf-val\">US_ai_search</span>:\n    2025: $<span class=\"cf-val\">1.0B</span>\n    2026: $<span class=\"cf-val\">2.08B</span>\n    2029: $<span class=\"cf-val\">25.9B</span>\n  <span class=\"cf-val\">global_ai_advertising</span>:\n    2025: $<span class=\"cf-val\">11.17B</span>\n    2030: $<span class=\"cf-val\">36.34B</span>\n<span class=\"cf-comment\">// CAGR: 28.4-36.6%</span>\n<span class=\"cf-comment\">// 2029: 13.6% of all search ad spend</span>",
+      "patents": "",
+      "affects": "Affected by: AI search adoption rates, advertiser willingness to experiment, platform ad format maturity, regulatory environment. Growth rate suggests AI ads will be a significant portion of digital advertising within 3-4 years."
+    }
+  ],
+  "pipeline": {
+    "title": "AI Advertising Monetization Pipeline",
+    "stages": [
+      {
+        "name": "User Query",
+        "detail": "User submits natural language query to AI platform (Google AI Mode, ChatGPT, Copilot). Query analyzed for commercial intent, topic category, and advertiser relevance. Sensitive topics (politics, health, mental health) excluded from ad targeting on ChatGPT."
+      },
+      {
+        "name": "AI Response Generation",
+        "detail": "LLM generates answer using training data, RAG retrieval, and reasoning. Response generated independently of advertising. Platforms claim ad content does not influence answer generation (OpenAI principle, Google separation)."
+      },
+      {
+        "name": "Ad Matching",
+        "detail": "Parallel or post-generation ad matching based on query context and response content. Google: embedded in AI Overview SERP (<a href=\"https://searchengineland.com/google-ai-overviews-ads-growth-2025-468721\">25.5% of queries</a>). ChatGPT: appended at bottom of answer (<a href=\"https://www.adweek.com/media/exclusive-openai-confirms-200000-minimum-commitment-for-chatgpt-ads/\">$60 CPM</a>). Copilot: Performance Max beneath AI response. <a href=\"https://www.perplexity.ai/hub/blog/why-we-re-experimenting-with-advertising\">Perplexity (abandoned)</a>: sponsored follow-up questions in Related Questions section."
+      },
+      {
+        "name": "Disclosure and Rendering",
+        "detail": "Ads labeled 'Sponsored' and rendered separately from AI-generated content. <a href=\"https://www.ftc.gov/legal-library/browse/rules/consumer-review-fairness-act\">FTC requires double disclosure</a> (sponsored + AI-generated). Visual separation varies by platform. ChatGPT excludes premium tiers and minors."
+      },
+      {
+        "name": "Performance Measurement",
+        "detail": "Shift from click-based (CPC) to impression-based (CPM) metrics. <a href=\"https://sparktoro.com/blog/2024-zero-click-search-study-for-every-1000-us-google-searches-only-374-clicks-go-to-the-open-web-in-the-eu-its-360/\">93% of AI Mode sessions end without clicks</a>, making traditional CTR less meaningful. New KPIs: reference rates, <a href=\"https://metricusapp.com/ai-platform-comparison-brands/\">brand mention rates, citation positions</a>. <a href=\"https://seranking.com/blog/ai-traffic-research-study/\">AI search traffic grew 527% YoY</a>."
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2024-05",
+      "type": "event",
+      "title": "Google AI Overviews US Launch",
+      "desc": "Google deploys AI Overviews in the US with ads limited to standard 'above the fold' placements. Minimal ad integration initially."
+    },
+    {
+      "year": "2024-08",
+      "type": "event",
+      "title": "AI Overviews Reach UK",
+      "desc": "Organic AI summaries arrive in the UK with minimal ad integration. Sets stage for international expansion."
+    },
+    {
+      "year": "2024-11",
+      "type": "event",
+      "title": "Perplexity Launches Sponsored Questions",
+      "desc": "<a href=\"https://www.perplexity.ai/hub/blog/why-we-re-experimenting-with-advertising\">Perplexity begins testing sponsored follow-up questions</a> and side video ads. Initial partners include Indeed and Whole Foods Market. AI still generates answers to sponsored questions."
+    },
+    {
+      "year": "2025-01",
+      "type": "event",
+      "title": "AI Overview Ad Penetration at 3%",
+      "desc": "Ads appear alongside only <a href=\"https://searchengineland.com/google-ai-overviews-ads-growth-2025-468721\">3% of AI Overview SERPs</a>. Google begins slow ramp of ad monetization within AI-generated results."
+    },
+    {
+      "year": "2025-05",
+      "type": "event",
+      "title": "Google AI Mode Launch",
+      "desc": "<a href=\"https://blog.google/products/search/ai-mode-search/\">Google AI Mode launches</a>, reaching initial users. Usage at 0.25% of searches. Represents Google's dedicated conversational AI search interface."
+    },
+    {
+      "year": "2025-07",
+      "type": "event",
+      "title": "AI Overview Visibility Peaks",
+      "desc": "AI Overview visibility peaks at just under 25% of queries before Google pulls back to less than 16% by November. AI Mode usage jumps to over 1% of searches."
+    },
+    {
+      "year": "2025-08",
+      "type": "event",
+      "title": "Perplexity Ad Sales Chief Departs",
+      "desc": "Taz Patel, Perplexity's head of advertising sales, departs. Signals internal doubts about ad-supported model."
+    },
+    {
+      "year": "2025-09",
+      "type": "event",
+      "title": "Seer Interactive CTR Study",
+      "desc": "Seer Interactive publishes research showing <a href=\"https://ahrefs.com/blog/ai-overviews-ctr/\">AI Overviews reduce organic CTR by 61% and paid CTR by 68%</a>. Industry begins quantifying the revenue impact."
+    },
+    {
+      "year": "2025-10",
+      "type": "event",
+      "title": "Perplexity Pauses New Advertisers",
+      "desc": "Perplexity stops accepting new advertisers. Internal assessment suggests advertising undermines user trust in AI-generated answers."
+    },
+    {
+      "year": "2025-11",
+      "type": "event",
+      "title": "AI Overview Ad Penetration Reaches ~40%",
+      "desc": "Ads alongside AI Overviews reach approximately 40% for commercial query categories (<a href=\"https://searchengineland.com/google-ai-overviews-ads-growth-2025-468721\">Search Engine Land</a>). Google later recalibrates in early 2026."
+    },
+    {
+      "year": "2025-12",
+      "type": "event",
+      "title": "Google AI Mode Reaches 75M Users",
+      "desc": "<a href=\"https://blog.google/products/search/ai-mode-search/\">AI Mode reaches 75M users</a>, a 4x increase since May launch. Processes over 1B monthly queries. <a href=\"https://ahrefs.com/blog/ai-overviews-ctr/\">Ahrefs confirms 58% lower CTR</a> for pages with AI Overviews."
+    },
+    {
+      "year": "2026-01",
+      "type": "event",
+      "title": "OpenAI Announces ChatGPT Ads",
+      "desc": "OpenAI announces January 16 that ChatGPT will display ads to free-tier US users. <a href=\"https://www.adweek.com/media/exclusive-openai-confirms-200000-minimum-commitment-for-chatgpt-ads/\">$60 CPM, $200K minimum</a>. <a href=\"https://www.ftc.gov/legal-library/browse/rules/consumer-review-fairness-act\">FTC issues first warning letters</a> under Consumer Review Rule."
+    },
+    {
+      "year": "2026-02",
+      "type": "event",
+      "title": "ChatGPT Ads Go Live / Perplexity Abandons Ads",
+      "desc": "<a href=\"https://techcrunch.com/2026/02/09/chatgpt-rolls-out-ads/\">ChatGPT ads begin February 9</a>. Hit $100M ARR in under two months. Same month, Perplexity eliminates all advertising citing user trust concerns: 'Users begin to second-guess whether responses maintain integrity.'"
+    },
+    {
+      "year": "2026-03",
+      "type": "event",
+      "title": "AI Overviews Cover 48% of Queries",
+      "desc": "<a href=\"https://www.semrush.com/blog/semrush-ai-overviews-study/\">AI Overviews appear on 48% of all US queries</a>. <a href=\"https://metricusapp.com/ai-platform-comparison-brands/\">Brand mention rate comparison: Gemini 21.4%, Copilot 20.0%, Perplexity 11.4%, ChatGPT 7.9%</a>."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "OpenAI (January 2026 announcement)",
+      "publicClaim": "Ads do not influence the answers ChatGPT gives you. Ads are always separate and clearly labeled. OpenAI keeps conversations private from advertisers and never sells data.",
+      "internalSource": "<a href=\"https://www.wheresyoured.at/oai_docs/\">OpenAI internal revenue documents</a> + market positioning",
+      "internalClaim": "Internal documents project advertising generating $1B in 2026 scaling to $25B by 2029, targeting up to 20% of total revenue. With <a href=\"https://www.wheresyoured.at/oai_docs/\">inference costs of $14.1B projected for 2026</a> and cumulative cash burn of $17B, the financial pressure to maximize ad revenue creates structural incentives that may increasingly conflict with the stated independence of AI answers from advertising influence."
+    },
+    {
+      "publicSource": "Google (AI Overview ad strategy)",
+      "publicClaim": "AI Overviews provide users with helpful, high-quality summaries. Ads are clearly labeled and do not affect the AI-generated content.",
+      "internalSource": "Industry performance data (Seer Interactive, <a href=\"https://ahrefs.com/blog/ai-overviews-ctr/\">Ahrefs</a>, Pew Research)",
+      "internalClaim": "<a href=\"https://ahrefs.com/blog/ai-overviews-ctr/\">AI Overviews reduce organic CTR by 61% and paid CTR by 68%</a>. Only 8% of users click organic results below an AI Overview. Google <a href=\"https://searchengineland.com/google-ai-overviews-ads-growth-2025-468721\">increased ad penetration from 3% to 25.5%</a> of AI Overview SERPs in one year (394% increase), reaching 40% for commercial queries before pulling back. The rapid monetization pace suggests revenue optimization is driving AI Overview expansion as much as user benefit."
+    },
+    {
+      "publicSource": "AI platforms generally (advertising announcements)",
+      "publicClaim": "AI-generated answers remain objective and independent. Advertising is clearly separated from content. Users can trust AI responses regardless of ad presence.",
+      "internalSource": "<a href=\"https://www.perplexity.ai/hub/blog/why-we-re-experimenting-with-advertising\">Perplexity</a> (February 2026 reversal)",
+      "internalClaim": "Perplexity abandoned all advertising after finding that even clearly labeled, non-invasive sponsored questions undermined user trust. Executive stated: 'A user needs to believe this is the best possible answer. Once advertisements appear, users begin to second-guess whether responses maintain integrity.' If the company most committed to ad-answer separation concluded it was impossible, this challenges the foundational claim of every AI platform running ads."
+    },
+    {
+      "publicSource": "Industry analysts (AI advertising market projections)",
+      "publicClaim": "AI search advertising represents a massive growth opportunity. Market projected to reach <a href=\"https://www.emarketer.com/content/ai-search-ad-spending-will-climb-with-consumer-adoption\">$25.9B by 2029</a>. AI ads deliver superior performance (<a href=\"https://www.searchinfluence.com/blog/bing-ai-performance-report-copilot-citations/\">73% higher CTR on Copilot</a>, $100M ARR in two months for ChatGPT).",
+      "internalSource": "Zero-click data + CTR collapse metrics",
+      "internalClaim": "<a href=\"https://sparktoro.com/blog/2024-zero-click-search-study-for-every-1000-us-google-searches-only-374-clicks-go-to-the-open-web-in-the-eu-its-360/\">93% of Google AI Mode sessions end without a click</a>. AI Overviews increase impressions 49% while reducing CTR 30%. The shift from CPC to CPM pricing reflects the reality that clicks are disappearing from AI search. Advertisers paying premium CPMs (<a href=\"https://www.adweek.com/media/exclusive-openai-confirms-200000-minimum-commitment-for-chatgpt-ads/\">$60 for ChatGPT</a>, 3x Meta rates) may be buying visibility in a medium where users increasingly never click through, making the actual conversion value uncertain."
+    }
+  ]
+}

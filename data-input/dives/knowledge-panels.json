@@ -1,0 +1,180 @@
+{
+  "id": "knowledge-panels",
+  "route": "/knowledge-panels",
+  "systems": [
+    "KnowledgePanels",
+    "KnowledgeGraph",
+    "Webref"
+  ],
+  "hero": {
+    "title": "Knowledge Panels: From Entity Data to SERP Feature",
+    "subtitle": "Knowledge Panels are Google's most visible Knowledge Graph output, displaying structured entity information directly in search results. Behind the public-facing panel lies a patent-documented pipeline: seed facts are bootstrapped from known triples, corroborated across documents, scored by entity confidence, and contextualized per query. The API leak confirms six key signals governing panel generation, while 7 patents reveal the extraction, scoring, and contextualization systems."
+  },
+  "keyInsight": {
+    "label": "Key Insight from Patents + API Leak",
+    "text": "Knowledge Panels are not static entity cards. Patent <a href=\"https://patents.google.com/patent/US11720577\">US11720577</a> reveals a <strong>contextualization system</strong> that reshapes panel content based on query terms: 'Taylor Swift albums' produces a different panel than 'Taylor Swift net worth', even though both resolve to the same <strong>kgEntityId</strong>. The API leak confirms this with <strong>kgEntityConfidence</strong> (how certain Google is about the entity match) and <strong>topicality</strong> (how central the entity is to the query). Panels are generated from facts extracted via dependency-parse bootstrapping (<a href=\"https://patents.google.com/patent/US9672251\">US9672251</a>) and corroborated across independent documents (<a href=\"https://patents.google.com/patent/US8954412\">US8954412</a>), not from owner-submitted claims."
+  },
+  "pillars": [
+    {
+      "type": "leak",
+      "title": "API Leak Signals",
+      "items": [
+        "<strong>kgEntityId</strong> - Knowledge Graph entity ID. The unique identifier linking a document or query to a KG entity. Required for panel generation.",
+        "<strong>kgEntityConfidence</strong> - Confidence score for the entity-document or entity-query association. Higher confidence triggers panel display.",
+        "<strong>topicality</strong> - Entity topicality score measuring how central an entity is to a page or query context.",
+        "<strong>qrefAnnotation</strong> - Query reference entity annotation. Maps the user's query to a specific KG entity, enabling panel selection.",
+        "<strong>salienceScores</strong> - Entity prominence within a document. Determines which entities are central versus merely mentioned.",
+        "<strong>encodedAccountableEntity</strong> - Structured entity representation for E-E-A-T evaluation. Links the panel entity to accountability and trust signals."
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "7 Patents",
+      "items": [
+        "<strong>Seed fact bootstrapping</strong> (<a href=\"https://patents.google.com/patent/US9672251\">US9672251</a>) - Known (subject, attribute, object) triples generate dependency-parse patterns. Patterns extract new facts from the corpus at scale. Scored by extraction frequency and attribute coherence.",
+        "<strong>Template-based extraction</strong> (<a href=\"https://patents.google.com/patent/US8812435\">US8812435</a>) - Extracts entity facts from structured sources (Wikipedia infoboxes, tables) using title and contextual patterns. Feeds the attribute-value pairs displayed in panels.",
+        "<strong>Fact corroboration</strong> (<a href=\"https://patents.google.com/patent/US8954412\">US8954412</a>) - Candidate facts are validated by counting how many independent documents support them. A containment filter prevents partial facts from overshadowing complete answers.",
+        "<strong>Central entity identification via PMI</strong> (<a href=\"https://patents.google.com/patent/US9009192\">US9009192</a>) - Builds a global entity co-occurrence graph weighted by pointwise mutual information. Filters to document-level entities and scores centrality by edge weights, query frequency, and corpus frequency.",
+        "<strong>Anchor text synonym discovery</strong> (<a href=\"https://patents.google.com/patent/US8738643\">US8738643</a>) - Discovers entity name variants by analyzing anchor texts of inbound links. 'IBM', 'Big Blue', 'International Business Machines' resolve to the same entity. Critical for query-to-panel matching.",
+        "<strong>Knowledge panel contextualization</strong> (<a href=\"https://patents.google.com/patent/US11720577\">US11720577</a>) - Detects context terms in queries and reshapes panel content accordingly. Relationship knowledge elements (e.g., albums, filmography) are ranked above generic entity facts when the query specifies a relationship.",
+        "<strong>Answer passage scoring</strong> (<a href=\"https://patents.google.com/patent/US10019513\">US10019513</a>) - Pre-computes answer-term vectors by clustering question phrases. Incoming questions are matched to clusters and candidate passages scored against expected answer terms. Feeds the descriptive text within panels."
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "Knowledge Panel Optimization",
+      "items": [
+        "<strong>Establish your entity in the Knowledge Graph</strong>: Panels require a kgEntityId. Use consistent entity naming across your site, Wikipedia, Wikidata, and authoritative directories. Schema.org markup (Organization, Person, LocalBusiness) helps Webref link your content to a KG entry. Without a KG entity, no panel is possible.",
+        "<strong>Maximize kgEntityConfidence through corroboration</strong>: Patent US8954412 shows facts are validated by independent document support. Ensure your entity's key facts (founding date, location, leadership) appear consistently across multiple authoritative sources. Contradictory information across sources lowers confidence.",
+        "<strong>Control your entity synonyms via anchor text</strong>: Patent US8738643 discovers entity names from inbound link text. If external sites link to you with inconsistent or incorrect names, Google may fail to resolve your entity. Encourage brand-name anchor text in citations, press mentions, and partner links.",
+        "<strong>Structure content for context-sensitive panels</strong>: Patent US11720577 reshapes panels based on query context terms. If you want your panel to show rich relationship data (products, team members, locations), present these as clearly structured entity relationships, not buried in prose. Tables, lists, and Schema.org properties are machine-extractable.",
+        "<strong>Be the primary source for your entity's facts</strong>: Google extracts panel content from structured and semi-structured sources. Your official site should contain the definitive, structured version of your entity's attributes. If Wikipedia or third-party sites have better-structured data about your entity than you do, their version populates your panel."
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "System Context",
+      "items": [
+        "<strong>Knowledge Graph as competitive infrastructure</strong> - No specific DOJ exhibits address Knowledge Panels directly. However, the broader DOJ antitrust trial (US v. Google, Judge Mehta) established that Google's Knowledge Graph, built from billions of extracted facts and entity relationships, functions as a competitive moat. The KG's scale (billions of facts, hundreds of millions of entities) makes it difficult for competitors to replicate the panel experience.",
+        "<strong>Data flywheel reinforces KG dominance</strong> - The DOJ case documented how search volume feeds entity understanding: more queries produce better qrefAnnotation mappings, better click data refines kgEntityConfidence, and richer panels drive more branded searches. This feedback loop is structural, not easily replicated by market entrants."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Panel Trigger Score",
+      "source": "API Leak: kgEntityConfidence + qrefAnnotation + topicality",
+      "how": "Determines whether a Knowledge Panel is displayed for a query. The query is mapped to a KG entity via qrefAnnotation. If the entity confidence exceeds a threshold and topicality indicates the entity is central to the query intent, a panel is triggered. Low-confidence matches or ambiguous queries suppress panels.",
+      "formula": "<span class=\"cf-fn\">panelTrigger</span>(query) = \n  <span class=\"cf-fn\">qrefAnnotation</span>(query) &rarr; <span class=\"cf-val\">kgEntityId</span>\n  <span class=\"cf-kw\">if</span> <span class=\"cf-fn\">kgEntityConfidence</span>(entity, query) > <span class=\"cf-val\">threshold_c</span>\n  AND <span class=\"cf-fn\">topicality</span>(entity, query) > <span class=\"cf-val\">threshold_t</span>:\n    <span class=\"cf-kw\">trigger</span> panel\n  <span class=\"cf-kw\">else</span>: <span class=\"cf-kw\">suppress</span>  <span class=\"cf-comment\">// ambiguous or low-confidence</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US11720577\">US11720577</a> (Knowledge panel contextualization), <a href=\"https://patents.google.com/patent/US9009192\">US9009192</a> (Central entity identification)",
+      "affects": "Affected by: entity clarity in your content. Ambiguous entity references lower kgEntityConfidence. Schema.org markup and consistent naming improve entity resolution."
+    },
+    {
+      "name": "Panel Content Contextualization",
+      "source": "Patent US11720577 (Knowledge panel contextualization)",
+      "how": "After a panel is triggered, the system detects context terms in the query beyond the entity name. These context terms select which knowledge elements to surface. Relationship elements (albums, filmography, products) are ranked above static attributes when the query implies a specific relationship.",
+      "formula": "<span class=\"cf-fn\">contextualizePanel</span>(entity, query) = \n  <span class=\"cf-val\">context_terms</span> = query &minus; entity_name\n  <span class=\"cf-kw\">for each</span> knowledge_element <span class=\"cf-kw\">in</span> entity.facts:\n    <span class=\"cf-fn\">relevance</span> = <span class=\"cf-fn\">match</span>(element.type, context_terms)\n  <span class=\"cf-kw\">rank</span> elements <span class=\"cf-kw\">by</span> relevance <span class=\"cf-kw\">desc</span>\n  <span class=\"cf-comment\">// 'Taylor Swift albums' ranks album elements above bio facts</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US11720577\">US11720577</a> (Knowledge panel contextualization)",
+      "affects": "Affected by: structured entity relationships on your site. If your entity has sub-entities (products, works, team members), structuring them as explicit relationships enables context-sensitive panel content."
+    },
+    {
+      "name": "Entity Salience for Panel Attribution",
+      "source": "API Leak: salienceScores + encodedAccountableEntity",
+      "how": "Determines which source documents are attributed as panel sources. salienceScores measure how central the panel entity is to each candidate source page. Pages where the entity is merely mentioned score low; pages built around the entity score high. encodedAccountableEntity links the entity to E-E-A-T trust evaluation.",
+      "formula": "<span class=\"cf-fn\">panelSource</span>(entity) = <span class=\"cf-fn\">rank</span>(\n  candidate_pages,\n  <span class=\"cf-kw\">by</span>: <span class=\"cf-fn\">salienceScores</span>(entity, page) &times;\n    <span class=\"cf-fn\">trust</span>(<span class=\"cf-val\">encodedAccountableEntity</span>(page))\n)  <span class=\"cf-comment\">// highest salience + trust = panel source</span>\n<span class=\"cf-comment\">// official sites with high salience become authoritative sources</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US9009192\">US9009192</a> (Central entity identification), <a href=\"https://patents.google.com/patent/US8954412\">US8954412</a> (Fact corroboration)",
+      "affects": "Affected by: making your entity the clear focus of your page. High salience + trust = your site becomes the panel's attributed source."
+    }
+  ],
+  "pipeline": {
+    "title": "Knowledge Panel Generation Pipeline",
+    "stages": [
+      {
+        "name": "Query-Entity Resolution",
+        "detail": "qrefAnnotation maps the incoming query to a KG entity. Synonym discovery (US8738643) ensures variant names resolve correctly. Output: kgEntityId candidate."
+      },
+      {
+        "name": "Confidence Evaluation",
+        "detail": "kgEntityConfidence scores how certain the entity match is. Ambiguous queries (e.g., 'Mercury') may match multiple entities. Below-threshold confidence suppresses panel display."
+      },
+      {
+        "name": "Fact Retrieval",
+        "detail": "Entity's facts are retrieved from the Knowledge Graph. Facts were originally extracted via dependency-parse bootstrapping (US9672251) and template extraction (US8812435)."
+      },
+      {
+        "name": "Fact Corroboration Check",
+        "detail": "Each fact's corroboration count (US8954412) is verified. Facts with insufficient independent document support are deprioritized or excluded from the panel."
+      },
+      {
+        "name": "Context Detection",
+        "detail": "Query terms beyond the entity name are identified as context terms (US11720577). These determine which panel sections are emphasized."
+      },
+      {
+        "name": "Panel Composition",
+        "detail": "Knowledge elements are ranked by context relevance. Relationship elements matching context terms are promoted. Static attributes fill remaining slots. Answer passages (US10019513) provide descriptive text."
+      },
+      {
+        "name": "Source Attribution & Trust",
+        "detail": "salienceScores and encodedAccountableEntity determine which sources are cited in the panel. High-salience, high-trust pages become the panel's attributed sources."
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2008",
+      "type": "patent",
+      "title": "Zhao files template-based extraction (US8812435)",
+      "desc": "Method for extracting entity facts from structured sources using title and contextual patterns. Foundation for populating entity attributes in panels."
+    },
+    {
+      "year": "2009",
+      "type": "patent",
+      "title": "Zhao/Czuba file fact corroboration (US8954412)",
+      "desc": "Hypothesis testing across the corpus: generate candidate facts, count independent document support, apply containment filter."
+    },
+    {
+      "year": "2011",
+      "type": "patent",
+      "title": "Central entity identification filed (US9009192)",
+      "desc": "PMI-weighted co-occurrence graph for determining which entities are topically central to a document. Enables entity-to-page mapping for panels."
+    },
+    {
+      "year": "2012",
+      "type": "system",
+      "title": "Knowledge Graph and Knowledge Panels launch",
+      "desc": "Google publicly launches the Knowledge Graph with 500 million entities. Knowledge Panels appear in search results for entity queries, powered by the extraction pipeline patented 2008-2011."
+    },
+    {
+      "year": "2013",
+      "type": "patent",
+      "title": "Seed fact bootstrapping (US9672251) and synonym discovery (US8738643)",
+      "desc": "Two foundational patents filed: dependency-parse pattern extraction for scaling fact discovery, and anchor-text analysis for entity name resolution."
+    },
+    {
+      "year": "2016",
+      "type": "patent",
+      "title": "Knowledge panel contextualization filed (US11720577)",
+      "desc": "System for reshaping panel content based on query context terms. Shifts panels from static entity cards to dynamic, query-responsive displays."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "API leak confirms panel signals",
+      "desc": "Google Content Warehouse API leak reveals kgEntityId, kgEntityConfidence, topicality, qrefAnnotation, salienceScores, and encodedAccountableEntity as active signals governing panel generation."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Search Central (Knowledge Panel documentation)",
+      "publicClaim": "Anyone can claim and suggest changes to a Knowledge Panel through Google's verification process. Panel information comes from 'various sources across the web.'",
+      "internalSource": "API Leak (kgEntityId, kgEntityConfidence) + Patents US9672251, US8954412, US8812435",
+      "internalClaim": "Panels are generated from Knowledge Graph entity data populated by patent-documented fact extraction pipelines: seed-fact bootstrapping, template extraction, and cross-document corroboration. Panel content is determined by algorithmic fact scoring, not owner claims. The 'claim your panel' process allows minor edits, but the panel's existence and core content depend on kgEntityId resolution and kgEntityConfidence thresholds that are outside the claimant's control."
+    },
+    {
+      "publicSource": "Google (various public statements)",
+      "publicClaim": "Knowledge Panels show objective, factual information about entities from across the web.",
+      "internalSource": "Patent US11720577 (Knowledge panel contextualization)",
+      "internalClaim": "Panel content is not static or objective. The contextualization system actively reshapes which facts are shown based on query terms. The same entity displays different information depending on query context, making panels a dynamic interpretation of relevance, not a neutral fact display."
+    }
+  ]
+}

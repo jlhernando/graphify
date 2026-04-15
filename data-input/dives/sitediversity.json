@@ -169,5 +169,13 @@
       "title": "Twiddler Framework Confirmed",
       "desc": "DOJ trial confirms PredocTwiddlers handle diversity enforcement. YouTubeDensityTwiddler confirms per-source density caps in the Twiddler architecture."
     }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google (public statements on ranking fairness)",
+      "publicClaim": "Rankings are based on quality and relevance. The best results appear at the top regardless of which domain they come from.",
+      "internalSource": "SiteDiversity enforcement + 2-3 results per domain typical",
+      "internalClaim": "Site diversity enforcement artificially limits domains to 2-3 results per SERP regardless of quality. A domain with the 5 most relevant pages for a query will only show 2-3 of them. The remaining positions go to lower-quality results from different domains. This means ranking is not purely quality-based; diversity is a hard constraint that overrides relevance for SERP composition."
+    }
   ]
 }

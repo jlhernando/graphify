@@ -1,0 +1,100 @@
+{
+  "id": "finetuning-alignment",
+  "route": "/llm/finetuning-alignment",
+  "systems": ["RLHF", "SFT", "ConstitutionalAI"],
+  "hero": {
+    "title": "Fine-Tuning & Alignment: How LLMs Learn to Follow Instructions and Refuse Harm",
+    "subtitle": "Pre-trained LLMs are raw text predictors. Fine-tuning transforms them into helpful assistants via Supervised Fine-Tuning (SFT, 10K-100K instruction/response pairs) followed by RLHF (Reinforcement Learning from Human Feedback) or DPO (Direct Preference Optimization). Anthropic's Constitutional AI (RLAIF) uses AI-generated feedback based on explicit principles, reducing human labeling dependency. InstructGPT (Ouyang et al., 2022) established the SFT+RLHF paradigm that powers ChatGPT, Claude, and Gemini. This post-training stage determines what the model will say, refuse, prefer, and recommend."
+  },
+  "keyInsight": {
+    "label": "Key Insight for LLM Influence",
+    "text": "Fine-tuning and alignment are where <strong>value judgments are encoded</strong> into LLMs. The pre-trained model has knowledge; alignment determines how it uses that knowledge. <strong>SFT data</strong> teaches the model what a 'good' response looks like (format, tone, helpfulness). <strong>RLHF reward models</strong> encode human preferences about which responses are better. <strong>Constitutional AI principles</strong> define what the model should and should not do. For LLM influence, the key vectors are: (1) being represented in SFT training data as a recommended entity, (2) being associated with positive sentiment in the preference data, and (3) not triggering refusal/safety classifiers that would block mention of your brand."
+  },
+  "pillars": [
+    {
+      "type": "patent",
+      "title": "Alignment Techniques",
+      "items": [
+        "<strong>Supervised Fine-Tuning (SFT)</strong>: Train base model on human-written (instruction, response) pairs. Typically 10K-100K examples. Transforms raw text predictor into instruction-follower. Quality matters more than quantity: InstructGPT used ~13K demonstrations. Data usually from human contractors (Scale AI, Surge AI, internal teams)",
+        "<strong>RLHF (Reinforcement Learning from Human Feedback)</strong>: Step 1: Collect human preference comparisons (response A vs B, which is better?). Step 2: Train a reward model on these preferences. Step 3: Optimize the language model to maximize the reward model's score using PPO (Proximal Policy Optimization). InstructGPT paper (Ouyang et al., 2022) formalized this pipeline",
+        "<strong>DPO (Direct Preference Optimization)</strong>: Rafailov et al., 2023. Bypasses the reward model entirely. Directly optimizes the policy on preference pairs using a closed-form solution. Simpler, more stable, computationally cheaper than PPO. Used by Llama 3, Mistral, many open models. Formula: L_DPO = -E[log sigmoid(beta * (log pi/pi_ref(y_w) - log pi/pi_ref(y_l)))]",
+        "<strong>Constitutional AI (RLAIF)</strong>: Anthropic's approach. Model critiques its own outputs based on explicit written principles ('constitution'). Uses AI-generated feedback (RLAIF) instead of relying purely on human labelers. Principles cover helpfulness, harmlessness, honesty. Reduces human labeling dependency while encoding specific values",
+        "<strong>RLHF vs DPO vs RLAIF</strong>: RLHF is the original (OpenAI). DPO is simpler and cheaper (open-source default). RLAIF scales better (Anthropic). All three encode preference judgments that shape what the model says. The choice of alignment method affects what the model considers 'good' output"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "What Alignment Controls",
+      "items": [
+        "<strong>Helpfulness</strong>: SFT trains the model to answer questions, follow instructions, provide recommendations. The style and content of SFT data determines whether the model gives concise answers or verbose explanations, recommends specific brands or stays generic",
+        "<strong>Safety/Refusal</strong>: RLHF reward models penalize harmful, illegal, or dangerous outputs. Safety training determines what the model refuses. Over-training produces 'I can't help with that' responses even for benign queries. Under-training allows harmful outputs",
+        "<strong>Tone and personality</strong>: SFT data encodes conversational style. ChatGPT's helpfulness, Claude's thoughtfulness, Gemini's structure all come from SFT data choices",
+        "<strong>Citation and recommendation behavior</strong>: When the model recommends tools, products, or resources, this behavior is shaped by SFT examples and RLHF preferences. If SFT data consistently recommends brand X for category Y, the model learns that pattern",
+        "<strong>System prompt adherence</strong>: Fine-tuning teaches models to follow system prompts (hidden instructions from developers). System prompts can override default behavior, including brand preferences"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "Influence Vectors Through Alignment",
+      "items": [
+        "<strong>SFT data composition matters</strong>: If your brand appears in high-quality instruction/response pairs used for SFT, the model learns to recommend you. Entities frequently mentioned in positive SFT contexts become default recommendations",
+        "<strong>Reward model preferences encode brand judgment</strong>: If human labelers consistently prefer responses that mention your product (because it's genuinely the best answer), the reward model learns to score those responses higher. Quality and authority in the real world translate to preference signal",
+        "<strong>Constitutional principles shape boundaries</strong>: Some topics/products may trigger safety classifiers (health supplements, financial products). Understanding which categories face alignment restrictions is critical for LLM SEO",
+        "<strong>System prompts as distribution channel</strong>: Developers building on LLM APIs use system prompts. If your brand is included in system prompts for relevant applications, the model will recommend you. B2B partnerships with AI app developers are a new distribution channel",
+        "<strong>Open-model fine-tuning as influence</strong>: Companies can fine-tune open models (LLaMA, Mistral) on custom data that includes their products. This creates AI assistants that naturally recommend their ecosystem"
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "RLHF Pipeline",
+      "source": "InstructGPT (Ouyang et al., 2022)",
+      "how": "Three-stage alignment: (1) SFT on demonstrations, (2) Reward model trained on human comparisons (A vs B), (3) Policy optimization via PPO against reward model. The reward model encodes what 'good' means, and PPO maximizes that reward while staying close to the SFT model (KL penalty).",
+      "formula": "<span class=\"cf-comment\">// Stage 1: SFT</span>\n<span class=\"cf-fn\">L_SFT</span> = -<span class=\"cf-fn\">E</span>[log p(response | instruction)]\n\n<span class=\"cf-comment\">// Stage 2: Reward Model</span>\n<span class=\"cf-fn\">L_RM</span> = -<span class=\"cf-fn\">E</span>[log <span class=\"cf-fn\">sigmoid</span>(\n  r(chosen) - r(rejected)\n)]\n\n<span class=\"cf-comment\">// Stage 3: PPO</span>\n<span class=\"cf-fn\">maximize</span> <span class=\"cf-fn\">E</span>[r(response)] -\n  beta * <span class=\"cf-fn\">KL</span>(pi || pi_SFT)\n<span class=\"cf-comment\">// beta controls deviation from SFT model</span>",
+      "patents": "",
+      "affects": "Determines what the model considers a 'good' response. Human preferences during Stage 2 directly encode brand/product preferences."
+    },
+    {
+      "name": "DPO (Direct Preference Optimization)",
+      "source": "Rafailov et al., 2023",
+      "how": "Eliminates the reward model. Directly optimizes the policy on preference pairs. Mathematically equivalent to RLHF under certain assumptions but simpler to implement. The loss function directly contrasts the log-probability ratio of chosen vs rejected responses.",
+      "formula": "<span class=\"cf-fn\">L_DPO</span> = -<span class=\"cf-fn\">E</span>[log <span class=\"cf-fn\">sigmoid</span>(\n  beta * (\n    log(<span class=\"cf-val\">pi</span>/<span class=\"cf-val\">pi_ref</span>)(y_chosen) -\n    log(<span class=\"cf-val\">pi</span>/<span class=\"cf-val\">pi_ref</span>)(y_rejected)\n  )\n)]\n<span class=\"cf-comment\">// no reward model needed</span>\n<span class=\"cf-comment\">// pi = current policy, pi_ref = SFT reference</span>\n<span class=\"cf-comment\">// beta = temperature (higher = closer to ref)</span>",
+      "patents": "",
+      "affects": "Simpler alignment pipeline. Default for open-source fine-tuning. Preference pairs directly shape what the model says."
+    }
+  ],
+  "pipeline": {
+    "title": "Post-Training Alignment Pipeline",
+    "stages": [
+      {"name": "Base Model (Pre-trained)", "detail": "Raw text predictor. Knows language and world knowledge but doesn't follow instructions, can produce harmful content, has no personality."},
+      {"name": "SFT (Supervised Fine-Tuning)", "detail": "Train on 10K-100K (instruction, response) pairs from human contractors. Model learns to follow instructions, answer questions, adopt helpful tone."},
+      {"name": "Preference Data Collection", "detail": "Human labelers compare pairs of model responses (A vs B). Labels: 'A is better,' 'B is better,' or 'tie.' Typically 100K-500K comparisons."},
+      {"name": "Reward Model Training", "detail": "Train a reward model to predict which response humans prefer. The reward model encodes human values about helpfulness, harmlessness, honesty."},
+      {"name": "Policy Optimization (RLHF/DPO)", "detail": "Optimize the language model to maximize reward while staying close to SFT baseline (KL penalty). PPO (RLHF) or direct optimization (DPO). Multiple iterations."},
+      {"name": "Safety Fine-Tuning", "detail": "Additional round targeting harmful outputs. Red-teaming to find jailbreaks. Constitutional AI principles applied (Anthropic). Iterative refinement."},
+      {"name": "Evaluation & Deployment", "detail": "MT-Bench, Chatbot Arena, human eval. A/B testing against previous versions. Gradual rollout. Continuous monitoring for safety regressions."}
+    ]
+  },
+  "timeline": [
+    {"year": "2017", "type": "patent", "title": "RLHF Concept (Christiano et al.)", "desc": "Deep reinforcement learning from human preferences. Foundation paper for aligning AI systems with human values."},
+    {"year": "2022", "type": "patent", "title": "InstructGPT (Ouyang et al.)", "desc": "Formalizes SFT + RLHF pipeline. 13K demonstrations, 33K comparisons. 1.3B model preferred over 175B GPT-3. Foundation for ChatGPT."},
+    {"year": "2022", "type": "patent", "title": "Constitutional AI (Bai et al., Anthropic)", "desc": "RLAIF: model critiques own outputs based on principles. Reduces human labeling dependency. Encodes explicit values into training."},
+    {"year": "2023", "type": "patent", "title": "DPO (Rafailov et al.)", "desc": "Direct Preference Optimization bypasses reward model. Simpler, cheaper, more stable. Becomes default for open-source alignment."},
+    {"year": "2023", "type": "event", "title": "Open-Source RLHF Tooling", "desc": "TRL (HuggingFace), DeepSpeed-Chat (Microsoft) make RLHF accessible to any team with GPUs. Alignment democratized."},
+    {"year": "2025", "type": "event", "title": "DeepSeek R1: RL Without SFT", "desc": "Pure RL training produces chain-of-thought reasoning without supervised examples. Proves RL alone can elicit complex behavior from base models."}
+  ],
+  "contradictions": [
+    {
+      "publicSource": "AI companies (safety claims)",
+      "publicClaim": "Our model is aligned with human values. RLHF ensures the model is helpful, harmless, and honest.",
+      "internalSource": "Alignment limitations",
+      "internalClaim": "RLHF aligns models with the preferences of specific human labelers (typically US-based contractors), not universal 'human values.' Labeler demographics, instructions, and incentives shape what the model considers 'good.' Different labeler pools produce different alignments. Constitutional AI is more explicit about its values but still reflects the choices of its designers."
+    },
+    {
+      "publicSource": "AI companies (neutrality claims)",
+      "publicClaim": "Our AI assistant is neutral and objective. It does not favor specific products, brands, or viewpoints.",
+      "internalSource": "SFT data composition + RLHF preferences",
+      "internalClaim": "SFT training data contains implicit brand preferences: if demonstrations consistently recommend product X for category Y, the model learns that pattern. RLHF reward models encode labeler preferences. The model's recommendations reflect the biases in its training data and the preferences of its human evaluators. Neutrality is claimed but not architecturally possible."
+    }
+  ]
+}

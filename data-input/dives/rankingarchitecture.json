@@ -168,5 +168,13 @@
       "title": "DOJ Trial: Pipeline Revealed",
       "desc": "Pandu Nayak and HJ Kim describe the full ranking pipeline under oath. ~1,700 signals confirmed. Multi-phase architecture with Mustang, Ascorer, Twiddlers, and Tangram detailed."
     }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google (public communications on AI in search)",
+      "publicClaim": "AI and machine learning are at the heart of how Google Search works. We use advanced AI to understand queries and rank results.",
+      "internalSource": "DOJ: HJ Kim PXR0356 + Nayak PXR0357 on hand-crafted signals",
+      "internalClaim": "The ranking architecture is predominantly hand-crafted. 100+ signals combined via sigmoid functions and linear weighted formulas tuned by engineers. Only RankBrain (feed-forward NN) and DeepRank (Transformer) use ML. HJ Kim: engineers 'take a sigmoid and figure out the threshold.' The architecture is a carefully engineered signal combination system, not an end-to-end AI system."
+    }
   ]
 }

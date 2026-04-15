@@ -1,0 +1,188 @@
+{
+  "id": "geo-ranking",
+  "route": "/geo-ranking",
+  "systems": [
+    "Geo",
+    "NavBoost",
+    "QUS"
+  ],
+  "hero": {
+    "title": "Geographic Ranking: How Location Shapes Every Search Result",
+    "subtitle": "Geographic signals affect ALL Google searches, not just local business queries. The DOJ confirmed that Google logs IP addresses to 'customize search results' (Mehta FOF #122) and NavBoostLocationSlice segments click data by geographic location, meaning the same URL ranks differently in different cities based on regional user behavior. The Geo system provides geotopicality (content-location alignment) and brickAndMortarStrengthScore (physical business presence). Since Venice (2012), geographic results are integrated into organic SERPs. Location is always a factor, even for seemingly non-local queries."
+  },
+  "keyInsight": {
+    "label": "Key Insight from DOJ Trial + API Leak",
+    "text": "Geographic ranking operates at <strong>three distinct levels</strong>: (1) <strong>User-level</strong>: NavBoostLocationSlice segments click data by geography. The same page accumulates separate click scores per country/region. A page performing well in Germany gets boosted for German users but not for French users. (2) <strong>Document-level</strong>: geotopicality measures alignment between page content and query location. (3) <strong>Query-level</strong>: Implicit locale detection (Patent <a href=\"https://patents.google.com/patent/US8200694\">US8200694</a>) identifies queries with geographic intent without explicit location terms. 'Pharmacy hours' implies local intent. This means <strong>location personalization is always active</strong>: IP-based customization applies to all users, even for 'non-local' queries."
+  },
+  "pillars": [
+    {
+      "type": "doj",
+      "title": "Signals, Core",
+      "items": [
+        "<strong>geotopicality</strong> (Geo system, LocalWWWInfo module) - Geographic relevance score measuring alignment between page content and query location. Applies to organic ranking, not just local business results. Core geographic signal for all web pages",
+        "<strong>NavBoostLocationSlice</strong> (NavBoost, CrapsCrapsData) - NavBoost contextually slices click data by geographic location, providing location-specific ranking adjustments based on regional user behavior patterns. Same page ranks differently in different cities based on LOCAL click patterns",
+        "<strong>brickAndMortarStrengthScore</strong> (Geo, LocalWWWInfo) - Physical business presence authority score for local search ranking. Pure online businesses get zero local boost. Based on Google Business Profile verification, profile completeness, NAP consistency",
+        "<strong>IP address logging</strong> (Mehta FOF #122): 'Google logs IP addresses and uses them to customize search results.' Lehman: 'Knowing a person's location can sometimes help understand what it is they're looking for'",
+        "<strong>Nayak on location slicing</strong> (PXR0357): 'Navboost, a measure of how frequently users (subset by location and device type) click on a particular document for a particular query is a traditional signal'",
+        "<strong>Localization in metrics</strong> (UPX0192, Lehman): 'Importance of freshness and localization built into the metric.' Location is embedded in evaluation methodology, not just applied as a filter"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "API Leak: Geographic Signals",
+      "items": [
+        "<strong>locationIdentity</strong> - Demotes pages targeting non-matching geographic areas. Penalizes fake local content and programmatic location pages. Triggers on pages with no genuine local presence",
+        "<strong>geoLocationQuality</strong> - Location data quality score. Measures accuracy and consistency of geographic information on a page",
+        "<strong>geoFeatureType</strong> - Geographic feature type classification (city, state, country, landmark, etc.)",
+        "<strong>localityScore</strong> - Geographic locality relevance measuring how locally relevant a page is",
+        "<strong>localAuthorityScore</strong> - Local content authority measurement. Separate from domain authority. Built through local links: newspapers, chambers of commerce, local directories",
+        "<strong>isCovidLocalAuthority</strong> - Topic-specific local authority flag for COVID-related content. Confirms topic-specific geographic authority signals exist",
+        "<strong>isElectionAuthority</strong> - Topic-specific local authority flag for election content"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "6 Patents",
+      "items": [
+        "<strong>Implicit locale detection</strong> (<a href=\"https://patents.google.com/patent/US8200694\">US8200694</a>, Pang, Kumar, 2008): Identifies queries with implicit local or regional intent without explicit location terms. 'Pharmacy hours' implies local intent regardless of user typing location. Enables geographic ranking for queries that don't mention a place",
+        "<strong>Geographic short text language detection</strong> (<a href=\"https://patents.google.com/patent/US8548797\">US8548797</a>, Cucerzan, 2009): Solves language detection in short text using geographic information. A short query from Spain is more likely Spanish than Portuguese; same query from Brazil is more likely Portuguese",
+        "<strong>Location quality inference</strong> (<a href=\"https://patents.google.com/patent/US9558210\">US9558210</a>): Inferring location quality from travel time investment. Compares anticipated vs actual distance users travel to visit a location",
+        "<strong>N-gram language identification</strong> (<a href=\"https://patents.google.com/patent/US6167369\">US6167369</a>, 1998): Character N-gram frequency analysis for per-document language detection. Determines which language index a page enters. Detected language can override hreflang declarations",
+        "<strong>Search query results based on topic</strong> (<a href=\"https://patents.google.com/patent/US8620951\">US8620951</a>): Topic-based result selection incorporating geographic relevance",
+        "<strong>Generating local search results</strong>: Patents covering local organic result integration with standard web search (Venice update foundation)"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Geographic Signals Affect Rankings",
+      "items": [
+        "<strong>Every search is location-influenced</strong>: IP-based location customization applies to all users, all queries. Even 'non-local' queries like 'best laptop 2026' may rank differently by country due to NavBoostLocationSlice regional click patterns. There is no truly location-neutral search result",
+        "<strong>Click data diverges by region</strong>: NavBoostLocationSlice means a page performing well with users in one region gets boosted there but not elsewhere. Building regional user engagement (not just global engagement) matters for geographic ranking",
+        "<strong>Fake local content is detectable</strong>: locationIdentity demotes pages targeting non-matching geographic areas. Programmatic location pages ('plumber in [city]' generated at scale) without genuine local presence trigger penalties. Authentic local presence outperforms templated geographic targeting",
+        "<strong>Local authority is separate from domain authority</strong>: localAuthorityScore is built through local links (newspapers, chambers of commerce, local directories). A site with high domain authority but no local links may rank poorly for location-specific queries. Local link building is distinct from general link building",
+        "<strong>Physical presence creates ranking advantage</strong>: brickAndMortarStrengthScore gives physical businesses a ranking boost that pure online businesses cannot access. For local queries, having a verified Google Business Profile matters for organic ranking, not just map pack",
+        "<strong>Implicit locale detection broadens geographic influence</strong>: US8200694 means queries without explicit locations still trigger geographic ranking. 'Restaurant reservations' implies local intent. Content must be geographically relevant even for seemingly generic queries",
+        "<strong>Language detection overrides hreflang</strong>: US6167369 N-gram analysis determines a page's language independently of hreflang declarations. If your page's detected language doesn't match your hreflang, the detected language wins. Content language must actually match your target locale"
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Geotopicality Score",
+      "source": "DOJ + Leak",
+      "how": "Measures alignment between page content and query location. The Geo system's LocalWWWInfo module computes a relevance score based on geographic entities mentioned in content, page metadata, linking patterns from local sources, and user engagement data from that region.",
+      "formula": "<span class=\"cf-fn\">Geotopicality</span>(page, query_loc) =\n  <span class=\"cf-fn\">f</span>(\n    <span class=\"cf-val\">geo_entities</span>(page),\n    <span class=\"cf-val\">local_links</span>(page),\n    <span class=\"cf-val\">regional_engagement</span>(page, query_loc),\n    <span class=\"cf-val\">location_metadata</span>(page)\n  )\n<span class=\"cf-comment\">// applies to ALL pages, not just local businesses</span>\n<span class=\"cf-comment\">// same page, different location = different score</span>",
+      "patents": "",
+      "affects": "Affected by: geographic entity mentions, local link sources, regional user engagement, location metadata accuracy."
+    },
+    {
+      "name": "NavBoostLocationSlice",
+      "source": "DOJ: Nayak PXR0357",
+      "how": "NavBoost segments click data by geographic location. Each URL accumulates separate click quality metrics (goodClicks, badClicks, lastLongestClicks) per region. A page that users in Germany find satisfying gets boosted for German searches but receives no boost for French searches, even if both regions share a language.",
+      "formula": "<span class=\"cf-fn\">LocationSlice</span>(url, region) =\n  <span class=\"cf-fn\">NavBoost</span>(\n    <span class=\"cf-val\">clicks</span>[url][<span class=\"cf-val\">region</span>]\n  )\n<span class=\"cf-comment\">// separate click profiles per region</span>\n<span class=\"cf-comment\">// Germany clicks don't boost France ranking</span>\n<span class=\"cf-comment\">// 13-month rolling window per region</span>",
+      "patents": "",
+      "affects": "Affected by: regional user engagement, geographic click patterns, local user satisfaction. Regional traffic matters, not just global traffic."
+    },
+    {
+      "name": "Implicit Locale Detection",
+      "source": "Patent US8200694",
+      "how": "Identifies queries with implicit geographic intent without explicit location terms. Analyzes query patterns, user location, and query category to determine whether results should be geographically biased. 'Pharmacy hours' triggers local intent. 'Bundesliga scores' triggers German content preference. The classification happens before retrieval, affecting which documents are even considered.",
+      "formula": "<span class=\"cf-fn\">ImplicitLocale</span>(query, user_loc) =\n  <span class=\"cf-fn\">classify</span>(\n    <span class=\"cf-val\">query_pattern</span>,\n    <span class=\"cf-val\">user_loc</span>,\n    <span class=\"cf-val\">category</span>\n  )\n<span class=\"cf-comment\">// 'pharmacy hours' → local intent</span>\n<span class=\"cf-comment\">// 'Bundesliga scores' → German content</span>\n<span class=\"cf-comment\">// runs BEFORE retrieval in QUS</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US8200694\">US8200694</a>",
+      "affects": "Affected by: query category, user location, query pattern matching. Determines geographic bias before ranking begins."
+    }
+  ],
+  "pipeline": {
+    "title": "Geographic Ranking Pipeline",
+    "stages": [
+      {
+        "name": "User Location Detection",
+        "detail": "IP address logged (Mehta FOF #122). GPS/device location when available. Browser language and locale detected. Applies to all users, all queries."
+      },
+      {
+        "name": "Implicit Locale Classification",
+        "detail": "QUS classifies query for geographic intent (US8200694). 'Pharmacy hours' triggers local, 'best laptop' may trigger country-level. No explicit location needed."
+      },
+      {
+        "name": "Retrieval with Geographic Bias",
+        "detail": "Mustang retrieves candidates with geographic weighting. geotopicality influences which documents enter the candidate set."
+      },
+      {
+        "name": "NavBoost Location Slicing",
+        "detail": "Click data segmented by user's region (NavBoostLocationSlice). Same URL has different click profiles per region. Regional engagement determines boost/demotion."
+      },
+      {
+        "name": "Local Authority Scoring",
+        "detail": "localAuthorityScore computed from local link sources. brickAndMortarStrengthScore applied for physical businesses. locationIdentity penalizes fake local content."
+      },
+      {
+        "name": "SERP Assembly",
+        "detail": "Tangram assembles location-appropriate SERP: local pack (if triggered), location-specific organic results, regional featured snippets, geographically relevant ads."
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2003",
+      "type": "event",
+      "title": "Google Local Launched",
+      "desc": "Google Local provides location-based search results. Geographic signals begin influencing organic rankings."
+    },
+    {
+      "year": "2008",
+      "type": "patent",
+      "title": "Implicit Locale Detection (US8200694)",
+      "desc": "Patent for identifying queries with implicit geographic intent without explicit location terms. Foundation for geographic ranking of all queries."
+    },
+    {
+      "year": "2012",
+      "type": "event",
+      "title": "Venice Update",
+      "desc": "Local results integrated into organic SERPs. Location-specific queries receive localized organic results, not just map pack listings."
+    },
+    {
+      "year": "2014",
+      "type": "event",
+      "title": "Pigeon Update",
+      "desc": "Major local algorithm update. Distance and location prominence become stronger ranking factors. Local and organic signals more tightly integrated."
+    },
+    {
+      "year": "2017",
+      "type": "event",
+      "title": "Possum Update",
+      "desc": "Diversifies local results by business address. Physical location proximity becomes more influential. locationIdentity signal likely strengthened."
+    },
+    {
+      "year": "2023",
+      "type": "doj",
+      "title": "DOJ: IP Logging for Customization",
+      "desc": "Mehta FOF #122: 'Google logs IP addresses and uses them to customize search results.' Confirms location-based customization applies to all users."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "Geographic Signals Exposed",
+      "desc": "API leak reveals geotopicality, locationIdentity, geoLocationQuality, localityScore, localAuthorityScore, brickAndMortarStrengthScore, and topic-specific authority flags."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Search Central (ranking documentation)",
+      "publicClaim": "Rankings are based on relevance, quality, and usefulness. Location is one of many factors considered for local queries.",
+      "internalSource": "DOJ: NavBoostLocationSlice + Mehta FOF #122 + geotopicality",
+      "internalClaim": "Location is not 'one of many factors for local queries.' It is a pervasive signal affecting ALL searches. NavBoostLocationSlice segments click data by region for every URL. IP addresses are logged and used to customize results (Mehta FOF #122). geotopicality applies to all web pages. Implicit locale detection (US8200694) triggers geographic ranking even for queries without location terms."
+    },
+    {
+      "publicSource": "Google (public guidance on local SEO)",
+      "publicClaim": "Create content that is locally relevant. Ensure your Google Business Profile is complete and accurate.",
+      "internalSource": "API Leak: locationIdentity + localAuthorityScore",
+      "internalClaim": "locationIdentity actively demotes pages targeting non-matching geographic areas, penalizing programmatic location pages without genuine local presence. localAuthorityScore is a separate signal from domain authority, requiring local link sources (newspapers, chambers of commerce). Simply 'creating locally relevant content' is insufficient; Google measures authentic local presence through distinct signals that template pages cannot fake."
+    },
+    {
+      "publicSource": "Google (public statements on equal treatment)",
+      "publicClaim": "Google Search provides the same ranking algorithm to all users. Results are based on the query and document quality.",
+      "internalSource": "DOJ: NavBoostLocationSlice + IP customization + implicit locale",
+      "internalClaim": "Two users in different cities searching the same query receive meaningfully different results. NavBoostLocationSlice creates separate click profiles per region. IP-based customization applies before ranking. The same page with the same quality can rank #1 in one city and #20 in another based purely on regional click data. The algorithm is the same; the inputs are location-dependent."
+    }
+  ]
+}

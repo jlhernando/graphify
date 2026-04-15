@@ -165,5 +165,13 @@
       "title": "shingleInfo in Quality",
       "desc": "DOJ confirms shingleInfo in CompressedQualitySignals. Duplicate detection directly affects quality scoring, not just index management."
     }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Search Central (canonical URL documentation)",
+      "publicClaim": "You can specify your preferred canonical URL using rel=canonical. Google will respect your preference when determining which URL to show in search results.",
+      "internalSource": "WebMirror SimHash deduplication + Google's canonical override",
+      "internalClaim": "WebMirror uses SimHash fingerprinting to detect duplicates independently of rel=canonical declarations. Google's system can override your canonical preference if its duplicate detection determines a different URL is more appropriate. rel=canonical is a hint, not a directive. Google may choose a different canonical than the one you specified based on its own content analysis, link signals, and serving preferences."
+    }
   ]
 }

@@ -183,5 +183,19 @@
       "title": "Authorship System Confirmed",
       "desc": "DOJ trial documents confirm Authorship as a separate system from Entity. Dual attribution suggests a detection-then-evaluation pipeline."
     }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Search Central (E-E-A-T guidelines)",
+      "publicClaim": "E-E-A-T is not a ranking factor. There is no 'E-E-A-T score.' We use many different signals as a proxy for these concepts.",
+      "internalSource": "API Leak: isAuthor (boolean) + authorObfuscatedGaiaStr (GAIA identity link)",
+      "internalClaim": "Google tracks author identity at the document level through two specific signals: isAuthor detects distinct authorship, and authorObfuscatedGaiaStr links authors to Google's GAIA identity system. With 19 patents on authorship, authorship IS a discrete, measurable signal. While 'E-E-A-T score' may not exist as a single number, authorship signals are concrete inputs to quality evaluation."
+    },
+    {
+      "publicSource": "Google (public response to Google Authorship sunset, 2014)",
+      "publicClaim": "We discontinued Google Authorship markup (rel=author). Author identity is not used as a ranking signal.",
+      "internalSource": "API Leak: isAuthor (Entity system, Tier 1, 100/100 corroboration) + DOJ: Authorship system",
+      "internalClaim": "Google discontinued the PUBLIC Authorship markup program but continued tracking authorship internally. The isAuthor signal has 100/100 corroboration (Tier 1) in the API leak and is independently confirmed in DOJ documentation. Google stopped asking webmasters to declare authorship but never stopped detecting it."
+    }
   ]
 }

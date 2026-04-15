@@ -1,0 +1,159 @@
+{
+  "id": "safesearch",
+  "route": "/safesearch",
+  "systems": [
+    "SafeSearch"
+  ],
+  "hero": {
+    "title": "SafeSearch: Content Classification & Adult Content Filtering",
+    "subtitle": "SafeSearch is Google's content safety classification system that detects and filters explicit, adult, and potentially harmful content from search results. It operates across text, images, and video using machine learning classifiers that assign safety scores at indexing time. The API leak confirmed two key signals: pornDemotion (active demotion of adult content when queries lack explicit intent) and imageSafeSearchScore (per-image adult content classification). Patent US11797626 reveals a filter architecture that dynamically restricts results based on resource content analysis, applying different thresholds depending on user settings and query intent."
+  },
+  "keyInsight": {
+    "label": "Key Insight from API Leak",
+    "text": "The API leak confirmed that Google applies <strong>pornDemotion</strong>, an active ranking penalty for adult content appearing in non-adult query contexts. This is not simply a filter toggle; it is a <strong>continuous demotion signal</strong> that suppresses explicit content in general search results even when SafeSearch is set to moderate or off. Combined with <strong>imageSafeSearchScore</strong>, which classifies images on a safety spectrum, Google maintains a layered content safety system that operates both at indexing time (image classification) and at serving time (query-intent-aware demotion). Sites with adult content sections can see their entire domain demoted for non-adult queries, even if the specific page is clean."
+  },
+  "pillars": [
+    {
+      "type": "leak",
+      "title": "API Leak Signals",
+      "items": [
+        "<strong>pornDemotion</strong>: Active ranking demotion applied to adult/explicit content when the query does not indicate adult intent. Operates as a continuous signal, not a binary filter",
+        "<strong>imageSafeSearchScore</strong>: Per-image classification score from SafeSearch classifiers. Evaluates visual content for adult, violent, or otherwise explicit material during indexing",
+        "Both signals exist within the broader CompressedQualitySignals framework, indicating they are pre-computed during indexing and stored as part of the document's quality profile",
+        "pornDemotion interacts with query-level intent classification: the same page receives different effective demotion depending on whether the query signals adult intent"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "1 Patent",
+      "items": [
+        "<strong>Search result filters from resource content</strong> - Patent <a href=\"https://patents.google.com/patent/US11797626\">US11797626</a> (Google, filed 2020): Describes a system that analyzes resource content to generate filter classifications. Content features are extracted and processed through trained classifiers to produce category labels (e.g., adult, violent, medical). These labels are stored in the search index and used at serving time to filter or demote results based on user settings and query context. The system supports multiple filter dimensions and threshold levels, enabling graduated filtering rather than binary inclusion/exclusion"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How SafeSearch Affects Visibility",
+      "items": [
+        "<strong>Domain-level contamination</strong>: Sites hosting adult content in subdirectories can see pornDemotion applied more broadly, affecting non-adult pages on the same domain",
+        "<strong>Image classification is pre-computed</strong>: imageSafeSearchScore is assigned at indexing time. Incorrectly classified images lose visibility immediately and remain suppressed until re-crawled",
+        "<strong>Query intent gates demotion</strong>: pornDemotion activates based on query classification. Ambiguous queries (terms with both adult and non-adult meanings) may trigger partial demotion",
+        "<strong>User-generated content risk</strong>: Forums and platforms with unmoderated explicit content can trigger site-wide SafeSearch signals, demoting all pages",
+        "<strong>Graduated filtering</strong>: SafeSearch operates on a spectrum (strict/moderate/off), but pornDemotion applies even with SafeSearch off for queries without adult intent"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "System Context",
+      "items": [
+        "No SafeSearch-specific DOJ exhibits have been identified in the antitrust trial evidence. Content safety systems were not a focus of the DOJ case, which centered on search distribution agreements and competition",
+        "General SERP quality testimony from the DOJ trial confirms that Google operates multiple content classification systems that feed into ranking, with quality and safety signals pre-computed during indexing",
+        "The trial revealed Google's multi-stage ranking architecture (Mustang retrieval, Ascorer, neural re-ranking, Twiddlers), where SafeSearch filtering can operate at multiple stages to exclude or demote content"
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "pornDemotion Score",
+      "source": "Leak",
+      "how": "When a query is classified as non-adult, Google applies pornDemotion to any document that has been flagged with adult content signals. The demotion strength scales with the confidence of the adult content classification and inversely with adult query intent probability. Documents on domains with high adult content ratios receive stronger demotion even for their clean pages.",
+      "formula": "<span class=\"cf-fn\">pornDemotion</span>(doc, query) =\n  <span class=\"cf-val\">adultContentScore</span>(doc) *\n  (1 - <span class=\"cf-fn\">adultIntentProb</span>(query)) *\n  <span class=\"cf-val\">domainAdultRatio</span>\n<span class=\"cf-comment\">// adultContentScore: page-level adult classification</span>\n<span class=\"cf-comment\">// adultIntentProb: query-level adult intent probability</span>\n<span class=\"cf-comment\">// domainAdultRatio: fraction of domain pages flagged adult</span>\n<span class=\"cf-comment\">// Higher demotion = lower ranking for non-adult queries</span>",
+      "patents": "<a href=\"https://patents.google.com/patent/US11797626\">US11797626</a>",
+      "affects": "Affected by: page content classification, query intent classification, domain-level adult content ratio, user SafeSearch setting"
+    },
+    {
+      "name": "imageSafeSearchScore Classification",
+      "source": "Leak",
+      "how": "Each image indexed by Google is processed through SafeSearch visual classifiers that assign a safety score. The classifier evaluates pixel-level features (skin detection, pose estimation) and contextual features (surrounding text, page topic) to produce a composite safety classification. This score is stored in the index and used at serving time to filter image results based on SafeSearch settings.",
+      "formula": "<span class=\"cf-fn\">imageSafeSearchScore</span>(image) =\n  <span class=\"cf-fn\">visualClassifier</span>(<span class=\"cf-val\">pixelFeatures</span>) *\n  <span class=\"cf-val\">w_visual</span> +\n  <span class=\"cf-fn\">contextClassifier</span>(<span class=\"cf-val\">pageText</span>, <span class=\"cf-val\">altText</span>) *\n  <span class=\"cf-val\">w_context</span>\n<span class=\"cf-comment\">// Pre-computed at indexing time</span>\n<span class=\"cf-comment\">// Thresholds: strict &gt; moderate &gt; off</span>\n<span class=\"cf-comment\">// Images above threshold filtered from results</span>",
+      "patents": "<a href=\"https://patents.google.com/patent/US11797626\">US11797626</a>",
+      "affects": "Affected by: visual content features, surrounding text context, alt text, page-level content classification"
+    },
+    {
+      "name": "Content Filter Classification",
+      "source": "Patent",
+      "how": "Patent US11797626 describes a multi-dimensional content filter system. Resource content is analyzed to produce category labels across multiple safety dimensions (adult, violent, medical, etc.). Each dimension has configurable thresholds that can be adjusted based on user preferences and query context. The filter operates as a scoring function where resources exceeding the active threshold for any dimension are excluded or demoted.",
+      "formula": "<span class=\"cf-fn\">filterDecision</span>(doc, query, settings) =\n  <span class=\"cf-kw\">for each</span> <span class=\"cf-val\">dimension</span> <span class=\"cf-kw\">in</span> [adult, violent, medical]:\n    <span class=\"cf-kw\">if</span> <span class=\"cf-fn\">classScore</span>(doc, <span class=\"cf-val\">dimension</span>) &gt;\n       <span class=\"cf-fn\">threshold</span>(<span class=\"cf-val\">dimension</span>, settings):\n      <span class=\"cf-kw\">return</span> <span class=\"cf-val\">EXCLUDE</span> | <span class=\"cf-val\">DEMOTE</span>\n<span class=\"cf-comment\">// Threshold varies by SafeSearch setting level</span>\n<span class=\"cf-comment\">// Query context can override user settings</span>\n<span class=\"cf-comment\">// Multiple dimensions evaluated independently</span>",
+      "patents": "<a href=\"https://patents.google.com/patent/US11797626\">US11797626</a>",
+      "affects": "Affected by: content category scores, user SafeSearch setting, query safety classification, regional content policies"
+    }
+  ],
+  "pipeline": {
+    "title": "SafeSearch Content Filtering Pipeline",
+    "stages": [
+      {
+        "name": "Content Crawl & Feature Extraction",
+        "detail": "Googlebot crawls pages and extracts content features: text content, image pixel data, video frames, metadata. Raw features are prepared for safety classification."
+      },
+      {
+        "name": "Safety Classification (Indexing)",
+        "detail": "Machine learning classifiers process extracted features to assign safety scores. imageSafeSearchScore is computed for each image. Text content is classified for adult/violent/explicit signals. Scores are stored in CompressedQualitySignals within the index."
+      },
+      {
+        "name": "Domain-Level Aggregation",
+        "detail": "Page-level safety scores are aggregated at the domain level to compute domain adult content ratio. Domains with high ratios of flagged pages receive elevated baseline demotion signals that affect all pages on the domain."
+      },
+      {
+        "name": "Query Intent Classification",
+        "detail": "At query time, the query is classified for adult intent probability. Ambiguous queries receive partial adult intent scores. This classification determines how strongly pornDemotion is applied to adult-flagged results."
+      },
+      {
+        "name": "Filter Application (Serving)",
+        "detail": "Based on user SafeSearch setting and query intent, content filter thresholds are set. Documents exceeding thresholds are excluded (strict mode) or demoted (moderate/off modes). pornDemotion is applied as a ranking adjustment for non-adult queries."
+      },
+      {
+        "name": "Image Result Filtering",
+        "detail": "Image search results undergo additional filtering using imageSafeSearchScore. Stricter thresholds apply to image results than web results. Images above the active threshold are removed from the result set entirely."
+      },
+      {
+        "name": "Post-Ranking Safety Check",
+        "detail": "Final SERP undergoes a safety review via Twiddler adjustments. Results that passed individual filtering but create an unsafe aggregate result page (e.g., too many borderline results clustering together) may be further demoted or replaced."
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2009",
+      "type": "event",
+      "title": "SafeSearch Becomes Default Moderate",
+      "desc": "Google shifts SafeSearch default from off to moderate filtering, applying basic adult content filtering to all searches unless users explicitly disable it."
+    },
+    {
+      "year": "2012",
+      "type": "event",
+      "title": "SafeSearch Simplified to Three Levels",
+      "desc": "Google consolidates SafeSearch into strict/moderate/off settings, replacing the previous more granular configuration. Moderate becomes the persistent default for most users."
+    },
+    {
+      "year": "2020",
+      "type": "patent",
+      "title": "US11797626 Filed: Search Result Filters",
+      "desc": "Patent <a href=\"https://patents.google.com/patent/US11797626\">US11797626</a> filed describing content-based filter classification system. Multi-dimensional safety scoring with configurable thresholds per user setting and query context."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "API Leak Confirms pornDemotion & imageSafeSearchScore",
+      "desc": "The Google API leak reveals <strong>pornDemotion</strong> as an active ranking signal and <strong>imageSafeSearchScore</strong> as a per-image safety classifier, confirming SafeSearch operates as a continuous demotion system, not just a binary filter."
+    },
+    {
+      "year": "2024",
+      "type": "event",
+      "title": "SafeSearch AI Enhancement",
+      "desc": "Google announces improved SafeSearch classifiers using advanced ML models for better detection of explicit content, including AI-generated explicit imagery and edge cases previously missed by older classifiers."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google SafeSearch Help Center",
+      "publicClaim": "SafeSearch is a setting that acts as a filter to block explicit content. When SafeSearch is off, you will see the most relevant results for your search, which may include explicit content.",
+      "internalSource": "API Leak (pornDemotion signal)",
+      "internalClaim": "pornDemotion applies active demotion to adult content even when SafeSearch is off, for queries classified as non-adult. The filter is never fully off; it transitions from exclusion (strict) to demotion (off) based on query intent classification."
+    },
+    {
+      "publicSource": "Google Search Quality Guidelines",
+      "publicClaim": "SafeSearch filtering is page-level: individual pages are classified and filtered based on their own content.",
+      "internalSource": "API Leak (domain-level signals)",
+      "internalClaim": "Domain-level adult content ratios influence pornDemotion strength for all pages on a domain. A clean page on a domain with substantial adult content receives stronger demotion than the same page on a clean domain."
+    }
+  ]
+}

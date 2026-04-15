@@ -63,6 +63,14 @@
   ],
   "calculations": [
     {
+      "name": "QDF Boosting Formula (US8832088)",
+      "source": "Patent: Chen, Zhu, 2012",
+      "how": "The core QDF boosting formula: S' = S * Q^D. S = original document score from Ascorer. Q = query freshness value derived from 8 signals (volume spikes, blog/news/social mentions, click ratios). D = resource freshness value using reverse sigmoid of document age multiplied by provider quality and topicality. QtoA ratio (recent/overall impression probability) detects freshness-seeking queries. Patent US9189526 (2013 continuation) adds demotion dampening: when F(age) is negative, J(query, resource) prevents popular evergreen documents from false demotion.",
+      "formula": "<span class=\"cf-fn\">S'</span> = <span class=\"cf-val\">S</span> * <span class=\"cf-val\">Q</span>^<span class=\"cf-val\">D</span>\n<span class=\"cf-comment\">// S = original Ascorer score</span>\n<span class=\"cf-comment\">// Q = query freshness (8 signals)</span>\n<span class=\"cf-comment\">// D = resource freshness (reverse sigmoid of age)</span>\n<span class=\"cf-comment\">// QtoA = recent/overall impression probability</span>\n\n<span class=\"cf-comment\">// Demotion dampening (US9189526):</span>\n<span class=\"cf-kw\">if</span> F(age) &lt; 0:\n  <span class=\"cf-fn\">dampen</span> = <span class=\"cf-fn\">J</span>(query, resource)\n  <span class=\"cf-comment\">// protects evergreen from false demotion</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8832088\">US8832088</a> (QDF boosting), <a href=\"https://patents.google.com/patent/US9189526\">US9189526</a> (demotion dampening)",
+      "affects": "Affected by: query volume deviation, document age, provider quality, topicality. Evergreen content protected by dampening function."
+    },
+    {
       "name": "QDF Query Classification",
       "source": "Patent",
       "how": "QDF monitors real-time search volume for every query and compares it against a historical baseline. When the current volume deviates significantly above the baseline, the query is classified as deserving freshness. The deviation magnitude determines the intensity of the freshness boost applied by downstream systems.",
@@ -132,6 +140,26 @@
       "type": "leak",
       "title": "FreshnessTwiddler Confirmed",
       "desc": "API leak confirms FreshnessTwiddler, timeSensitivity, and freshdocs signals that QDF feeds into. The downstream freshness system is well-documented even though QDF itself is not directly named."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Search Central (ranking documentation)",
+      "publicClaim": "Content quality and relevance are the most important ranking factors. We aim to show the most helpful results regardless of when they were published.",
+      "internalSource": "QDF + FreshnessTwiddler + Instant Glue pipeline",
+      "internalClaim": "When QDF activates, publishing speed temporarily overrides content quality and domain authority. A breaking news article from a low-authority site can outrank an established, comprehensive resource within minutes. The 35% of searches affected by the 2011 freshness update confirms that timeliness regularly trumps traditional quality signals for a significant portion of queries."
+    },
+    {
+      "publicSource": "Google (public guidance on content creation)",
+      "publicClaim": "Focus on creating comprehensive, evergreen content that serves users over time. Quick, thin content is not rewarded.",
+      "internalSource": "Patent US8832088: S'=S*Q^D formula + Patent US9189526: demotion dampening",
+      "internalClaim": "The QDF boosting formula (S'=S*Q^D) explicitly amplifies fresh content scores during volume spikes. The demotion dampening patent (US9189526) was needed precisely because QDF was falsely demoting high-quality evergreen content. The system's design acknowledges that freshness and quality are in tension, not aligned, requiring explicit protections for evergreen content."
+    },
+    {
+      "publicSource": "Google (public statements on news ranking)",
+      "publicClaim": "We do not favor news publishers over other types of content creators. All sites are evaluated on the same criteria.",
+      "internalSource": "QDF + Instant Glue (~10 min latency) + isHotdoc flag",
+      "internalClaim": "The QDF-to-InstantGlue-to-RealTimeBoost pipeline inherently favors organizations with rapid publishing capabilities, dedicated crawl relationships (news sitemaps), and real-time indexing access. The isHotdoc flag and Instant Glue's 10-minute latency create a fast lane that structurally benefits news publishers and large sites with established crawl priority over independent creators."
     }
   ]
 }

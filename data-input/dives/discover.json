@@ -62,6 +62,14 @@
   ],
   "calculations": [
     {
+      "name": "Quality Gate Filter",
+      "source": "DOJ + Leak",
+      "how": "Before any interest matching, content must pass quality gates. Sites below Q* threshold (0.4) are excluded from Discover entirely, the same gate that blocks featured snippets. siteAuthority and NavBoost engagement history provide additional filtering. This means Discover eligibility is determined by search quality signals before the interest-based algorithm runs.",
+      "formula": "<span class=\"cf-fn\">QualityGate</span>(site) = {\n  <span class=\"cf-kw\">if</span> Q*(site) &lt; <span class=\"cf-val\">0.4</span>: <span class=\"cf-val\">EXCLUDE</span>\n  <span class=\"cf-kw\">if</span> siteAuthority(site) &lt; <span class=\"cf-val\">threshold</span>: <span class=\"cf-val\">EXCLUDE</span>\n  <span class=\"cf-kw\">if</span> navboost_engagement(site) &lt; <span class=\"cf-val\">min</span>: <span class=\"cf-val\">EXCLUDE</span>\n  <span class=\"cf-kw\">else</span>: <span class=\"cf-val\">ELIGIBLE</span>\n}\n<span class=\"cf-comment\">// same Q* gate as featured snippets</span>\n<span class=\"cf-comment\">// must pass BEFORE interest matching runs</span>",
+      "patents": "",
+      "affects": "Affected by: site quality score (Q*), site authority, engagement history. Low-authority sites never enter Discover regardless of content quality."
+    },
+    {
       "name": "Discover Content Score",
       "source": "Research",
       "how": "Discover evaluates content through a nine-stage pipeline that combines topic relevance, content quality, user interest alignment, and predicted engagement. Content must pass quality gates before CTR prediction models determine surfacing likelihood.",
@@ -131,6 +139,26 @@
       "type": "patent",
       "title": "Separate Algorithm",
       "desc": "Discover now ranks independently from search, using quality signals and topic authority over engagement."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Search Central (Discover guidelines)",
+      "publicClaim": "There is no way to 'optimize' content for Discover. You cannot create content specifically to appear in Discover.",
+      "internalSource": "API Leak: Bayesian CTR prediction + DOJ: Q* quality gates",
+      "internalClaim": "Discover uses Bayesian CTR prediction at site and subfolder level, meaning Google tracks which site sections perform well and surfaces similar content. Sites below Q* threshold (0.4) are excluded entirely. These are measurable, optimizable signals."
+    },
+    {
+      "publicSource": "Google Search Central (Discover guidelines)",
+      "publicClaim": "Discover surfaces content based purely on user interests and content quality, independent of search ranking.",
+      "internalSource": "DOJ: Nayak testimony + API Leak signals",
+      "internalClaim": "Discover uses NavBoost click signals, Q* quality scores, siteAuthority, and chromeInTotal browsing data. These are the same core signals that drive search ranking. Discover eligibility correlates directly with site-level trust scores used in search."
+    },
+    {
+      "publicSource": "Google (public communications)",
+      "publicClaim": "Discover provides a personalized, interest-based experience distinct from traditional search.",
+      "internalSource": "DOJ: Quality gates + Chrome data dependency",
+      "internalClaim": "The 'personalization' layer sits on top of the same quality infrastructure as search. Sites that fail search quality gates (Q* < 0.4) are automatically excluded from Discover regardless of user interest. Chrome browsing data feeds both Discover interest modeling and search ranking via CRAPS."
     }
   ]
 }

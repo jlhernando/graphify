@@ -1,0 +1,184 @@
+{
+  "id": "realtime-indexing",
+  "route": "/realtime-indexing",
+  "systems": [
+    "RealtimeIndexing",
+    "InstantGlue",
+    "Trawler"
+  ],
+  "hero": {
+    "title": "Real-Time Indexing: How Google Indexes Content in Minutes, Not Days",
+    "subtitle": "Google maintains a three-tier crawl architecture (Base 200M+, Daily 50M+, Real-time 5M+) that enables near-instant indexing for high-priority URLs. Chrome browser signals feed directly into ranking through CRAPS (Chrome Realtime Aggregated Page Signals), while InstantGlue delivers user engagement data with ~10-minute latency. The API leak revealed RealTimeBoost, a re-ranking twiddler that incorporates live Chrome visit data, and a family of CRAPS signals that recompute site quality (NSR) and URL-level freshness in real time."
+  },
+  "keyInsight": {
+    "label": "Key Insight from API Leak + Patents",
+    "text": "Google's real-time indexing is not just about crawling faster. The API leak reveals a <strong>dual pipeline</strong>: Trawler's three-tier crawl scheduler (Patent <a href=\"https://patents.google.com/patent/US7725452\">US7725452</a>) determines <strong>how quickly content is fetched</strong>, while CRAPS signals (<strong>crapsNewUrlSignals</strong>, <strong>crapsAbsoluteHostSignals</strong>) determine <strong>how quickly it influences rankings</strong>. The <strong>RealTimeBoost</strong> twiddler bridges both pipelines, re-ranking results using incoming Chrome visits before the traditional NavBoost table is updated. For high-engagement URLs, the gap between publishing and ranking impact can be as short as 10 minutes via InstantGlue."
+  },
+  "pillars": [
+    {
+      "type": "leak",
+      "title": "API Leak Signals",
+      "items": [
+        "<strong>RealTimeBoost</strong> - Re-ranking twiddler incorporating real-time signals including incoming Chrome visits. Applied as a post-retrieval boost for content receiving sudden engagement spikes before the full NavBoost pipeline processes the data",
+        "<strong>crapsNewUrlSignals</strong> - Chrome Realtime Aggregated Page Signals for new/fresh URLs. Provides immediate engagement metrics for recently discovered pages that lack historical NavBoost data, solving the cold-start problem for fresh content",
+        "<strong>crapsAbsoluteHostSignals</strong> - Chrome Realtime Aggregated Page Signals at the host level. Aggregates Chrome browsing behavior across an entire domain, providing real-time site-level quality signals that can influence all pages on that host",
+        "<strong>crapsNewNsrSignal</strong> - Site-level NSR (Normalized Site Rank) recomputed using CRAPS data in near-real-time. Allows site quality scores to update rapidly when Chrome engagement patterns shift, rather than waiting for the next batch NSR computation"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "4 Patents",
+      "items": [
+        "Patent <a href=\"https://patents.google.com/patent/US20060294086\">US20060294086</a>: <strong>Realtime Indexing in Rapidly Changing Document Collections</strong> - Foundational patent for real-time indexing. Describes maintaining a real-time index partition that is continuously updated as documents change, merged periodically with the main index. Enables sub-second indexing latency for the highest-priority content tier",
+        "Patent <a href=\"https://patents.google.com/patent/US7634466\">US7634466</a>: <strong>Realtime Indexing</strong> - Near-real-time indexing system for rapidly changing content. Implements incremental index updates without requiring full index rebuilds. The real-time partition handles insertions, deletions, and modifications as a streaming operation",
+        "Patent <a href=\"https://patents.google.com/patent/US7725452\">US7725452</a>: <strong>Scheduler for Search Engine Crawler</strong> - Three-tier crawl architecture: <strong>Base</strong> (200M+ URLs, comprehensive coverage), <strong>Daily</strong> (50M+ URLs, frequent changers), <strong>Real-time</strong> (5M+ URLs, breaking/critical content). Priority scoring combines PageRank, change frequency, and content importance to route URLs into the appropriate tier",
+        "Patent <a href=\"https://patents.google.com/patent/US8458163\">US8458163</a>: <strong>Website Owner Crawl Rate Management</strong> - Allows site owners to request faster or slower crawl rates via Search Console. Speed-up requests are only honored when the current rate limit is the binding constraint: |currentLimit - maxActualRate| < threshold. If the crawler is already below server capacity, a speed-up request has no effect"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "Real-Time Indexing Implications",
+      "items": [
+        "<strong>Chrome traffic is a real-time ranking input, not just a passive signal</strong>: CRAPS signals (crapsNewUrlSignals, crapsAbsoluteHostSignals) mean Chrome browsing data feeds ranking in near-real-time. If your content receives a surge of Chrome visits (from social media, email newsletters, direct shares), RealTimeBoost can amplify your ranking before the regular NavBoost cycle processes the data. This creates a flywheel: early traffic generates real-time signals that boost rankings, driving more traffic",
+        "<strong>New URLs have a dedicated real-time signal path</strong>: crapsNewUrlSignals specifically addresses fresh URLs, solving the cold-start problem. When you publish new content and it receives immediate Chrome engagement, the system does not wait for historical NavBoost data to accumulate. This means early promotion of new content (via email lists, social channels, push notifications) directly feeds the real-time ranking pipeline",
+        "<strong>Site-level CRAPS signals affect all your pages</strong>: crapsAbsoluteHostSignals operates at the domain level. If your site as a whole receives strong Chrome engagement, all pages benefit from the real-time host-level signal. Conversely, a sudden drop in site-wide Chrome engagement (site outage, bad press, migration issues) can depress rankings across all pages in near-real-time",
+        "<strong>The three-tier crawl determines your content's indexing speed ceiling</strong>: Only ~5M URLs qualify for real-time crawl. To reach this tier, content needs high PageRank, demonstrated change frequency, and content importance signals. Most sites operate in the Daily (50M+) or Base (200M+) tiers. Improving server response time, internal linking to new content, and maintaining consistent update cadence are prerequisites for faster crawl tier assignment",
+        "<strong>Search Console crawl rate requests have strict conditions</strong>: Patent US8458163 reveals that speed-up requests only work when the current crawl rate limit is actually the bottleneck. If your server is slow or content quality is low, requesting faster crawling has zero effect. Fix server performance first, then request rate increases",
+        "<strong>NSR recomputation via CRAPS means site reputation can shift rapidly</strong>: crapsNewNsrSignal recalculates your site's Normalized Site Rank using real-time Chrome data. A viral positive event (featured in major media, trending product launch) can improve your NSR within hours rather than waiting for the next batch computation. The reverse is also true: a brand crisis visible in Chrome traffic patterns can depress NSR quickly"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "System Context",
+      "items": [
+        "<strong>Crawl scale as competitive advantage</strong> - Judge Mehta's opinion identifies Google's crawl infrastructure and index scale as structural competitive advantages. The ability to crawl 200M+ URLs in the base tier alone, with 5M+ in real-time, requires infrastructure investment that constitutes a barrier to entry for competitors",
+        "<strong>Elizabeth Reid on crawl scheduling</strong> - 'Index tiering and crawl scheduling are among Google's most sensitive proprietary assets.' The three-tier crawl architecture and the criteria for real-time tier assignment are classified as trade secrets",
+        "<strong>Chrome data feeds ranking</strong> - DOJ trial testimony confirmed Chrome browsing data as a ranking input. The CRAPS signal family in the API leak provides the technical mechanism: Chrome visits are aggregated in real time and fed into ranking signals at both URL and host levels",
+        "Note: No specific DOJ exhibits target real-time indexing mechanisms directly. The above references are drawn from Judge Mehta's opinion on Google's infrastructure advantages and general trial testimony about Chrome data usage in ranking"
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Real-Time Crawl Tier Assignment",
+      "source": "Patent",
+      "how": "The crawler scheduler assigns each URL to one of three crawl tiers based on a composite priority score. The score combines PageRank (link-based importance), content change frequency (detected by comparing checksums across successive crawls), and content importance (predicted query utility). URLs in the Real-time tier (top ~5M) are fetched within minutes of a change being detected or signaled. Daily-tier URLs (~50M) are recrawled every 24 hours. Base-tier URLs (~200M+) follow a longer cycle based on their individual priority scores.",
+      "formula": "<span class=\"cf-fn\">CrawlTier</span>(url) =\n  <span class=\"cf-kw\">if</span> <span class=\"cf-fn\">priority</span>(<span class=\"cf-val\">url</span>) >= <span class=\"cf-val\">T_realtime</span>: <span class=\"cf-val\">Real-time</span> (~5M URLs)\n  <span class=\"cf-kw\">if</span> <span class=\"cf-fn\">priority</span>(<span class=\"cf-val\">url</span>) >= <span class=\"cf-val\">T_daily</span>: <span class=\"cf-val\">Daily</span> (~50M URLs)\n  <span class=\"cf-kw\">else</span>: <span class=\"cf-val\">Base</span> (~200M+ URLs)\n\n<span class=\"cf-fn\">priority</span>(url) = <span class=\"cf-fn\">f</span>(\n  <span class=\"cf-fn\">PageRank</span>(<span class=\"cf-val\">url</span>),\n  <span class=\"cf-fn\">changeFrequency</span>(<span class=\"cf-val\">checksum_history</span>),\n  <span class=\"cf-fn\">contentImportance</span>(<span class=\"cf-val\">predicted_query_utility</span>)\n)\n<span class=\"cf-comment\">// Real-time: fetched within minutes</span>\n<span class=\"cf-comment\">// Daily: recrawled every ~24h</span>\n<span class=\"cf-comment\">// Base: recrawled on longer cycles</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US7725452\">US7725452</a> (Scheduler for Search Engine Crawler)",
+      "affects": "Affected by: PageRank, content change rate, predicted query utility, server response speed, sitemap signals"
+    },
+    {
+      "name": "RealTimeBoost Signal Computation",
+      "source": "Leak",
+      "how": "RealTimeBoost operates as a post-retrieval re-ranking twiddler that incorporates real-time Chrome visit data. When a URL receives a sudden spike in Chrome visits (detected via CRAPS aggregation), RealTimeBoost applies a positive re-ranking signal before the standard NavBoost table is updated. The signal combines crapsNewUrlSignals (URL-level Chrome engagement for fresh URLs) with crapsAbsoluteHostSignals (host-level Chrome engagement). For new URLs without NavBoost history, crapsNewUrlSignals provides the primary engagement signal, solving the cold-start problem.",
+      "formula": "<span class=\"cf-fn\">RealTimeBoost</span>(url, query) = <span class=\"cf-fn\">twiddler</span>(\n  <span class=\"cf-fn\">crapsNewUrlSignals</span>(<span class=\"cf-val\">url</span>),\n  <span class=\"cf-fn\">crapsAbsoluteHostSignals</span>(<span class=\"cf-val\">host</span>),\n  <span class=\"cf-fn\">chromeVisitSpike</span>(<span class=\"cf-val\">url</span>, <span class=\"cf-val\">window</span>)\n)\n<span class=\"cf-comment\">// Applied post-retrieval, before final ranking</span>\n<span class=\"cf-comment\">// Bridges gap between publish and NavBoost update</span>\n\n<span class=\"cf-kw\">for</span> new URLs:\n  <span class=\"cf-fn\">engagement</span> = <span class=\"cf-fn\">crapsNewUrlSignals</span>(<span class=\"cf-val\">url</span>)\n  <span class=\"cf-comment\">// cold-start bypass: no NavBoost history needed</span>\n\n<span class=\"cf-kw\">for</span> all URLs:\n  <span class=\"cf-fn\">siteBoost</span> = <span class=\"cf-fn\">crapsAbsoluteHostSignals</span>(<span class=\"cf-val\">host</span>)\n  <span class=\"cf-comment\">// host-level Chrome engagement lifts all pages</span>",
+      "patents": "",
+      "affects": "Affected by: Chrome visit volume and velocity, CRAPS signal freshness, host-level engagement patterns, NavBoost data availability"
+    },
+    {
+      "name": "Real-Time NSR Recomputation",
+      "source": "Leak",
+      "how": "Normalized Site Rank (NSR) is normally computed in batch cycles, but crapsNewNsrSignal enables near-real-time recomputation using Chrome browsing data. When aggregate Chrome engagement patterns for a host shift significantly (viral event, site outage, brand crisis), the NSR is recomputed without waiting for the next batch cycle. This updated NSR then influences all ranking decisions for pages on that host, including index tier placement and crawl priority.",
+      "formula": "<span class=\"cf-fn\">crapsNewNsrSignal</span>(host) = <span class=\"cf-fn\">recompute</span>(\n  <span class=\"cf-fn\">NSR</span>(<span class=\"cf-val\">host</span>),\n  <span class=\"cf-fn\">crapsAbsoluteHostSignals</span>(<span class=\"cf-val\">host</span>)\n)\n<span class=\"cf-comment\">// Triggers on significant Chrome engagement shift</span>\n<span class=\"cf-comment\">// Bypasses standard batch NSR computation cycle</span>\n\n<span class=\"cf-fn\">impact</span>(host) = <span class=\"cf-fn\">crapsNewNsrSignal</span> &rarr; {\n  <span class=\"cf-val\">crawlPriority</span>,\n  <span class=\"cf-val\">indexTierPlacement</span>,\n  <span class=\"cf-val\">rankingCeiling</span>\n}\n<span class=\"cf-comment\">// All pages on host affected by NSR update</span>",
+      "patents": "",
+      "affects": "Affected by: aggregate Chrome browsing patterns at host level, engagement velocity changes, site-wide traffic trends"
+    }
+  ],
+  "pipeline": {
+    "title": "Real-Time Indexing Pipeline",
+    "stages": [
+      {
+        "name": "Change Detection",
+        "detail": "URL change detected via sitemap ping, RSS feed, Google Alerts, or checksum difference on recrawl"
+      },
+      {
+        "name": "Crawl Tier Routing",
+        "detail": "Scheduler assigns URL to Real-time (5M+), Daily (50M+), or Base (200M+) tier based on priority score"
+      },
+      {
+        "name": "Real-Time Fetch",
+        "detail": "Trawler fetches Real-time tier URLs within minutes. Content rendered and parsed for indexing"
+      },
+      {
+        "name": "Real-Time Index Partition",
+        "detail": "New/updated content enters the real-time index partition (Patent US20060294086). Merged periodically with main index"
+      },
+      {
+        "name": "CRAPS Signal Aggregation",
+        "detail": "Chrome Realtime Aggregated Page Signals computed: crapsNewUrlSignals (URL-level), crapsAbsoluteHostSignals (host-level)"
+      },
+      {
+        "name": "RealTimeBoost Application",
+        "detail": "Post-retrieval twiddler applies real-time Chrome engagement data to re-rank results before NavBoost table update"
+      },
+      {
+        "name": "InstantGlue Delivery",
+        "detail": "User engagement signals delivered with ~10-minute latency on 24h windows. Feeds isHotdoc flag for trending content"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2006",
+      "type": "patent",
+      "title": "Realtime Indexing Patent Filed",
+      "desc": "US20060294086 filed: describes maintaining a real-time index partition continuously updated as documents change."
+    },
+    {
+      "year": "2007",
+      "type": "patent",
+      "title": "Crawl Scheduler Patent",
+      "desc": "US7725452 granted: three-tier crawl architecture (Base 200M+, Daily 50M+, Real-time 5M+) for prioritized crawling."
+    },
+    {
+      "year": "2009",
+      "type": "patent",
+      "title": "Realtime Indexing Granted",
+      "desc": "US7634466 granted: near-real-time incremental index updates without full index rebuilds."
+    },
+    {
+      "year": "2010",
+      "type": "event",
+      "title": "Caffeine Launch",
+      "desc": "Google replaces batch indexing with continuous incremental indexing. Content can enter the index within seconds of crawling."
+    },
+    {
+      "year": "2013",
+      "type": "patent",
+      "title": "Crawl Rate Management Patent",
+      "desc": "US8458163 granted: site owners can request crawl rate changes, but speed-up only honored when rate limit is the binding constraint."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "API Leak Reveals CRAPS + RealTimeBoost",
+      "desc": "RealTimeBoost, crapsNewUrlSignals, crapsAbsoluteHostSignals, and crapsNewNsrSignal exposed. Chrome real-time signal pipeline confirmed."
+    },
+    {
+      "year": "2025",
+      "type": "doj",
+      "title": "Mehta Opinion on Infrastructure",
+      "desc": "Judge Mehta identifies Google's crawl scale and Chrome data integration as structural competitive advantages constituting barriers to entry."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Search Central Documentation",
+      "publicClaim": "It can take time for Google to discover and index new content. Indexing can take anywhere from a few days to a few weeks.",
+      "internalSource": "API Leak: crapsNewUrlSignals + RealTimeBoost",
+      "internalClaim": "Chrome Realtime Aggregated Page Signals provide near-real-time engagement data for new URLs. RealTimeBoost re-ranks results using live Chrome visits. For high-engagement URLs, the gap between publishing and ranking impact can be as short as 10 minutes via InstantGlue."
+    },
+    {
+      "publicSource": "Google Search Central Documentation",
+      "publicClaim": "There's no way to guarantee that Google will index your content faster. Submitting a sitemap or using the URL Inspection tool can help but doesn't guarantee faster indexing.",
+      "internalSource": "Patent US7725452 + API Leak CRAPS signals",
+      "internalClaim": "The three-tier crawl architecture routes ~5M URLs into a real-time crawl tier with minutes-level fetch latency. URLs that demonstrate high PageRank, content importance, and change frequency are automatically promoted to faster crawl tiers. Chrome engagement data (CRAPS) further accelerates ranking impact for content receiving real-time traffic."
+    },
+    {
+      "publicSource": "Google Public Statements",
+      "publicClaim": "We don't use Chrome data for ranking. Chrome usage data is not used in Search ranking.",
+      "internalSource": "API Leak: crapsNewUrlSignals, crapsAbsoluteHostSignals, crapsNewNsrSignal",
+      "internalClaim": "CRAPS literally stands for Chrome Realtime Aggregated Page Signals. Three distinct CRAPS signals feed ranking: URL-level (crapsNewUrlSignals), host-level (crapsAbsoluteHostSignals), and NSR recomputation (crapsNewNsrSignal). RealTimeBoost incorporates Chrome visits as a re-ranking twiddler."
+    }
+  ]
+}

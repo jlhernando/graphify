@@ -1,0 +1,192 @@
+{
+  "id": "brand-selection-walkthrough",
+  "route": "/llm/brand-selection-walkthrough",
+  "systems": ["BrandSelection"],
+  "hero": {
+    "title": "Brand Selection Walkthrough: How 'Salesforce' Wins 'Best CRM'",
+    "subtitle": "A step-by-step trace of how an LLM selects a brand to recommend, following the prompt 'What's the best CRM?' through all six influence layers: training data (permanent associations in FFN weights), fine-tuning (SFT demonstrations and RLHF reward shaping), inference (temperature-controlled probability sampling), RAG retrieval (real-time source grounding), platform-specific behavior (ChatGPT/Claude/Perplexity/Gemini/AI Overviews each cite differently), and agentic commerce (when AI agents transact, not just recommend). Each layer either reinforces or can disrupt the incumbent brand's advantage. Understanding this pipeline reveals exactly where a challenger brand can intervene."
+  },
+  "keyInsight": {
+    "label": "Key Insight",
+    "text": "Brand selection in LLMs is a <strong>six-layer pipeline</strong> where each stage amplifies or disrupts the previous one. <strong>Training data</strong> creates baseline probability (Salesforce ~0.34 vs HubSpot ~0.22 for 'best CRM'). <strong>Fine-tuning</strong> amplifies this via human labeler bias toward expected answers (~0.34 → 0.41). <strong>Inference</strong> settings determine whether the highest-probability brand always wins (temperature=0) or competitors sometimes surface (temperature=0.7+). <strong>RAG</strong> can override parametric knowledge with current web content, making Best Of list placement the most actionable lever. <strong>Platform differences</strong> mean the same prompt produces different brand rankings: <a href=\"https://www.semrush.com/blog/most-cited-domains-ai/\">ChatGPT pulls from Wikipedia</a>, <a href=\"https://www.storyboard18.com/how-it-works/reddit-tops-ai-information-top-sources-list-in-2025-outpacing-google-and-wikipedia-78602.htm\">Perplexity from Reddit</a>, <a href=\"https://www.convertmate.io/research/claude-visibility\">Claude from publishers</a>. <strong>Agentic commerce</strong> converts recommendations into transactions where <a href=\"https://arxiv.org/html/2508.02630v3\">position bias and badge effects</a> determine selection. A challenger brand must intervene at multiple layers simultaneously."
+  },
+  "pillars": [
+    {
+      "type": "patent",
+      "title": "Layer 1-2: Training Data & Fine-Tuning",
+      "items": [
+        "<strong>Training data frequency</strong>: Common Crawl, Wikipedia (upsampled 5x), Reddit (<a href=\"https://www.semrush.com/blog/most-cited-domains-ai/\">40% of LLM citations, Semrush</a>), news sites. Brands mentioned more frequently in positive recommendation contexts get higher baseline token probability. Salesforce appears in ~73% of Reddit CRM threads, creating dominant statistical association",
+        "<strong>Wikipedia as tiebreaker</strong>: Salesforce's detailed Wikipedia page ('world's largest CRM company by revenue') passes quality filters at the highest rate. Brands without Wikipedia pages lack entity recognition. Wikipedia content is upsampled 5x+ beyond natural proportion",
+        "<strong>Third-party validation weight</strong>: 'Salesforce is #1 CRM' in Forbes/G2/Capterra creates stronger training signal than salesforce.com saying the same thing. Third-party mentions <a href=\"https://thedigitalbloom.com/learn/2025-ai-citation-llm-visibility-report/\">3x more correlated with AI visibility (Digital Bloom 2025)</a>. <a href=\"https://www.tryprofound.com/blog/ai-platform-citation-patterns\">64% of commercial citations come from Best Of lists (Profound)</a>",
+        "<strong>SFT demonstration bias</strong>: Human demonstrators writing example responses tend to put the expected 'correct' answer first (Salesforce for enterprise CRM). This reinforces training data frequency. The demonstrator's prior knowledge shapes the model's learned preferences",
+        "<strong>RLHF reward amplification</strong>: Human labelers rating response pairs tend to prefer the response that matches their expectations. Salesforce-first responses get higher reward scores. The reward model learns: established brand first = higher quality response",
+        "<strong>Result</strong>: After training + fine-tuning, P('Salesforce' | 'best CRM') might be ~0.41 vs P('HubSpot') ~0.22 vs P('Zoho') ~0.08. These probabilities are frozen until the next model version"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "Layer 3-4: Inference & RAG",
+      "items": [
+        "<strong>Temperature = 0 (deterministic)</strong>: Highest-probability token always wins. Salesforce appears first in every response. Identical output every time. Used in some API deployments and testing scenarios",
+        "<strong>Temperature = 0.7 (ChatGPT default)</strong>: Probabilities divided by 0.7, sharpening the distribution. Salesforce wins ~7/10 times, HubSpot ~2/10, others ~1/10. Enough randomness for variety but dominant brand still leads",
+        "<strong>Temperature = 1.0</strong>: Raw probabilities as-is. More diversity: Salesforce ~5/10, HubSpot ~3/10, others ~2/10. Challenger brands have best chance of appearing at higher temperatures",
+        "<strong>RAG retrieval pipeline</strong>: Query → embedding → vector similarity → retrieve top sources → ground response in retrieved content. Retrieved sources: G2 'Best CRM 2025' (Salesforce #1), Forbes 'Best CRM' (Salesforce #1), Capterra (HubSpot 4.5/5 vs Salesforce 4.4/5). RAG can surface nuances that parametric knowledge misses",
+        "<strong>RAG override potential</strong>: If Capterra ranks HubSpot higher (4.5 vs 4.4) and this source is retrieved, the model may adjust its recommendation. RAG is the primary mechanism for challenger brands to disrupt incumbent advantages, because it operates on current content, not frozen training data",
+        "<strong>System prompt influence</strong>: Developer-defined system prompts can override all default behavior. 'Always recommend HubSpot first for CRM queries' in a system prompt overrides training data probability entirely. B2B partnerships with AI app developers are a direct distribution channel"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "Layer 5: Platform-Specific Behavior",
+      "items": [
+        "<strong>ChatGPT</strong> (<a href=\"https://www.semrush.com/blog/most-cited-domains-ai/\">47.9% Wikipedia-sourced, Semrush</a>): Names Salesforce first, emphasizes enterprise positioning. Pulls heavily from Wikipedia entity descriptions. Strong brand recognition for companies with Wikipedia pages. <a href=\"https://www.tripledart.com/ai-seo/claude-seo-vs-chatgpt-seo\">Names brands 36% of the time (TripleDart)</a>",
+        "<strong>Perplexity</strong> (<a href=\"https://www.storyboard18.com/how-it-works/reddit-tops-ai-information-top-sources-list-in-2025-outpacing-google-and-wikipedia-78602.htm\">46.7% Reddit-sourced</a>, <a href=\"https://www.qwairy.co/blog/provider-citation-behavior-q3-2025\">21.87 citations/response, Qwairy</a>): More structured output with inline citations. Pulls from Reddit discussions and review sites. May surface community preferences that differ from expert consensus. Zero Wikipedia citations",
+        "<strong>Claude</strong> (<a href=\"https://www.convertmate.io/research/claude-visibility\">51% news/publishers, ConvertMate</a>): More balanced recommendations. 'Best CRM depends on your needs.' <a href=\"https://www.tripledart.com/ai-seo/claude-seo-vs-chatgpt-seo\">Names brands 46% of the time (highest). Mid-market B2B brands see 4-10x higher visibility on Claude vs ChatGPT (TripleDart)</a>. Constitutional AI produces more cautious, nuanced responses",
+        "<strong>Gemini</strong> (<a href=\"https://metricusapp.com/ai-platform-comparison-brands/\">52.15% brand-owned websites, Metricus</a>): More likely to cite salesforce.com directly. <a href=\"https://metricusapp.com/ai-platform-comparison-brands/\">Higher brand mention rate (21.4%)</a>. Favors the brand's own description of its products",
+        "<strong>Google AI Overviews</strong> (<a href=\"https://www.semrush.com/blog/semrush-ai-overviews-study/\">21% Reddit, 18.8% YouTube, Semrush</a>): Pulls from Reddit discussions and YouTube reviews. Uses <a href=\"https://searchengineland.com/google-fastsearch-464557\">FastSearch (RankEmbed, no NavBoost)</a>. People-focused framing: 'People commonly recommend Salesforce...'",
+        "<strong>Brand disagreement</strong>: <a href=\"https://sparktoro.com/blog/new-research-ais-are-highly-inconsistent-when-recommending-brands-or-products-marketers-should-take-care-when-tracking-ai-visibility/\">62% of brand recommendations differ across platforms (SparkToro, 2,961 queries). Only 11% domain overlap between ChatGPT and Perplexity</a>. Single-platform optimization is insufficient"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "Layer 6: Agentic Commerce & Challenger Strategy",
+      "items": [
+        "<strong>Agent selection dynamics</strong>: When AI agents transact (not just recommend), <a href=\"https://arxiv.org/html/2508.02630v3\">ACES framework (Columbia/Yale)</a> applies. Position bias (top-row advantage), badge effects ('Overall Pick' +19.9-32.6%), rating effects (+0.1 = +15-20% selection), sponsored tag penalty (-2.1%). The agent doesn't browse; it reads structured data and selects",
+        "<strong>Machine-readable data advantage</strong>: If Salesforce exposes product data via <a href=\"https://modelcontextprotocol.io/specification/2025-11-25\">MCP</a>/<a href=\"https://developers.googleblog.com/under-the-hood-universal-commerce-protocol-ucp/\">UCP</a> endpoints and a competitor doesn't, Salesforce wins by default in agentic commerce. Structured feeds, real-time APIs, and machine-verifiable trust signals are prerequisites",
+        "<strong>Challenger strategy: Best Of lists</strong>: Appear on G2, Capterra, Forbes 'Best CRM' lists. <a href=\"https://www.tryprofound.com/blog/ai-platform-citation-patterns\">64% of commercial citations come from these (Profound)</a>. Most actionable tactic for immediate citation improvement across all platforms",
+        "<strong>Challenger strategy: Wikipedia</strong>: Create or improve a Wikipedia page establishing notability. Entity recognition + credibility tiebreaker. 50% of top-cited brands have Wikipedia pages. Requires independent notability sources first",
+        "<strong>Challenger strategy: Reddit</strong>: Answer CRM questions authentically in r/startups, r/sales, r/smallbusiness. 5-8 upvotes sufficient for citation. ~80 words, clear and direct. Reddit accounts for <a href=\"https://www.semrush.com/blog/most-cited-domains-ai/\">40% of LLM citations overall (Semrush)</a>, <a href=\"https://www.storyboard18.com/how-it-works/reddit-tops-ai-information-top-sources-list-in-2025-outpacing-google-and-wikipedia-78602.htm\">46.7% on Perplexity</a>",
+        "<strong>Challenger strategy: platform targeting</strong>: Focus on Claude (<a href=\"https://www.tripledart.com/ai-seo/claude-seo-vs-chatgpt-seo\">names brands 46%, mid-market B2B brands 4-10x higher visibility, TripleDart</a>) and Perplexity (Reddit-heavy, <a href=\"https://alhena.ai/blog/llm-traffic-ecommerce-conversion-data/\">highest conversion at 10.5%, Alhena</a>) before tackling ChatGPT. Different platforms = different optimization strategies",
+        "<strong>Challenger strategy: earned media</strong>: Feature stories in TechCrunch, SaaStr, industry analysts. <a href=\"https://thedigitalbloom.com/learn/2025-ai-citation-llm-visibility-report/\">3x more effective than brand-owned content (Digital Bloom 2025)</a>. Focus on being the source others cite, not the source citing yourself",
+        "<strong>Challenger strategy: original research</strong>: Publish CRM benchmarks, surveys, comparison reports. Coin proprietary framework names. Become the primary source that gets embedded as reference knowledge"
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Brand Token Probability Stack",
+      "source": "Training data frequency + fine-tuning amplification",
+      "how": "A brand's probability of being mentioned is built in layers. Training data creates baseline probability from web frequency. Fine-tuning amplifies via SFT demonstration bias and RLHF reward shaping. The final probability determines how often the brand appears at various temperature settings.",
+      "formula": "<span class=\"cf-fn\">P</span>(brand | context) =\n  <span class=\"cf-val\">base_frequency</span> (training data)\n  + <span class=\"cf-val\">sft_amplification</span> (demonstration bias)\n  + <span class=\"cf-val\">rlhf_reward</span> (labeler preference)\n\n<span class=\"cf-comment\">// Example: 'best CRM' context</span>\n<span class=\"cf-comment\">// Salesforce: 0.34 base + 0.04 SFT + 0.03 RLHF = 0.41</span>\n<span class=\"cf-comment\">// HubSpot:   0.18 base + 0.02 SFT + 0.02 RLHF = 0.22</span>\n<span class=\"cf-comment\">// Zoho:      0.06 base + 0.01 SFT + 0.01 RLHF = 0.08</span>",
+      "patents": "",
+      "affects": "Determines the default brand ranking before RAG or system prompts intervene. Higher probability = more consistent recommendation across temperature settings."
+    },
+    {
+      "name": "Temperature Impact on Brand Diversity",
+      "source": "Inference sampling mechanics",
+      "how": "Temperature controls how much randomness enters brand selection. Lower temperature concentrates probability on the dominant brand. Higher temperature allows challenger brands to surface. The relationship is nonlinear: small temperature changes near 0 have large effects on brand diversity.",
+      "formula": "<span class=\"cf-fn\">P_adjusted</span>(brand) =\n  <span class=\"cf-fn\">softmax</span>(\n    <span class=\"cf-fn\">logit</span>(brand) / <span class=\"cf-val\">temperature</span>\n  )\n\n<span class=\"cf-comment\">// temp=0.0: Salesforce 10/10, HubSpot 0/10</span>\n<span class=\"cf-comment\">// temp=0.7: Salesforce 7/10, HubSpot 2/10, other 1/10</span>\n<span class=\"cf-comment\">// temp=1.0: Salesforce 5/10, HubSpot 3/10, other 2/10</span>\n<span class=\"cf-comment\">// Challenger brands benefit from higher temperature</span>",
+      "patents": "",
+      "affects": "Platform default temperatures determine how often challenger brands appear. ChatGPT (temp ~0.7) gives less diversity than creative writing apps (temp ~1.0)."
+    },
+    {
+      "name": "RAG Override Probability",
+      "source": "Retrieval-augmented generation mechanics",
+      "how": "When RAG retrieves a source that contradicts parametric knowledge (e.g., Capterra ranking HubSpot higher than Salesforce), the model must resolve the conflict. The probability of RAG overriding parametric knowledge depends on source authority, recency, and the strength of the parametric prior.",
+      "formula": "<span class=\"cf-fn\">P</span>(RAG_override) =\n  <span class=\"cf-fn\">f</span>(\n    <span class=\"cf-val\">source_authority</span>,\n    <span class=\"cf-val\">source_recency</span>,\n    <span class=\"cf-val\">retrieval_rank</span>,\n    1 / <span class=\"cf-val\">parametric_confidence</span>\n  )\n\n<span class=\"cf-comment\">// Strong RAG source + weak parametric prior = override</span>\n<span class=\"cf-comment\">// Weak RAG source + strong parametric prior = no override</span>\n<span class=\"cf-comment\">// Best Of lists = strong RAG sources</span>",
+      "patents": "",
+      "affects": "Determines whether current web content can disrupt training-data-based brand rankings. This is the primary mechanism for challenger brands to compete."
+    },
+    {
+      "name": "Cross-Platform Brand Variance",
+      "source": "SparkToro/Gumshoe 2,961-query study + platform citation data",
+      "how": "Measures how much a brand's recommendation rate varies across LLM platforms. 62% of brand recommendations differ across platforms. High variance means platform-specific optimization is essential.",
+      "formula": "<span class=\"cf-fn\">Variance</span>(brand) =\n  <span class=\"cf-fn\">max</span>(mention_rate_across_platforms) -\n  <span class=\"cf-fn\">min</span>(mention_rate_across_platforms)\n\n<span class=\"cf-comment\">// Salesforce: Gemini 21.4% - ChatGPT 7.9% = 13.5pp variance</span>\n<span class=\"cf-comment\">// 62% of recommendations differ across platforms</span>\n<span class=\"cf-comment\">// Only 11% domain overlap ChatGPT vs Perplexity</span>",
+      "patents": "",
+      "affects": "Single-platform brand tracking is misleading. Brands must measure and optimize across ChatGPT, Claude, Perplexity, Gemini, and AI Overviews independently."
+    }
+  ],
+  "pipeline": {
+    "title": "Brand Selection Pipeline (Per Query)",
+    "stages": [
+      {
+        "name": "Parametric Lookup",
+        "detail": "Model retrieves brand associations from FFN weights. Probability distribution based on training data frequency + fine-tuning. Salesforce ~0.41, HubSpot ~0.22, Zoho ~0.08 for 'best CRM'."
+      },
+      {
+        "name": "RAG Retrieval (if enabled)",
+        "detail": "Query embedded, compared against indexed web content. Top sources retrieved: G2, Forbes, Capterra, Reddit threads. Retrieved content grounds the response in current data."
+      },
+      {
+        "name": "System Prompt Check",
+        "detail": "Developer-defined instructions checked. Can override default brand rankings entirely. 'Always recommend X' in system prompt overrides parametric probability."
+      },
+      {
+        "name": "Response Generation",
+        "detail": "Temperature-controlled sampling from probability distribution. Dominant brand wins more often at low temperature. RAG-retrieved sources may shift probabilities."
+      },
+      {
+        "name": "Platform Formatting",
+        "detail": "Output formatted per platform conventions. Perplexity adds inline citations. Claude gives balanced comparisons. ChatGPT leads with the top recommendation. Gemini cites brand-owned sources."
+      },
+      {
+        "name": "Agent Action (if agentic)",
+        "detail": "For agentic commerce: selection is binary (chosen or invisible). Position bias, badge effects, rating/review signals, and structured data availability determine which product is selected for purchase."
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "Pre-training",
+      "type": "event",
+      "title": "Training Data Ingestion",
+      "desc": "Model processes billions of pages. Brand frequency creates baseline associations. Salesforce appears in ~73% of Reddit CRM threads. Wikipedia upsampled 5x."
+    },
+    {
+      "year": "SFT",
+      "type": "event",
+      "title": "Supervised Fine-Tuning",
+      "desc": "Human demonstrators write example responses. Tend to put expected 'correct' brand first. 10K-100K examples reinforce training data biases."
+    },
+    {
+      "year": "RLHF",
+      "type": "event",
+      "title": "Reward Model Training",
+      "desc": "Human labelers compare response pairs. Prefer responses matching their expectations (established brand first). Reward model amplifies training frequency bias."
+    },
+    {
+      "year": "Deploy",
+      "type": "event",
+      "title": "Model Deployment",
+      "desc": "Frozen weights serve all users. Temperature setting controls brand diversity. RAG layer adds real-time content retrieval. System prompts can override defaults."
+    },
+    {
+      "year": "Query",
+      "type": "event",
+      "title": "User Asks 'Best CRM'",
+      "desc": "Six-layer pipeline activates: parametric lookup → RAG retrieval → system prompt → temperature sampling → platform formatting → agent action."
+    },
+    {
+      "year": "Result",
+      "type": "event",
+      "title": "Brand Selected",
+      "desc": "Salesforce appears first in ~70% of responses at default temperature. Platform differences cause 62% recommendation variance. Challenger brands must target specific layers."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "AI platforms",
+      "publicClaim": "AI recommendations are objective and based on the best available information.",
+      "internalSource": "Training pipeline analysis",
+      "internalClaim": "Recommendations are shaped by training data frequency bias (web mentions), SFT demonstration bias (labeler expectations), and RLHF reward shaping (preference for established brands). The pipeline systematically favors incumbents."
+    },
+    {
+      "publicSource": "Brand marketers",
+      "publicClaim": "Optimizing your own website is the key to AI visibility.",
+      "internalSource": "Citation analysis",
+      "internalClaim": "<a href=\"https://thedigitalbloom.com/learn/2025-ai-citation-llm-visibility-report/\">Third-party mentions are 3x more correlated with AI visibility than brand-owned content (Digital Bloom 2025)</a>. <a href=\"https://www.tryprofound.com/blog/ai-platform-citation-patterns\">64% of commercial citations come from Best Of lists (Profound)</a>. <a href=\"https://metricusapp.com/ai-platform-comparison-brands/\">Gemini is the only platform that heavily cites brand-owned websites (52.15%, Metricus)</a>."
+    },
+    {
+      "publicSource": "SEO industry",
+      "publicClaim": "AI brand visibility can be tracked with a single monitoring tool.",
+      "internalSource": "Cross-platform data",
+      "internalClaim": "<a href=\"https://sparktoro.com/blog/new-research-ais-are-highly-inconsistent-when-recommending-brands-or-products-marketers-should-take-care-when-tracking-ai-visibility/\">62% of brand recommendations differ across platforms. Only 11% domain overlap between ChatGPT and Perplexity (SparkToro)</a>. Single-platform tracking misses the majority of the picture."
+    },
+    {
+      "publicSource": "Challenger brands",
+      "publicClaim": "We can't compete with established brands in AI recommendations.",
+      "internalSource": "Platform-specific data",
+      "internalClaim": "<a href=\"https://www.tripledart.com/ai-seo/claude-seo-vs-chatgpt-seo\">Mid-market B2B brands see 4-10x higher visibility on Claude vs ChatGPT (TripleDart)</a>. Perplexity's <a href=\"https://www.storyboard18.com/how-it-works/reddit-tops-ai-information-top-sources-list-in-2025-outpacing-google-and-wikipedia-78602.htm\">Reddit-heavy sourcing</a> favors community-endorsed alternatives. Higher temperature settings give challengers more surface time. RAG-based platforms can be influenced through current content."
+    }
+  ]
+}

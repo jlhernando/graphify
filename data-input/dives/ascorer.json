@@ -64,6 +64,14 @@
   ],
   "calculations": [
     {
+      "name": "Scoring Function Evaluation (US8060497)",
+      "source": "Patent: Zatsman, Haahr, Cutts, Wu, 2009",
+      "how": "A/B testing framework for evaluating ranking function variants. For each candidate scoring function, pair-wise comparisons determine win/draw/loss against the baseline. Score = (2*wins + draws) / (2*trials). Diversity-based selection ensures the evaluation covers varied query types. Karma tracking prevents spam evaluations from corrupting results. This is how Google decides which Ascorer configurations to deploy.",
+      "formula": "<span class=\"cf-fn\">Score</span>(function_i) =\n  (2 * <span class=\"cf-val\">wins</span> + <span class=\"cf-val\">draws</span>) /\n  (2 * <span class=\"cf-val\">trials</span>)\n<span class=\"cf-comment\">// pair-wise comparison against baseline</span>\n<span class=\"cf-comment\">// diversity-based trial selection</span>\n<span class=\"cf-comment\">// karma tracking prevents spam evals</span>\n<span class=\"cf-comment\">// authors: Haahr, Cutts, Zatsman, Wu</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US8060497\">US8060497</a>",
+      "affects": "Affected by: trial diversity, evaluation corpus, karma scores. Determines which scoring function variant goes to production."
+    },
+    {
       "name": "Ascorer Composite Score",
       "source": "Leak+DOJ",
       "how": "Ascorer combines the three top-level signals (T*, Q*, P*) along with additional component signals into a single ranking score per document. The exact combination formula is unknown, but all three pillars are confirmed inputs. The output is a numeric score that determines initial document ordering before any re-ranking.",
@@ -89,7 +97,7 @@
       },
       {
         "name": "Ascorer Scoring",
-        "detail": "T* + Q* + P* combined into initial ranking score for all ~10K candidates"
+        "detail": "T* + Q* + P* combined into initial ranking score for all ~10K candidates. NavBoost click data feeds P* as a core input at this stage (its primary impact point). P* was 'more powerful than the rest of ranking combined' (Grushetsky)"
       },
       {
         "name": "Predoc Twiddlers",
@@ -97,11 +105,11 @@
       },
       {
         "name": "ML Re-ranking",
-        "detail": "RankBrain (all queries), DeepRank (top 200-300), RankEmbed adjust scores using neural models"
+        "detail": "RankBrain (feed-forward NN, all ~10K candidates, cheap), DeepRank (Transformer, top 200-300 only, expensive), RankEmbed (dual encoder) adjust Ascorer scores. ML systems refine but do not replace the hand-crafted Ascorer score"
       },
       {
-        "name": "NavBoost Re-ranking",
-        "detail": "Click data from 13-month window adjusts rankings based on real user behavior"
+        "name": "NavBoost Re-ranking (second pass)",
+        "detail": "NavBoost click data adjusts rankings again after ML systems. This is NavBoost's second pipeline impact (first: P* input to Ascorer). Post-ML NavBoost re-ranking fine-tunes the order based on 13-month click patterns"
       },
       {
         "name": "Lazy Twiddlers",
@@ -155,6 +163,26 @@
       "type": "doj",
       "title": "Three Pillars Confirmed",
       "desc": "DOJ trial confirms T*, Q*, P* as inputs. Nayak testifies on pipeline: 'maybe over a hundred' signals combined."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google (public communications on ranking)",
+      "publicClaim": "Google uses 'hundreds of signals' in a complex, holistic process. No single system or formula determines your ranking.",
+      "internalSource": "API Leak: Ascorer named module + DOJ: T*/Q*/P* framework",
+      "internalClaim": "Ascorer is a specific, named module ('primary rankings algorithm before re-ranking adjustments') that combines signals into three top-level components: T* (Topicality), Q* (Quality), P* (Popularity). While hundreds of sub-signals exist, they all feed into this structured 3-pillar framework. The 'complexity' narrative obscures a clear architectural hierarchy."
+    },
+    {
+      "publicSource": "Google (public emphasis on AI/ML in ranking)",
+      "publicClaim": "AI and machine learning have transformed how Google ranks search results. Systems like BERT and MUM represent the cutting edge of ranking technology.",
+      "internalSource": "DOJ: Nayak testimony + Pipeline architecture",
+      "internalClaim": "Ascorer's output (traditional signal combination) determines which documents enter the pipeline at all. ML re-rankers (RankBrain, DeepRank, RankEmbed) only score the top 200-300 documents from Ascorer. The 'AI transformation' operates on a small fraction of results, adjusting an ordering that was already largely determined by non-ML signals (links, content quality, click data)."
+    },
+    {
+      "publicSource": "Google Search Central (ranking factors documentation)",
+      "publicClaim": "There is no single most important ranking factor. Google considers many factors together.",
+      "internalSource": "DOJ: Grushetsky UPX0197 + Nayak testimony on NavBoost",
+      "internalClaim": "VP Grushetsky stated NavBoost was 'likely more powerful than the rest of ranking combined.' Within Ascorer, the P* (Popularity) component, largely driven by NavBoost click data, was acknowledged as disproportionately influential. The three pillars are not equally weighted."
     }
   ]
 }

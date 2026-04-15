@@ -1,0 +1,184 @@
+{
+  "id": "canonicalization",
+  "route": "/canonicalization",
+  "systems": [
+    "Canonicalization",
+    "WebMirror",
+    "Indexing"
+  ],
+  "hero": {
+    "title": "URL Canonicalization: Duplicate Resolution and URL Selection",
+    "subtitle": "Canonicalization is Google's system for selecting the single authoritative URL when multiple URLs serve identical or near-identical content. Before content-level deduplication (handled by WebMirror's SimHash), canonicalization resolves URL-level duplicates through redirect chain resolution, rel=canonical directives, URL parameter stripping, and normalization heuristics. With 7 patents covering duplicate detection, URL normalization, and dynamic URL handling, the system ensures crawl budget is not wasted on equivalent URLs and that link equity consolidates to the correct canonical. It operates at crawl time (Googlebot following redirects), indexing time (selecting canonical from URL clusters), and serving time (returning the chosen canonical in search results)."
+  },
+  "keyInsight": {
+    "label": "Key Insight from System Analysis",
+    "text": "Canonicalization is <strong>not a single algorithm</strong> but a multi-signal voting system. Google weighs <strong>rel=canonical hints</strong>, <strong>redirect signals</strong> (301 vs 302), <strong>internal linking patterns</strong>, <strong>sitemap declarations</strong>, and <strong>URL parameter rules</strong> to elect a canonical URL from a cluster of duplicates. The API leak reveals <strong>canonicalUrl</strong> and <strong>urlAfterRedirects</strong> as distinct fields, confirming that Google tracks both the declared canonical and the actual redirect destination separately. When these signals conflict (e.g., rel=canonical points to URL A but 301 redirects go to URL B), Google uses a confidence-weighted resolution that can override webmaster declarations. This is why <strong>hreflang and canonical conflicts</strong> cause indexing failures: if the canonical points outside the hreflang cluster, the entire alternate language set breaks."
+  },
+  "pillars": [
+    {
+      "type": "leak",
+      "title": "API Leak Evidence",
+      "items": [
+        "<strong>canonicalUrl</strong>: Stored per document in the index, representing Google's chosen canonical URL for a duplicate cluster. This is the URL that appears in search results regardless of which URL was originally crawled.",
+        "<strong>urlAfterRedirects</strong>: Tracks the final URL after following all redirect chains. When this differs from canonicalUrl, it indicates Google resolved a redirect but may have chosen a different canonical based on other signals.",
+        "<strong>dupFlags</strong>: Bitfield flags in document indexing that mark duplicate relationships. Includes flags for exact duplicates, near-duplicates, and canonical overrides. WebMirror's SimHash handles content-level dedup separately.",
+        "<strong>duplicateClusterId</strong>: Found in the IndexingDocjoinerDataVersion module, this field assigns each document to a duplicate cluster. URLs sharing the same duplicateClusterId are considered duplicate variants, and canonical election runs within each cluster."
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "7 Patents",
+      "items": [
+        "<strong>Duplicate document detection</strong>: <a href=\"https://patents.google.com/patent/US6615209\">US6615209</a> detects query-specific duplicate documents by comparing document fingerprints at retrieval time. Rather than global dedup, it identifies duplicates relative to the query context, reducing redundant results.",
+        "<strong>Near-duplicate file detection</strong>: <a href=\"https://patents.google.com/patent/US6658423\">US6658423</a> uses shingling and fingerprinting to detect near-duplicate files. Documents are decomposed into overlapping shingles, hashed, and compared via resemblance thresholds. This feeds the canonical selection process by identifying which URLs serve substantially similar content.",
+        "<strong>Term canonicalization</strong>: <a href=\"https://patents.google.com/patent/US7007014\">US7007014</a> canonicalizes terms in keyword-based systems, normalizing URL components and query terms to reduce variation before matching. Applied to URL token normalization during indexing.",
+        "<strong>Crawler-level duplicate detection</strong>: <a href=\"https://patents.google.com/patent/US7627613\">US7627613</a> detects duplicate documents during web crawling using content fingerprints, preventing redundant fetches and conserving crawl budget by recognizing already-seen content at crawl time.",
+        "<strong>URL normalization rule inference</strong>: <a href=\"https://patents.google.com/patent/US7680785\">US7680785</a> automatically infers URL normalization rules by observing URL patterns across a site. Detects parameters that do not change page content (session IDs, tracking codes) and learns site-specific normalization rules without webmaster configuration.",
+        "<strong>Dynamic URL handling</strong>: <a href=\"https://patents.google.com/patent/US7827166\">US7827166</a> handles dynamic URLs in crawling to improve coverage of unique content. Classifies URL parameters as content-changing vs. non-content-changing, allowing the crawler to skip redundant parameter combinations while discovering genuinely new pages.",
+        "<strong>Near-duplicate detection for crawling</strong>: <a href=\"https://patents.google.com/patent/US8548972\">US8548972</a> applies near-duplicate detection specifically within the web crawling pipeline, using MinHash signatures to identify duplicate content before full indexing, reducing processing load on downstream systems."
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Canonicalization Affects Your SEO",
+      "items": [
+        "<strong>Consolidate link equity with correct canonicals</strong>: Every duplicate URL that receives backlinks dilutes your authority. Set rel=canonical on all duplicate variants pointing to the preferred URL. Verify with Google Search Console's URL Inspection tool that Google honors your canonical, as it may override your declaration if signals conflict.",
+        "<strong>Fix redirect chains to preserve crawl budget</strong>: Each hop in a redirect chain costs crawl budget and may lose link equity. Audit redirect chains longer than 2 hops and flatten them to direct 301s. Mixed 301/302 chains are especially problematic because Google interprets 302s as temporary, potentially keeping the redirecting URL as canonical.",
+        "<strong>Handle URL parameters explicitly</strong>: If your site uses URL parameters for sorting, filtering, or tracking (e.g., ?sort=price, ?utm_source=), these create duplicate URLs that waste crawl budget. Use Google Search Console's URL Parameters tool or implement rel=canonical on parameterized pages pointing to the clean URL.",
+        "<strong>Avoid hreflang and canonical conflicts</strong>: If page /en/ has rel=canonical pointing to /en/ and hreflang alternates to /es/, but /es/ has rel=canonical pointing to /en/, the entire hreflang cluster breaks. Each hreflang variant must self-canonical. This is one of the most common international SEO failures.",
+        "<strong>Prefer 301 over 302 for permanent moves</strong>: Google treats 301 redirects as strong canonical signals and consolidates link equity to the target. 302 redirects signal temporary moves, which may cause Google to keep indexing the original URL. For permanent URL changes (HTTP to HTTPS, domain migrations), always use 301.",
+        "<strong>Use consistent internal linking</strong>: If your sitemap lists example.com/page/ but internal links point to example.com/page (no trailing slash), Google sees conflicting canonical signals. Standardize all internal links, sitemaps, and canonical tags to the same URL format."
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "Canonical Override Evidence",
+      "items": [
+        "<strong>Google determines canonicals independently</strong>: The API leak's canonicalUrl field confirms Google determines canonical URLs independently of webmaster declarations. canonicalUrl, urlAfterRedirects, and dupFlags are distinct index fields showing Google tracks these signals separately. When internal signals (redirect chains, link patterns, content similarity) conflict with rel=canonical declarations, Google can override the webmaster's preference."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Canonical URL Election",
+      "source": "API Leak + Patents",
+      "how": "Google selects a canonical URL from a cluster of duplicate URLs by aggregating weighted signals. Redirect type (301 strong, 302 weak), rel=canonical declarations, internal link volume to each URL variant, external backlink distribution, sitemap inclusion, and HTTPS preference all contribute votes. The URL with the highest aggregate score becomes the canonicalUrl stored in the index.",
+      "formula": "<span class=\"cf-fn\">canonicalScore</span>(url) =\n  <span class=\"cf-val\">w1</span> &times; <span class=\"cf-fn\">redirectSignal</span>(url) +\n  <span class=\"cf-val\">w2</span> &times; <span class=\"cf-fn\">relCanonical</span>(url) +\n  <span class=\"cf-val\">w3</span> &times; <span class=\"cf-fn\">internalLinks</span>(url) +\n  <span class=\"cf-val\">w4</span> &times; <span class=\"cf-fn\">externalLinks</span>(url) +\n  <span class=\"cf-val\">w5</span> &times; <span class=\"cf-fn\">sitemapPresence</span>(url) +\n  <span class=\"cf-val\">w6</span> &times; <span class=\"cf-fn\">httpsBoost</span>(url)\n<span class=\"cf-comment\">// 301 redirect targets get strongest signal</span>\n<span class=\"cf-comment\">// rel=canonical is a hint, not a directive</span>\n<span class=\"cf-comment\">// conflicting signals reduce confidence</span>",
+      "patents": "<a href=\"https://patents.google.com/patent/US7680785\">US7680785</a> (URL normalization rules), <a href=\"https://patents.google.com/patent/US7827166\">US7827166</a> (dynamic URL handling)",
+      "affects": "Affected by: redirect type and chain length, rel=canonical consistency, internal link patterns, external backlink distribution, sitemap declarations, HTTPS vs HTTP."
+    },
+    {
+      "name": "URL Parameter Classification",
+      "source": "Patent US7680785 + US7827166",
+      "how": "Google automatically classifies URL parameters as content-changing or non-content-changing by analyzing page content across parameter variations. For a given parameter (e.g., ?sort=, ?sessionid=), the system fetches multiple URLs varying only that parameter and compares content fingerprints. Parameters that produce identical or near-identical content are marked for stripping during normalization. This eliminates duplicate crawling of parameterized URLs.",
+      "formula": "<span class=\"cf-fn\">classifyParam</span>(param, site) =\n  <span class=\"cf-kw\">for each</span> value <span class=\"cf-kw\">in</span> <span class=\"cf-fn\">observedValues</span>(param):\n    <span class=\"cf-val\">fingerprint</span>[value] = <span class=\"cf-fn\">contentHash</span>(url + param=value)\n  <span class=\"cf-val\">similarity</span> = <span class=\"cf-fn\">avgPairwise</span>(fingerprints)\n  <span class=\"cf-kw\">if</span> similarity &gt; <span class=\"cf-val\">0.95</span>: <span class=\"cf-val\">NON_CONTENT</span> <span class=\"cf-comment\">// strip param</span>\n  <span class=\"cf-kw\">else</span>: <span class=\"cf-val\">CONTENT_CHANGING</span> <span class=\"cf-comment\">// keep param, crawl variants</span>",
+      "patents": "<a href=\"https://patents.google.com/patent/US7680785\">US7680785</a> (inferring normalization rules), <a href=\"https://patents.google.com/patent/US7827166\">US7827166</a> (dynamic URL coverage)",
+      "affects": "Affected by: parameter value diversity, content similarity across variants, site-specific URL patterns, crawl budget allocation."
+    },
+    {
+      "name": "Near-Duplicate Clustering",
+      "source": "Patents US6658423 + US8548972",
+      "how": "Before canonical election, URLs must be grouped into duplicate clusters. The system generates MinHash signatures from document shingles (overlapping n-grams of content). URLs whose MinHash similarity exceeds a threshold are grouped into the same cluster. Within each cluster, the canonical election process selects the representative URL. This operates separately from WebMirror's SimHash, which handles content-level dedup at serving time.",
+      "formula": "<span class=\"cf-fn\">clusterDuplicates</span>(urls) =\n  <span class=\"cf-kw\">for each</span> url:\n    <span class=\"cf-val\">sig</span> = <span class=\"cf-fn\">minHash</span>(<span class=\"cf-fn\">shingles</span>(content(url)))\n  <span class=\"cf-fn\">clusters</span> = <span class=\"cf-fn\">groupBy</span>(\n    <span class=\"cf-fn\">jaccardSim</span>(sig_a, sig_b) &gt; <span class=\"cf-val\">threshold</span>\n  )\n  <span class=\"cf-kw\">for each</span> cluster:\n    <span class=\"cf-val\">canonical</span> = <span class=\"cf-fn\">electCanonical</span>(cluster)\n<span class=\"cf-comment\">// threshold ~0.8 for near-duplicates</span>\n<span class=\"cf-comment\">// separate from WebMirror SimHash dedup</span>",
+      "patents": "<a href=\"https://patents.google.com/patent/US6658423\">US6658423</a> (near-duplicate detection), <a href=\"https://patents.google.com/patent/US8548972\">US8548972</a> (crawl-time dedup), <a href=\"https://patents.google.com/patent/US6615209\">US6615209</a> (query-specific dedup)",
+      "affects": "Affected by: content similarity between URL variants, shingle size and hash function, Jaccard similarity threshold, cluster size limits."
+    }
+  ],
+  "pipeline": {
+    "title": "Canonicalization in the Ranking Pipeline",
+    "stages": [
+      {
+        "name": "URL Discovery",
+        "detail": "Googlebot discovers URLs through sitemaps, internal links, external links, and Search Console submissions. Multiple URL variants for the same content enter the crawl queue."
+      },
+      {
+        "name": "URL Normalization",
+        "detail": "Before crawling, URLs are normalized: scheme lowercased, default ports removed, path resolved (/../), trailing slashes standardized, and known non-content parameters stripped using learned rules (US7680785)."
+      },
+      {
+        "name": "Redirect Resolution",
+        "detail": "Googlebot follows redirect chains (301, 302, meta refresh, JavaScript redirects) and records urlAfterRedirects. Redirect type and chain length feed into canonical signal scoring."
+      },
+      {
+        "name": "Content Fingerprinting",
+        "detail": "Crawled content is shingled and hashed using MinHash (US8548972) and content fingerprints (US6658423). Near-duplicate pages are identified and grouped into duplicate clusters before full indexing."
+      },
+      {
+        "name": "Canonical Election",
+        "detail": "For each duplicate cluster, signals are aggregated (redirects, rel=canonical, links, sitemap, HTTPS) to elect the canonical URL. The winner is stored as canonicalUrl in the index. Conflicting signals lower election confidence."
+      },
+      {
+        "name": "Index Consolidation",
+        "detail": "Link equity, PageRank, and other signals from non-canonical URLs are consolidated to the elected canonical. The non-canonical URLs are stored as alternates but not served in search results."
+      },
+      {
+        "name": "Serving & Dedup",
+        "detail": "At query time, only canonical URLs are considered for ranking. WebMirror's SimHash provides an additional content-level dedup layer, catching duplicates that canonicalization missed. Query-specific dedup (US6615209) removes remaining redundancy."
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2000",
+      "type": "patent",
+      "title": "Duplicate Document Detection (US6615209)",
+      "desc": "Google patents query-specific duplicate document detection, identifying duplicates relative to search context rather than globally. Foundation for reducing redundant results at serving time."
+    },
+    {
+      "year": "2001",
+      "type": "patent",
+      "title": "Near-Duplicate File Detection (US6658423)",
+      "desc": "Shingling and fingerprinting patent for detecting near-duplicate files. Introduces resemblance-based comparison using overlapping content shingles, enabling duplicate clustering at scale."
+    },
+    {
+      "year": "2003",
+      "type": "patent",
+      "title": "Term Canonicalization (US7007014)",
+      "desc": "Patent for canonicalizing terms in keyword-based presentation systems. Normalizes URL components and query terms to reduce surface-level variation before matching."
+    },
+    {
+      "year": "2003",
+      "type": "patent",
+      "title": "Crawler Duplicate Detection (US7627613)",
+      "desc": "Google patents duplicate detection within the web crawling pipeline, allowing Googlebot to recognize already-seen content during crawling and skip redundant fetches."
+    },
+    {
+      "year": "2005",
+      "type": "patent",
+      "title": "URL Normalization Rules (US7680785)",
+      "desc": "Patent for automatically inferring URL normalization rules by observing URL patterns. The system learns which parameters are non-content-changing without requiring webmaster configuration."
+    },
+    {
+      "year": "2009",
+      "type": "event",
+      "title": "rel=canonical Introduced",
+      "desc": "Google, Yahoo, and Microsoft jointly announce support for rel=canonical. Gives webmasters a declarative way to specify preferred URLs, though Google treats it as a hint that can be overridden by stronger signals."
+    },
+    {
+      "year": "2010",
+      "type": "patent",
+      "title": "Dynamic URL Handling (US7827166)",
+      "desc": "Patent for handling dynamic URLs in crawling. Classifies URL parameters as content-changing vs tracking/session, improving crawl coverage of unique content while avoiding parameter-based duplicates."
+    },
+    {
+      "year": "2012",
+      "type": "patent",
+      "title": "Crawl-Time Near-Duplicate Detection (US8548972)",
+      "desc": "Patent for applying MinHash-based near-duplicate detection within the crawling pipeline, reducing processing load on downstream indexing systems by catching duplicates early."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "API Leak Confirms Canonical Fields",
+      "desc": "The Google API leak reveals canonicalUrl, urlAfterRedirects, and dupFlags as distinct index fields, confirming that Google tracks declared canonicals, redirect destinations, and duplicate relationships independently."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Search Central Documentation",
+      "publicClaim": "The rel=canonical link element tells Google which URL you prefer as canonical. Google will take this into account when determining the canonical URL.",
+      "internalSource": "API Leak (canonicalUrl, urlAfterRedirects, dupFlags)",
+      "internalClaim": "Google stores canonicalUrl as an independently determined field. When internal signals (redirect chains, link patterns, content similarity) conflict with rel=canonical declarations, Google can override the webmaster's preference. The dupFlags bitfield includes flags for canonical overrides."
+    }
+  ]
+}

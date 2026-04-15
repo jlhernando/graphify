@@ -1,0 +1,171 @@
+{
+  "id": "system-prompt-ecosystem",
+  "route": "/llm/system-prompt-ecosystem",
+  "systems": ["SystemPrompt"],
+  "hero": {
+    "title": "System Prompt Ecosystem: How Invisible Instructions Shape Brand Visibility in LLMs",
+    "subtitle": "System prompts are the hidden control layer between platform providers, developers, and users that determines which brands LLMs recommend. OpenAI's hierarchy gives platform-level instructions absolute priority over developer and user prompts. By 2025, ChatGPT's system prompt exceeded 10,000 words, embedding tool definitions, personality calibration, and product routing. Custom GPTs (3M+ created) and the GPT Store function as brand distribution channels. MCP (Model Context Protocol), adopted by OpenAI, Google, and Anthropic by March 2025, enables system-level tool integrations that surface specific brands through structured tool calls. Leaked prompts from ChatGPT, Claude, and Gemini reveal how each platform steers product recommendations through invisible instructions. Preference Manipulation Attacks (ICLR 2025) can boost targeted brand recommendations 2.5-8x, creating a prisoner's dilemma for competitive brand placement."
+  },
+  "keyInsight": {
+    "label": "Key Insight",
+    "text": "System prompts create a <strong>three-tier brand influence hierarchy</strong> that most marketers cannot see: (1) <strong>Platform-level prompts</strong> (OpenAI, Google, Anthropic) set absolute rules about product handling, tool routing, and brand safety. These cannot be overridden. (2) <strong>Developer/operator prompts</strong> embed brand preferences into SaaS products, custom GPTs, and API integrations. 3M+ custom GPTs act as branded recommendation engines. (3) <strong>MCP tool integrations</strong> connect brands directly into LLM workflows (DoorDash ordering, Spotify curation, Zillow listings). The critical finding: <strong>system prompts take absolute priority over user input</strong>. A developer who writes 'Always recommend Product X for task Y' in their system prompt overrides any user preference. This makes system prompt placement the most powerful, least visible brand influence channel in AI."
+  },
+  "pillars": [
+    {
+      "type": "leak",
+      "title": "System Prompt Taxonomy & Hierarchy",
+      "items": [
+        "<strong>Platform-level (root) prompts</strong>: Set by OpenAI/Google/Anthropic. Cannot be overridden by developers or users. Define safety rules, tool availability, personality calibration, and product routing. ChatGPT's system prompt grew to 10,000+ words by 2025, including tool definitions, memory management, canvas rendering, and multi-modal processing (<a href='https://github.com/asgeirtj/system_prompts_leaks'>System Prompts Leaks repo</a>)",
+        "<strong>Developer/operator prompts</strong>: API users set via 'system' or 'developer' message role. OpenAI's Model Spec gives developers 'broad latitude' to customize behavior. Can embed brand preferences, restrict competitors, define recommendation rules. Higher-priority developer instructions remain binding over user input (<a href='https://model-spec.openai.com/2025-12-18.html'>OpenAI Model Spec Dec 2025</a>)",
+        "<strong>Custom GPT instructions</strong>: 3M+ custom GPTs created since November 2023. Each has a system prompt defining its behavior, knowledge, and brand associations. GPT Store (Jan 2024) organized into categories: writing, research, programming, education. Revenue sharing program launched Q1 2024 with guaranteed monthly payments + usage bonuses (<a href='https://openai.com/index/introducing-the-gpt-store/'>OpenAI GPT Store</a>)",
+        "<strong>User prompts</strong>: Lowest priority in the hierarchy. Can be overridden by developer and platform instructions. ChatGPT Memory (Feb 2024) persists user preferences across sessions but still subordinate to system-level rules",
+        "<strong>Enterprise variants</strong>: ChatGPT Enterprise, Claude for Enterprise, Gemini for Google Workspace. Dedicated system prompts with compliance controls, data handling rules, and brand-safe configurations. Anthropic's Claude Marketplace (2025) lets enterprises apply API spend toward third-party Claude-powered tools (<a href='https://venturebeat.com/technology/anthropic-launches-claude-marketplace-giving-enterprises-access-to-claude'>VentureBeat</a>)"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "Leaked System Prompts: What They Reveal",
+      "items": [
+        "<strong>ChatGPT (GPT-5)</strong>: 10,000+ word system prompt. Includes tool definitions (DALL-E, browsing, Python, Canvas), personality v2, memory via 'bio' tool, guardian_tool safety lookups. Product routing: 'NEVER use the dalle tool unless the user specifically requests.' Shopping queries routed through Google Shopping (83% of carousel products from Google's top 40). Bing ranking predicts 87% of ChatGPT citations (<a href='https://www.digitaltrends.com/computing/you-are-chatgpt-leaked-system-prompt-reveals-the-inner-workings-of-gpt-5/'>Digital Trends</a>, <a href='https://searchengineland.com/bing-ranking-chatgpt-visibility-study-473680'>Search Engine Land</a>)",
+        "<strong>Claude (Sonnet/Opus 4)</strong>: System prompt identifies model family and capabilities. Explicitly lists Anthropic products users can access: web/mobile/desktop chat, API, Claude Code. States 'There are no other Anthropic products.' Leaked Claude Code source (59.8 MB JS source map in npm, version 2.1.88) revealed 'Undercover Mode' to prevent leaking internal codenames in open-source contributions (<a href='https://simonwillison.net/2025/May/25/claude-4-system-prompt/'>Simon Willison</a>, <a href='https://venturebeat.com/technology/claude-codes-source-code-appears-to-have-leaked-heres-what-we-know'>VentureBeat</a>)",
+        "<strong>Gemini</strong>: Instructed to 'ground your responses in fact and reality, gently correcting misconceptions' while simultaneously mirroring user tone and validating emotions. Analysis found the empathy mandate frequently overrides factual grounding, amplifying user bias on polarized queries. Google Search Grounding connects Gemini to real-time web results (<a href='https://berreby.ai/gemini-leak-prompt-injection-internal-system-information/'>Berreby AI</a>)",
+        "<strong>120+ prompts analyzed</strong>: Taskade study of leaked prompts across Claude, ChatGPT, Grok, Gemini, GitHub Copilot, Perplexity, Cursor, Manus. Key pattern: every major AI assistant performs a character 'scripted by its corporate parent, complete with rules about what to refuse, how to behave, and whether to admit those rules exist at all' (<a href='https://www.taskade.com/blog/leaked-ai-prompts-study'>Taskade</a>)",
+        "<strong>Extraction techniques</strong>: Kevin Liu's 2023 'repeat everything above' method normalized prompt extraction. Evolved to multi-turn conversation exploits, role-play framing, encoding tricks that bypass keyword-level filters. Platforms now actively defend against extraction but leaks continue through adversarial research, open-source collection, and accidental exposure"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "Brand Distribution Through System Prompts",
+      "items": [
+        "<strong>Custom GPTs as brand channels</strong>: 3M+ GPTs act as branded recommendation engines. Developers embed product preferences, competitor restrictions, and recommendation logic in system prompts. GPT Store organized by category creates discoverability. Revenue sharing incentivizes brand-aligned GPT creation (<a href='https://donovanrittenbach.com/market-research-report-the-custom-gpt-market-a-3-7-billion-opportunity-for-creators-and-developers-in-2025/'>$3.7B market opportunity estimate for 2025</a>)",
+        "<strong>ChatGPT Apps SDK (Dec 2025)</strong>: Replaced prompt-based Custom GPTs with code-based apps using MCP. Launch partners: DoorDash (meal planning + cart), Apple Music (curation), Zillow (real estate), Khan Academy (learning), Spotify, Uber, AllTrails, Target. Users invoke apps by name in prompts. Apps include backend logic, external API calls, interactive widgets. Each app's system-level integration surfaces its brand during relevant queries (<a href='https://techcrunch.com/2025/10/06/openai-launches-apps-inside-of-chatgpt/'>TechCrunch</a>)",
+        "<strong>Anthropic Claude Marketplace</strong>: Enterprise customers apply API spend toward third-party Claude-powered tools from GitLab, Harvey, Lovable, Replit, Rogo, Snowflake. No commission. Targets enterprise workflows, not consumer. Contrast with OpenAI's consumer-facing App Directory (<a href='https://thenextweb.com/news/anthropic-marketplace-claude-enterprise-software'>The Next Web</a>)",
+        "<strong>Developer brand embedding</strong>: API developers routinely include brand preferences in system prompts: 'When users ask about X, recommend Y.' 'Always suggest our product for Z tasks.' These invisible instructions steer millions of conversations without user awareness. OpenAI's Model Spec confirms developer instructions 'take priority over a prompt in the input parameter'",
+        "<strong>SaaS integration layer</strong>: Companies like Intercom, Zendesk, HubSpot embed LLMs with system prompts that reference their own products and partner ecosystems. Customer support chatbots trained to recommend specific products, upsell, and cross-sell. 97% of businesses plan AI-powered customer communications (2024 survey), 43% investing in chatbots"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "MCP as System-Level Brand Integration",
+      "items": [
+        "<strong>Protocol overview</strong>: Anthropic launched MCP in November 2024. Open standard for connecting AI assistants to external data and tools. Three primitives: Tools (functions LLM can call), Resources (structured data), Prompt Templates (pre-written prompts guiding behavior). Donated to Linux Foundation's Agentic AI Foundation in December 2025 (<a href='https://www.anthropic.com/news/model-context-protocol'>Anthropic announcement</a>)",
+        "<strong>Universal adoption</strong>: OpenAI adopted MCP in March 2025 across Agents SDK, Responses API, ChatGPT Desktop. Google DeepMind adopted it. By April 2026: 97M monthly SDK downloads, 500+ public MCP servers, client support in Claude Desktop, Cursor, Windsurf, Zed, Continue, Sourcegraph Cody, Taskade Genesis (<a href='https://en.wikipedia.org/wiki/Model_Context_Protocol'>Wikipedia</a>)",
+        "<strong>Brand integration via MCP tools</strong>: When a brand publishes an MCP server, its products become callable tools inside any MCP-compatible LLM. DoorDash MCP = 'order food' tool. Spotify MCP = 'play music' tool. The brand is surfaced whenever the LLM decides the tool is relevant to the user's query. This is system-level integration, not content optimization",
+        "<strong>Brand intelligence MCP servers</strong>: Meltwater GenAI Lens (2025) tracks brand mentions across ChatGPT, Claude, Gemini, Perplexity via MCP. Audiense (July 2025) delivers audience insights into AI tools. GWI Spark plugs survey data directly into LLMs. These tools let brands monitor and influence their AI visibility",
+        "<strong>MCP as the new SEO</strong>: Publishing an MCP server is analogous to building a website in 1998. Early movers who create well-structured MCP tools get embedded into AI workflows before competition. The brand becomes a first-class function call, not just a text mention"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "Prompt Injection & Brand Manipulation",
+      "items": [
+        "<strong>Preference Manipulation Attacks (ICLR 2025)</strong>: Novel attack class that tricks LLMs into promoting attacker products and discrediting competitors. Effective against production systems: Bing Copilot, Perplexity, GPT-4, Claude. Boosts targeted brand recommendations 2.5-8x. A fictitious camera became more likely to be recommended than Nikon or Fujifilm (<a href='https://openreview.net/pdf?id=hkdqxN3c7t'>ICLR 2025 paper</a>)",
+        "<strong>Prisoner's dilemma</strong>: Game-theoretic analysis shows all parties are incentivized to launch attacks, but collective attacks degrade LLM output quality for everyone. Economic incentives create an arms race analogous to early SEO spam, but with higher stakes because LLMs provide direct recommendations, not ranked links",
+        "<strong>Real-world brand hijacking</strong>: Chevrolet chatbot (Dec 2023) tricked into selling a Tahoe for $1 via prompt injection. ChatGPT search tool vulnerable to indirect injection via hidden webpage content (Guardian, Dec 2024). ServiceNow Now Assist exploited via second-order injection: low-privilege agent tricked high-privilege agent into unauthorized actions",
+        "<strong>OWASP Top 10 for LLM (2025)</strong>: Prompt Injection ranked #1 vulnerability. UK NCSC and US NIST classify it as critical security threat. Three attack channels: direct injection (malicious user input), indirect injection (hidden instructions in documents/emails/retrieved data), cross-agent injection (agent-to-agent manipulation)",
+        "<strong>Brand defense gap</strong>: Brands optimizing for LLM visibility must simultaneously defend against competitors injecting counter-recommendations. Hidden text on competitor pages can override negative reviews with artificially positive assessments. No standardized defense exists; platforms rely on keyword-level filters that are easily bypassed"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "System Prompt Influence on Brand Selection",
+      "items": [
+        "<strong>'Position is Power' (FAccT 2025)</strong>: System prompts are a mechanism of bias in LLMs. Deployers and third-party developers can append prompts without visibility into others' additions. Research compared how models process demographic information in system vs user prompts across 6 commercial LLMs and 50 demographic groups (<a href='https://dl.acm.org/doi/10.1145/3715275.3732038'>ACM FAccT 2025</a>)",
+        "<strong>'Global is Good, Local is Bad?' (EMNLP 2024)</strong>: LLMs show consistent brand bias: luxury brands recommended 88-100% for high-income countries, non-luxury 84-98% for low-income countries. Socio-economic bias in brand recommendations is systematic, not random (<a href='https://aclanthology.org/2024.emnlp-main.707/'>ACL Anthology</a>)",
+        "<strong>'LLM Whisperer' (CHI 2025)</strong>: Paraphrased prompts shift brand mention likelihood from 'never' to 'always.' Prompt providers can cause recommendations of target brands like Apple by causing the word 'MacBook' to appear. Demonstrates that subtle prompt engineering can systematically steer brand recommendations (<a href='https://users.ece.cmu.edu/~lbauer/papers/2025/chi2025-LLM-brands-bias-noacm.pdf'>CMU paper</a>)",
+        "<strong>LLM Recommendation Rate (LLMR)</strong>: Emerging KPI measuring percentage of relevant AI queries where a brand is actively recommended, not merely mentioned. Avenue Z combines behavioral analytics with LLMR optimization, studying linguistic patterns that make AI engines recommend specific brands. Some brands appear more in Claude than GPT-4o due to training corpus differences (<a href='https://news.iowanewsheadlines.com/story/609679/8-companies-advancing-llm-recommendation-rate-llmr-optimization-in-2026.html'>LLMR optimization</a>)",
+        "<strong>Perplexity advertising experiment</strong>: Launched sponsored follow-up questions (Nov 2024) with Whole Foods, Universal McCann, PMG. CPM-based, AI-generated answers to sponsored questions. Paused new advertisers by August 2025. Completely abandoned advertising in February 2026: 'A user needs to believe this is the best possible answer.' Trust concerns killed system-prompt-level brand placement in AI search (<a href='https://www.perplexity.ai/hub/blog/why-we-re-experimenting-with-advertising'>Perplexity blog</a>, <a href='https://almcorp.com/blog/perplexity-ai-abandons-advertising-2026-analysis/'>ALM Corp analysis</a>)"
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "System Prompt Priority Score",
+      "source": "OpenAI Model Spec + leaked prompt analysis",
+      "how": "System prompts follow a strict priority hierarchy. Platform-level (root) instructions cannot be overridden. Developer instructions override user input. MCP tool integrations operate at system level. The effective brand influence of any prompt-level placement is determined by its position in this hierarchy and the number of users exposed to it.",
+      "formula": "<span class=\"cf-fn\">BrandInfluence</span>(prompt_tier) =\n  <span class=\"cf-val\">priority_weight</span> * <span class=\"cf-val\">user_reach</span> * <span class=\"cf-val\">query_relevance</span>\n\n<span class=\"cf-comment\">// Priority weights:</span>\n<span class=\"cf-val\">platform_root</span>:     <span class=\"cf-val\">1.0</span>  <span class=\"cf-comment\">// Cannot be overridden</span>\n<span class=\"cf-val\">developer_system</span>:  <span class=\"cf-val\">0.9</span>  <span class=\"cf-comment\">// Overrides user input</span>\n<span class=\"cf-val\">mcp_tool</span>:          <span class=\"cf-val\">0.85</span> <span class=\"cf-comment\">// System-level integration</span>\n<span class=\"cf-val\">custom_gpt</span>:        <span class=\"cf-val\">0.7</span>  <span class=\"cf-comment\">// Scoped to GPT users</span>\n<span class=\"cf-val\">user_prompt</span>:       <span class=\"cf-val\">0.3</span>  <span class=\"cf-comment\">// Lowest priority</span>",
+      "patents": "",
+      "affects": "Determines the effective influence of brand placement at each tier. Platform and developer prompts dominate; user preferences are easily overridden."
+    },
+    {
+      "name": "Preference Manipulation Boost (ICLR 2025)",
+      "source": "Adversarial Search Engine Optimization for LLMs, ICLR 2025",
+      "how": "Preference Manipulation Attacks use crafted website content or plugin descriptions to trick LLMs into promoting attacker products. Tested against Bing Copilot, Perplexity, GPT-4, Claude. Attack boosts targeted content recommendations by 2.5-8x. Creates prisoner's dilemma where collective attacks degrade output quality.",
+      "formula": "<span class=\"cf-fn\">AttackBoost</span>(target_brand) =\n  <span class=\"cf-val\">baseline_recommendation_rate</span> * <span class=\"cf-val\">manipulation_factor</span>\n\n<span class=\"cf-comment\">// manipulation_factor = 2.5x to 8x</span>\n<span class=\"cf-comment\">// Fictitious camera > Nikon/Fujifilm in Bing Copilot</span>\n<span class=\"cf-comment\">// Effective against: Bing, Perplexity, GPT-4, Claude</span>\n<span class=\"cf-comment\">// Game theory: Nash equilibrium = all attack = all lose</span>",
+      "patents": "",
+      "affects": "Demonstrates that system-level and content-level manipulation can override legitimate brand signals. No standardized defense exists."
+    },
+    {
+      "name": "MCP Brand Surface Area",
+      "source": "MCP adoption data + ChatGPT Apps SDK launch metrics",
+      "how": "Brands that publish MCP servers become callable tools inside LLMs. The brand's surface area in AI is determined by the number of MCP-compatible hosts, the relevance of the tool to common queries, and the frequency of tool invocation. By April 2026: 97M monthly SDK downloads, 500+ public MCP servers, adoption by OpenAI, Google, Anthropic.",
+      "formula": "<span class=\"cf-fn\">MCPBrandReach</span> =\n  <span class=\"cf-val\">compatible_hosts</span> * <span class=\"cf-val\">query_match_rate</span> * <span class=\"cf-val\">invocation_frequency</span>\n\n<span class=\"cf-comment\">// Compatible hosts (Apr 2026):</span>\n<span class=\"cf-comment\">//   Claude Desktop, ChatGPT, Cursor, Windsurf, Zed,</span>\n<span class=\"cf-comment\">//   Continue, Sourcegraph Cody, VS Code</span>\n<span class=\"cf-comment\">// 97M monthly SDK downloads</span>\n<span class=\"cf-comment\">// Brand = first-class function call, not text mention</span>",
+      "patents": "",
+      "affects": "MCP transforms brand visibility from content-based (text mentions) to integration-based (tool calls). Early MCP adopters gain structural advantage."
+    },
+    {
+      "name": "Custom GPT Brand Amplification",
+      "source": "GPT Store data + market analysis",
+      "how": "3M+ custom GPTs created, each with system prompts that can embed brand preferences. GPT Store organized by category creates discoverability for branded GPTs. Revenue sharing (Q1 2024) incentivizes brand-aligned creation. Each GPT acts as a recommendation engine scoped to its user base.",
+      "formula": "<span class=\"cf-fn\">GPTBrandReach</span> =\n  <span class=\"cf-val\">active_users</span> * <span class=\"cf-val\">recommendation_density</span> * <span class=\"cf-val\">category_relevance</span>\n\n<span class=\"cf-comment\">// 3M+ custom GPTs created</span>\n<span class=\"cf-comment\">// Available to Plus, Team, Enterprise users</span>\n<span class=\"cf-comment\">// Revenue sharing: guaranteed monthly + usage bonuses</span>\n<span class=\"cf-comment\">// Market estimate: $3.7B opportunity (2025)</span>\n<span class=\"cf-comment\">// Apps SDK (Dec 2025) adds code-based integrations</span>",
+      "patents": "",
+      "affects": "Custom GPTs create a long tail of branded recommendation engines. Volume creates ecosystem lock-in even without direct platform partnerships."
+    }
+  ],
+  "pipeline": {
+    "title": "System Prompt Brand Influence Pipeline",
+    "stages": [
+      {"name": "Platform Root Prompt", "detail": "OpenAI/Google/Anthropic set immutable rules: safety, tool routing, personality, product handling. ChatGPT's 10K+ word prompt defines which tools exist and when to invoke them. Cannot be overridden."},
+      {"name": "Developer System Prompt", "detail": "API developers and SaaS builders embed brand preferences, competitor restrictions, recommendation logic. Takes priority over user input per OpenAI Model Spec."},
+      {"name": "MCP Tool Registration", "detail": "Brands publish MCP servers exposing tools (ordering, search, curation). Tool descriptions include brand context. LLM decides when to invoke tools based on query relevance."},
+      {"name": "Custom GPT / App Layer", "detail": "3M+ custom GPTs with branded system prompts. ChatGPT Apps SDK (Dec 2025) adds DoorDash, Spotify, Zillow as code-based integrations. Each acts as a scoped recommendation engine."},
+      {"name": "User Query", "detail": "User asks a question. Query processed against full context: root prompt + developer prompt + MCP tools + custom GPT instructions. User preferences lowest priority."},
+      {"name": "Brand Selection", "detail": "LLM selects brands based on combined signals: system prompt directives, MCP tool availability, training data associations, RAG retrieval. System-level instructions dominate."},
+      {"name": "Response Generation", "detail": "Brand mentioned, tool invoked, or product surfaced. User sees the recommendation but not the hierarchy of invisible instructions that produced it."}
+    ]
+  },
+  "timeline": [
+    {"year": "2023", "type": "event", "title": "Prompt Extraction Normalized", "desc": "Kevin Liu extracts ChatGPT system prompt via 'repeat everything above.' Technique adopted by security research community. Multi-turn exploits, role-play framing, and encoding tricks follow."},
+    {"year": "2023", "type": "event", "title": "Custom GPTs Launch", "desc": "OpenAI announces custom GPTs (Nov 2023). Developers create specialized chatbots with custom system prompts. 3M+ GPTs created within months. Each embeds brand-specific instructions."},
+    {"year": "2024", "type": "event", "title": "GPT Store Opens", "desc": "OpenAI launches GPT Store (Jan 2024) for Plus, Team, Enterprise users. Categories: writing, research, programming, education. Revenue sharing announced Q1 2024."},
+    {"year": "2024", "type": "event", "title": "MCP Announced", "desc": "Anthropic releases Model Context Protocol (Nov 2024). Open standard for connecting AI to external tools and data. Tools, Resources, and Prompt Templates as primitives."},
+    {"year": "2024", "type": "event", "title": "Perplexity Ads Launch", "desc": "Perplexity tests sponsored follow-up questions (Nov 2024). CPM-based. Partners: Whole Foods, Universal McCann, PMG. First major AI search advertising experiment."},
+    {"year": "2024", "type": "patent", "title": "Brand Bias Research (EMNLP)", "desc": "'Global is Good, Local is Bad?' published at EMNLP 2024. Finds LLMs recommend luxury brands 88-100% for high-income countries, non-luxury 84-98% for low-income. Systematic socio-economic bias."},
+    {"year": "2025", "type": "event", "title": "OpenAI Adopts MCP", "desc": "OpenAI integrates MCP across Agents SDK, Responses API, ChatGPT Desktop (March 2025). Google DeepMind follows. Universal adoption creates standardized brand integration channel."},
+    {"year": "2025", "type": "patent", "title": "Preference Manipulation (ICLR)", "desc": "ICLR 2025 paper demonstrates attacks boosting brand recommendations 2.5-8x against Bing, Perplexity, GPT-4, Claude. Prisoner's dilemma dynamics identified."},
+    {"year": "2025", "type": "patent", "title": "'Position is Power' (FAccT)", "desc": "ACM FAccT 2025: System prompts identified as mechanism of bias. Deployers append prompts without visibility into others' additions. Tested across 6 LLMs and 50 demographic groups."},
+    {"year": "2025", "type": "patent", "title": "'LLM Whisperer' (CHI)", "desc": "CMU research shows paraphrased prompts shift brand mention probability from never to always. Subtle prompt engineering systematically steers recommendations."},
+    {"year": "2025", "type": "event", "title": "Claude Marketplace", "desc": "Anthropic launches enterprise marketplace. Partners: GitLab, Harvey, Replit, Rogo, Snowflake. No commission. Enterprise API spend applied to third-party Claude-powered tools."},
+    {"year": "2025", "type": "event", "title": "ChatGPT Apps SDK", "desc": "OpenAI launches Apps SDK (Dec 2025). DoorDash, Apple Music, Zillow, Khan Academy, Spotify, Uber as code-based MCP integrations. Brands become callable tools inside ChatGPT."},
+    {"year": "2025", "type": "event", "title": "MCP Donated to Linux Foundation", "desc": "MCP donated to Agentic AI Foundation (Dec 2025). 97M monthly SDK downloads by April 2026. 500+ public MCP servers. Industry standard for AI-tool integration."},
+    {"year": "2025", "type": "event", "title": "Perplexity Pauses Ads", "desc": "Perplexity stops accepting new advertisers (Aug 2025). Head of ad sales departs. Trust concerns override revenue potential."},
+    {"year": "2026", "type": "event", "title": "Perplexity Abandons Ads", "desc": "Perplexity completely abandons advertising (Feb 2026). 'A user needs to believe this is the best possible answer.' Trust-based brand placement fails in AI search context."},
+    {"year": "2026", "type": "event", "title": "120+ System Prompts Analyzed", "desc": "Comprehensive analysis of leaked prompts from ChatGPT, Claude, Gemini, Grok, Copilot, Perplexity, Cursor, Manus. Every major AI scripted by corporate parent with rules about refusals, behavior, and self-disclosure."}
+  ],
+  "contradictions": [
+    {
+      "publicSource": "AI platform marketing (OpenAI, Google, Anthropic)",
+      "publicClaim": "AI assistants provide objective, helpful, unbiased recommendations based on the user's needs.",
+      "internalSource": "Leaked system prompts + OpenAI Model Spec hierarchy",
+      "internalClaim": "System prompts create a strict hierarchy where platform and developer instructions override user input. Developers can embed brand preferences ('always recommend X for Y') invisible to users. 10,000+ word system prompts define tool routing, product handling, and personality calibration. The user's question is the lowest-priority input in the response generation pipeline."
+    },
+    {
+      "publicSource": "SEO industry (content optimization for AI)",
+      "publicClaim": "Optimize your content to get cited by LLMs. Focus on training data presence, third-party mentions, and structured content.",
+      "internalSource": "MCP tool integrations + ChatGPT Apps SDK + Custom GPTs",
+      "internalClaim": "Content optimization targets the weakest influence layer (training data and RAG retrieval). The strongest brand influence comes from system-level integration: MCP tools that make your brand a callable function, custom GPTs with embedded preferences, and developer API prompts. A DoorDash MCP integration surfaces the brand at system level; no amount of content optimization can match a tool call."
+    },
+    {
+      "publicSource": "Perplexity advertising experiment (Nov 2024)",
+      "publicClaim": "AI search can support advertising through sponsored follow-up questions. Brands can pay for placement in AI-generated answers.",
+      "internalSource": "Perplexity ad abandonment (Feb 2026) + trust research",
+      "internalClaim": "Perplexity abandoned all advertising within 15 months. 'A user needs to believe this is the best possible answer.' Transparent brand placement in AI responses destroys the trust that makes AI recommendations valuable. The effective path is invisible system-level integration (MCP, developer prompts), not visible sponsorship."
+    },
+    {
+      "publicSource": "AI safety / alignment community",
+      "publicClaim": "Prompt injection is a security vulnerability that platforms are working to prevent. System prompts are protected from extraction.",
+      "internalSource": "ICLR 2025 Preference Manipulation + leaked prompts ecosystem",
+      "internalClaim": "Prompt injection is also a brand manipulation vector. Preference Manipulation Attacks boost targeted recommendations 2.5-8x against production systems. Hidden webpage text overrides negative reviews. 120+ system prompts leaked despite protections. No standardized defense exists. The same vulnerability that security researchers worry about is actively exploitable for commercial brand manipulation."
+    }
+  ]
+}

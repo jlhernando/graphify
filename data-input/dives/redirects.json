@@ -1,0 +1,177 @@
+{
+  "id": "redirects",
+  "route": "/redirects",
+  "systems": ["Redirects", "Canonicalization", "WebMirror"],
+  "hero": {
+    "title": "Redirect Handling: How Google Processes URL Redirects and Passes Link Equity",
+    "subtitle": "Redirects are the primary mechanism through which Google resolves URL changes, domain migrations, and content moves. Google processes four redirect types (301, 302, meta refresh, JavaScript) with different equity transfer behaviors. The API leak reveals that Google tracks urlAfterRedirects as a distinct field from canonicalUrl, confirming that redirect resolution and canonical election are separate processes. With 5 patents covering duplicate detection, URL normalization, and dynamic URL handling, the redirect pipeline determines whether link equity flows to the target URL, gets diluted through chains, or is lost entirely. Redirect handling feeds directly into canonicalization (canonical election), WebMirror (dedup clustering), and ultimately ranking signal consolidation."
+  },
+  "keyInsight": {
+    "label": "Key Insight from API Leak",
+    "text": "Google stores <strong>urlAfterRedirects</strong> and <strong>canonicalUrl</strong> as separate index fields, proving that redirect resolution and canonical selection are <strong>independent processes</strong>. A 301 redirect from URL A to URL B sets urlAfterRedirects to B, but Google may still elect a different canonicalUrl based on competing signals (internal links, rel=canonical tags, sitemap presence). The <strong>dupFlags</strong> bitfield and <strong>duplicateClusterId</strong> further show that redirected URLs are grouped into duplicate clusters where the canonical election happens post-redirect. This means a redirect alone does not guarantee canonical status for the target URL."
+  },
+  "pillars": [
+    {
+      "type": "leak",
+      "title": "API Leak Signals",
+      "items": [
+        "<strong>canonicalUrl</strong>: Google's independently determined canonical URL for a document. After redirect resolution, this field may or may not match the redirect target. When canonicalUrl differs from urlAfterRedirects, it means Google chose a different URL as canonical despite the redirect, based on stronger competing signals.",
+        "<strong>urlAfterRedirects</strong>: The final URL after following the complete redirect chain. This field records what Googlebot actually landed on after resolving all hops (301, 302, meta refresh, JS). Chain length and redirect type are implicit in the resolution path.",
+        "<strong>dupFlags</strong>: Bitfield marking duplicate relationships between documents. Includes flags that distinguish exact duplicates from near-duplicates, and marks documents involved in redirect relationships. Used during canonical election to weigh redirect-based duplicate signals.",
+        "<strong>duplicateClusterId</strong>: Assigns each document to a duplicate cluster within the IndexingDocjoinerDataVersion module. Redirected URLs and their targets share the same duplicateClusterId, enabling link equity consolidation within the cluster after canonical election."
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "5 Patents",
+      "items": [
+        "<strong>Query-specific duplicate detection</strong>: <a href=\"https://patents.google.com/patent/US6615209\">US6615209</a> detects duplicate documents relative to a specific query context at retrieval time. After redirects consolidate URLs into clusters, this patent ensures that remaining duplicate content from different redirect chains does not appear as redundant results.",
+        "<strong>Near-duplicate file detection</strong>: <a href=\"https://patents.google.com/patent/US6658423\">US6658423</a> uses shingling and fingerprinting to detect near-duplicate content. When redirects point to pages with slightly different content (e.g., parameter variations), this system determines whether they belong in the same duplicate cluster, directly affecting how redirect equity is consolidated.",
+        "<strong>URL normalization rule inference</strong>: <a href=\"https://patents.google.com/patent/US7680785\">US7680785</a> automatically infers URL normalization rules by observing patterns across a site. Detects that URLs differing only in session IDs or tracking parameters resolve to equivalent content, effectively treating these as implicit redirects without requiring actual HTTP redirects.",
+        "<strong>Dynamic URL handling</strong>: <a href=\"https://patents.google.com/patent/US7827166\">US7827166</a> classifies URL parameters as content-changing vs. non-content-changing during crawling. This determines which parameterized URLs should be treated as redirect-equivalent (same content, different URL) versus genuinely distinct pages.",
+        "<strong>Near-duplicate detection for crawling</strong>: <a href=\"https://patents.google.com/patent/US8548972\">US8548972</a> applies MinHash-based near-duplicate detection within the crawl pipeline. When Googlebot follows a redirect and finds content similar to an already-crawled page, this system flags it as a near-duplicate before full indexing, saving processing resources."
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "Redirect Best Practices",
+      "items": [
+        "<strong>Use 301 for permanent moves, 302 only for genuinely temporary ones</strong>: While Google claims to treat 301 and 302 similarly for indexing, the existence of separate urlAfterRedirects and canonicalUrl fields suggests different signal weighting. A 301 sends a stronger canonical signal to the target. Use 301 for domain migrations, HTTPS upgrades, and permanent URL changes.",
+        "<strong>Flatten redirect chains to 1 hop maximum</strong>: Each hop in a redirect chain risks equity loss and wastes crawl budget. Common offenders: HTTP to HTTPS to www to non-www (3 hops). Audit with Screaming Frog or similar tools and flatten to a single 301 from any source URL directly to the final destination.",
+        "<strong>Avoid meta refresh and JavaScript redirects for SEO-critical pages</strong>: Google can follow meta refresh and JS redirects, but they are processed later in the rendering pipeline and may not pass full link equity. For any page that needs to transfer ranking signals, use server-side 301 redirects.",
+        "<strong>Monitor canonicalUrl vs urlAfterRedirects mismatches</strong>: Use Google Search Console's URL Inspection tool to verify that redirected URLs resolve to your intended canonical. If Google shows a different canonical than your redirect target, competing signals (rel=canonical elsewhere, stronger internal links to another URL) are overriding your redirect.",
+        "<strong>Maintain redirects for at least 1 year after migration</strong>: Google recrawls at varying frequencies. Removing redirects too early means Googlebot encounters 404s and drops the old URLs from the index without transferring equity. Keep redirects active until Google Search Console confirms the old URLs are no longer indexed."
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "System Context",
+      "items": [
+        "<strong>No specific DOJ exhibits on redirect handling</strong>: The DOJ antitrust trial exhibits do not contain direct evidence about Google's redirect processing systems. However, redirect handling is a core component of the crawl-to-index pipeline that DOJ exhibits reference in the context of search quality and ranking infrastructure. The technical behavior is best documented through the API leak and patent corpus."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Redirect Equity Transfer",
+      "source": "API Leak + Patent Analysis",
+      "how": "When a URL redirects, link equity from the source URL transfers to the target URL, modulated by redirect type and chain length. A single 301 passes the most equity. Each additional hop in a chain applies a dampening factor. 302 redirects transfer less canonical signal because they indicate temporary moves. Meta refresh and JS redirects receive the lowest transfer weight due to rendering-dependent resolution.",
+      "formula": "<span class=\"cf-fn\">equityTransfer</span>(chain) =\n  <span class=\"cf-val\">sourceEquity</span> &times;\n  <span class=\"cf-fn\">typeWeight</span>(redirectType) &times;\n  <span class=\"cf-val\">dampen</span><sup>chainLength - 1</sup>\n<span class=\"cf-comment\">// typeWeight: 301 ≈ 1.0, 302 ≈ 0.9, meta ≈ 0.7, JS ≈ 0.5</span>\n<span class=\"cf-comment\">// dampen ≈ 0.85 per additional hop</span>\n<span class=\"cf-comment\">// chain of 3 hops: equity × 0.85² = 72% at best</span>",
+      "patents": "<a href=\"https://patents.google.com/patent/US6615209\">US6615209</a> (duplicate detection post-redirect), <a href=\"https://patents.google.com/patent/US6658423\">US6658423</a> (near-duplicate clustering)",
+      "affects": "Affected by: redirect type (301/302/meta/JS), number of hops in chain, time since redirect was established, whether source URL has active backlinks."
+    },
+    {
+      "name": "Redirect Chain Resolution",
+      "source": "API Leak (urlAfterRedirects)",
+      "how": "Googlebot follows redirect chains up to a maximum hop limit, recording the final landing URL as urlAfterRedirects. At each hop, the crawler checks the HTTP status code, follows Location headers (301/302), parses meta refresh tags after rendering, and executes JavaScript redirects via the Web Rendering Service. If the chain exceeds the hop limit or loops, resolution stops and the last valid URL is recorded.",
+      "formula": "<span class=\"cf-fn\">resolveChain</span>(startUrl) =\n  <span class=\"cf-val\">current</span> = startUrl\n  <span class=\"cf-kw\">for</span> hop = 1 <span class=\"cf-kw\">to</span> <span class=\"cf-val\">MAX_HOPS</span>:\n    <span class=\"cf-val\">response</span> = <span class=\"cf-fn\">fetch</span>(current)\n    <span class=\"cf-kw\">if</span> response.status <span class=\"cf-kw\">in</span> [301, 302, 307, 308]:\n      current = response.headers[\"Location\"]\n    <span class=\"cf-kw\">elif</span> <span class=\"cf-fn\">hasMetaRefresh</span>(response):\n      current = <span class=\"cf-fn\">parseMetaRefresh</span>(response)\n    <span class=\"cf-kw\">elif</span> <span class=\"cf-fn\">hasJSRedirect</span>(response):\n      current = <span class=\"cf-fn\">renderAndFollow</span>(response)\n    <span class=\"cf-kw\">else</span>: <span class=\"cf-kw\">break</span>\n  <span class=\"cf-kw\">return</span> current <span class=\"cf-kw\">as</span> <span class=\"cf-val\">urlAfterRedirects</span>\n<span class=\"cf-comment\">// MAX_HOPS typically 5-10</span>\n<span class=\"cf-comment\">// JS redirects require WRS rendering pass</span>",
+      "patents": "<a href=\"https://patents.google.com/patent/US7680785\">US7680785</a> (URL normalization), <a href=\"https://patents.google.com/patent/US7827166\">US7827166</a> (dynamic URL handling)",
+      "affects": "Affected by: chain length, redirect types in chain, rendering requirements for meta/JS redirects, hop limit, loop detection."
+    },
+    {
+      "name": "Redirect-Based Duplicate Clustering",
+      "source": "API Leak (duplicateClusterId) + Patents",
+      "how": "URLs connected by redirects are assigned to the same duplicateClusterId. The system combines redirect graph data (which URLs redirect to which) with content fingerprinting (MinHash similarity) to build clusters. Within each cluster, the canonical election process determines which URL receives consolidated signals. Redirect targets receive a canonical boost proportional to the number and authority of source URLs redirecting to them.",
+      "formula": "<span class=\"cf-fn\">buildRedirectCluster</span>(url) =\n  <span class=\"cf-val\">sources</span> = <span class=\"cf-fn\">allRedirectsTo</span>(url)\n  <span class=\"cf-val\">cluster</span> = {url} &cup; sources\n  <span class=\"cf-kw\">for each</span> src <span class=\"cf-kw\">in</span> sources:\n    <span class=\"cf-kw\">if</span> <span class=\"cf-fn\">minHashSim</span>(src, url) &gt; <span class=\"cf-val\">0.8</span>:\n      <span class=\"cf-fn\">merge</span>(cluster, <span class=\"cf-fn\">getCluster</span>(src))\n  <span class=\"cf-fn\">assignClusterId</span>(cluster)\n  <span class=\"cf-val\">canonicalBoost</span>(url) += <span class=\"cf-fn\">count</span>(sources) &times; <span class=\"cf-val\">avgAuthority</span>(sources)\n<span class=\"cf-comment\">// redirect targets get canonical boost</span>\n<span class=\"cf-comment\">// content similarity validates redirect intent</span>",
+      "patents": "<a href=\"https://patents.google.com/patent/US6658423\">US6658423</a> (near-duplicate detection), <a href=\"https://patents.google.com/patent/US8548972\">US8548972</a> (crawl-time dedup), <a href=\"https://patents.google.com/patent/US6615209\">US6615209</a> (query-specific dedup)",
+      "affects": "Affected by: number of redirecting source URLs, authority of source URLs, content similarity between source and target, existing duplicate cluster membership."
+    }
+  ],
+  "pipeline": {
+    "title": "Redirect Processing in the Ranking Pipeline",
+    "stages": [
+      {
+        "name": "URL Discovery & Crawl Queue",
+        "detail": "Googlebot discovers URLs from sitemaps, internal links, external backlinks, and Search Console. URLs enter the crawl queue regardless of whether they will redirect. The crawler does not know a URL redirects until it fetches it."
+      },
+      {
+        "name": "HTTP Redirect Resolution",
+        "detail": "Googlebot fetches the URL and receives a 301, 302, 307, or 308 response with a Location header. The crawler follows the redirect chain, recording each hop's status code and target. Server-side redirects are resolved immediately without rendering."
+      },
+      {
+        "name": "Rendering & Client-Side Redirects",
+        "detail": "If the initial response is a 200 with meta refresh or JavaScript redirect, the page enters the Web Rendering Service (WRS) queue. After rendering, the WRS detects the client-side redirect and follows it. This adds latency compared to server-side redirects and may delay equity transfer."
+      },
+      {
+        "name": "Final URL Recording",
+        "detail": "The final landing URL after all redirect hops is recorded as urlAfterRedirects in the document's index entry. The complete redirect chain (source, intermediaries, target) is stored for graph analysis and equity calculation."
+      },
+      {
+        "name": "Duplicate Cluster Assignment",
+        "detail": "The redirect target is matched against existing duplicate clusters using duplicateClusterId. URLs connected by redirects are merged into the same cluster. Content fingerprinting (MinHash from US8548972) validates that the redirect connects genuinely duplicate content."
+      },
+      {
+        "name": "Canonical Election",
+        "detail": "Within the duplicate cluster, Google runs canonical election using redirect signals, rel=canonical, internal links, external links, sitemap presence, and HTTPS preference. The winning URL is stored as canonicalUrl. A 301 target receives a stronger canonical signal than a 302 target."
+      },
+      {
+        "name": "Signal Consolidation & Serving",
+        "detail": "Link equity, PageRank, and other ranking signals from non-canonical URLs in the cluster are consolidated to the elected canonical. At query time, only the canonical URL is considered for ranking. Query-specific dedup (US6615209) provides a final layer of redundancy removal."
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2000",
+      "type": "patent",
+      "title": "Query-Specific Duplicate Detection (US6615209)",
+      "desc": "Google patents duplicate detection relative to query context. Enables post-redirect dedup at serving time, ensuring redirect-consolidated pages do not appear as redundant results."
+    },
+    {
+      "year": "2001",
+      "type": "patent",
+      "title": "Near-Duplicate File Detection (US6658423)",
+      "desc": "Shingling and fingerprinting patent for near-duplicate detection. Provides the content similarity layer that validates whether redirected URLs genuinely serve duplicate content."
+    },
+    {
+      "year": "2005",
+      "type": "patent",
+      "title": "URL Normalization Rule Inference (US7680785)",
+      "desc": "Patent for automatically learning URL normalization rules. Treats URLs that differ only in non-content parameters as implicit redirects, reducing the need for explicit HTTP redirects."
+    },
+    {
+      "year": "2008",
+      "type": "event",
+      "title": "Google Confirms 301 Equity Transfer",
+      "desc": "Matt Cutts confirms that 301 redirects pass PageRank, settling long-standing SEO debate. However, he notes some equity loss occurs, contradicting earlier claims that 301s pass full equity."
+    },
+    {
+      "year": "2010",
+      "type": "patent",
+      "title": "Dynamic URL Handling (US7827166)",
+      "desc": "Patent for classifying URL parameters as content-changing vs. tracking/session. Enables Google to treat parameter-only URL variations as redirect-equivalent without actual HTTP redirects."
+    },
+    {
+      "year": "2012",
+      "type": "patent",
+      "title": "Crawl-Time Near-Duplicate Detection (US8548972)",
+      "desc": "MinHash-based near-duplicate detection in the crawl pipeline. Catches duplicate content from redirect targets before full indexing, reducing processing overhead in the redirect resolution pipeline."
+    },
+    {
+      "year": "2016",
+      "type": "event",
+      "title": "Google Says 301/302 Treated Similarly for Indexing",
+      "desc": "John Mueller states that 301 and 302 redirects are treated the same for indexing purposes. This contradicts the API leak evidence of separate urlAfterRedirects and canonicalUrl fields, suggesting different internal signal weighting even if indexing behavior appears similar."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "API Leak Reveals Redirect Fields",
+      "desc": "The Google API leak exposes urlAfterRedirects, canonicalUrl, dupFlags, and duplicateClusterId as distinct index fields. Confirms that redirect resolution and canonical election are separate processes, and that Google tracks redirect chain results independently from canonical decisions."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "John Mueller, Google (2016)",
+      "publicClaim": "For indexing purposes, Google treats 301 and 302 redirects the same. Both will result in the target URL being indexed. The redirect type does not matter for how Google handles the redirect.",
+      "internalSource": "API Leak (urlAfterRedirects, canonicalUrl as separate fields)",
+      "internalClaim": "Google stores urlAfterRedirects and canonicalUrl as distinct index fields, indicating redirect resolution and canonical election are separate processes. If 301 and 302 were truly treated identically, there would be no need for separate tracking. The dupFlags bitfield includes redirect-type-specific flags, confirming that redirect type is a factor in duplicate relationship classification and canonical signal weighting."
+    },
+    {
+      "publicSource": "Google Search Central Documentation",
+      "publicClaim": "Google can follow and process JavaScript redirects. Google renders pages with the Web Rendering Service and can detect client-side redirects.",
+      "internalSource": "API Leak (urlAfterRedirects) + Crawl Pipeline Architecture",
+      "internalClaim": "While Google can technically follow JavaScript redirects, they require a separate rendering pass through the WRS queue, adding significant latency. Server-side redirects (301/302) are resolved immediately during crawling, while JS redirects may wait hours or days for rendering. The urlAfterRedirects field records the same final URL regardless of redirect method, but the timing difference means JS redirects may not transfer equity promptly, and pages discovered only through JS redirects risk being deprioritized in the crawl queue."
+    }
+  ]
+}

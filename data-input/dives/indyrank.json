@@ -64,6 +64,14 @@
   ],
   "calculations": [
     {
+      "name": "Linking Domain Clustering Coefficient",
+      "source": "Inferred from IndyRank mechanics + US7958128",
+      "how": "Measures the degree to which a page's linking domains form interconnected clusters. If linking domains also link to each other (shared networks, PBNs, guest post exchanges), the clustering coefficient is high, indicating non-independence. Low clustering (diverse, unrelated linkers) signals genuine editorial discovery.",
+      "formula": "<span class=\"cf-fn\">ClusterCoeff</span>(doc) =\n  <span class=\"cf-val\">actual_interconnections</span>(linking_domains) /\n  <span class=\"cf-val\">potential_interconnections</span>(linking_domains)\n<span class=\"cf-comment\">// high = PBN-like patterns (bad)</span>\n<span class=\"cf-comment\">// low = diverse, unrelated linkers (good)</span>\n<span class=\"cf-comment\">// feeds into IndyRank scoring</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US7958128\">US7958128</a> (link independence measurement)",
+      "affects": "Affected by: linking domain interconnections. PBNs produce high clustering. Natural editorial links produce low clustering."
+    },
+    {
       "name": "IndyRank Independence Score",
       "source": "Leak",
       "how": "IndyRank evaluates the independence of a page's backlink profile. Rather than counting links, it measures whether linking domains discovered the target independently or through shared pathways (e.g., the same link list, the same PBN, the same guest post exchange). High independence = high IndyRank.",
@@ -133,6 +141,26 @@
       "type": "leak",
       "title": "Four Variants Revealed",
       "desc": "API leak exposes IndyRank, ScaledIndyRank, ScaledExptIndyRank2, ScaledExptIndyRank3. Site-level variant in NSR confirmed."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Search Central (Link guidelines)",
+      "publicClaim": "All links that point to your site are considered. Google evaluates links as votes of confidence.",
+      "internalSource": "API Leak: IndyRank 4 variants (CompositeDoc, NSR, PerDocData)",
+      "internalClaim": "IndyRank specifically measures whether linking domains discovered a page independently or through coordinated networks. Non-independent links (same PBN, same guest post exchange, same link list) are identified and devalued. Not all links are 'votes of confidence'; links from interconnected sources are discounted by design."
+    },
+    {
+      "publicSource": "Google (public guidance on link building)",
+      "publicClaim": "Focus on creating great content and links will come naturally. Link building outreach is acceptable when done for legitimate promotional purposes.",
+      "internalSource": "API Leak: ScaledIndyRank in QualityNsrNsrData + SpamBrain integration",
+      "internalClaim": "IndyRank operates at the site level via NSR (ScaledIndyRank), meaning coordinated link building campaigns that produce non-independent patterns depress the entire domain's quality score. The signal feeds directly into SpamBrain for link spam detection. 'Outreach' that targets the same network of sites creates exactly the non-independent pattern IndyRank is designed to detect."
+    },
+    {
+      "publicSource": "Google (public statements on ranking transparency)",
+      "publicClaim": "Google does not disclose specific ranking factors to prevent manipulation.",
+      "internalSource": "API Leak: Four named IndyRank variants with corroboration scores",
+      "internalClaim": "The API leak exposed IndyRank (65/100 corroboration), ScaledIndyRank, ScaledExptIndyRank2, and ScaledExptIndyRank3 as named signals with specific module locations (CompositeDoc, QualityNsrNsrData, PerDocData). The experimental variants (16/100 corroboration) show active R&D on link independence measurement."
     }
   ]
 }

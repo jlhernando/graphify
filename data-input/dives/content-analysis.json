@@ -154,5 +154,25 @@
       "title": "ConsensusScore Revealed",
       "desc": "DOJ trial reveals ConsensusScore: passage-level agreement with web consensus. DebunkingQueryClassifier forces consensus for factual queries."
     }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google (public statements on search neutrality)",
+      "publicClaim": "Google does not editorially curate search results. Our ranking is algorithmic and does not impose editorial judgment on what users should see.",
+      "internalSource": "DOJ: ConsensusScore + DebunkingQueryClassifier",
+      "internalClaim": "ConsensusScore algorithmically encodes editorial judgment: it measures whether content agrees with 'web consensus' and uses this to rank results. DebunkingQueryClassifier forces consensus-only results for certain queries ('is earth flat?'). For political/subjective topics, Google 'intentionally mixes perspectives,' which is itself an editorial decision about how to present information."
+    },
+    {
+      "publicSource": "Google (public guidance on content diversity)",
+      "publicClaim": "We aim to show diverse, helpful results from a variety of sources. We value different perspectives and viewpoints.",
+      "internalSource": "DOJ: ConsensusScore + YMYL amplification",
+      "internalClaim": "For YMYL topics (health, finance), ConsensusScore weight is amplified, systematically suppressing non-consensus viewpoints. Debunking queries receive consensus-only results with zero perspective diversity. The 'diversity' claim applies selectively: Google decides which topics deserve diverse viewpoints and which enforce consensus, a classification that is not transparent to users or publishers."
+    },
+    {
+      "publicSource": "Google Search Central (content quality guidelines)",
+      "publicClaim": "Create content that is helpful and written for people. There is no minimum or maximum content length, originality threshold, or effort requirement.",
+      "internalSource": "API Leak: OriginalContentScore (0-127) + EffortScore (LLM-estimated) + gibberishScores",
+      "internalClaim": "Google quantitatively scores originality (0-127 scale), effort (LLM-estimated), and language quality (gibberishScores). vlq (Very Low Quality) is a boolean flag that gates content below a minimum quality threshold. These are explicit, measured thresholds that determine ranking eligibility, contradicting the guidance that no such thresholds exist."
+    }
   ]
 }

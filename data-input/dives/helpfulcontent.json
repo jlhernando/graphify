@@ -203,5 +203,19 @@
       "title": "Scaled Content Abuse Policy",
       "desc": "Google rebrands 'spammy auto-generated content' to 'scaled content abuse.' Focus shifts from creation method to intent and outcome. Keyword-swap, programmatic filler, and mass affiliate pages targeted."
     }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google (March 2024 Core Update announcement)",
+      "publicClaim": "The helpful content system has been folded into our core ranking systems. It is no longer a separate system.",
+      "internalSource": "API Leak: HCU classifier signals persist + DOJ signals active",
+      "internalClaim": "While Google announced HCU was 'folded into core,' the classifier's signals persist in the ranking pipeline. The site-level demotion mechanism (applying penalties to entire domains, not individual pages) continues to operate. 'Folded into core' means the classifier runs by default rather than as a separate update, not that it was removed."
+    },
+    {
+      "publicSource": "Google Search Central (helpful content guidelines)",
+      "publicClaim": "Focus on creating content for people, not for search engines. If you do this, you have nothing to worry about from the helpful content system.",
+      "internalSource": "HCU as site-level classifier + collateral damage evidence",
+      "internalClaim": "HCU applies sitewide demotion, meaning individual high-quality pages are penalized if the domain overall has too much search-engine-first content. Sites with a mix of genuine helpful content and some SEO-oriented pages can see ALL their pages demoted, including the helpful ones. 'Focus on creating content for people' is insufficient if the site-level classifier penalizes the entire domain."
+    }
   ]
 }

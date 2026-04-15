@@ -177,5 +177,19 @@
       "title": "HJ Kim Confirms Distance-Based Definition (PXR0356)",
       "desc": "HJ Kim (DOJ Remedies Exhibit PXR0356, Feb 2025): PageRank is 'a single signal relating to distance from a known good source,' used as 'an input to the Quality score.' Confirms PageRank_NS (distance from seeds) is the production variant."
     }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google (public statements post-2016)",
+      "publicClaim": "PageRank is just one of many signals. We no longer publish Toolbar PageRank. Links are less important than they used to be.",
+      "internalSource": "API Leak: 7 active PageRank variants + Q* integration",
+      "internalClaim": "The API leak revealed seven PageRank variants still active: pagerank, pagerank_ns, homepagePagerankNs, ToolbarPageRank, rawPagerank, pagerank2, firstCoveragePagerank. PageRank feeds into Q* (Quality), a top-level Ascorer pillar. Google stopped publishing the Toolbar version but never stopped computing or using PageRank internally. Seven active variants suggests PageRank remains deeply integrated into ranking."
+    },
+    {
+      "publicSource": "Google (public emphasis on content quality over links)",
+      "publicClaim": "Focus on creating great content. Links will come naturally. Content quality matters more than link building.",
+      "internalSource": "DOJ: T* = Anchors + Body + Clicks + PageRank feeds Q*",
+      "internalClaim": "PageRank feeds Q* (quality pillar). Anchor text is one-third of T* (topicality pillar). Links affect TWO of the three top-level Ascorer pillars. The Reasonable Surfer model (US7716225) evolved PageRank to weight links by click probability, making link quality more important than ever. Content quality alone affects Body (one-third of T*) and some Q* sub-signals, but links influence a broader portion of the scoring function."
+    }
   ]
 }

@@ -1,0 +1,184 @@
+{
+  "id": "vertical-search",
+  "route": "/vertical-search",
+  "systems": [
+    "UniversalSearch",
+    "SuperRoot",
+    "Tangram",
+    "QueryClassification"
+  ],
+  "hero": {
+    "title": "Vertical Search: Universal Search Integration",
+    "subtitle": "Vertical Search is Google's system for blending specialized result types (News, Shopping, Images, Videos, Maps) into the main SERP. Internally orchestrated by SuperRoot, which dispatches queries to multiple vertical backends simultaneously, and assembled by Tangram, which decides placement and rendering of each vertical block. QueryClassification determines which verticals are relevant for a given query. With 6 patents, DOJ antitrust evidence on self-preferencing, and API leak signals confirming SuperRoot orchestration, Vertical Search represents one of the most commercially significant and legally contested ranking systems. The EU's Google Shopping fine (2.42B EUR) and ongoing US DOJ case both center on how Google integrates its own vertical properties into organic results."
+  },
+  "keyInsight": {
+    "label": "Key Insight from System Analysis",
+    "text": "<strong>SuperRoot</strong> acts as the orchestration layer, dispatching the user query to multiple vertical backends (Web, News, Images, Shopping, Videos, Maps) in parallel. Each vertical returns its own ranked candidates with relevance scores. <strong>QueryClassification</strong> determines query intent and triggers only relevant verticals (e.g., a product query triggers Shopping, a breaking event triggers News). <strong>Tangram</strong> then merges these heterogeneous result sets into a single SERP layout, deciding <strong>where</strong> each vertical block appears (above organic, inline, sidebar) and <strong>how many</strong> results each vertical gets. The merging is not purely relevance-based: commercial value, user engagement metrics, and Google's own vertical properties receive preferential placement, as confirmed by DOJ trial evidence."
+  },
+  "pillars": [
+    {
+      "type": "leak",
+      "title": "API Leak Evidence",
+      "items": [
+        "<strong>SuperRoot</strong> orchestrates vertical triggers by dispatching queries to multiple backends (Web, News, Images, Shopping, Video, Maps) in parallel. Each backend returns scored candidates independently.",
+        "<strong>Tangram</strong> handles SERP assembly and vertical placement. It decides which vertical blocks appear, their position (top, inline, sidebar), and how many results each block displays.",
+        "<strong>QueryClassification</strong> determines user intent and activates relevant verticals. A query classified as 'shopping intent' triggers the Shopping vertical; 'news intent' triggers News carousel placement.",
+        "<strong>VerticalTrigger</strong> scores control whether a vertical appears at all. Each vertical has a trigger threshold; only verticals exceeding the threshold for a given query are included in the SERP.",
+        "<strong>UniversalSearch</strong> merging logic blends vertical results into organic blue links using relevance scores normalized across backends. The normalization method is not uniform, giving some verticals systematic advantages."
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "6 Patents",
+      "items": [
+        "<strong>Universal Search Interface</strong> - Patent <a href=\"https://patents.google.com/patent/US11314822\">US11314822</a>: Defines the interface for blending multiple vertical result types into a unified search results page. Covers the rendering framework that Tangram implements.",
+        "<strong>Universal Search Engine</strong> - Patent <a href=\"https://patents.google.com/patent/US7447678\">US7447678</a> (Taylor, Mayer et al., 2004): Early universal search patent establishing the architecture for querying multiple specialized indexes and merging results into a single ranked list.",
+        "<strong>Automatic Relevance and Variety Checking</strong> - Patent <a href=\"https://patents.google.com/patent/US7558787\">US7558787</a>: Validates both relevance and variety across web and vertical results. Ensures vertical insertions are contextually appropriate and do not degrade SERP quality.",
+        "<strong>Merging Search Results</strong> - Patent <a href=\"https://patents.google.com/patent/US8392394\">US8392394</a>: Describes algorithms for merging heterogeneous result sets from different backends into a single ranked output. Handles score normalization across verticals with different scoring scales.",
+        "<strong>Query Image Search</strong> - Patent <a href=\"https://patents.google.com/patent/US9053115\">US9053115</a>: Specialized image vertical triggering and ranking. Determines when image results should appear in the main SERP and how to rank images against web results.",
+        "<strong>Shopping via Social Graph</strong> - Patent <a href=\"https://patents.google.com/patent/US20130054365\">US20130054365</a>: Enhances Shopping vertical results using social graph signals. Friends' purchases and reviews influence product ranking and display in Shopping results."
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "DOJ Antitrust Evidence",
+      "items": [
+        "<strong>SERP composition (FOF 42)</strong>: Mehta opinion FOF 42: 'Most SERPs contain some mixture of advertisements, organic links, and vertical offerings.' Vertical offerings are integrated alongside ads and organic results as a core SERP component.",
+        "<strong>Vertical definition (FOF 45)</strong>: FOF 45: 'A vertical offering is a category of specialized information.' Google treats verticals (Shopping, Flights, Hotels, Local) as distinct result types with dedicated backends and rendering.",
+        "<strong>Special Vertical Providers (FOF 141-155)</strong>: Extensive Mehta opinion section on SVPs (Amazon, Yelp, TripAdvisor, Expedia). Google assessed competitive threats from SVPs and tracked traffic flowing through GSEs. SVPs lost 33-88% of traffic flowing through general search engines after vertical integration changes.",
+        "<strong>Self-preferencing and the EU Shopping fine</strong>: EU fined Google 2.42B EUR (2017) for giving systematic advantage to Google Shopping over competing comparison shopping services. Mehta opinion references Google's awareness of self-preferencing concerns across verticals.",
+        "<strong>PXR0356 (HJ Kim testimony)</strong>: 'There are different search features - 10 blue links as well as other verticals (knowledge panels, etc.).' Confirms internal framing of verticals as distinct search features competing for SERP real estate.",
+        "<strong>Revenue-driven placement (DOJ exhibits)</strong>: DOJ exhibits showed vertical placement decisions factored in commercial value. Shopping results, which generate ad revenue, received preferential SERP real estate over purely organic verticals."
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Vertical Search Affects Your SEO",
+      "items": [
+        "<strong>Optimize for the right vertical</strong>: If your content fits a vertical (images, videos, news, products), optimize for that vertical's specific requirements. Product pages need structured data for Shopping. News needs fast indexing and E-E-A-T signals. Images need proper alt text and schema markup.",
+        "<strong>Structured data triggers vertical inclusion</strong>: Product schema, Recipe schema, FAQ schema, and Video schema directly influence whether your content appears in vertical carousels. Without structured data, you are invisible to vertical triggers.",
+        "<strong>Vertical SERP features bypass organic limits</strong>: Appearing in an Image pack, Video carousel, or Shopping result gives you SERP presence independent of your organic ranking. A page ranking #15 organically can still appear in the Image pack at position 1.",
+        "<strong>Monitor vertical displacement</strong>: When Google adds a new vertical block (e.g., Shopping carousel) to your target SERP, organic results get pushed down. Track not just your organic rank but your actual pixel position and CTR changes.",
+        "<strong>News vertical requires freshness</strong>: The News carousel prioritizes recency heavily. To appear in News results, publish quickly on breaking topics, maintain a track record in Google News, and ensure your site meets Google News technical requirements.",
+        "<strong>Video thumbnails increase CTR</strong>: Pages with video content can earn video thumbnails in search results. Host videos on your own domain (not just YouTube) to capture this benefit for your site."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Vertical Trigger Score",
+      "source": "API Leak + Patents US7447678, US7558787",
+      "how": "For each query, QueryClassification computes a trigger score per vertical based on query intent, entity recognition, and historical vertical CTR for similar queries. Only verticals exceeding a trigger threshold are activated. SuperRoot dispatches the query only to activated vertical backends, saving computation.",
+      "formula": "<span class=\"cf-fn\">VerticalTrigger</span>(query, vertical) =\n  <span class=\"cf-fn\">intentScore</span>(<span class=\"cf-val\">query</span>, <span class=\"cf-val\">vertical</span>) &times;\n  <span class=\"cf-fn\">historicalCTR</span>(<span class=\"cf-val\">query_class</span>, <span class=\"cf-val\">vertical</span>) &times;\n  <span class=\"cf-val\">entityMatch</span>(query)\n<span class=\"cf-kw\">if</span> <span class=\"cf-fn\">VerticalTrigger</span> &gt; <span class=\"cf-val\">threshold[vertical]</span>:\n  <span class=\"cf-kw\">activate</span>(vertical)\n<span class=\"cf-comment\">// thresholds vary per vertical</span>\n<span class=\"cf-comment\">// News threshold drops during breaking events</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US7447678\">US7447678</a> (universal search engine), <a href=\"https://patents.google.com/patent/US7558787\">US7558787</a> (relevance and variety checking)",
+      "affects": "Affected by: query intent classification, entity recognition, historical CTR per vertical, breaking news signals, commercial intent strength."
+    },
+    {
+      "name": "Cross-Vertical Score Normalization",
+      "source": "Patent US8392394",
+      "how": "Each vertical backend uses its own scoring scale. Web results score on a 0-1 relevance scale, Shopping results on a price/relevance hybrid, Images on visual similarity. Before merging, scores must be normalized to a common scale. The normalization accounts for vertical-specific score distributions and applies calibration factors that can systematically favor certain verticals.",
+      "formula": "<span class=\"cf-fn\">NormalizedScore</span>(result, vertical) =\n  <span class=\"cf-fn\">rawScore</span>(result) &times;\n  <span class=\"cf-val\">calibration[vertical]</span> &times;\n  <span class=\"cf-fn\">positionDecay</span>(<span class=\"cf-val\">rank_in_vertical</span>)\n<span class=\"cf-fn\">MergedRanking</span> = <span class=\"cf-fn\">sort</span>(\n  all results <span class=\"cf-kw\">by</span> <span class=\"cf-val\">NormalizedScore</span>\n)\n<span class=\"cf-comment\">// calibration factors differ per vertical</span>\n<span class=\"cf-comment\">// Google-owned verticals may have higher calibration</span>\n<span class=\"cf-comment\">// position decay prevents deep vertical results from surfacing</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US8392394\">US8392394</a> (merging search results)",
+      "affects": "Affected by: vertical-specific scoring scale, calibration factors per vertical, rank position within vertical, total number of activated verticals."
+    },
+    {
+      "name": "Tangram Placement Optimization",
+      "source": "API Leak + DOJ Evidence",
+      "how": "After merging, Tangram determines the visual layout of the SERP. It assigns each vertical block a position (above fold, inline with organic, sidebar, bottom) based on predicted user engagement, commercial value, and SERP aesthetic rules. The placement algorithm optimizes for overall SERP engagement, which inherently favors high-CTR vertical blocks like Shopping and Images.",
+      "formula": "<span class=\"cf-fn\">Placement</span>(vertical_block) =\n  <span class=\"cf-fn\">argmax</span>(\n    <span class=\"cf-fn\">predictedCTR</span>(<span class=\"cf-val\">position</span>) &times;\n    <span class=\"cf-val\">commercialWeight</span> +\n    <span class=\"cf-fn\">userSatisfaction</span>(<span class=\"cf-val\">position</span>)\n  )\n<span class=\"cf-kw\">subject to</span>:\n  <span class=\"cf-val\">organicResults</span> &ge; <span class=\"cf-val\">minRequired</span>\n<span class=\"cf-comment\">// Shopping/Ads above fold on commercial queries</span>\n<span class=\"cf-comment\">// News carousel at top for breaking events</span>\n<span class=\"cf-comment\">// Images inline for visual queries</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US11314822\">US11314822</a> (universal search interface)",
+      "affects": "Affected by: predicted CTR per position, commercial value of vertical, query intent, number of competing verticals, SERP layout constraints."
+    }
+  ],
+  "pipeline": {
+    "title": "Vertical Search Integration Pipeline",
+    "stages": [
+      {
+        "name": "Query Classification",
+        "detail": "QueryClassification analyzes the query to determine intent (informational, navigational, transactional) and identifies relevant entities. Output: intent vector and vertical trigger candidates."
+      },
+      {
+        "name": "Vertical Trigger Evaluation",
+        "detail": "Each vertical's trigger score is computed. Verticals exceeding their threshold are activated. Typically 1-3 verticals trigger per query alongside web results."
+      },
+      {
+        "name": "SuperRoot Dispatch",
+        "detail": "SuperRoot dispatches the query in parallel to Web index (Mustang) and all activated vertical backends (News, Images, Shopping, Video, Maps). Each backend runs its own ranking algorithm."
+      },
+      {
+        "name": "Vertical Backend Ranking",
+        "detail": "Each vertical ranks its own candidates independently. Shopping uses price/relevance hybrid scoring. News weights recency heavily. Images use visual similarity and metadata. Each returns a scored candidate list."
+      },
+      {
+        "name": "Score Normalization and Merging",
+        "detail": "Cross-vertical score normalization converts heterogeneous scores to a common scale. Results are merged into a single ranked list per US8392394 merging algorithm. Calibration factors applied per vertical."
+      },
+      {
+        "name": "Tangram Layout Assembly",
+        "detail": "Tangram takes the merged results and determines SERP layout: which vertical blocks appear, their position, size, and rendering format (carousel, grid, list). Optimizes for predicted engagement and commercial value."
+      },
+      {
+        "name": "SERP Rendering",
+        "detail": "Final SERP rendered with organic blue links interspersed with vertical blocks (News carousel, Image pack, Shopping results, Video carousel, Map pack). Each block type has distinct visual treatment per US11314822."
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2004",
+      "type": "patent",
+      "title": "Universal Search Engine Patent (US7447678)",
+      "desc": "Bret Taylor, Marissa Mayer, and Orkut Buyukkokten (Google) patent the interface for a universal search engine that queries multiple specialized indexes and merges results. Foundation of Universal Search architecture."
+    },
+    {
+      "year": "2007",
+      "type": "patent",
+      "title": "Universal Search Launch",
+      "desc": "Google launches Universal Search, blending News, Images, Videos, Maps, and other verticals into the main SERP. Ends the era of ten blue links. Patent US7558787 filed for automatic relevance and variety checking across verticals."
+    },
+    {
+      "year": "2010",
+      "type": "patent",
+      "title": "Search Result Merging Patent (US8392394)",
+      "desc": "Google patents algorithms for merging heterogeneous result sets from different vertical backends into a single ranked output, solving the cross-vertical score normalization problem."
+    },
+    {
+      "year": "2010",
+      "type": "doj",
+      "title": "Foundem Complaint and EU Formal Investigation",
+      "desc": "Foundem (UK comparison shopping site) files antitrust complaint against Google with the European Commission, triggering the formal investigation into Google's self-preferencing of its own vertical products. This eventually leads to the 2017 Google Shopping fine."
+    },
+    {
+      "year": "2013",
+      "type": "patent",
+      "title": "Social Shopping Enhancement (US20130054365)",
+      "desc": "Google patents social graph integration for Shopping results. Friends' purchases and reviews used to personalize and rank product results in the Shopping vertical."
+    },
+    {
+      "year": "2017",
+      "type": "doj",
+      "title": "EU Google Shopping Fine",
+      "desc": "European Commission fines Google 2.42 billion EUR for self-preferencing its comparison shopping service. Google Shopping received prominent placement while competing vertical aggregators were demoted. First major antitrust action on vertical search integration."
+    },
+    {
+      "year": "2019",
+      "type": "patent",
+      "title": "Universal Search Interface Patent (US11314822)",
+      "desc": "Google patents the modern universal search interface covering the rendering framework for blending vertical results. Defines how Tangram assembles heterogeneous result types into a cohesive SERP."
+    },
+    {
+      "year": "2023",
+      "type": "doj",
+      "title": "US DOJ Antitrust Trial",
+      "desc": "DOJ trial reveals internal documents showing vertical trigger manipulation, revenue-driven placement decisions, and systematic suppression of competing vertical search engines. SuperRoot orchestration and Tangram assembly confirmed."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Blog (2007)",
+      "publicClaim": "Universal Search integrates results from different content types to show users the most relevant results, regardless of format.",
+      "internalSource": "Mehta opinion FOF 141-155 + EU Google Shopping decision (2017)",
+      "internalClaim": "Google's vertical integration self-preferences its own vertical products (Shopping, Flights, Hotels) in prime SERP positions. SVPs lost 33-88% traffic flowing through GSEs. EU fined Google 2.42B EUR for Shopping self-preferencing."
+    }
+  ]
+}

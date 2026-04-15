@@ -1,0 +1,185 @@
+{
+  "id": "trust-signals",
+  "route": "/llm/trust-signals",
+  "systems": ["TrustSignals"],
+  "hero": {
+    "title": "Trust Signals Across AI Platforms: How Each LLM Decides What to Cite",
+    "subtitle": "Google's E-E-A-T framework does not apply universally. Each AI platform evaluates source trust differently: Google AI Overviews use E-E-A-T with <a href=\"https://wellows.com/blog/google-ai-overviews-ranking-factors/\">r=0.81 correlation</a> to selection. ChatGPT inherits trust from <a href=\"https://www.seerinteractive.com/insights/87-percent-of-searchgpt-citations-match-bings-top-results\">Bing's ranking</a> (87% citation overlap). Claude uses <a href=\"https://www.oltre.ai/blog/claude-ai-optimization/\">Brave Search</a> (86.7% overlap) filtered through <a href=\"https://www.anthropic.com/constitution\">Constitutional AI</a> principles. Perplexity runs a <a href=\"https://ziptie.dev/blog/how-perplexity-ai-answers-work/\">proprietary 3-layer ML reranker</a> that systematically discounts brand-owned content. Traditional domain authority has collapsed (r=0.18 correlation with AI citations, down from r=0.43). The new authority metrics: <a href=\"https://thedigitalbloom.com/learn/2025-ai-citation-llm-visibility-report/\">brand search volume (0.334 correlation)</a>, <a href=\"https://www.metricsrule.com/research/entity-authority-gap-ai-trust-competitor/\">Knowledge Graph entity density (15+ entities = 4.8x selection)</a>, and <a href=\"https://writesonic.com/blog/llm-ai-search-citation-study-dominant-domains\">cross-platform presence (Reddit #1 at 7.3M citations, Wikipedia #2 at 4.3M)</a>."
+  },
+  "keyInsight": {
+    "label": "Key Insight",
+    "text": "AI platforms use <strong>four distinct trust architectures</strong>: (1) <strong>Google AI Overviews</strong>: E-E-A-T with entity-level Knowledge Graph verification (<a href=\"https://wellows.com/blog/google-ai-overviews-ranking-factors/\">semantic completeness r=0.87, factual verification r=0.89</a>). (2) <strong>ChatGPT</strong>: Bing rank passthrough with domain/brand authority as #1 factor; sites with <a href=\"https://gofishdigital.com/blog/ranking-in-searchgpt/\">32K+ referring domains are 3.5x more likely to be cited</a>. (3) <strong>Claude</strong>: Brave Search + Constitutional AI filtering; <a href=\"https://www.oltre.ai/blog/claude-ai-optimization/\">single factual errors can disqualify a source</a>. (4) <strong>Perplexity</strong>: 3-layer ML reranker with <a href=\"https://authoritytech.io/blog/how-perplexity-selects-sources-algorithm-2026\">~0.7 quality threshold</a> that drops entire result sets rather than serve low-quality citations. <strong>Traditional domain authority (DA) has collapsed to r=0.18 correlation</strong>. Entity recognition, cross-platform presence, and community validation (Reddit, Wikipedia) now drive AI trust."
+  },
+  "pillars": [
+    {
+      "type": "patent",
+      "title": "Platform-Specific Trust Architectures",
+      "items": [
+        "<strong>Google AI Overviews: E-E-A-T + Knowledge Graph</strong>. <a href=\"https://wellows.com/blog/google-ai-overviews-ranking-factors/\">r=0.81 correlation between E-E-A-T signals and AI Overview selection</a>. 96% of content comes from sources with verified E-E-A-T. Semantic completeness (r=0.87) and factual verification (r=0.89) outweigh traditional SEO signals. <a href=\"https://wellows.com/blog/google-ai-overviews-ranking-factors/\">47% of citations come from pages ranking below position #5</a> in organic results, showing AI selection is decoupled from traditional rankings. Domain Authority correlation dropped to r=0.18",
+        "<strong>ChatGPT: Bing passthrough + brand authority</strong>. Sends queries to <a href=\"https://ipullrank.com/ai-search-manual/search-architecture\">Bing's API</a>, fetches full content, synthesizes answers. <a href=\"https://thedigitalbloom.com/learn/2025-ai-citation-llm-visibility-report/\">87% of citations match Bing's top 10</a>. 60% of queries answered from parametric knowledge alone (no web retrieval). Domain + brand authority is #1 factor. Sites with <a href=\"https://gofishdigital.com/blog/ranking-in-searchgpt/\">32K+ referring domains are 3.5x more likely to be cited</a>. <a href=\"https://rankstudio.net/articles/en/openai-ranking-algorithm\">Trustworthiness weighted 10/10</a>. 3.2x more brand mentions than linked citations",
+        "<strong>Claude: Brave Search + Constitutional AI</strong>. Uses <a href=\"https://www.oltre.ai/blog/claude-ai-optimization/\">Brave Search (86.7% citation overlap)</a>. More conservative than ChatGPT: refuses citation when claims lack support. <a href=\"https://www.oltre.ai/blog/claude-ai-optimization/\">Single factual errors can disqualify a source</a>. Prefers 3-4 independent authoritative domains. <a href=\"https://www.anthropic.com/constitution\">Constitutional AI</a> causes caution in YMYL categories. Preference for content that separates facts from judgment. Recommended update cycle: every 2-4 weeks",
+        "<strong>Perplexity: 3-layer ML reranker</strong>. <a href=\"https://ziptie.dev/blog/how-perplexity-ai-answers-work/\">6-stage pipeline</a> retrieving 60+ sources per query. <a href=\"https://authoritytech.io/blog/how-perplexity-selects-sources-algorithm-2026\">L3 XGBoost reranker with ~0.7 quality threshold</a> drops entire result sets rather than serve low-quality citations. Citations <a href=\"https://ziptie.dev/blog/how-perplexity-ai-answers-work/\">pre-embedded in prompts before LLM synthesis</a>, not retrofitted. <a href=\"https://authoritytech.io/blog/how-perplexity-selects-sources-algorithm-2026\">Company websites systematically discounted</a> as inherently promotional. <a href=\"https://metehan.ai/blog/perplexity-ai-seo-59-ranking-patterns/\">59 potential ranking signals</a> identified including topic classification",
+        "<strong>Gemini: Knowledge Graph-first</strong>. Maps queries to <a href=\"https://www.answermaniac.ai/blog/gemini-ai-visibility-citations-2026\">known entities in Google's Knowledge Graph</a> before retrieving. Evaluates content across entity connections, formats, and authoritative references. Prioritizes content tracing claims to <a href=\"https://www.answermaniac.ai/blog/gemini-ai-visibility-citations-2026\">academic papers, patents, and official documentation</a> over secondary blog posts. Considers cross-platform brand presence. Answer-ready blocks of 40-80 words prioritized"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "Universal Trust Signals",
+      "items": [
+        "<strong>Wikipedia: universal trust anchor</strong>. <a href=\"https://writesonic.com/blog/llm-ai-search-citation-study-dominant-domains\">Top 10 most-cited domain on every AI platform (4.3M citations)</a>. ChatGPT: 47.9%, AI Overviews: 18%, Perplexity: 12.5%. Comprises <a href=\"https://thedigitalbloom.com/learn/2025-ai-citation-llm-visibility-report/\">~22% of major LLM training data</a>. Wikidata provides structured, machine-readable data for entity verification. <a href=\"https://www.dearstage.com/p/how-to-use-wikipedia-to-boost-llm\">Brands without Wikidata entities are invisible to AI's factual grounding layer</a>",
+        "<strong>Reddit: community-validated authority</strong>. <a href=\"https://writesonic.com/blog/llm-ai-search-citation-study-dominant-domains\">#1 most-cited domain overall (7.3M citations across 7 platforms)</a>. <a href=\"https://searchengineland.com/ai-search-engines-cite-reddit-youtube-and-linkedin-most-study-473138\">40.1% citation frequency across 150K analyzed citations</a>. Citations from Reddit in AI overviews grew <a href=\"https://discoveredlabs.com/blog/the-reddit-content-types-that-llms-cite-most-data-backed-breakdown\">450% from March to June 2025</a>. Monopolizes 'alternatives' queries. <a href=\"https://discoveredlabs.com/blog/the-reddit-content-types-that-llms-cite-most-data-backed-breakdown\">85% of consumers find UGC more trustworthy than brand content</a>, and LLMs mirror this",
+        "<strong>Entity recognition as trust signal</strong>. Google maintains <a href=\"https://www.metricsrule.com/research/entity-authority-gap-ai-trust-competitor/\">54 billion entities in its Knowledge Graph</a>. Pages with 15+ connected entities show 4.8x higher AI Overview selection probability. <a href=\"https://www.metricsrule.com/research/entity-authority-gap-ai-trust-competitor/\">Top 3 brands in any category hold 70% of LLM mentions (Gartner)</a>. Brands lacking structured 'triples' (subject-predicate-object) remain unresolvable. Entity disambiguation schema (SameAs, knowsAbout pointing to Wikidata, LinkedIn, Crunchbase) is highest-leverage implementation",
+        "<strong>Author-level signals</strong>. Bylined content with industry credentials gains <a href=\"https://thedigitalbloom.com/learn/2025-ai-citation-llm-visibility-report/\">significantly more AI visibility</a>. <a href=\"https://authoritytech.io/blog/how-perplexity-selects-sources-algorithm-2026\">Perplexity's L3 reranker evaluates named authors and institutional credibility</a>. <a href=\"https://www.oltre.ai/blog/claude-ai-optimization/\">Claude specifically recognizes credentialed authors</a> in regulated fields. About pages function as <a href=\"https://www.dakotaq.com/trust-signals-for-ai-search/\">trust anchors</a>: credentials, awards, certifications, years in business. However, author signal is weaker than domain/brand signals for most platforms",
+        "<strong>Source consensus</strong>. Leading platforms now reference <a href=\"https://www.ekamoira.com/blog/ai-citations-llm-sources\">2-4 independent domains for consensus</a> before surfacing data. Claims appearing on only one source face active scrutiny. However, <a href=\"https://www.nature.com/articles/s41467-025-58551-6\">50-90% of LLM citations don't fully support attached claims (Nature Communications)</a>. <a href=\"https://www.sciencedirect.com/science/article/pii/S1570826824000441\">Knowledge Graphs serve as structured verification layers that mitigate hallucinations</a>"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "New Authority Metrics (Replacing Domain Authority)",
+      "items": [
+        "<strong>Domain Authority collapse</strong>. <a href=\"https://wellows.com/blog/google-ai-overviews-ranking-factors/\">DA correlation with AI citations: r=0.18 (down from r=0.43 pre-2024)</a>. Traditional backlink-based authority has been displaced by brand signals, entity density, and community validation. <a href=\"https://thedigitalbloom.com/learn/2025-ai-citation-llm-visibility-report/\">80% of LLM citations don't rank in Google's top 100 for the same query</a>",
+        "<strong>Brand search volume is #1 predictor</strong>. <a href=\"https://thedigitalbloom.com/learn/2025-ai-citation-llm-visibility-report/\">0.334 correlation (Digital Bloom 2025)</a>, outweighing backlinks. Brand mentions correlate 3x more strongly with AI visibility than backlinks. <a href=\"https://thedigitalbloom.com/learn/2025-ai-citation-llm-visibility-report/\">Brands in top 25% for web mentions earn 10x more AI citations</a>",
+        "<strong>Cross-platform presence</strong>. <a href=\"https://thedigitalbloom.com/learn/2025-ai-citation-llm-visibility-report/\">Presence across 4+ platforms yields 2.8x higher ChatGPT citation probability</a>. <a href=\"https://sparktoro.com/blog/new-research-ais-are-highly-inconsistent-when-recommending-brands-or-products-marketers-should-take-care-when-tracking-ai-visibility/\">Only 11% of domains are cited by both ChatGPT and Perplexity</a>, making multi-platform presence essential",
+        "<strong>Schema and entity linking</strong>. <a href=\"https://www.frase.io/blog/faq-schema-ai-search-geo-aeo\">FAQPage schema: 41% citation rate vs 15% without</a>. <a href=\"https://ziptie.dev/blog/how-perplexity-ai-answers-work/\">JSON-LD in Perplexity: 47% vs 28% Top-3 rate</a>. <a href=\"https://www.schemaapp.com/schema-markup/what-2025-revealed-about-ai-search-and-the-future-of-schema-markup/\">ChatGPT, Claude, Perplexity, and Gemini all actively process schema markup (SearchVIU, Oct 2025)</a>. Only 4% of schema-present pages implement entity-linking. <a href=\"https://www.metricsrule.com/research/entity-authority-gap-ai-trust-competitor/\">Generic schema shows 18pp citation penalty vs entity-linked schema</a>",
+        "<strong>Freshness as trust signal</strong>. Platforms differ: <a href=\"https://rank.bot/blog/content-freshness-2-3-day-window-ai-citations-2025\">Perplexity most aggressive (50% of citations from current year, peak at 2-3 days post-publish)</a>. <a href=\"https://searchengineland.com/chatgpt-citations-content-study-469483\">ChatGPT: 76.4% of cited pages updated within 30 days</a>. <a href=\"https://developers.google.com/search/docs/appearance/ai-features\">AI Overviews: moderate (85% from last 2 years)</a>. <a href=\"https://www.oltre.ai/blog/claude-ai-optimization/\">Claude: balanced (2-4 week update cycle)</a>"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "Optimization by Trust Architecture",
+      "items": [
+        "<strong>For Google AI Overviews</strong>: Maximize E-E-A-T signals. Author pages with credentials. Cite peer-reviewed sources and Tier-1 publications. Build <a href=\"https://www.metricsrule.com/research/entity-authority-gap-ai-trust-competitor/\">Knowledge Graph entity density (15+ connected entities)</a>. 40-80 word answer-ready blocks. Entity disambiguation schema pointing to Wikidata",
+        "<strong>For ChatGPT</strong>: Optimize for Bing first. <a href=\"https://www.seerinteractive.com/insights/87-percent-of-searchgpt-citations-match-bings-top-results\">87% of citations match Bing top 10</a>. Build <a href=\"https://gofishdigital.com/blog/ranking-in-searchgpt/\">referring domain count (32K+ = 3.5x citation rate)</a>. Submit to Bing Webmaster Tools. Allow OAI-SearchBot in robots.txt. <a href=\"https://searchengineland.com/chatgpt-citations-content-study-469483\">Update content every 30 days (3.2x boost)</a>",
+        "<strong>For Claude</strong>: Prioritize factual accuracy (single errors disqualify). <a href=\"https://www.oltre.ai/blog/claude-ai-optimization/\">Cite 3-4 independent authoritative domains</a>. Separate facts from judgment. Avoid promotional language and absolutist claims. Add visible freshness timestamps. Optimize for Brave Search ranking",
+        "<strong>For Perplexity</strong>: Earn coverage from <a href=\"https://authoritytech.io/blog/how-perplexity-selects-sources-algorithm-2026\">Tier-1 publications (structurally favored over brand content)</a>. <a href=\"https://ziptie.dev/blog/how-perplexity-ai-answers-work/\">JSON-LD schema (47% vs 28% citation rate)</a>. Front-load answers in first 100 words (BLUF). <a href=\"https://rank.bot/blog/content-freshness-2-3-day-window-ai-citations-2025\">Update content every 2-3 days for peak citation window</a>. Reddit presence essential (46.7% of Perplexity citations)",
+        "<strong>For Gemini</strong>: Build entity connections in Google's Knowledge Graph. Cross-platform brand presence (Reddit, G2, LinkedIn, YouTube). Trace claims to academic papers and official documentation. 40-80 word extractable blocks. <a href=\"https://metricusapp.com/ai-platform-comparison-brands/\">Brand-owned websites accepted (52.15% citation rate)</a>",
+        "<strong>Universal</strong>: <a href=\"https://writesonic.com/blog/llm-ai-search-citation-study-dominant-domains\">Wikipedia + Wikidata presence</a>. <a href=\"https://discoveredlabs.com/blog/the-reddit-content-types-that-llms-cite-most-data-backed-breakdown\">Reddit community validation</a>. <a href=\"https://thedigitalbloom.com/learn/2025-ai-citation-llm-visibility-report/\">Cross-platform brand mentions (top 25% = 10x citations)</a>. Entity-linked schema. Named, credentialed authors. Regular content freshness updates"
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Platform Trust Score",
+      "source": "Cross-platform trust architecture analysis",
+      "how": "Each platform weighs trust signals differently. This formula shows the relative weight of each trust factor per platform, based on correlation studies and citation pattern analysis.",
+      "formula": "<span class=\"cf-fn\">Trust</span>(source, platform) =\n  <span class=\"cf-comment\">// Google AI Overviews:</span>\n  <span class=\"cf-val\">E-E-A-T</span>(r=0.81) * <span class=\"cf-val\">entity_density</span>(r=0.87) * <span class=\"cf-val\">factual_verification</span>(r=0.89)\n  <span class=\"cf-comment\">// ChatGPT:</span>\n  <span class=\"cf-val\">bing_rank</span> * <span class=\"cf-val\">referring_domains</span>(32K+=3.5x) * <span class=\"cf-val\">brand_authority</span>\n  <span class=\"cf-comment\">// Claude:</span>\n  <span class=\"cf-val\">brave_rank</span> * <span class=\"cf-val\">factual_accuracy</span>(binary) * <span class=\"cf-val\">source_diversity</span>(3-4 domains)\n  <span class=\"cf-comment\">// Perplexity:</span>\n  <span class=\"cf-val\">L3_reranker</span>(threshold=0.7) * <span class=\"cf-val\">freshness</span> * <span class=\"cf-val\">schema_presence</span>(+19pp)",
+      "patents": "",
+      "affects": "Optimizing for the wrong trust signal wastes effort. E-E-A-T optimization helps Google AI Overviews but has minimal impact on Perplexity. Bing ranking helps ChatGPT but not Claude."
+    },
+    {
+      "name": "Domain Authority Replacement Index",
+      "source": "Digital Bloom 2025, Wellows, Metrics Rule",
+      "how": "Traditional DA has collapsed from r=0.43 to r=0.18 for AI citations. New metrics that better predict AI visibility.",
+      "formula": "<span class=\"cf-fn\">AIAuthority</span>(brand) =\n  <span class=\"cf-val\">brand_search_volume</span> (r=0.334, strongest)\n  + <span class=\"cf-val\">cross_platform_presence</span> (4+ platforms = 2.8x)\n  + <span class=\"cf-val\">entity_density</span> (15+ KG entities = 4.8x)\n  + <span class=\"cf-val\">web_mention_volume</span> (top 25% = 10x)\n  - <span class=\"cf-val\">traditional_DA</span> (r=0.18, weak)\n\n<span class=\"cf-comment\">// Brand mentions 3x more predictive than backlinks</span>\n<span class=\"cf-comment\">// 80% of LLM citations don't rank in Google top 100</span>",
+      "patents": "",
+      "affects": "Brands investing in traditional link building for AI visibility are optimizing the wrong metric. Brand awareness, entity presence, and cross-platform mentions are now the primary drivers."
+    },
+    {
+      "name": "Source Selectivity by Platform",
+      "source": "Writesonic 2.4M domain study, Semrush, platform-specific analysis",
+      "how": "Each platform has a different selectivity level for which sources it cites. Higher selectivity means fewer sources win, creating winner-take-all dynamics.",
+      "formula": "<span class=\"cf-fn\">Selectivity</span>(platform) =\n  ChatGPT: <span class=\"cf-val\">7.9%</span> brand mention rate (most selective)\n  Perplexity: <span class=\"cf-val\">11.4%</span>\n  Copilot: <span class=\"cf-val\">20.0%</span>\n  Gemini: <span class=\"cf-val\">21.4%</span> (least selective)\n\n<span class=\"cf-comment\">// ChatGPT recommends 1.2% of brand locations</span>\n<span class=\"cf-comment\">// vs Google local pack 35.9% (30x more selective)</span>\n<span class=\"cf-comment\">// Top 3 brands hold 70% of LLM mentions (Gartner)</span>",
+      "patents": "",
+      "affects": "Winner-take-all dynamics are strongest on ChatGPT (most selective) and weakest on Gemini. Challenger brands should target less selective platforms first."
+    }
+  ],
+  "pipeline": {
+    "title": "Trust Signal Optimization Pipeline",
+    "stages": [
+      {
+        "name": "Entity Foundation",
+        "detail": "Establish Wikipedia page + Wikidata entity. Implement entity disambiguation schema (SameAs, knowsAbout). Build Knowledge Graph connections (target 15+ entities). Create structured triples."
+      },
+      {
+        "name": "Cross-Platform Presence",
+        "detail": "Build presence on 4+ platforms: Wikipedia, Reddit, G2/Capterra, LinkedIn, YouTube. Target top 25% for web mentions. Ensure consistent entity naming across all platforms."
+      },
+      {
+        "name": "Platform-Specific Optimization",
+        "detail": "Google: E-E-A-T + entity density. ChatGPT: Bing ranking + referring domains. Claude: factual accuracy + source diversity. Perplexity: earned media + schema + freshness."
+      },
+      {
+        "name": "Content Structure",
+        "detail": "FAQPage schema (2.7x citation rate). Entity-linked JSON-LD. Named, credentialed authors. Self-contained 40-80 word answer blocks. Cite peer-reviewed sources."
+      },
+      {
+        "name": "Freshness Cadence",
+        "detail": "Perplexity: every 2-3 days (peak window). ChatGPT: every 30 days (3.2x boost). Claude: every 2-4 weeks. AI Overviews: quarterly minimum. Add temporal phrases."
+      },
+      {
+        "name": "Monitor & Adapt",
+        "detail": "Track trust signals per platform. DA is no longer predictive. Monitor brand search volume (0.334 correlation), cross-platform mentions, entity density, and freshness metrics."
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2014",
+      "type": "event",
+      "title": "Google E-A-T",
+      "desc": "Google introduces E-A-T (Expertise, Authoritativeness, Trustworthiness) in Quality Rater Guidelines. Becomes the standard for search quality evaluation."
+    },
+    {
+      "year": "2022",
+      "type": "event",
+      "title": "E-E-A-T (Experience Added)",
+      "desc": "Google adds 'Experience' to E-A-T, creating E-E-A-T. First-hand experience becomes a quality signal. Constitutional AI launched by Anthropic as an alternative trust framework."
+    },
+    {
+      "year": "2023",
+      "type": "event",
+      "title": "ChatGPT Browsing + Perplexity",
+      "desc": "ChatGPT adds Bing-based web browsing. Perplexity launches citation-forward search. Two new trust architectures emerge alongside Google's E-E-A-T."
+    },
+    {
+      "year": "2024",
+      "type": "event",
+      "title": "AI Overviews + Trust Divergence",
+      "desc": "Google launches AI Overviews with E-E-A-T enforcement. DA correlation drops to r=0.18. Reddit citations grow 450% in AI overviews. The era of platform-specific trust begins."
+    },
+    {
+      "year": "2025",
+      "type": "event",
+      "title": "Entity Authority Era",
+      "desc": "Wikidata launches Embedding Project. Knowledge Graph entity density becomes 4.8x citation predictor. Brand search volume surpasses DA as strongest AI authority signal (0.334 correlation)."
+    },
+    {
+      "year": "2025-10",
+      "type": "event",
+      "title": "Schema Processing Confirmed",
+      "desc": "SearchVIU tests confirm ChatGPT, Claude, Perplexity, and Gemini all actively process schema markup. Entity-linked schema shows 18pp advantage over generic schema."
+    },
+    {
+      "year": "2026",
+      "type": "event",
+      "title": "Post-DA Trust Landscape",
+      "desc": "Traditional domain authority fully displaced. 80% of LLM citations don't rank in Google top 100. Brand mentions 3x more predictive than backlinks. Cross-platform presence (4+) = 2.8x citation rate."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "SEO industry",
+      "publicClaim": "E-E-A-T is the universal standard for AI search quality across all platforms.",
+      "internalSource": "Platform architecture analysis",
+      "internalClaim": "E-E-A-T is Google-specific (r=0.81 for AI Overviews). ChatGPT uses Bing's authority signals. Claude uses Brave Search + Constitutional AI. Perplexity uses a proprietary ML reranker. Each platform evaluates trust differently."
+    },
+    {
+      "publicSource": "SEO tools",
+      "publicClaim": "Domain Authority (DA) predicts AI citation performance.",
+      "internalSource": "<a href=\"https://wellows.com/blog/google-ai-overviews-ranking-factors/\">Wellows correlation study</a>",
+      "internalClaim": "DA correlation with AI citations has dropped to r=0.18 (from r=0.43). <a href=\"https://thedigitalbloom.com/learn/2025-ai-citation-llm-visibility-report/\">Brand search volume (0.334) and cross-platform mentions (3x more predictive than backlinks)</a> have replaced DA as the primary authority signals."
+    },
+    {
+      "publicSource": "Brand marketers",
+      "publicClaim": "Building our own website's authority is the path to AI visibility.",
+      "internalSource": "<a href=\"https://authoritytech.io/blog/how-perplexity-selects-sources-algorithm-2026\">AuthorityTech Perplexity analysis</a>",
+      "internalClaim": "Perplexity systematically discounts company websites as inherently promotional. <a href=\"https://thedigitalbloom.com/learn/2025-ai-citation-llm-visibility-report/\">Third-party mentions are 3x more correlated with AI visibility than brand-owned content</a>. The exception: <a href=\"https://metricusapp.com/ai-platform-comparison-brands/\">Gemini cites brand-owned websites at 52.15%</a>."
+    },
+    {
+      "publicSource": "Traditional search",
+      "publicClaim": "Ranking #1 on Google means you'll be cited in AI search too.",
+      "internalSource": "<a href=\"https://thedigitalbloom.com/learn/2025-ai-citation-llm-visibility-report/\">Digital Bloom 2025</a>",
+      "internalClaim": "80% of LLM citations don't rank in Google's top 100 for the same query. <a href=\"https://sparktoro.com/blog/new-research-ais-are-highly-inconsistent-when-recommending-brands-or-products-marketers-should-take-care-when-tracking-ai-visibility/\">Only 11% of domains are cited by both ChatGPT and Perplexity</a>. AI trust is platform-specific, not search-ranking-derived."
+    }
+  ]
+}

@@ -1,0 +1,218 @@
+{
+  "id": "query-rewriting",
+  "route": "/query-rewriting",
+  "systems": [
+    "QUS",
+    "QueryUnderstanding",
+    "RankBrain"
+  ],
+  "hero": {
+    "title": "Query Rewriting: How Google Transforms Your Search Before Ranking",
+    "subtitle": "Before any ranking happens, Google's Query Understanding Service (QUS) rewrites your search query through spell correction, synonym expansion, entity resolution, semantic unit extraction, and concept substitution. With 119+ patents on query processing and DOJ confirmation of QUS as a central system, query rewriting is one of Google's deepest competitive moats. RankBrain handles the ~15% of never-before-seen queries by mapping unknown concepts to known patterns via Word2Vec. The 2008 Machine Translation for Query Expansion patent (US20080319962) revealed Google uses statistical machine translation between languages to find paraphrases, with context maps preventing incorrect expansions."
+  },
+  "keyInsight": {
+    "label": "Key Insight from DOJ Trial + Patents",
+    "text": "The query you type is <strong>not the query Google ranks for</strong>. QUS transforms raw queries through multiple processing stages before retrieval. <strong>Spell correction</strong> fixes typos. <strong>Synonym expansion</strong> adds equivalent terms (US8538984: co-occurrence-based). <strong>Entity resolution</strong> links terms to Knowledge Graph entities. <strong>Semantic unit extraction</strong> identifies multi-word phrases (US7249121: 'New York' stays together). <strong>Concept substitution</strong> via RankBrain maps unknown terms to known equivalents (US9104750). The DOJ trial confirmed QUS as a central system running BEFORE retrieval, and <strong>QBST</strong> (Query Based Salient Terms) memorizes which words 'should appear prominently on web pages relevant to that query,' enabling Google to filter documents by expected terminology before final ranking."
+  },
+  "pillars": [
+    {
+      "type": "doj",
+      "title": "Signals, Core",
+      "items": [
+        "<strong>QUS (QueryUnderstandingService)</strong> - Central query processing system that interprets, classifies, and enriches search queries before they reach the ranking pipeline. Performs spell correction, synonym expansion, entity resolution, intent classification. Runs BEFORE retrieval (DOJ trial testimony)",
+        "<strong>QBST (Query Based Salient Terms)</strong> - Memorization system identifying words appearing prominently on relevant pages. Trained on 13 months of query and click data. Used in initial retrieval to identify candidate document set. Pages missing expected terminology filtered before final ranking (Lehman testimony)",
+        "<strong>18 Search Quality Aspects</strong> - 'Spell correction control' listed as one of 18 quality dimensions evaluated by human raters. Confirms spell correction as a core quality metric, not just convenience",
+        "<strong>RefinedQuerySemanticClass</strong> - 8 semantic classes for query classification: short fact, boolean, instruction, definition, reason, comparison, consequence, other. Determines how query rewriting is applied (Candour exploit)",
+        "<strong>DebunkingQueryClassifier</strong> - Detects queries like 'is earth flat?' and forces consensus-only results. Query classification affects not just ranking but which results are eligible"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "10 Key Patents",
+      "items": [
+        "<strong>Synonym identification via co-occurrence</strong> (<a href=\"https://patents.google.com/patent/US8538984\">US8538984</a>): Identifies synonyms using co-occurrence with non-adjacent terms. Analyzes confidence values for term substitution. Foundation for Hummingbird semantic matching",
+        "<strong>Concept-based query substitution</strong> (<a href=\"https://patents.google.com/patent/US9104750\">US9104750</a>, Strohmann, RankBrain co-creator): Replaces unknown terms with conceptually equivalent known terms using concept contexts. Core RankBrain technology",
+        "<strong>Semantic unit extraction</strong> (<a href=\"https://patents.google.com/patent/US7249121\">US7249121</a>, filed 2000): Identifies meaningful multi-word phrases in queries. Validates compound terms against top-ranked documents. Prevents splitting 'New York' into 'new' + 'york'",
+        "<strong>Machine translation for query expansion</strong> (<a href=\"https://patents.google.com/patent/US20080319962\">US20080319962</a>): Context-aware expansion using statistical machine translation. Trained on Q&A pairs, query-snippet click logs, phrase-paraphrase pairs. Context maps prevent 'ship' expanding to 'send' vs 'boat'",
+        "<strong>Word2Vec embeddings</strong> (<a href=\"https://patents.google.com/patent/US9740680\">US9740680</a>, Mikolov, Chen, Corrado, Dean): Words as vectors preserving semantic relationships. vec('King') - vec('Man') + vec('Woman') = vec('Queen'). Foundation for RankBrain query interpretation",
+        "<strong>Query rewriting with entity detection</strong> (<a href=\"https://patents.google.com/patent/US7536382\">US7536382</a>): Detects entity names, determines associations, generates rewritten queries with entity disambiguation",
+        "<strong>Evaluating semantic interpretations</strong> (<a href=\"https://patents.google.com/patent/US10353964\">US10353964</a>, 2015): Evaluates multiple semantic interpretations for ambiguous queries. Compares result set similarity via Jaccard intersection",
+        "<strong>Spell-checking search queries</strong> (<a href=\"https://patents.google.com/patent/US7194684\">US7194684</a>): Dedicated spell correction system for search queries",
+        "<strong>Augmenting queries with synonyms</strong> (<a href=\"https://patents.google.com/patent/US7475063\">US7475063</a>): Synonym selection using language statistics for query augmentation",
+        "<strong>Generating query variants via generative model</strong> (<a href=\"https://patents.google.com/patent/US11663201\">US11663201</a>): Modern approach using trained generative models to produce query reformulations"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "API Leak Signals",
+      "items": [
+        "<strong>queryTermEmbedding</strong> - Per-query-term embedding vectors stored for concept substitution and nearest-neighbor lookup",
+        "<strong>nluAnnotation</strong> - Natural language understanding annotations enabling concept extraction from queries",
+        "<strong>semanticRelevanceScore</strong> - ML-derived relevance score combining concept matching with document features",
+        "<strong>novelQueryClassification</strong> - Classification flag for queries requiring RankBrain rewriting vs standard keyword matching",
+        "<strong>RankEmbedNearestNeighbors</strong> - Vector similarity retrieval using RankBrain-era embeddings for concept matching",
+        "<strong>qrefAnnotation</strong> - Entity annotation linking queries to Knowledge Graph entities",
+        "<strong>intentScores</strong> - Document intent classification (informational, navigational, transactional) affecting query processing"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Query Rewriting Affects SEO",
+      "items": [
+        "<strong>You rank for the rewritten query, not the typed query</strong>: Google rewrites queries before ranking. A typo, a synonym, or a conceptual equivalent all route to the same rewritten query. Optimize for the canonical concept, not just exact keywords",
+        "<strong>Semantic units protect multi-word terms</strong>: 'Machine learning engineer' is identified as a semantic unit, not three separate words. Content that uses established multi-word terms naturally aligns with Google's semantic unit extraction",
+        "<strong>QBST filters by expected terminology</strong>: Pages missing the words QBST expects for a query are filtered before final ranking. If QBST memorizes that 'Python tutorial' pages should contain 'def', 'print', 'import', pages missing these terms may be excluded from candidates",
+        "<strong>Synonym expansion broadens your reach</strong>: Google expands queries with synonyms (US8538984). Content using varied vocabulary for the same concept naturally captures these expansions. Synonym richness improves discoverability",
+        "<strong>Entity resolution connects queries to Knowledge Graph</strong>: If your content is linked to KG entities via WebRef, it benefits from entity-based query rewriting. Structured data and clear entity references help",
+        "<strong>Context-aware expansion prevents mismatches</strong>: US20080319962 uses context maps to prevent incorrect expansions. Google distinguishes 'apple fruit' from 'Apple company' before expanding. Clear topical context in content helps Google apply the right expansions"
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "QUS Processing Pipeline",
+      "source": "DOJ + Leak",
+      "how": "QUS processes raw queries through multiple stages before retrieval: spell correction, synonym expansion, entity resolution via Knowledge Graph, intent classification, and query annotation. The output is an enriched query object that Mustang uses for retrieval.",
+      "formula": "<span class=\"cf-fn\">QUS</span>(raw_query, ctx) = {\n  <span class=\"cf-val\">corrected</span>: <span class=\"cf-fn\">spell_fix</span>(q),\n  <span class=\"cf-val\">expanded</span>: <span class=\"cf-fn\">synonyms</span>(q),\n  <span class=\"cf-val\">entities</span>: <span class=\"cf-fn\">resolve</span>(q, <span class=\"cf-val\">KG</span>),\n  <span class=\"cf-val\">intent</span>: <span class=\"cf-fn\">classify</span>(q),\n  <span class=\"cf-val\">semantic_units</span>: <span class=\"cf-fn\">extract_phrases</span>(q)\n}  <span class=\"cf-comment\">// runs BEFORE retrieval</span>\n<span class=\"cf-comment\">// output feeds Mustang candidate generation</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US7194684\">US7194684</a> (spell correction), <a href=\"https://patents.google.com/patent/US8538984\">US8538984</a> (synonyms), <a href=\"https://patents.google.com/patent/US7249121\">US7249121</a> (semantic units)",
+      "affects": "Affected by: query vocabulary, spelling accuracy, entity disambiguation, language complexity. QUS determines what documents are even considered."
+    },
+    {
+      "name": "Synonym Expansion Score",
+      "source": "Patent US8538984",
+      "how": "Identifies synonyms by analyzing co-occurrence patterns with non-adjacent terms. If 'car' and 'automobile' frequently co-occur with the same non-adjacent terms ('insurance', 'repair', 'used'), they are identified as synonyms. Confidence values determine whether substitution occurs.",
+      "formula": "<span class=\"cf-fn\">synonymScore</span>(t1, t2) =\n  <span class=\"cf-fn\">cooccurrence</span>(t1, t2, <span class=\"cf-val\">non_adjacent</span>) *\n  <span class=\"cf-fn\">conceptMatch</span>(t1, t2)\n<span class=\"cf-fn\">substitute</span>(q, t1) =\n  <span class=\"cf-fn\">argmax</span>(<span class=\"cf-fn\">synonymScore</span>(t1, <span class=\"cf-val\">candidates</span>))\n<span class=\"cf-comment\">// non-adjacent co-occurrence = key signal</span>\n<span class=\"cf-comment\">// Foundation for Hummingbird semantic matching</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US8538984\">US8538984</a>",
+      "affects": "Affected by: term frequency, co-occurrence patterns, concept overlap. Synonym expansion determines which additional terms your content can rank for."
+    },
+    {
+      "name": "Context-Aware Query Expansion (Machine Translation)",
+      "source": "Patent US20080319962",
+      "how": "Uses statistical machine translation (SMT) trained on three parallel corpora: Q&A pairs, query-snippet click logs, and phrase-paraphrase pairs. Translates queries into 'meaning space' and back to find context-appropriate expansions. Context maps prevent incorrect expansions (e.g., 'ship' in a maritime context expands to 'vessel', not 'send').",
+      "formula": "<span class=\"cf-fn\">p</span>(paraphrase | input) =\n  <span class=\"cf-fn\">max</span>_trans[\n    <span class=\"cf-fn\">p</span>(translated | input) *\n    <span class=\"cf-fn\">p</span>(paraphrase | translated)\n  ]\n<span class=\"cf-comment\">// SMT across three parallel corpora</span>\n<span class=\"cf-comment\">// context maps prevent semantic drift</span>\n<span class=\"cf-comment\">// 'ship' + maritime ctx → 'vessel' not 'send'</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US20080319962\">US20080319962</a>",
+      "affects": "Affected by: training corpus quality, context signal strength, translation model accuracy."
+    },
+    {
+      "name": "QBST Salient Term Filtering",
+      "source": "DOJ: Lehman testimony",
+      "how": "QBST memorizes which terms should appear prominently on pages relevant to specific queries. Trained on 13 months of user data. During retrieval, pages missing expected salient terms are filtered from the candidate set before Ascorer scoring. This is a pre-ranking filter, not a ranking signal.",
+      "formula": "<span class=\"cf-fn\">QBST</span>(query) &rarr; <span class=\"cf-val\">expected_terms[]</span>\n<span class=\"cf-kw\">for</span> doc <span class=\"cf-kw\">in</span> candidates:\n  <span class=\"cf-kw\">if</span> <span class=\"cf-fn\">missing</span>(doc, <span class=\"cf-val\">expected_terms</span>):\n    <span class=\"cf-fn\">filter_out</span>(doc)\n<span class=\"cf-comment\">// trained on 13 months of click data</span>\n<span class=\"cf-comment\">// pre-ranking filter, not a scoring signal</span>\n<span class=\"cf-comment\">// Lehman: 'words that should appear prominently'</span>",
+      "patents": "",
+      "affects": "Affected by: query-document term overlap. Pages missing expected terminology are excluded before scoring. Content must contain the terms users associate with the topic."
+    }
+  ],
+  "pipeline": {
+    "title": "Query Rewriting Pipeline",
+    "stages": [
+      {
+        "name": "Raw Query Input",
+        "detail": "User types query into search box. Raw text includes potential typos, abbreviations, ambiguities, and novel terms."
+      },
+      {
+        "name": "Spell Correction",
+        "detail": "Spelling errors corrected using language models and query log patterns (US7194684). 'Did you mean?' shown when correction confidence is moderate."
+      },
+      {
+        "name": "Semantic Unit Extraction",
+        "detail": "Multi-word phrases identified and preserved (US7249121). 'New York Times' kept as a unit, not split into three words."
+      },
+      {
+        "name": "Synonym Expansion",
+        "detail": "Synonyms identified via co-occurrence analysis (US8538984). Query expanded with equivalent terms. Context-aware expansion via SMT (US20080319962)."
+      },
+      {
+        "name": "Entity Resolution",
+        "detail": "Query terms linked to Knowledge Graph entities via WebRef. Disambiguates 'apple' (fruit vs company) based on query context."
+      },
+      {
+        "name": "Intent Classification",
+        "detail": "Query classified into semantic classes (navigational, informational, transactional, local) and refined classes (short fact, boolean, instruction, etc.)."
+      },
+      {
+        "name": "RankBrain Concept Substitution",
+        "detail": "For novel queries (~15% of searches), Word2Vec maps unknown terms to nearest known concepts. 'Temperature coefficient of the opposite of night' becomes 'temperature coefficient of day.'"
+      },
+      {
+        "name": "QBST Term Filtering",
+        "detail": "Candidate documents checked for expected salient terms. Pages missing key terminology filtered before ranking begins."
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2000",
+      "type": "patent",
+      "title": "Semantic Unit Extraction (US7249121)",
+      "desc": "First patent on identifying meaningful multi-word phrases in search queries. Foundation for phrase-level query understanding."
+    },
+    {
+      "year": "2006",
+      "type": "patent",
+      "title": "Spell Correction Patent (US7194684)",
+      "desc": "Dedicated method for spell-checking search queries using language models and query log statistics."
+    },
+    {
+      "year": "2008",
+      "type": "patent",
+      "title": "Machine Translation for Query Expansion",
+      "desc": "US20080319962: Uses statistical machine translation across three parallel corpora for context-aware query expansion."
+    },
+    {
+      "year": "2012",
+      "type": "patent",
+      "title": "Synonym Identification (US8538984)",
+      "desc": "Co-occurrence-based synonym detection. Non-adjacent term patterns identify semantic equivalences. Foundation for Hummingbird."
+    },
+    {
+      "year": "2013",
+      "type": "event",
+      "title": "Hummingbird Update",
+      "desc": "Major query processing overhaul enabling semantic understanding. Query rewriting shifts from keyword matching to concept matching."
+    },
+    {
+      "year": "2015",
+      "type": "event",
+      "title": "RankBrain Deployed",
+      "desc": "Word2Vec-based concept substitution handles ~15% of never-seen queries. Third most important ranking factor at launch."
+    },
+    {
+      "year": "2019",
+      "type": "event",
+      "title": "BERT Integration",
+      "desc": "BERT added for query understanding. Affects 1 in 10 queries initially. Complements RankBrain (BERT understands context; RankBrain maps concepts)."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "QUS Signals Exposed",
+      "desc": "API leak reveals queryTermEmbedding, nluAnnotation, semanticRelevanceScore, novelQueryClassification, and RankEmbedNearestNeighbors signals."
+    },
+    {
+      "year": "2025",
+      "type": "doj",
+      "title": "QUS Confirmed in Trial",
+      "desc": "DOJ testimony confirms QUS as central query processing system. QBST confirmed as salient term memorization system trained on 13 months of data."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Search Central (how search works)",
+      "publicClaim": "Google matches your search terms to relevant web pages. We look at the words in your query and find pages that match.",
+      "internalSource": "DOJ: QUS pipeline + 119 query rewriting patents",
+      "internalClaim": "Google extensively rewrites queries before matching. Spell correction, synonym expansion, concept substitution, entity resolution, and semantic unit extraction transform the raw query into a fundamentally different search. The query Google ranks for may share few words with what you typed. 119+ patents cover this transformation pipeline."
+    },
+    {
+      "publicSource": "Google (public guidance on keyword optimization)",
+      "publicClaim": "Use the words people would search for in your content. Think about what terms users might use.",
+      "internalSource": "DOJ: QBST + Patent US8538984 (synonym expansion)",
+      "internalClaim": "QBST memorizes which specific terms should appear on relevant pages, creating a terminology filter that excludes pages missing expected words regardless of their quality. Synonym expansion means Google matches your content against expanded query terms you cannot see. The gap between public keyword guidance and the actual query processing pipeline makes pure keyword optimization unreliable."
+    },
+    {
+      "publicSource": "Google (public communications on search quality)",
+      "publicClaim": "We're getting better at understanding the intent behind your searches. AI helps us understand what you really mean.",
+      "internalSource": "DOJ: Nayak testimony + HJ Kim PXR0356",
+      "internalClaim": "Only 2 ML systems operate in core ranking (RankBrain + DeepRank). Query rewriting uses a mixture of hand-crafted rules (spell correction, synonym dictionaries) and older ML techniques (Word2Vec from 2013, co-occurrence statistics). The 'AI understanding' narrative overstates the role of modern AI; most query processing uses statistical methods from the 2000s and 2010s, refined over decades of query log analysis."
+    }
+  ]
+}

@@ -1,0 +1,126 @@
+{
+  "id": "transformer-architecture",
+  "route": "/llm/transformer-architecture",
+  "systems": ["Transformer"],
+  "hero": {
+    "title": "Transformer Architecture: The Foundation of All Modern LLMs",
+    "subtitle": "The Transformer architecture (Vaswani et al., 2017, 'Attention Is All You Need') replaced recurrent neural networks with self-attention, enabling massive parallelization and capturing long-range dependencies in O(1) operations. All modern LLMs (GPT, Claude, Gemini, LLaMA, Mistral) are Transformers. All 8 original authors have left Google: Shazeer (Character.AI, back at Google), Vaswani (Essential AI), Parmar (Anthropic), Uszkoreit (Inceptive), Jones (Sakana AI), Gomez (Cohere), Kaiser (OpenAI), Polosukhin (NEAR Protocol)."
+  },
+  "keyInsight": {
+    "label": "Key Insight",
+    "text": "The Transformer's core innovation is <strong>self-attention</strong>: each token in a sequence attends to every other token simultaneously, unlike RNNs which process tokens one at a time. The formula <strong>Attention(Q,K,V) = softmax(QK^T / sqrt(d_k))V</strong> computes relevance between all token pairs in one step. Multi-head attention (8 heads in the original paper) lets different heads specialize in different relationship types (syntax, semantics, proximity). The key trade-off: attention is <strong>O(n^2)</strong> in sequence length, making long contexts expensive. Modern solutions (FlashAttention, RoPE, Ring Attention) mitigate this but don't eliminate it."
+  },
+  "pillars": [
+    {
+      "type": "patent",
+      "title": "Architecture Components",
+      "items": [
+        "<strong>Self-Attention</strong>: Three learned matrices (W_Q, W_K, W_V) project each input token into Query, Key, and Value vectors. Queries compare against all Keys to produce attention weights; weights applied to Values produce output. Every token sees every other token in one step",
+        "<strong>Multi-Head Attention</strong>: h parallel attention heads (8 in original, 32-128 in modern models). Each head uses different W_Q, W_K, W_V projections, learning to capture different relationship types. Outputs concatenated and projected: MultiHead = Concat(head_1,...,head_h)W^O",
+        "<strong>Positional Encoding</strong>: Transformers have no inherent notion of token order. Original paper uses sinusoidal encoding: PE(pos,2i) = sin(pos/10000^(2i/d)). Modern models use Rotary Position Embeddings (RoPE) or learned positional embeddings",
+        "<strong>Feed-Forward Network (FFN)</strong>: Two linear transformations with activation. FFN(x) = max(0, xW1+b1)W2+b2. Inner dimension typically 4x model dimension. This is where 'knowledge storage' happens (attention routes, FFN stores)",
+        "<strong>Layer Normalization</strong>: Normalizes activations. Original: post-norm (after attention/FFN). Modern: pre-norm (before), more stable for deep models",
+        "<strong>Residual Connections</strong>: Each sub-layer adds input to output: x + Sublayer(x). Prevents vanishing gradients in deep networks. Critical for training models with 100+ layers"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "Architecture Variants",
+      "items": [
+        "<strong>Encoder-only (BERT)</strong>: Bidirectional attention (every token sees every other token). Pre-trained with Masked Language Modeling (mask 15%, predict). Best for: classification, embeddings, extractive QA. Used in Google Search (DeepRank, RankEmbed)",
+        "<strong>Decoder-only (GPT, Claude, LLaMA)</strong>: Causal/unidirectional attention (each token only sees tokens before it). Pre-trained with next-token prediction. Best for: text generation, chat, code. Dominant architecture for modern LLMs",
+        "<strong>Encoder-Decoder (T5)</strong>: Encoder processes input bidirectionally, decoder generates output autoregressively with cross-attention. Pre-trained with span corruption. Best for: translation, summarization",
+        "<strong>Mixture-of-Experts (MoE)</strong>: Multiple FFN 'experts', only a subset activated per token. GPT-4 (rumored ~1.8T total, much less active), Mixtral 8x7B, DeepSeek V3 (671B total, 37B active). Enables larger model capacity at same inference cost"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "Key People: The 8 Transformer Authors",
+      "items": [
+        "<strong>Ashish Vaswani</strong> (first author): Co-founder & CEO, Essential AI. Previously co-founded Adept AI. Left Google 2021",
+        "<strong>Noam Shazeer</strong>: Co-founded Character.AI (2021). Google acqui-hired him back for $2.7B (Aug 2024). Now leads Gemini model development at Google DeepMind. Also co-invented Switch Transformer (MoE)",
+        "<strong>Niki Parmar</strong>: Joined Anthropic Dec 2024. Previously co-founded Adept AI and Essential AI. Contributed to Claude 3.7 Sonnet",
+        "<strong>Jakob Uszkoreit</strong>: Co-founder & CEO, Inceptive (biotech, RNA drug design using ML)",
+        "<strong>Llion Jones</strong>: Co-founder & CTO, Sakana AI (Tokyo, nature-inspired AI)",
+        "<strong>Aidan Gomez</strong>: Co-founder & CEO, Cohere (enterprise NLP, ~$5.5B valuation). Was an intern during the paper",
+        "<strong>Lukasz Kaiser</strong>: Member of Technical Staff, OpenAI. Led core R&D on GPT-4, GPT-5, o1, o3",
+        "<strong>Illia Polosukhin</strong>: Co-founder, NEAR Protocol (decentralized AI). Left Google same year as the paper (2017)",
+        "<strong>All 8 have left Google</strong>. 7 founded startups. 7 reunited at NVIDIA GTC Mar 2024 with Jensen Huang"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "Model Families and Context Windows",
+      "items": [
+        "<strong>GPT series</strong> (OpenAI): GPT-1 (117M, 2018), GPT-2 (1.5B, 2019), GPT-3 (175B, 2020), GPT-4 (~1.8T MoE, 2023), GPT-4o (~200B, 2024). Decoder-only, autoregressive",
+        "<strong>Claude</strong> (Anthropic): Claude 3 (Haiku/Sonnet/Opus, 2024), Claude 3.5 Sonnet, Claude 4/4.5 (2025). Constitutional AI (RLAIF). Up to 200K token context",
+        "<strong>Gemini</strong> (Google): Natively multimodal. Gemini 1.5 Pro: 1M+ token context via MoE + specialized attention",
+        "<strong>LLaMA</strong> (Meta): 7B-405B, open weights. Switched from SentencePiece to tiktoken in LLaMA 3. Trained on 15T+ tokens. Spawned thousands of fine-tunes",
+        "<strong>Mistral</strong> (Paris): 7B matches LLaMA 2 13B. Mixtral 8x7B pioneered open MoE. Founded by ex-Meta/DeepMind researchers",
+        "<strong>DeepSeek</strong> (China): V3 (671B MoE, $5.6M training cost). R1 (reasoning via pure RL). Proved frontier models don't require billion-dollar budgets",
+        "<strong>Context window costs</strong>: O(n^2) attention means 512 tokens ~0.07 GB, 8K tokens ~18 GB, 32K tokens ~280 GB. FlashAttention mitigates via tiling. Current limits: GPT-4o 128K, Claude 200K, Gemini 1M+"
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Self-Attention Formula",
+      "source": "Vaswani et al., 2017",
+      "how": "Each token produces Query, Key, Value vectors by multiplying its embedding by learned weight matrices. Attention scores computed by dot product of queries with all keys, scaled by sqrt(d_k) to prevent softmax saturation. Scores normalized via softmax to probabilities. Probabilities weight the values to produce output.",
+      "formula": "<span class=\"cf-fn\">Attention</span>(Q, K, V) =\n  <span class=\"cf-fn\">softmax</span>(\n    Q * K^T / <span class=\"cf-fn\">sqrt</span>(<span class=\"cf-val\">d_k</span>)\n  ) * V\n<span class=\"cf-comment\">// Q = query (what am I looking for?)</span>\n<span class=\"cf-comment\">// K = key (what do I contain?)</span>\n<span class=\"cf-comment\">// V = value (what info do I provide?)</span>\n<span class=\"cf-comment\">// d_k = key dimension (scaling factor)</span>\n<span class=\"cf-comment\">// QK^T = n x n attention score matrix</span>",
+      "patents": "",
+      "affects": "Foundation of all LLMs. Every token attends to every other token in one step."
+    },
+    {
+      "name": "Multi-Head Attention",
+      "source": "Vaswani et al., 2017",
+      "how": "Instead of one attention function, h parallel attention heads each operate on different learned projections. Each head captures different relationship types (syntax, semantics, proximity). Outputs are concatenated and linearly projected.",
+      "formula": "<span class=\"cf-fn\">MultiHead</span>(Q, K, V) =\n  <span class=\"cf-fn\">Concat</span>(head_1, ..., head_h) * W_O\n<span class=\"cf-kw\">where</span> head_i =\n  <span class=\"cf-fn\">Attention</span>(Q*W_i^Q, K*W_i^K, V*W_i^V)\n<span class=\"cf-comment\">// original: h=8, d_model=512, d_k=64 per head</span>\n<span class=\"cf-comment\">// modern: h=32-128, d_model=4096-8192</span>\n<span class=\"cf-comment\">// heads specialize during training</span>",
+      "patents": "",
+      "affects": "More heads = richer representations. GQA (Grouped Query Attention) in LLaMA 2+ reduces KV cache for efficient inference."
+    },
+    {
+      "name": "Quadratic Attention Cost",
+      "source": "Architecture constraint",
+      "how": "Self-attention computes an n x n matrix where n = sequence length. Time complexity O(n^2 * d), memory O(n^2). This quadratic scaling is the fundamental bottleneck for long contexts. FlashAttention uses tiling to avoid materializing the full matrix in GPU memory. Sparse/linear attention approximations trade accuracy for efficiency.",
+      "formula": "<span class=\"cf-fn\">AttentionCost</span>(n) = O(n^2 * d)\n<span class=\"cf-comment\">// n=512:   ~0.07 GB attention matrix</span>\n<span class=\"cf-comment\">// n=8K:    ~18 GB</span>\n<span class=\"cf-comment\">// n=32K:   ~280 GB (exceeds single GPU)</span>\n<span class=\"cf-comment\">// n=128K:  ~4.5 TB (distributed required)</span>\n\n<span class=\"cf-comment\">// Solutions:</span>\n<span class=\"cf-comment\">// FlashAttention: tiling, O(n^2) but memory-efficient</span>\n<span class=\"cf-comment\">// Sparse attention: O(n * sqrt(n))</span>\n<span class=\"cf-comment\">// Linear attention: O(n) approximation</span>",
+      "patents": "",
+      "affects": "Determines context window limits. Longer context = quadratically more compute. Trade-off: context size vs cost."
+    }
+  ],
+  "pipeline": {
+    "title": "Transformer Forward Pass",
+    "stages": [
+      {"name": "Tokenization", "detail": "Input text split into tokens via BPE (GPT, LLaMA 3), SentencePiece (LLaMA 1-2), or tiktoken. Each token mapped to an embedding vector."},
+      {"name": "Positional Encoding", "detail": "Position information added to embeddings. Sinusoidal (original), learned (GPT), or RoPE (LLaMA, modern models)."},
+      {"name": "Self-Attention", "detail": "Each token attends to all other tokens (encoder) or preceding tokens only (decoder). Q, K, V projections computed per head."},
+      {"name": "Feed-Forward Network", "detail": "Two linear transformations with activation (ReLU, GeLU, SwiGLU). Inner dimension 4x model dimension. Knowledge storage layer."},
+      {"name": "Layer Stacking", "detail": "Attention + FFN repeated N times (12 layers in BERT-base, 96+ in frontier models). Residual connections and layer normalization at each layer."},
+      {"name": "Output Projection", "detail": "Final hidden states projected to vocabulary size. Softmax produces probability distribution over next token (decoder) or masked token (encoder)."}
+    ]
+  },
+  "timeline": [
+    {"year": "2014", "type": "patent", "title": "Sequence-to-Sequence (Sutskever et al.)", "desc": "Encoder-decoder RNNs with attention for translation. Foundation that Transformers would replace."},
+    {"year": "2015", "type": "patent", "title": "Bahdanau Attention", "desc": "Additive attention mechanism for RNN seq2seq. Proved attention works; Transformers would make it the entire architecture."},
+    {"year": "2017", "type": "patent", "title": "Attention Is All You Need", "desc": "Vaswani, Shazeer et al. publish the Transformer. Replaces recurrence entirely with self-attention. 8 authors, all now outside Google."},
+    {"year": "2018", "type": "patent", "title": "BERT + GPT-1", "desc": "Two competing pre-training paradigms: BERT (encoder, bidirectional) and GPT (decoder, causal). Both are Transformers."},
+    {"year": "2020", "type": "patent", "title": "GPT-3: Scale Changes Everything", "desc": "175B parameters demonstrate few-shot learning without fine-tuning. Proves scaling Transformers creates emergent capabilities."},
+    {"year": "2023", "type": "event", "title": "GPT-4 + MoE", "desc": "Rumored Mixture-of-Experts architecture. Multimodal. Sets new frontier. MoE becomes dominant architecture for efficiency."},
+    {"year": "2024", "type": "event", "title": "FlashAttention + 1M Context", "desc": "FlashAttention v2/v3 enables practical long-context models. Gemini 1.5 Pro reaches 1M tokens. Ring Attention enables distributed long-context."},
+    {"year": "2025", "type": "event", "title": "DeepSeek R1: RL-Trained Reasoning", "desc": "Pure reinforcement learning produces chain-of-thought reasoning without supervised examples. Open weights. Proves Transformers + RL = reasoning capability."}
+  ],
+  "contradictions": [
+    {
+      "publicSource": "AI industry marketing",
+      "publicClaim": "AI understands and reasons about text like humans do. LLMs 'understand' language.",
+      "internalSource": "Transformer architecture: next-token prediction",
+      "internalClaim": "Transformers predict the most likely next token given preceding context. There is no semantic 'understanding' in the architecture. Self-attention computes statistical relationships between token positions. The appearance of understanding emerges from pattern matching at scale, not from any reasoning mechanism. The architecture has no world model, memory, or causal reasoning beyond what statistical patterns in training data provide."
+    },
+    {
+      "publicSource": "AI companies (marketing larger context windows)",
+      "publicClaim": "Our model supports 1 million token context windows. You can input entire codebases or books.",
+      "internalSource": "Quadratic attention cost + practical performance degradation",
+      "internalClaim": "Attention is O(n^2). A 1M token context requires distributed computation across many GPUs and costs orders of magnitude more per query than short contexts. Performance on 'needle-in-a-haystack' tasks degrades in the middle of very long contexts ('lost in the middle' phenomenon). Supporting a context length and effectively using it are different things."
+    }
+  ]
+}

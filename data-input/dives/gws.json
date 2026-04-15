@@ -59,6 +59,22 @@
   ],
   "calculations": [
     {
+      "name": "A/B Experiment Variant Selection",
+      "source": "Leak + DOJ",
+      "how": "GWS assigns each user session to experiment buckets that determine SERP layout variants. Google runs thousands of concurrent experiments, each modifying result presentation (snippet length, feature placement, layout order, visual styling). The same query can produce visually different SERPs for different users, independent of ranking changes.",
+      "formula": "<span class=\"cf-fn\">ExperimentVariant</span>(user) =\n  <span class=\"cf-fn\">bucket_hash</span>(<span class=\"cf-val\">user_id</span>, <span class=\"cf-val\">experiment_id</span>)\n  &rarr; <span class=\"cf-val\">variant</span> &isin; {control, treatment_1, ...}\n<span class=\"cf-comment\">// thousands of concurrent experiments</span>\n<span class=\"cf-comment\">// CTR fluctuations may be experiment effects, not ranking changes</span>",
+      "patents": "",
+      "affects": "Affected by: user session ID, experiment allocation. CTR changes may reflect layout experiments, not ranking shifts."
+    },
+    {
+      "name": "Geographic Routing and Locale Adaptation",
+      "source": "Infrastructure analysis",
+      "how": "GWS routes user requests to the nearest data center and applies locale-specific SERP modifications. This includes language selection, regional result blending, currency formatting, and compliance with local regulations (e.g., right to be forgotten in EU). The same query produces different results from different geographic locations even before personalization.",
+      "formula": "<span class=\"cf-fn\">GeoRoute</span>(request) = {\n  <span class=\"cf-val\">datacenter</span>: <span class=\"cf-fn\">nearest</span>(<span class=\"cf-val\">user_ip</span>),\n  <span class=\"cf-val\">locale</span>: <span class=\"cf-fn\">detect</span>(<span class=\"cf-val\">ip</span>, <span class=\"cf-val\">browser_lang</span>),\n  <span class=\"cf-val\">compliance</span>: <span class=\"cf-fn\">filter</span>(<span class=\"cf-val\">region_rules</span>)\n}\n<span class=\"cf-comment\">// same query, different location = different SERP</span>",
+      "patents": "",
+      "affects": "Affected by: user IP location, browser language, regional regulations, data center proximity."
+    },
+    {
       "name": "SERP Delivery Pipeline",
       "source": "Leak",
       "how": "GWS receives the fully assembled SERP from Tangram via SuperRoot and applies final transformations before HTTP delivery. This includes selecting the correct A/B experiment variant, applying personalization overlays based on user session data, adapting layout for device type, and routing the response through the nearest edge server for minimal latency.",
@@ -120,6 +136,26 @@
       "type": "leak",
       "title": "API Leak: GWS Referenced",
       "desc": "GWS identified in API documentation as the serving layer downstream of Tangram/SuperRoot. Confirmed as universal delivery system for all Google Search responses."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Pandu Nayak (DOJ Trial testimony, PXR0357)",
+      "publicClaim": "Personalization in Google Search is 'quite limited.' Most users see the same results for the same query.",
+      "internalSource": "GWS infrastructure: A/B testing + personalization overlays + geographic routing",
+      "internalClaim": "GWS applies personalization overlays based on user history, serves different A/B experiment variants to different users, and routes requests to different data centers by geography. Two users searching the same query can see meaningfully different SERPs due to experiment variants, locale differences, and device-specific rendering, all applied at the GWS layer."
+    },
+    {
+      "publicSource": "Google Public Statements (Search ranking documentation)",
+      "publicClaim": "Search results are determined by ranking algorithms. The delivery infrastructure is transparent and does not affect what users see.",
+      "internalSource": "GWS: experiment variant selection + cache behavior",
+      "internalClaim": "GWS selects which A/B experiment variant a user sees, meaning the delivery layer actively determines the SERP layout and feature presentation. GWS caching can delay propagation of ranking changes, creating inconsistencies between what the algorithm computes and what users see."
+    },
+    {
+      "publicSource": "Google (Core Web Vitals documentation)",
+      "publicClaim": "Page experience signals measure YOUR site's performance. Google's own serving infrastructure is not a factor.",
+      "internalSource": "GWS: edge caching + SERP load time",
+      "internalClaim": "GWS serves SERPs in milliseconds via edge caching, creating a performance baseline that user sites are measured against. The contrast between Google's fast SERP and a slow-loading clicked result amplifies bounce rate, feeding back into NavBoost's badClicks signal. GWS delivery speed indirectly penalizes slower sites."
     }
   ]
 }

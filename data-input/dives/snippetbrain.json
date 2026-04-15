@@ -173,5 +173,13 @@
       "title": "SnippetBrain Confirmed",
       "desc": "API leak confirms SnippetBrain as named ML system with snippetPrefixCharCount signal and EmptySnippetFilter."
     }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Search Central (featured snippets documentation)",
+      "publicClaim": "Featured snippets are automatically generated from search results. We show them when our systems determine they help users find what they're looking for.",
+      "internalSource": "SnippetBrain ML model + Q* 0.4 threshold gate",
+      "internalClaim": "Featured snippet selection is not purely algorithmic helpfulness. Pages below Q* 0.4 are ineligible for featured snippets regardless of answer quality. SnippetBrain is a dedicated ML model that selects snippets based on its own criteria, separate from organic ranking. A page can rank #1 organically but not be selected for the featured snippet if SnippetBrain's model doesn't favor it, and vice versa."
+    }
   ]
 }

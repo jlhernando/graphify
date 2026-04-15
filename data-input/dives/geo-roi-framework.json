@@ -1,0 +1,199 @@
+{
+  "id": "geo-roi-framework",
+  "route": "/llm/geo-roi-framework",
+  "systems": ["GEOEconomics"],
+  "hero": {
+    "title": "GEO ROI Framework: The Economics of AI Visibility vs Traditional SEO",
+    "subtitle": "Generative Engine Optimization carries a <a href=\"https://firstpagesage.com/seo-blog/generative-engine-optimization-customer-acquisition-cost-cac-benchmarks/\">14.4% cost premium over SEO but delivers 27% higher conversion rates and 9.2% higher lead quality</a>. Average GEO CAC declined 37.5% from $2,134 (Q4 2023) to $559 (Q2 2025) as methodologies matured. AI traffic converts at <a href=\"https://metricusapp.com/blog/chatgpt-referral-conversion-rates-shopify-2026/\">14.2% (ChatGPT) and 16.8% (Claude)</a> vs 2.8% Google organic, a 4-6x multiplier. But <a href=\"https://www.semrush.com/blog/semrush-ai-overviews-study/\">93% of AI Mode sessions end without clicks</a>, forcing new KPIs: share of AI voice, citation frequency, and branded search lift replace CTR. The GEO market reached <a href=\"https://www.incremys.com/en/resources/blog/geo-statistics\">$886M in 2024, projected $7.3B by 2031</a> (34% CAGR). Agency retainers range from $2,000-$50,000/month, with <a href=\"https://www.position.digital/blog/ai-seo-statistics/\">93% of CMOs reporting measurable ROI</a>."
+  },
+  "keyInsight": {
+    "label": "Key Insight",
+    "text": "GEO economics invert traditional SEO assumptions. In SEO, the KPI is clicks; in GEO, it's <strong>mentions and citations</strong>. <a href=\"https://firstpagesage.com/seo-blog/generative-engine-optimization-customer-acquisition-cost-cac-benchmarks/\">GEO costs 14.4% more per acquisition but converts 27% better</a>. The paradox: <a href=\"https://www.semrush.com/blog/semrush-ai-overviews-study/\">93% zero-click rate</a> makes traditional attribution impossible, yet brands cited in AI Overviews see <a href=\"https://www.brightedge.com/\">35% more organic clicks and 91% more paid clicks</a> on other queries. <a href=\"https://click-vision.com/zero-click-search-statistics\">73% of AI presence consists of citations without brand name mentions</a>, meaning most AI visibility is invisible to conventional tracking. The winning budget split: <a href=\"https://clutch.co/resources/geo-vs-seo-ppc-survey-report\">80-90% SEO / 10-20% GEO</a> initially, shifting to 60-70% SEO / 30-40% GEO for high-AI-impact industries."
+  },
+  "pillars": [
+    {
+      "type": "patent",
+      "title": "GEO vs SEO Cost Comparison",
+      "items": [
+        "<strong>GEO CAC benchmarks</strong> (<a href=\"https://firstpagesage.com/seo-blog/generative-engine-optimization-customer-acquisition-cost-cac-benchmarks/\">First Page Sage, 127 B2B companies, 18-month study</a>): Average GEO CAC $559 across all industries. 14.4% premium over SEO, but 27% higher conversion rates and 9.2% higher lead quality. GEO CAC declined 37.5% from $2,134 (Q4 2023) to $559 (Q2 2025)",
+        "<strong>Industry-specific GEO CAC</strong>: B2B SaaS: $249 GEO vs $205 SEO (+21.5%). Healthcare: $439 vs $366 (+19.9%). Financial Services: $772 vs $644 (+19.9%). Legal Services: $699 vs $584 (+19.7%). eCommerce: $387 vs $328 (+18.0%). Higher Education: $1,014 vs $862 (+17.6%)",
+        "<strong>Agency pricing tiers</strong> (<a href=\"https://firstpagesage.com/seo-blog/generative-engine-optimization-geo-cost-breakdown/\">First Page Sage</a>): Tier 1: $2,000-$3,000/month (basic placements). Tier 2: $4,000-$7,000/month (placement optimization + list articles). Tier 3: $8,000-$12,000/month (strategic placements, PR coordination). Enterprise: $15,000-$50,000/month. <a href=\"https://relixir.ai/blog/aeo-cost-2025-agency-pricing-diy-budgeting-hidden-fees\">Hidden fees can double initial estimates (Relixir)</a>",
+        "<strong>GEO tools pricing</strong>: <a href=\"https://otterly.ai/pricing\">Otterly.AI</a>: $29-$489/month. <a href=\"https://writesonic.com/blog/profound-vs-otterly\">Profound</a>: $499/month (enterprise). <a href=\"https://www.semrush.com/pricing/\">Semrush AI Toolkit</a>: $99/month per domain add-on, or Semrush One $199-$549/month bundled",
+        "<strong>Budget allocation</strong> (<a href=\"https://clutch.co/resources/geo-vs-seo-ppc-survey-report\">Clutch survey</a>): Start at 80-90% SEO / 10-20% GEO. Growth stage: 25-30% GEO. High-AI-impact industries (health, finance, B2B software): 30-40% GEO. <a href=\"https://www.incremys.com/en/resources/blog/geo-statistics\">63% of companies plan to increase GEO investment</a> in the next year. Much GEO work (schema, content quality) directly benefits SEO"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "AI Citation Conversion Economics",
+      "items": [
+        "<strong>Conversion rates by platform</strong>: <a href=\"https://metricusapp.com/blog/chatgpt-referral-conversion-rates-shopify-2026/\">Claude referrals: 16.8%. ChatGPT referrals: 14.2%</a>. <a href=\"https://seranking.com/blog/ai-traffic-research-study/\">Perplexity referrals: 12.4%</a> (10.5% ecommerce). Google organic: 2.8%. AI traffic converts at 4.4x to 23x traditional organic. <a href=\"https://clarity.microsoft.com/blog/ai-traffic-converts-at-3x-the-rate-of-other-channels-study/\">LLM signup conversion: 1.66% vs 0.15% from search (11x, Microsoft Clarity)</a>",
+        "<strong>ChatGPT ecommerce specifics</strong>: <a href=\"https://searchengineland.com/chatgpt-vs-non-branded-organic-search-conversions-470321\">Conversion 1.81% vs 1.39% non-branded organic (+31%)</a>. <a href=\"https://www.asklantern.com/blogs/chatgpt-drives-87-of-ai-referral-traffic\">ChatGPT drives 87.4% of all AI referral traffic</a>. Ecommerce visits grew 1,079% during 2025. AOV: $204 vs $238 organic (14.3% lower). AI referral revenue per visit reached parity with traditional by Dec 2024",
+        "<strong>Perplexity demographics</strong>: <a href=\"https://seranking.com/blog/ai-traffic-research-study/\">15% of AI traffic globally, ~20% in US</a>. Users spend ~9 minutes per referred site visit. <a href=\"https://smartyads.com/blog/from-hype-to-roi-can-llm-advertising-deliver-on-its-60-cpm-promise\">80% college graduates, 65% high-income earners</a>. 15M monthly users (late 2024). Ecommerce conversion 10.5% vs 1.76% Google organic (6x)",
+        "<strong>AI visitor behavior</strong>: <a href=\"https://digiday.com/media/in-graphic-detail-the-state-of-ai-referral-traffic-in-2025/\">AI visitors spend 68% more time on websites, 23% lower bounce rate, 12% more page views</a>. AI referrals still <1% of overall traffic but growing fast. Stores with accurate AI product descriptions see 2-4x higher conversion; inaccurate descriptions cause high bounce",
+        "<strong>Citation quality factors</strong>: <a href=\"https://www.superlines.io/articles/ai-search-statistics/\">Pages with H1-H2-H3 hierarchy: 2.8x more likely to be cited. Fast load (<0.4s): 6.7 citations vs 2.1 slow (3x). 80% of cited pages use lists; 87% have unique H1</a>. Content updated within 2 months: 5.0 citations vs 3.9 older. <a href=\"https://dl.acm.org/doi/10.1145/3637528.3671900\">Citations/statistics: +30-40% visibility (Princeton GEO)</a>"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "Zero-Click Economics",
+      "items": [
+        "<strong>Zero-click prevalence</strong>: <a href=\"https://click-vision.com/zero-click-search-statistics\">60-69% of searches end without a click</a> (up from 56% in 2024). AI Overviews: 83% zero-click. <a href=\"https://www.semrush.com/blog/semrush-ai-overviews-study/\">93% of AI Mode sessions</a> end without external clicks. <a href=\"https://www.bain.com/insights/goodbye-clicks-hello-ai-zero-click-search-redefines-marketing/\">80% of consumers rely on zero-click results in 40%+ of their searches (Bain)</a>",
+        "<strong>The citation paradox</strong>: AI Overviews reduce website visits by 30-70% depending on query type. But <a href=\"https://www.brightedge.com/\">brands cited in AI Overviews earn 35% more organic clicks and 91% more paid clicks (BrightEdge)</a> on other queries. Being mentioned without clicks still drives branded search, direct traffic, and conversion on other channels",
+        "<strong>Citation volatility</strong>: <a href=\"https://www.airops.com/report/the-2026-state-of-ai-search\">AI Overview content changes ~70% of the time for the same query (AirOps)</a>. Only ~30% of brands remain visible in consecutive AI responses. <a href=\"https://click-vision.com/zero-click-search-statistics\">Brands are 6.5x more likely to be cited through third-party sources than own domains</a>. 73% of AI presence consists of citations without brand name mentions",
+        "<strong>New measurement paradigm</strong>: <a href=\"https://nav43.com/blog/zero-click-search-ai-seo-kpis/\">Practitioners now track 'share of AI voice,' branded search lift, direct traffic changes, and citation frequency (NAV43)</a>. Traditional analytics (GA4) miss <a href=\"https://seranking.com/blog/ai-traffic-research-study/\">70.6% of AI traffic (SE Ranking)</a>. No standardized 'cost per AI mention' metric exists yet"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "Market Growth & Case Studies",
+      "items": [
+        "<strong>AI search growth</strong>: <a href=\"https://www.gartner.com/en/newsroom/press-releases/2024-02-19-gartner-predicts-search-engine-volume-will-drop-25-percent-by-2026-due-to-ai-chatbots-and-other-virtual-agents\">Gartner: traditional search drops 25% by 2026</a>. Organic traffic to websites down 50% by 2028. <a href=\"https://seranking.com/blog/ai-traffic-research-study/\">AI referral traffic grew from 0.02% to 1.08% of all web traffic</a>. <a href=\"https://www.position.digital/blog/ai-seo-statistics/\">AI chatbot traffic to retailers: +520% YoY</a>. AI search projected to reach 28% of global traffic by 2027. Daily LLM prompt volume: 4 billion",
+        "<strong>Case: Prop-Tech SaaS</strong>: <a href=\"https://alphap.tech/generative-engine-optimisation-geo-real-world-examples/\">Comprehensive help-centre pages, integration guides, detailed documentation. Result: 32% of new SQLs from AI search tools within 6 weeks (AlphaP)</a>",
+        "<strong>Case: B2B Webflow Agency</strong>: <a href=\"https://alphap.tech/generative-engine-optimisation-geo-real-world-examples/\">Consistent language, contextual links, schema, logical navigation. Result: 10% of organic traffic from AI citations, 27% of AI traffic converted to SQLs (AlphaP)</a>",
+        "<strong>Case: Building Materials Supplier</strong>: <a href=\"https://alphap.tech/generative-engine-optimisation-geo-real-world-examples/\">Answer-first content, FAQ/HowTo schema, expert contributions, YouTube. Result: 67% organic traffic increase, 400% traffic value rise, 540% AI Overview mentions boost (AlphaP)</a>",
+        "<strong>Case: B2B Property Management</strong>: <a href=\"https://www.stackmatix.com/blog/aeo-success-stories-case-studies\">Full GEO program. Result: $5.9M revenue from GEO strategies over 17 months (Stackmatix)</a>",
+        "<strong>Case: Law Firm</strong>: <a href=\"https://www.stackmatix.com/blog/aeo-success-stories-case-studies\">Core Web Vitals fixes (LCP 4.8s to 1.9s). Result: AI citation rate improved 189% (18% to 52%) (Stackmatix)</a>",
+        "<strong>General benchmarks</strong>: <a href=\"https://akii.com/blog/ai-visibility-index-q4-2025-benchmarking-brand-presence-in-ai-search\">71% visibility growth achievable in 8 weeks. 3.2x+ AI conversion rates (Akii)</a>"
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "GEO vs SEO CAC Comparison",
+      "source": "First Page Sage (127 B2B companies, Jan 2024-Jul 2025)",
+      "how": "GEO carries a consistent premium over SEO in customer acquisition cost, but this premium is offset by higher conversion rates and lead quality. The premium has been narrowing as GEO methodologies mature.",
+      "formula": "<span class=\"cf-fn\">GEO_Premium</span> =\n  (<span class=\"cf-val\">GEO_CAC</span> - <span class=\"cf-val\">SEO_CAC</span>) / <span class=\"cf-val\">SEO_CAC</span>\n\n<span class=\"cf-comment\">// Average: 14.4% premium</span>\n<span class=\"cf-comment\">// But: +27% conversion rate, +9.2% lead quality</span>\n<span class=\"cf-comment\">// Net ROI: GEO > SEO when conversion is factored</span>\n<span class=\"cf-comment\">// GEO CAC declining: $2,134 → $559 (-37.5%)</span>\n<span class=\"cf-comment\">// B2B SaaS: $249 GEO vs $205 SEO</span>",
+      "patents": "",
+      "affects": "GEO is more expensive per lead but cheaper per conversion. As CAC continues declining, the premium narrows. Budget decisions should weight conversion quality, not just acquisition cost."
+    },
+    {
+      "name": "AI Citation Conversion Multiplier",
+      "source": "Platform-specific conversion data (Metricus, SE Ranking, Microsoft Clarity)",
+      "how": "AI referral traffic converts at dramatically higher rates than traditional organic search. The multiplier varies by platform and measurement methodology.",
+      "formula": "<span class=\"cf-fn\">ConversionMultiplier</span>(platform) =\n  <span class=\"cf-val\">AI_conversion</span> / <span class=\"cf-val\">organic_conversion</span>\n\n<span class=\"cf-comment\">// Claude: 16.8% / 2.8% = 6.0x</span>\n<span class=\"cf-comment\">// ChatGPT: 14.2% / 2.8% = 5.1x</span>\n<span class=\"cf-comment\">// Perplexity: 12.4% / 2.8% = 4.4x</span>\n<span class=\"cf-comment\">// ChatGPT ecom: 1.81% / 1.39% = 1.3x</span>\n<span class=\"cf-comment\">// LLM signup: 1.66% / 0.15% = 11x</span>",
+      "patents": "",
+      "affects": "Even though AI traffic volumes are small (<1% of total), the conversion premium makes each AI referral 4-11x more valuable than an organic visit. This justifies GEO investment even at current traffic levels."
+    },
+    {
+      "name": "Zero-Click Citation Value",
+      "source": "BrightEdge, Bain, AirOps, NAV43",
+      "how": "In a zero-click environment, the value of being cited in AI responses comes from indirect effects: branded search lift, direct traffic increases, and conversion improvements on other channels. The citation itself has no click value, but creates measurable downstream effects.",
+      "formula": "<span class=\"cf-fn\">CitationValue</span> =\n  <span class=\"cf-val\">branded_search_lift</span> (35% more organic clicks) +\n  <span class=\"cf-val\">paid_click_lift</span> (91% more paid clicks) +\n  <span class=\"cf-val\">direct_traffic_change</span> +\n  <span class=\"cf-val\">conversion_lift_on_other_channels</span>\n\n<span class=\"cf-comment\">// Zero-click: 93% of AI Mode sessions</span>\n<span class=\"cf-comment\">// But cited brands gain 35% organic + 91% paid</span>\n<span class=\"cf-comment\">// 73% of AI presence = citations without name</span>\n<span class=\"cf-comment\">// Traditional GA4 misses 70.6% of AI traffic</span>",
+      "patents": "",
+      "affects": "The value of AI citations is indirect and distributed. Brands must measure second-order effects (branded search, direct traffic) rather than direct click attribution. This requires new measurement infrastructure."
+    },
+    {
+      "name": "GEO Market Growth Rate",
+      "source": "Incremys, Dimension Market Research, Gartner, Reuters",
+      "how": "The GEO market is growing at 34-50% CAGR while traditional search volumes are declining. The crossover point where GEO investment becomes mandatory varies by industry.",
+      "formula": "<span class=\"cf-fn\">GEOMarket</span>(year) =\n  2024: <span class=\"cf-val\">$886M</span>\n  2025: <span class=\"cf-val\">$848M-$1.2B</span>\n  2031: <span class=\"cf-val\">$7.3B</span> (34% CAGR)\n  2034: <span class=\"cf-val\">$33.7B</span> (50.5% CAGR, alt projection)\n\n<span class=\"cf-comment\">// Traditional search: -25% by 2026 (Gartner)</span>\n<span class=\"cf-comment\">// Organic traffic: -50% by 2028</span>\n<span class=\"cf-comment\">// AI search ad market: $1B → $26B by 2029</span>\n<span class=\"cf-comment\">// 63% of companies increasing GEO spend</span>",
+      "patents": "",
+      "affects": "The window for early-mover advantage in GEO is narrowing. Companies that establish AI visibility now will compound advantages as search volumes shift. Waiting until 2028 means competing in a mature, expensive market."
+    }
+  ],
+  "pipeline": {
+    "title": "GEO ROI Measurement Pipeline",
+    "stages": [
+      {
+        "name": "Baseline Measurement",
+        "detail": "Establish current AI visibility across ChatGPT, Claude, Perplexity, Gemini, AI Overviews. Track branded search volume, direct traffic, and organic conversion rates as control metrics."
+      },
+      {
+        "name": "GEO Investment",
+        "detail": "Allocate 10-20% of search budget to GEO. Agency retainer ($2,000-$12,000/month) or DIY tools ($29-$499/month). Focus on Best Of lists, schema markup, FAQ structure, Reddit presence."
+      },
+      {
+        "name": "Citation Tracking",
+        "detail": "Monitor AI citation frequency using Otterly.AI, Profound, or Semrush AI Toolkit. Track which platforms cite your brand, citation position, and sentiment. Measure share of AI voice vs competitors."
+      },
+      {
+        "name": "Attribution Modeling",
+        "detail": "Measure second-order effects: branded search lift (+35%), paid click improvement (+91%), direct traffic changes. Use UTM parameters where possible. Account for 70.6% invisible AI traffic in GA4."
+      },
+      {
+        "name": "Conversion Analysis",
+        "detail": "Compare AI referral conversion rates (14-17%) vs organic (2.8%). Calculate effective cost per AI-driven conversion. Factor in higher lead quality (+9.2%) and longer session times (+68%)."
+      },
+      {
+        "name": "Budget Rebalancing",
+        "detail": "Shift budget toward GEO as ROI data matures. Target 25-40% GEO for high-AI-impact industries. Track GEO CAC trend (declining 37.5% over 18 months). Increase investment in platforms showing highest conversion."
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2023-Q4",
+      "type": "event",
+      "title": "GEO CAC Peak",
+      "desc": "<a href=\"https://firstpagesage.com/seo-blog/generative-engine-optimization-customer-acquisition-cost-cac-benchmarks/\">Average GEO CAC at $2,134</a>. Early adopters paying premium for unproven methodology. No standardized measurement tools."
+    },
+    {
+      "year": "2024-08",
+      "type": "event",
+      "title": "Princeton GEO Study (KDD 2024)",
+      "desc": "<a href=\"https://dl.acm.org/doi/10.1145/3637528.3671900\">First formal GEO framework</a>. Demonstrates up to 40% visibility improvement. Establishes academic foundation for GEO as a discipline."
+    },
+    {
+      "year": "2024",
+      "type": "event",
+      "title": "GEO Market $886M",
+      "desc": "<a href=\"https://www.incremys.com/en/resources/blog/geo-statistics\">GEO market reaches $886M</a>. 93% of CMOs report measurable ROI from generative AI. Agency offerings begin to formalize."
+    },
+    {
+      "year": "2025",
+      "type": "event",
+      "title": "AI Traffic Inflection",
+      "desc": "<a href=\"https://seranking.com/blog/ai-traffic-research-study/\">AI referral traffic grows from 0.02% to 1.08% of web traffic</a>. ChatGPT ecommerce visits up 1,079%. Conversion rate premium validated across multiple studies."
+    },
+    {
+      "year": "2025-Q2",
+      "type": "event",
+      "title": "GEO CAC Matures",
+      "desc": "<a href=\"https://firstpagesage.com/seo-blog/generative-engine-optimization-customer-acquisition-cost-cac-benchmarks/\">Average GEO CAC declines to $559</a> (-37.5% from peak). Methodologies mature. First industry-specific benchmarks published."
+    },
+    {
+      "year": "2025",
+      "type": "event",
+      "title": "Monitoring Tools Launch",
+      "desc": "<a href=\"https://otterly.ai/\">Otterly.AI</a> (Gartner Cool Vendor), Profound, Semrush AI Toolkit formalize AI visibility tracking. Measurement infrastructure catches up to investment."
+    },
+    {
+      "year": "2026",
+      "type": "event",
+      "title": "Traditional Search Decline",
+      "desc": "<a href=\"https://www.gartner.com/en/newsroom/press-releases/2024-02-19-gartner-predicts-search-engine-volume-will-drop-25-percent-by-2026-due-to-ai-chatbots-and-other-virtual-agents\">Gartner prediction: traditional search volume drops 25%</a>. GEO shifts from optional to necessary. Budget rebalancing accelerates."
+    },
+    {
+      "year": "2028",
+      "type": "event",
+      "title": "Organic Traffic -50%",
+      "desc": "Gartner projects organic search traffic to websites down 50%. AI search reaches 28% of global traffic. GEO becomes the primary search optimization discipline."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "SEO agencies",
+      "publicClaim": "GEO is just SEO with a new name. The same tactics work for both.",
+      "internalSource": "<a href=\"https://firstpagesage.com/seo-blog/generative-engine-optimization-customer-acquisition-cost-cac-benchmarks/\">First Page Sage CAC data</a>",
+      "internalClaim": "GEO carries a 14.4% cost premium with different optimization targets (third-party mentions vs backlinks, schema vs on-page, citation frequency vs rankings). While some overlap exists, dedicated GEO investment delivers 27% higher conversion rates."
+    },
+    {
+      "publicSource": "Traditional analytics",
+      "publicClaim": "We can measure AI search ROI using existing GA4 and attribution tools.",
+      "internalSource": "<a href=\"https://seranking.com/blog/ai-traffic-research-study/\">SE Ranking AI traffic study</a>",
+      "internalClaim": "70.6% of AI traffic is invisible in GA4. 93% of AI Mode sessions produce zero clicks. 73% of AI presence is citations without brand name mentions. Existing tools miss the majority of GEO impact."
+    },
+    {
+      "publicSource": "Budget holders",
+      "publicClaim": "AI search traffic is too small (<1%) to justify dedicated investment.",
+      "internalSource": "<a href=\"https://metricusapp.com/blog/chatgpt-referral-conversion-rates-shopify-2026/\">Metricus conversion data</a>",
+      "internalClaim": "AI traffic converts at 4-11x traditional organic rates. ChatGPT referrals grew 1,079% in one year. Brands cited in AI Overviews see 35% more organic clicks. The volume is small but the value per visit is 4-11x higher, and growing exponentially."
+    },
+    {
+      "publicSource": "AI platforms",
+      "publicClaim": "AI recommendations are merit-based and cannot be optimized for.",
+      "internalSource": "<a href=\"https://dl.acm.org/doi/10.1145/3637528.3671900\">Princeton GEO study + case studies</a>",
+      "internalClaim": "Structured content optimization boosts AI visibility by up to 40%. FAQ schema: 2.7x citation rate. Fast load times: 3x more citations. Case studies show 189-540% citation improvements from targeted GEO work."
+    }
+  ]
+}

@@ -177,5 +177,13 @@
       "title": "ABC Framework Confirmed",
       "desc": "DOJ trial reveals T* = Anchors + Body + Clicks. HJ Kim confirms T*, Q*, P* as the three top-level ranking pillars. T* combines ABC in a relatively hand-crafted way. Nayak (PXR0357): top-level signals are a linear combination of log of individual raw signals, monotonic, baseline in style of Okapi BM25."
     }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google (public guidance on content relevance)",
+      "publicClaim": "Create content that matches what users are searching for. Relevance is determined by how well your content answers the query.",
+      "internalSource": "DOJ: T* = Anchors + Body + Clicks (ABC framework)",
+      "internalClaim": "Topicality (T*) is not just about content relevance to a query. It combines three sub-signals: Anchors (what other sites say about you), Body (your own content), and Clicks (user behavior). Only Body is within a content creator's direct control. Anchors depend on how others link to you, and Clicks depend on user engagement. A page with perfect content relevance (Body) but weak anchors and low clicks will have a poor T* score. 'Create relevant content' addresses only one-third of the topicality equation."
+    }
   ]
 }

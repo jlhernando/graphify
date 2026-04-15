@@ -1,0 +1,177 @@
+{
+  "id": "ads-organic",
+  "route": "/ads-organic",
+  "systems": [
+    "Tangram",
+    "GWS",
+    "NavBoost"
+  ],
+  "hero": {
+    "title": "Ads and Organic: How Advertising Interacts With Search Rankings",
+    "subtitle": "Google publicly maintains a 'wall' between ads and organic search. Internally, the DOJ trial revealed shared signal infrastructure (click predictions power both systems), SERP layout co-optimization via Tangram, a ranking signal that penalizes ad-heavy pages (adsDensityInterstitialViolationStrength), and patent US8676790 explicitly describing 'methods for improving search rankings using advertising data.' Paul Haahr and Pandu Nayak acknowledged internal pressure to 'hold back Search changes that are good for users but bad for revenue.' Google's $146B advertising revenue (2021) creates structural incentives that the 'ads wall' cannot fully contain."
+  },
+  "keyInsight": {
+    "label": "Key Insight from DOJ Trial",
+    "text": "The DOJ trial revealed that Google's search and ads systems share <strong>fundamental infrastructure</strong> despite the claimed separation. The same <strong>click prediction models</strong> power both organic ranking and ad auctions (UPX0205: 'one of the strongest signals for much of Google's search <strong>and ads</strong> ranking'). <strong>Tangram</strong> assembles SERPs optimizing both organic results and ads placement simultaneously. Paul Haahr and Pandu Nayak (UPX0708) admitted: '<strong>There can be pressure via Ads to change the product to favor Ads in general</strong>, not individual advertisers, but say, holding back Search changes that are good for users but bad for revenue.' Patent <a href=\"https://patents.google.com/patent/US8676790\">US8676790</a> describes using advertising data to improve organic rankings."
+  },
+  "pillars": [
+    {
+      "type": "doj",
+      "title": "Signals, Core",
+      "items": [
+        "<strong>adsDensityInterstitialViolationStrength</strong> (doj:ads-density-violation) - Scaled 0-1000 strength of ad density and interstitial policy violations on mobile pages. Pages with excessive ads or intrusive interstitials receive ranking penalties. This is the only confirmed organic ranking signal that directly references advertising content",
+        "<strong>Tangram</strong> (doj:tangram) - 'SERP assembly and layout system (evolved from Tetris). Arranges blue links, universal features, and ads for optimal space and UX.' Tangram optimizes organic and ad placement together, meaning ads directly compete with organic results for SERP real estate",
+        "<strong>Shared click prediction</strong> (UPX0205) - The Priors/click prediction system is described as 'one of the strongest signals for much of Google's search AND ads ranking.' Same behavioral models power both organic and ad ranking decisions",
+        "<strong>chromePurchaseActivity</strong> (doj:chrome-purchase-activity) - Chrome browser purchase and transaction activity tracking as a 'commercial engagement signal.' User commercial behavior feeds ranking through CRAPS",
+        "<strong>Haahr/Nayak on ads pressure</strong> (UPX0708): 'There can be pressure via Ads to change the product to favor Ads in general, not individual advertisers, but say, holding back Search changes that are good for users but bad for revenue.' Also: 'There's the search/ads wall where we don't use ads signals in search and so forth'",
+        "<strong>Revenue as objective</strong> (UPX45): 'Another important objective is the revenue that the platform (Google) makes.' Revenue considerations explicitly part of search product decisions",
+        "<strong>Commercial intent from ads</strong> (UPX0240): Commercial intent determined by 'whether an advertiser is willing to pay for an ad in response to the query.' Advertiser willingness to pay shapes which queries are classified as commercial"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "Auction Pricing Mechanisms",
+      "items": [
+        "<strong>Ads auction formula</strong> - bid * pCTR * quality_score. Multi-signal combination pattern parallel to organic ranking's signal combination",
+        "<strong>Squashing</strong> (Mehta opinion): 'Artificially raises the pCTR of the runner-up, thereby inflating its overall LTV score, creating upward pricing pressure.' Google manipulates auction mechanics to increase ad prices",
+        "<strong>rGSP (randomized generalized second-price auction)</strong>: 'Occasionally randomly switches the LTV scores of the two top auction entrants, artificially enhancing the runner-up's score, creating more competitive auctions and driving up final prices'",
+        "<strong>Format pricing</strong>: 'Strongly increased format prices' generating 'long-term revenue gains.' Ad format changes (sitelinks, callouts) become revenue extraction mechanisms",
+        "<strong>Pricing exploration</strong> (UPX509, 2018): 'We know there is still significant upside left in the different auction pricing knobs. Should we stop working on pricing exploration despite our belief we're leaving money on the table?'",
+        "<strong>Market dominance</strong>: Google's text ads market share is 88%. 45% of text ad revenue comes from searches on default search access points covered by distribution agreements (Mehta opinion)"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "6 Patents",
+      "items": [
+        "<strong>Improving rankings using advertising data</strong> (<a href=\"https://patents.google.com/patent/US8676790\">US8676790</a>): 'Methods and systems for improving search rankings using advertising data.' Explicitly links ad data to organic ranking improvement. The most direct evidence of ads-organic signal flow",
+        "<strong>Detecting commercial queries</strong> (<a href=\"https://patents.google.com/patent/US8046350\">US8046350</a>): Systems for identifying high-monetization queries. Commercial query detection feeds both ad targeting and organic intent classification",
+        "<strong>Ad placement optimization</strong> (<a href=\"https://patents.google.com/patent/US7039599\">US7039599</a>): Method and apparatus for automatic placement of advertising within content",
+        "<strong>Ad spot promotion/demotion</strong> (<a href=\"https://patents.google.com/patent/US7363302\">US7363302</a>): Promoting and demoting advertisements between spot types",
+        "<strong>Meaning-based advertising</strong> (<a href=\"https://patents.google.com/patent/US6816857\">US6816857</a>): Ties ad relevance determination to document relevance determination. Shared relevance models for ads and organic",
+        "<strong>Optimal ad placement on webpages</strong> (<a href=\"https://patents.google.com/patent/US7373599\">US7373599</a>): Method for optimum placement of advertisements on a webpage"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Ads Impact Organic Rankings",
+      "items": [
+        "<strong>SERP real estate competition</strong>: Tangram assembles ads and organic together. More ads above the fold pushes organic results down. For commercial queries, 4 ads above organic results means position 1 organic is effectively position 5 on the page. Organic CTR drops significantly with more ads",
+        "<strong>Ad-heavy pages get penalized</strong>: adsDensityInterstitialViolationStrength (0-1000 scale) directly penalizes pages with excessive ads or intrusive interstitials. Sites monetizing aggressively with ads harm their own organic rankings",
+        "<strong>Commercial intent shapes the SERP</strong>: Queries classified as commercial (based on advertiser willingness to pay) receive different SERP treatment: shopping carousels, product ads, local service ads all compete with organic. The classification itself is influenced by ad market dynamics",
+        "<strong>Click prediction models are shared</strong>: The same behavioral prediction infrastructure powers both organic ranking and ad auctions. Improvements to click prediction benefit both systems, but optimization pressure favors the revenue-generating side",
+        "<strong>Revenue pressure creates structural bias</strong>: Haahr/Nayak admitted 'holding back Search changes that are good for users but bad for revenue' as a real pressure. Search quality improvements that reduce ad clicks face internal resistance. The ads wall exists but the incentive structure works against it",
+        "<strong>Distribution agreements drive ad revenue</strong>: 45% of text ad revenue comes from default search positions. Google's $26.3B in distribution payments (data-advantage.json) are justified by ad revenue, creating a feedback loop where maintaining search dominance serves advertising goals"
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "adsDensityInterstitialViolationStrength",
+      "source": "DOJ + Leak",
+      "how": "Measures ad density and interstitial policy violations on mobile pages. Scaled 0-1000. Pages with excessive ads relative to content, or with intrusive interstitials blocking content access, receive ranking penalties proportional to the violation strength.",
+      "formula": "<span class=\"cf-fn\">AdsViolation</span>(page) = <span class=\"cf-fn\">scale</span>(\n  <span class=\"cf-val\">ad_density</span>(page) +\n  <span class=\"cf-val\">interstitial_score</span>(page),\n  <span class=\"cf-val\">0</span>, <span class=\"cf-val\">1000</span>\n)\n<span class=\"cf-comment\">// higher = worse violation</span>\n<span class=\"cf-comment\">// mobile-focused (interstitial rules)</span>\n<span class=\"cf-comment\">// feeds into Q* quality scoring</span>",
+      "patents": "",
+      "affects": "Affected by: ads-to-content ratio, interstitial presence on mobile, pop-up behavior. Aggressive monetization directly harms organic rankings."
+    },
+    {
+      "name": "Tangram SERP Co-optimization",
+      "source": "DOJ + Leak",
+      "how": "Tangram assembles the final SERP by arranging organic results, ad placements, universal features (news, images, shopping), and Knowledge Panel into an optimized layout. The system considers both user experience and revenue objectives simultaneously, meaning ad placement decisions directly affect organic result visibility.",
+      "formula": "<span class=\"cf-fn\">Tangram</span>(query) = <span class=\"cf-fn\">optimize</span>(\n  <span class=\"cf-val\">organic_results</span>,\n  <span class=\"cf-val\">ad_placements</span>,\n  <span class=\"cf-val\">universal_features</span>,\n  <span class=\"cf-val\">knowledge_panel</span>\n) &rarr; <span class=\"cf-val\">SERP_layout</span>\n<span class=\"cf-comment\">// evolved from 'Tetris' (DOJ)</span>\n<span class=\"cf-comment\">// ads + organic compete for real estate</span>\n<span class=\"cf-comment\">// 4 ads above fold = organic pos 1 is visual pos 5</span>",
+      "patents": "",
+      "affects": "Affected by: query commercial intent, ad inventory for query, SERP feature eligibility. More ads = less organic visibility."
+    },
+    {
+      "name": "Commercial Intent Classification",
+      "source": "DOJ + Patent",
+      "how": "Queries are classified as commercial based on advertiser willingness to pay for ads against that query (UPX0240). Commercial intent classification affects SERP composition: shopping carousels, product ads, local service ads are triggered. This classification bridges the ads and organic systems.",
+      "formula": "<span class=\"cf-fn\">CommercialIntent</span>(query) =\n  <span class=\"cf-fn\">f</span>(\n    <span class=\"cf-val\">advertiser_bid_volume</span>,\n    <span class=\"cf-val\">historical_ad_clicks</span>,\n    <span class=\"cf-val\">query_category</span>\n  )\n<span class=\"cf-comment\">// determines SERP feature mix</span>\n<span class=\"cf-comment\">// high commercial = more ads, less organic space</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US8046350\">US8046350</a> (detecting commercial queries)",
+      "affects": "Affected by: advertiser demand for query, historical ad performance, query category. Advertiser spending shapes the organic landscape."
+    }
+  ],
+  "pipeline": {
+    "title": "Ads-Organic Interaction Pipeline",
+    "stages": [
+      {
+        "name": "Query Classification",
+        "detail": "Query classified for commercial intent based on advertiser bid volume and historical ad performance. Commercial queries trigger ad auction alongside organic ranking."
+      },
+      {
+        "name": "Parallel Processing",
+        "detail": "Organic ranking (Ascorer pipeline) and ad auction (bid * pCTR * quality) run simultaneously. Shared click prediction models inform both."
+      },
+      {
+        "name": "Ads Density Scoring",
+        "detail": "Pages evaluated for adsDensityInterstitialViolationStrength (0-1000). Excessive ads penalize organic ranking."
+      },
+      {
+        "name": "Tangram Assembly",
+        "detail": "Organic results, ads, universal features, and Knowledge Panel assembled into optimized SERP layout. Ads and organic compete for above-the-fold real estate."
+      },
+      {
+        "name": "GWS Delivery",
+        "detail": "Final SERP delivered with A/B experiment variants. Different users may see different ads-to-organic ratios during experiments."
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2000",
+      "type": "event",
+      "title": "AdWords Launched",
+      "desc": "Google launches AdWords (now Google Ads). Text ads appear alongside organic results for the first time."
+    },
+    {
+      "year": "2006",
+      "type": "patent",
+      "title": "Commercial Query Detection (US8046350)",
+      "desc": "Google patents systems for identifying high-monetization queries. Commercial intent classification bridges ads and organic."
+    },
+    {
+      "year": "2012",
+      "type": "patent",
+      "title": "Rankings Using Advertising Data (US8676790)",
+      "desc": "Patent explicitly describes using advertising data to improve organic search rankings. Direct evidence of ads-organic signal flow."
+    },
+    {
+      "year": "2017",
+      "type": "event",
+      "title": "Mobile Interstitial Penalty",
+      "desc": "Google penalizes intrusive mobile interstitials. adsDensityInterstitialViolationStrength becomes an organic ranking signal."
+    },
+    {
+      "year": "2018",
+      "type": "doj",
+      "title": "Pricing Exploration Continues",
+      "desc": "UPX509: Google acknowledges 'significant upside left in auction pricing knobs' and continues aggressive price optimization despite market dominance."
+    },
+    {
+      "year": "2023",
+      "type": "doj",
+      "title": "DOJ Trial: Ads-Search Tension Revealed",
+      "desc": "Haahr/Nayak (UPX0708) admit 'pressure via Ads to hold back Search changes good for users but bad for revenue.' 88% text ads market share confirmed. $146B advertising revenue."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google (public statements on search integrity)",
+      "publicClaim": "There is a strict separation between ads and organic search results. Advertising does not influence organic rankings.",
+      "internalSource": "DOJ: UPX0708 (Haahr/Nayak) + Patent US8676790",
+      "internalClaim": "Haahr and Nayak acknowledged 'pressure via Ads to hold back Search changes good for users but bad for revenue.' Patent US8676790 explicitly describes 'methods for improving search rankings using advertising data.' The Priors algorithm powers 'much of Google's search AND ads ranking' (UPX0205). While individual advertiser influence is denied, systemic revenue pressure on search product decisions is admitted."
+    },
+    {
+      "publicSource": "Google (public communications)",
+      "publicClaim": "Paid ads are clearly labeled and separated from organic results. Users can easily distinguish between ads and organic.",
+      "internalSource": "DOJ: Tangram SERP assembly + format evolution",
+      "internalClaim": "Tangram optimizes ads and organic placement together for 'optimal space and UX.' Over time, ad formats have converged visually with organic results (removal of colored backgrounds, smaller 'Ad' labels). The 4-ads-above-organic layout means organic position 1 is effectively position 5 on the page. The visual distinction has narrowed while the real estate competition has intensified."
+    },
+    {
+      "publicSource": "Google (auction transparency)",
+      "publicClaim": "Google Ads uses a fair, transparent auction system. Advertisers compete on bids and quality.",
+      "internalSource": "DOJ: Mehta opinion on squashing + rGSP + format pricing",
+      "internalClaim": "Google uses 'squashing' to artificially inflate runner-up scores, 'rGSP' to randomly switch top auction positions, and 'format pricing' to extract additional revenue. These mechanisms systematically increase prices beyond what a transparent auction would produce. UPX509: Google acknowledged 'leaving money on the table' and continued aggressive pricing exploration."
+    }
+  ]
+}

@@ -1,0 +1,175 @@
+{
+  "id": "international",
+  "route": "/international",
+  "systems": [
+    "International",
+    "QueryUnderstanding"
+  ],
+  "hero": {
+    "title": "International SEO & Hreflang: Multi-Language Ranking and Locale Selection",
+    "subtitle": "Google's international ranking pipeline determines which language version of a page to serve based on document language classification, hreflang cluster resolution, geographic click segmentation, and implicit locale detection from queries. The API leak confirms two critical signals: 'language' for primary document language classification and 'localizedCluster' for grouping multi-language page variants into hreflang clusters used for deduplication. Four patents spanning 1998 to 2013 reveal the evolution from N-gram language fingerprinting to geographic-aware short text classification and implicit locale detection. NavBoost's geographic slicing means the same URL earns different click scores in different countries, creating a feedback loop where locale-appropriate content self-reinforces through user behavior."
+  },
+  "keyInsight": {
+    "label": "Key Insight from API Leak + Patents",
+    "text": "Google does <strong>not rely on hreflang declarations alone</strong> to determine which language version to serve. The API leak reveals <strong>language</strong> (document-level language classification) and <strong>localizedCluster</strong> (multi-language page grouping) as separate index fields, confirming Google independently classifies page language and clusters localized variants. When hreflang markup conflicts with detected language or localizedCluster assignments, Google's own classification overrides webmaster declarations. Combined with <strong>NavBoostLocationSlice</strong> geographic click segmentation, this means a page's international ranking depends on three independent systems: language detection (patents), cluster deduplication (API), and locale-specific click data (NavBoost)."
+  },
+  "pillars": [
+    {
+      "type": "leak",
+      "title": "API Leak Signals",
+      "items": [
+        "<strong>language</strong>: Primary document language classification stored per indexed document. Google independently detects the language of each page regardless of HTML lang attributes or hreflang declarations. This classification determines which language index a page enters and which queries it can match.",
+        "<strong>localizedCluster</strong>: Groups multi-language page variants into a single cluster for hreflang-based deduplication. Pages within the same localizedCluster are treated as alternate versions of the same content. During serving, Google selects the cluster member matching the user's locale, suppressing other variants from results. Confirmed in the canonicalization system as the mechanism that connects hreflang alternates.",
+        "<strong>NavBoostLocationSlice</strong> (from NavBoost system): Click data segmented by geographic location. The same URL accumulates separate click scores per country/region. A page performing well in Germany's click data gets boosted for German users but not for French users, even if both speak the same language. This geographic segmentation creates locale-specific ranking signals independent of language detection.",
+        "<strong>NavBoostDeviceSlice</strong> (from NavBoost system): Click data segmented by device type. International mobile search behavior differs significantly from desktop, with mobile users in many markets skewing toward local and navigational queries. Combined with LocationSlice, this creates a locale-plus-device matrix for click scoring."
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "4 Patents",
+      "items": [
+        "<strong>N-gram language identification</strong>: <a href=\"https://patents.google.com/patent/US6167369\">US6167369</a> (Kellogg, filed 1998) establishes the foundational language detection method using character N-gram frequency profiles. Documents are decomposed into overlapping character sequences (typically 3-5 characters), and the frequency distribution is compared against pre-built language models. This is the basis for the 'language' signal in the API leak, enabling classification of documents into 100+ languages without relying on metadata declarations.",
+        "<strong>Cross-language IR via anchor text</strong>: <a href=\"https://patents.google.com/patent/US7146358\">US7146358</a> (Lu, Chien, filed 2002) uses anchor text linking between pages of different languages as parallel corpora for cross-language information retrieval. When an English page links to a Japanese page with English anchor text, this creates a translation signal. This enables Google to match queries in one language to relevant documents in another, critical for serving results when no same-language content exists for a query.",
+        "<strong>Geographic short text language detection</strong>: <a href=\"https://patents.google.com/patent/US8548797\">US8548797</a> (Cucerzan, filed 2009) solves the problem of detecting language in short text (queries, titles, snippets) where N-gram profiles are unreliable due to limited character data. Uses geographic information from the user's location to disambiguate language. A short query from Spain is more likely Spanish than Portuguese, while the same query from Brazil is more likely Portuguese. This directly affects which localizedCluster member gets served.",
+        "<strong>Implicit locale detection in queries</strong>: <a href=\"https://patents.google.com/patent/US8200694\">US8200694</a> (Pang, Kumar, filed 2008) identifies queries with implicit local or regional intent without explicit location terms. A query for 'pharmacy hours' implies local intent; 'Bundesliga scores' implies German-language sports content regardless of user location. This patent enables Google to match queries to the correct locale even when users don't specify language or country, feeding into which localizedCluster member to surface."
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "International SEO Implications",
+      "items": [
+        "<strong>Match page language to hreflang declarations precisely</strong>: Because Google independently detects document language via the 'language' signal, a page declared as hreflang='de' but containing mostly English content will be classified as English internally, breaking the localizedCluster grouping. Ensure the actual on-page content, title, meta description, and structured data are fully in the declared language. Mixed-language pages confuse the N-gram classifier.",
+        "<strong>Build locale-specific click engagement for NavBoostLocationSlice</strong>: Geographic click segmentation means your French page needs clicks from users in France, not just French-speaking users globally. Run locale-targeted campaigns, build local backlinks from country-specific domains, and ensure your content matches local search intent patterns. A .fr domain with no French click data will lose to a .com competitor with strong NavBoostLocationSlice scores in France.",
+        "<strong>Self-canonicalize every hreflang variant</strong>: Each localized page must have rel=canonical pointing to itself, not to another language version. If your /es/ page canonicalizes to /en/, Google removes /es/ from the localizedCluster, breaking the entire hreflang set. This is the most common international SEO failure per canonicalization system data.",
+        "<strong>Use dedicated URLs per locale, not IP-based redirects</strong>: Google crawls from US IP addresses. If your site redirects Googlebot to the English version based on IP detection, other language versions never get indexed and no localizedCluster forms. Use separate URLs (subdirectories, subdomains, or ccTLDs) with proper hreflang annotations and let Googlebot crawl all versions.",
+        "<strong>Leverage cross-language anchor text for thin markets</strong>: Patent US7146358 confirms Google uses anchor text as parallel corpora for cross-language retrieval. When targeting a language with limited content competition, earn links from authoritative pages in major languages with descriptive anchor text. An English Wikipedia link with relevant anchor text to your Japanese page creates a cross-language relevance signal.",
+        "<strong>Optimize for implicit locale queries with US8200694 in mind</strong>: Users often search without specifying language or location. Ensure your pages contain locale-specific entities, currency formats, measurement units, and cultural references that signal geographic relevance beyond just language. A German e-commerce page using EUR prices and German shipping carriers signals locale more strongly than one with USD prices translated to German."
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "System Context",
+      "items": [
+        "<strong>NavBoostLocationSlice confirms geographic click segmentation</strong>: NavBoost click data is sliced by geographic location (confirmed in NavBoost system analysis), meaning identical URLs accumulate separate engagement metrics per country and region. For international SEO, this means a multi-language site competes in each locale's click data pool independently. Strong global traffic does not compensate for weak locale-specific engagement.",
+        "<strong>Geographic segmentation creates winner-take-all locale dynamics</strong>: Because NavBoost scores are location-sliced, the first page to build strong click-through and dwell time in a specific locale creates a feedback loop: higher ranking leads to more clicks, which reinforces ranking. Late entrants to a locale face an established NavBoost advantage that takes sustained local engagement to overcome."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Document Language Classification",
+      "source": "API Leak + Patent US6167369",
+      "how": "Google classifies each document's primary language using character N-gram frequency analysis. The document text is decomposed into overlapping character sequences (typically trigrams and 4-grams). The resulting frequency distribution is compared against pre-trained language models for 100+ languages using distance metrics. For short documents, geographic signals from US8548797 supplement the N-gram classifier. The winning language is stored as the 'language' field in the index.",
+      "formula": "<span class=\"cf-fn\">detectLanguage</span>(doc) =\n  <span class=\"cf-val\">ngrams</span> = <span class=\"cf-fn\">extractNgrams</span>(doc.text, n=[3,4])\n  <span class=\"cf-val\">profile</span> = <span class=\"cf-fn\">frequencyDistribution</span>(ngrams)\n  <span class=\"cf-kw\">for each</span> lang <span class=\"cf-kw\">in</span> languageModels:\n    <span class=\"cf-val\">distance</span>[lang] = <span class=\"cf-fn\">outOfPlace</span>(profile, lang.model)\n  <span class=\"cf-kw\">if</span> doc.length &lt; <span class=\"cf-val\">shortThreshold</span>:\n    <span class=\"cf-val\">distance</span> = <span class=\"cf-fn\">adjustForGeo</span>(distance, doc.geoSignals)\n  <span class=\"cf-kw\">return</span> <span class=\"cf-fn\">argmin</span>(distance)\n<span class=\"cf-comment\">// N-gram profiles override HTML lang attribute</span>\n<span class=\"cf-comment\">// Short text uses geographic disambiguation (US8548797)</span>",
+      "patents": "<a href=\"https://patents.google.com/patent/US6167369\">US6167369</a> (N-gram language identification), <a href=\"https://patents.google.com/patent/US8548797\">US8548797</a> (geographic short text detection)",
+      "affects": "Affected by: document text length, character set, mixed-language content ratio, geographic signals for short text, HTML lang attribute (weak hint only)."
+    },
+    {
+      "name": "Localized Cluster Resolution",
+      "source": "API Leak (localizedCluster) + Canonicalization System",
+      "how": "Google groups pages connected by hreflang annotations into a localizedCluster. At serving time, when a user issues a query, the system selects the best cluster member based on: user locale (country + language preference), the 'language' classification of each cluster member, and NavBoostLocationSlice scores for each variant. If a cluster member's detected language contradicts its hreflang declaration, it may be excluded from selection. The winning variant is served while others are suppressed as duplicates.",
+      "formula": "<span class=\"cf-fn\">resolveCluster</span>(cluster, user) =\n  <span class=\"cf-kw\">for each</span> page <span class=\"cf-kw\">in</span> cluster.members:\n    <span class=\"cf-val\">langMatch</span> = <span class=\"cf-fn\">langScore</span>(page.language, user.langPref)\n    <span class=\"cf-val\">geoMatch</span> = <span class=\"cf-fn\">geoScore</span>(page.hreflangRegion, user.country)\n    <span class=\"cf-val\">clickScore</span> = <span class=\"cf-fn\">navBoostLocation</span>(page, user.region)\n    <span class=\"cf-val\">page.score</span> = <span class=\"cf-val\">w1</span> &times; langMatch + <span class=\"cf-val\">w2</span> &times; geoMatch + <span class=\"cf-val\">w3</span> &times; clickScore\n  <span class=\"cf-kw\">if</span> page.detectedLang &ne; page.hreflangLang:\n    <span class=\"cf-val\">page.score</span> &times;= <span class=\"cf-val\">0.3</span> <span class=\"cf-comment\">// mismatch penalty</span>\n  <span class=\"cf-kw\">return</span> <span class=\"cf-fn\">argmax</span>(cluster.members, score)\n<span class=\"cf-comment\">// NavBoost geographic slice influences variant selection</span>\n<span class=\"cf-comment\">// Language detection override can break hreflang intent</span>",
+      "patents": "<a href=\"https://patents.google.com/patent/US8200694\">US8200694</a> (implicit locale detection), <a href=\"https://patents.google.com/patent/US8548797\">US8548797</a> (geographic language detection)",
+      "affects": "Affected by: hreflang annotation completeness, detected vs declared language consistency, NavBoostLocationSlice per variant, user country and language preferences, self-canonicalization of each variant."
+    },
+    {
+      "name": "Cross-Language Relevance via Anchor Text",
+      "source": "Patent US7146358",
+      "how": "When a page in language A links to a page in language B with anchor text in language A, this creates a translation pair used for cross-language information retrieval. Google aggregates these anchor-text translation pairs across the web to build bilingual lexicons. At query time, if no strong same-language result exists, the system can match a query in language A to a document in language B by translating query terms through the anchor-derived lexicon and computing relevance.",
+      "formula": "<span class=\"cf-fn\">crossLangScore</span>(query, doc) =\n  <span class=\"cf-val\">anchors</span> = <span class=\"cf-fn\">getAnchors</span>(doc, lang=query.lang)\n  <span class=\"cf-val\">lexicon</span> = <span class=\"cf-fn\">buildBilingualLex</span>(anchors)\n  <span class=\"cf-val\">translatedTerms</span> = <span class=\"cf-fn\">translate</span>(query.terms, lexicon)\n  <span class=\"cf-val\">relevance</span> = <span class=\"cf-fn\">cosineSim</span>(translatedTerms, doc.termVector)\n  <span class=\"cf-kw\">return</span> relevance &times; <span class=\"cf-fn\">anchorConfidence</span>(anchors.count)\n<span class=\"cf-comment\">// More cross-language anchors = higher translation confidence</span>\n<span class=\"cf-comment\">// Used when same-language results are insufficient</span>",
+      "patents": "<a href=\"https://patents.google.com/patent/US7146358\">US7146358</a> (anchor text as parallel corpora)",
+      "affects": "Affected by: volume of cross-language anchor text pointing to the document, anchor text diversity, language pair availability in the bilingual lexicon, same-language result sufficiency."
+    }
+  ],
+  "pipeline": {
+    "title": "International Content Processing Pipeline",
+    "stages": [
+      {
+        "name": "Document Language Detection",
+        "desc": "At crawl/index time, each document's text is analyzed using N-gram frequency profiling (US6167369). Character trigram and 4-gram distributions are compared against 100+ language models. For short documents, geographic signals supplement the classifier (US8548797). The detected language is stored in the 'language' index field, independent of HTML lang or hreflang declarations."
+      },
+      {
+        "name": "Hreflang Cluster Formation",
+        "desc": "Pages connected by valid hreflang annotations are grouped into a localizedCluster. Google validates bidirectional hreflang links (page A references B and B references A). Broken or unidirectional references cause pages to be excluded from the cluster. Each page must self-canonicalize to remain in the cluster."
+      },
+      {
+        "name": "Language-Cluster Consistency Check",
+        "desc": "The detected 'language' for each cluster member is compared against its hreflang language declaration. Mismatches (e.g., page declared as hreflang='de' but detected as English) trigger penalties or exclusion from the cluster. This is where hreflang markup can fail silently if page content does not match the declared language."
+      },
+      {
+        "name": "Query Locale Resolution",
+        "desc": "At query time, the user's locale is determined from IP geolocation, browser language settings, Google account preferences, and search domain (.de, .co.jp, etc.). For ambiguous queries, US8200694's implicit locale detection identifies regional intent without explicit location terms. US8548797 disambiguates short query language using geographic context."
+      },
+      {
+        "name": "NavBoost Geographic Scoring",
+        "desc": "NavBoostLocationSlice provides locale-specific click engagement scores for each URL. The same page has different NavBoost scores in different countries. These scores influence both the selection of which localizedCluster member to serve and the page's overall ranking position within that locale's results."
+      },
+      {
+        "name": "Cluster Member Selection",
+        "desc": "For each localizedCluster appearing in candidate results, the system selects the best member for the user's locale. Selection weighs language match, regional match, and NavBoostLocationSlice scores. Non-selected members are suppressed as duplicates. If no cluster member matches the user's locale well, the default version (typically x-default hreflang) is served."
+      },
+      {
+        "name": "Cross-Language Fallback",
+        "desc": "When same-language results are insufficient for a query, US7146358's cross-language retrieval activates. Anchor text translation pairs enable matching queries in one language to documents in another. Results are ranked by cross-language relevance with a confidence discount based on translation quality. This ensures users in underserved language markets still receive relevant results."
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": 1998,
+      "type": "patent",
+      "title": "N-gram Language Identification Filed",
+      "desc": "<a href=\"https://patents.google.com/patent/US6167369\">US6167369</a> filed, establishing character N-gram frequency profiling as the core method for automatic language identification. This foundational technique remains the basis for the 'language' classification signal in Google's index."
+    },
+    {
+      "year": 2002,
+      "type": "patent",
+      "title": "Cross-Language IR via Anchor Text Filed",
+      "desc": "<a href=\"https://patents.google.com/patent/US7146358\">US7146358</a> filed, using anchor text linking between different language pages as parallel corpora for cross-language information retrieval. Enables query-document matching across language barriers."
+    },
+    {
+      "year": 2008,
+      "type": "patent",
+      "title": "Implicit Locale Detection Filed",
+      "desc": "<a href=\"https://patents.google.com/patent/US8200694\">US8200694</a> filed, identifying queries with implicit local or regional intent without explicit location terms. Bridges the gap between query understanding and international content serving."
+    },
+    {
+      "year": 2009,
+      "type": "patent",
+      "title": "Geographic Short Text Language Detection Filed",
+      "desc": "<a href=\"https://patents.google.com/patent/US8548797\">US8548797</a> filed, solving language detection for short text (queries, snippets) by incorporating geographic signals. A query typed in Spain is resolved differently than the same characters typed in Brazil."
+    },
+    {
+      "year": 2011,
+      "type": "event",
+      "title": "Google Introduces Hreflang Support",
+      "desc": "Google announces support for rel=alternate hreflang annotations, providing webmasters a way to declare language and regional variants of pages. This becomes the primary mechanism for building localizedClusters in Google's index."
+    },
+    {
+      "year": 2024,
+      "type": "leak",
+      "title": "API Leak Reveals language and localizedCluster",
+      "desc": "The Google Search API leak confirms 'language' as a per-document language classification field and 'localizedCluster' as the grouping mechanism for multi-language page variants. Confirms Google's language detection operates independently of webmaster declarations."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Search Central Documentation",
+      "publicClaim": "Hreflang is used as a signal to serve the correct language or regional URL to users. Google recommends hreflang as the primary method for managing international content.",
+      "internalSource": "API Leak: language + localizedCluster fields",
+      "internalClaim": "Google independently classifies document language via the 'language' signal using N-gram detection (US6167369), and can override hreflang declarations when detected language contradicts the hreflang annotation. localizedCluster formation depends on language consistency, not just hreflang markup."
+    },
+    {
+      "publicSource": "Google Search Central Documentation",
+      "publicClaim": "Google uses hreflang annotations to understand the relationship between pages in different languages and serve the most appropriate version to users based on their language preference.",
+      "internalSource": "NavBoostLocationSlice (NavBoost system)",
+      "internalClaim": "Locale-specific click data from NavBoostLocationSlice independently influences which version users see. A language variant with poor engagement metrics in its target locale can be outranked by a different variant with stronger click data, regardless of correct hreflang implementation."
+    },
+    {
+      "publicSource": "Google Webmaster Blog",
+      "publicClaim": "The HTML lang attribute and Content-Language HTTP header help Google understand page language, and webmasters should use these alongside hreflang for best results.",
+      "internalSource": "Patent US6167369 + API Leak language field",
+      "internalClaim": "N-gram content analysis is the primary language detection method. HTML lang attributes and Content-Language headers serve as weak hints at best. The 'language' field stored in the index is determined by content analysis, not metadata. Pages with correct metadata but wrong-language content are classified by their actual content."
+    }
+  ]
+}

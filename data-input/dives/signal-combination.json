@@ -1,0 +1,196 @@
+{
+  "id": "signal-combination",
+  "route": "/signal-combination",
+  "systems": [
+    "Ascorer",
+    "RankingArchitecture",
+    "SignalProcessing"
+  ],
+  "hero": {
+    "title": "Signal Combination: How Google Blends 100+ Signals Into a Single Score",
+    "subtitle": "Google combines 100+ raw ranking signals into a single document score using a two-stage process: raw signals are log-transformed and passed through sigmoid functions with hand-tuned thresholds, then aggregated via linear weighted formulas into top-level scores (T*, Q*, P*). HJ Kim testified that engineers 'take a sigmoid or other function and figure out the threshold.' Nayak confirmed 'top-level signals are a linear combination of log of individual raw signals' with a monotonicity constraint. The weights are tuned by engineers, not learned via gradient descent."
+  },
+  "keyInsight": {
+    "label": "Key Insight from DOJ Trial (PXR0357 + PXR0356)",
+    "text": "Google's ranking is <strong>not a neural network</strong> deciding rankings end-to-end. It is a <strong>hand-crafted linear combination of log-transformed, sigmoid-normalized signals</strong>. Pandu Nayak (PXR0357, Jan 2025): 'Top-level signals are a <strong>linear combination of log of individual raw signals</strong>. Signals are formulated such that their impact on ranking is <strong>monotonic</strong> relative to the signal.' HJ Kim (PXR0356, Feb 2025): 'engineers look at data and then take a <strong>sigmoid or other function</strong> and figure out the threshold.' The three pillars (T*, Q*, P*) are <strong>not equally weighted</strong>: VP Grushetsky (UPX0197) stated NavBoost was 'likely more powerful than the rest of ranking combined.'"
+  },
+  "pillars": [
+    {
+      "type": "doj",
+      "title": "Signals, Core",
+      "items": [
+        "<strong>SigmoidCombination</strong> (SignalProcessing module) - Sigmoid functions and threshold engineering used to combine and normalize individual ranking signals into composite scores. Core signal blending mechanism. Witness: HJ Kim deposition (PXR0356)",
+        "<strong>LinearWeightedFormula</strong> (SignalProcessing module) - 100+ raw signals combined into top-level scores via linear weighted formulas. Primary signal aggregation method for hand-crafted signals. Cross-referenced: doj:searchengineworld-doc-dump, doj:sistrix-ranking-details",
+        "<strong>T*</strong> (TopLevelSignal) - Query-dependent topicality score computing direct relevance through three sub-signals: Anchors (A), Body (B), and Clicks (C). Foundation score used in initial retrieval stage. Witness: Pandu Nayak. isCore: true",
+        "<strong>Q*</strong> (TopLevelSignal) - Site-wide, query-independent quality score on 0-1 scale measuring trustworthiness and authority. Pages below 0.4 ineligible for featured snippets. Largely static, hand-crafted. Witness: Pandu Nayak. isCore: true",
+        "<strong>P*</strong> (TopLevelSignal) - Dynamic real-world engagement metric combining NavBoost user interaction data with link-based anchor text metrics. Measures how widely visited and well-linked a page is. Witness: Pandu Nayak. isCore: true",
+        "<strong>Nayak (PXR0357)</strong>: 'Top-level signals are a linear combination of log of individual raw signals. Signals are formulated such that their impact on ranking is monotonic relative to the signal.' Internal debugging interface shows table of blue links with scores per top-level signal",
+        "<strong>HJ Kim (PXR0356)</strong>: 'To develop and use these signals, engineers look at data and then take a sigmoid or other function and figure out the threshold. So, the hand crafting means that Google takes all those sigmoids and figures out the thresholds.' For majority of signals, Google performs regression; in extreme cases, manually picks midpoint",
+        "<strong>HJ Kim on curves</strong>: 'There was a leak of Google documents which named certain components of Google's ranking system, but the documents don't go into specifics of the curves and thresholds... tons of work went into it, figuring out the curves, threshold, etc.' Reverse engineering possible with log/query data",
+        "<strong>Grushetsky (UPX0197)</strong>: 'NavBoost alone was likely more powerful than the rest of ranking combined.' Engineers outside NavBoost team 'resented its dominance.' Confirms the three pillars are not equally weighted; P* (via NavBoost) disproportionately influential",
+        "<strong>Q* 0.4 threshold</strong>: Pages below Q* 0.4 ineligible for featured snippets, People Also Ask, and rich results. Confirmed independently across 800K domains via Candour Agency exploit. Hard gate, not a sliding scale"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "Signal Architecture",
+      "items": [
+        "<strong>Ascorer</strong> (Content Warehouse API): Named module. 'Primary rankings algorithm before re-ranking adjustments (twiddlers).' Produces the initial ranking order that the entire re-ranking pipeline then modifies. isCore: true",
+        "<strong>DocID Profiles</strong>: Per-document profiles accumulate hundreds of signals over lifetime. Stores: Q*, NSR, NavBoost, SpamBrain, pagerank_NS, hostAge, language. Categories: QUALITY SIGNALS (Q*, NSR, Panda, EffortScore, OriginalContentScore), POPULARITY SIGNALS (NavBoost clicks, impressions, Chrome views, directFrac), SPAM SIGNALS (SpamBrain, gibberishScore, keywordStuffingScore)",
+        "<strong>Signal processing is hand-crafted, not ML</strong>: The SigmoidCombination and LinearWeightedFormula modules are under the SignalProcessing system, categorized as ml-ranking but explicitly described as hand-crafted. Weights are tuned by engineers, NOT learned via gradient descent",
+        "<strong>100+ raw signals</strong>: Nayak testified Google uses 'maybe over a hundred' signals. Each raw signal undergoes: (1) log transformation, (2) sigmoid normalization with threshold, (3) linear weighted combination into T*/Q*/P*"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "6 Patents",
+      "items": [
+        "Scoring function evaluation framework (<a href=\"https://patents.google.com/patent/US8060497\">US8060497</a>, Zatsman, Haahr, Cutts, Wu, 2009): A/B testing framework for ranking functions. Score(i) = (2*wins + draws) / (2*trials). Pair-wise comparisons with diversity-based selection. Karma tracking prevents spam evaluations",
+        "Adaptive ranking computation (<a href=\"https://patents.google.com/patent/US7028029\">US7028029</a>, Kamvar, Haveliwala, Golub, 2004): Optimizes PageRank iteration by identifying converged nodes. Matrix: A = (c(P+D) + (1-c)E)^T. 50-70% reduction in computation cost",
+        "LocalInterConnectivity re-ranking (<a href=\"https://patents.google.com/patent/US6725259\">US6725259</a>): LocalScore(x) = sum(OldScore(BackSet(i))^m for top k). NewScore(x) = (a + LocalScore/MaxLS) * (b + OldScore/MaxOS). Combines original score with local link connectivity",
+        "Information retrieval based on historical data (<a href=\"https://patents.google.com/patent/US7346839\">US7346839</a>, Acharya, Cutts, Dean, Haahr, 2003): 56 claims on scoring via content changes, link velocity, domain history",
+        "Model generation for ranking (<a href=\"https://patents.google.com/patent/US7743050\">US7743050</a>): Ranking document models based on large data sets",
+        "Framework for training ML models (<a href=\"https://patents.google.com/patent/US11295171\">US11295171</a>): Training on extremely large datasets for ranking model generation"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Signal Weighting Affects Rankings",
+      "items": [
+        "<strong>P* dominates</strong>: Grushetsky confirmed NavBoost (the primary P* input) was 'more powerful than the rest of ranking combined.' Click engagement signals carry disproportionate weight in the linear combination. Building click engagement (satisfaction, dwell time) may matter more than content optimization or link building individually",
+        "<strong>Q* is a hard gate, not a gradient</strong>: The 0.4 threshold creates a binary eligibility boundary for SERP features. Moving from 0.3 to 0.39 does nothing for feature eligibility. Moving from 0.39 to 0.41 unlocks featured snippets, PAA, and rich results. Focus on crossing the threshold, not maximizing Q*",
+        "<strong>Sigmoid thresholds create cliff effects</strong>: Each signal passes through a sigmoid function with a hand-tuned threshold. Near the threshold, small signal improvements produce large ranking changes. Far from the threshold, large improvements produce negligible changes. This explains why some SEO actions produce dramatic results while others seem invisible",
+        "<strong>Monotonicity means no signal hurts you above zero</strong>: All signals are formulated with monotonic impact. More content, more links, more engagement can only help (above the noise floor). This contradicts fears about 'too many links' or 'too much content' as long as quality is maintained",
+        "<strong>Log transformation compresses extremes</strong>: Raw signals are log-transformed before combination. This means the first 100 backlinks matter far more than the next 1000. Diminishing returns are built into the scoring function. Chasing raw volume yields less return than improving signal quality",
+        "<strong>Weights are human decisions</strong>: Engineers tune the linear combination weights, not gradient descent. This means signal importance can change abruptly when an engineer adjusts a weight, without any 'algorithm update' being announced. Cookbook configuration changes to weights can shift rankings silently"
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Core Signal Combination Formula",
+      "source": "DOJ: Nayak PXR0357 + HJ Kim PXR0356",
+      "how": "100+ raw signals are log-transformed, passed through sigmoid functions with hand-tuned thresholds, then combined via linear weighted formulas into top-level scores. Nayak confirmed this is a linear combination of log signals with a monotonicity constraint. HJ Kim confirmed engineers manually tune sigmoid thresholds.",
+      "formula": "<span class=\"cf-fn\">Score</span>(doc) = <span class=\"cf-fn\">sum</span>(\n  w_i * <span class=\"cf-fn\">sigmoid</span>(<span class=\"cf-fn\">log</span>(<span class=\"cf-val\">raw_signal_i</span>))\n  <span class=\"cf-kw\">for</span> i <span class=\"cf-kw\">in</span> <span class=\"cf-val\">100+ signals</span>\n)\n<span class=\"cf-comment\">// log-transform then sigmoid (Nayak PXR0357)</span>\n<span class=\"cf-comment\">// monotonicity constraint on all signals</span>\n<span class=\"cf-comment\">// weights tuned by engineers, NOT learned</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8060497\">US8060497</a> (scoring function evaluation), <a href=\"https://patents.google.com/patent/US7743050\">US7743050</a> (model generation for ranking)",
+      "affects": "Affected by: all raw signal inputs, sigmoid threshold settings, linear weights. Weight changes can shift rankings without public announcements."
+    },
+    {
+      "name": "Three-Pillar Ascorer Combination",
+      "source": "DOJ + Leak: Ascorer module",
+      "how": "Ascorer combines the three top-level signals (T*, Q*, P*) plus additional component signals into a single ranking score per document. Each pillar is itself a linear combination of log-transformed sub-signals. The exact inter-pillar weighting is unknown, but P* (NavBoost) is confirmed as disproportionately influential.",
+      "formula": "<span class=\"cf-fn\">Ascorer</span>(query, doc) = <span class=\"cf-fn\">combine</span>(\n  <span class=\"cf-fn\">T*</span>(<span class=\"cf-val\">query</span>, <span class=\"cf-val\">doc</span>),  <span class=\"cf-comment\">// Anchors + Body + Clicks</span>\n  <span class=\"cf-fn\">Q*</span>(<span class=\"cf-val\">doc</span>),            <span class=\"cf-comment\">// 0-1 scale, 0.4 threshold</span>\n  <span class=\"cf-fn\">P*</span>(<span class=\"cf-val\">doc</span>),            <span class=\"cf-comment\">// NavBoost + anchor metrics</span>\n  <span class=\"cf-val\">additional...</span>\n) &rarr; <span class=\"cf-val\">initial_rank_score</span>\n<span class=\"cf-comment\">// P* disproportionately influential (Grushetsky)</span>\n<span class=\"cf-comment\">// ~10K docs scored per query</span>",
+      "patents": "",
+      "affects": "Affected by: T* (query relevance), Q* (site quality), P* (engagement/popularity). P* carries the most weight per internal testimony."
+    },
+    {
+      "name": "Sigmoid Threshold Engineering",
+      "source": "DOJ: HJ Kim PXR0356",
+      "how": "Each raw signal passes through a sigmoid (or similar) function with a hand-tuned threshold. The sigmoid maps the raw signal to a 0-1 range, with the threshold determining the inflection point. HJ Kim: engineers 'look at data and perform regression; in extreme cases, manually pick the midpoint.' Near the threshold, small signal changes produce large score changes. Far from the threshold, changes are compressed.",
+      "formula": "<span class=\"cf-fn\">normalized</span>(signal) = <span class=\"cf-fn\">sigmoid</span>(\n  <span class=\"cf-fn\">log</span>(<span class=\"cf-val\">raw_signal</span>) - <span class=\"cf-val\">threshold</span>\n)\n<span class=\"cf-comment\">// threshold tuned via regression on data</span>\n<span class=\"cf-comment\">// near threshold: high sensitivity</span>\n<span class=\"cf-comment\">// far from threshold: compressed response</span>\n<span class=\"cf-comment\">// 'tons of work figuring out curves' (HJ Kim)</span>",
+      "patents": "",
+      "affects": "Affected by: raw signal distribution, engineer threshold tuning, regression data quality. Threshold changes silently shift which sites benefit most."
+    },
+    {
+      "name": "Pipeline Score Evolution",
+      "source": "DOJ + Leak",
+      "how": "A document's score evolves through the ranking pipeline. Ascorer sets the initial score. Predoc Twiddlers make early adjustments. ML systems (RankBrain, DeepRank) add neural adjustments. NavBoost re-ranks based on clicks. Lazy Twiddlers make final refinements. The final score can differ significantly from Ascorer's initial score.",
+      "formula": "<span class=\"cf-val\">score</span> = <span class=\"cf-fn\">Ascorer</span>(query, doc)\n  &rarr; <span class=\"cf-fn\">PredocTwiddlers</span>(score)   <span class=\"cf-comment\">// 100+ functions</span>\n  &rarr; <span class=\"cf-fn\">RankBrain</span>(score)         <span class=\"cf-comment\">// all queries</span>\n  &rarr; <span class=\"cf-fn\">DeepRank</span>(score)          <span class=\"cf-comment\">// top 200-300</span>\n  &rarr; <span class=\"cf-fn\">NavBoost</span>(score)          <span class=\"cf-comment\">// click re-rank</span>\n  &rarr; <span class=\"cf-fn\">LazyTwiddlers</span>(score)     <span class=\"cf-comment\">// top 20-30</span>\n  &rarr; <span class=\"cf-val\">final_position</span>",
+      "patents": "",
+      "affects": "Affected by: each pipeline stage. Ascorer determines pipeline entry; NavBoost has greatest post-Ascorer influence."
+    }
+  ],
+  "pipeline": {
+    "title": "Signal Combination Pipeline",
+    "stages": [
+      {
+        "name": "Raw Signal Extraction",
+        "detail": "100+ raw signals extracted per document during indexing (Multiverse phase) and at query time. Includes link counts, content features, quality metrics, engagement data, freshness signals, spam scores."
+      },
+      {
+        "name": "Log Transformation",
+        "detail": "Raw signals are log-transformed to compress extreme values. The first 100 backlinks matter more than the next 1000. This normalization step ensures no single signal can dominate purely through volume."
+      },
+      {
+        "name": "Sigmoid Normalization",
+        "detail": "Log-transformed signals pass through sigmoid functions with hand-tuned thresholds (HJ Kim: engineers 'take a sigmoid and figure out the threshold'). Maps each signal to a 0-1 range with the threshold as inflection point."
+      },
+      {
+        "name": "Linear Weighted Combination",
+        "detail": "Normalized signals combined via linear weighted formulas into top-level scores: T* (topicality), Q* (quality), P* (popularity). Weights set by engineers. Nayak: 'linear combination of log of individual raw signals.'"
+      },
+      {
+        "name": "Ascorer Scoring",
+        "detail": "T*, Q*, P* combined into a single Ascorer score per document. ~10K candidate documents scored. This initial ranking determines pipeline entry. Exact combination formula unknown but P* is disproportionately influential."
+      },
+      {
+        "name": "Post-Ascorer Pipeline",
+        "detail": "Ascorer score modified sequentially: (1) Predoc Twiddlers (100+ functions on several hundred URLs), (2) RankBrain (feed-forward NN, all candidates, cheap), (3) DeepRank (Transformer, top 200-300 only, expensive), (4) NavBoost second-pass re-ranking (click-based fine-tuning after ML), (5) Lazy Twiddlers (top 20-30, final quality/diversity enforcement). Note: NavBoost already fed P* in Ascorer (its primary impact); this second pass refines ML-adjusted ordering."
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "1998",
+      "type": "patent",
+      "title": "PageRank + TF-IDF",
+      "desc": "Original Google scoring: simple combination of link authority (PageRank) with term relevance (TF-IDF). The first signal combination was a weighted sum of two signals."
+    },
+    {
+      "year": "2003",
+      "type": "patent",
+      "title": "Historical Data Scoring (US7346839)",
+      "desc": "Acharya, Cutts, Dean, Haahr patent 56-claim system for combining historical signals. Foundation for multi-signal scoring architecture."
+    },
+    {
+      "year": "2009",
+      "type": "patent",
+      "title": "A/B Testing Framework (US8060497)",
+      "desc": "Haahr, Cutts et al. patent framework for evaluating ranking function variants. Score(i) = (2*wins + draws) / (2*trials). Infrastructure for continuous weight optimization."
+    },
+    {
+      "year": "2015",
+      "type": "event",
+      "title": "RankBrain Added to Pipeline",
+      "desc": "First ML component added to signal combination. RankBrain score combined with traditional linear-weighted signals via Ascorer."
+    },
+    {
+      "year": "2019",
+      "type": "doj",
+      "title": "NavBoost Dominance Confirmed",
+      "desc": "VP Grushetsky (UPX0197): 'NavBoost alone was likely more powerful than the rest of ranking combined.' Confirms unequal pillar weighting."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "Ascorer Named in API Leak",
+      "desc": "Content Warehouse API confirms Ascorer as named module: 'primary rankings algorithm before re-ranking adjustments.' DocID profiles reveal hundreds of signals per document."
+    },
+    {
+      "year": "2025",
+      "type": "doj",
+      "title": "Signal Combination Mechanics Revealed",
+      "desc": "Nayak (PXR0357): linear combination of log signals, monotonicity constraint. HJ Kim (PXR0356): sigmoid functions, threshold engineering, hand-crafted weights. The most detailed public description of Google's scoring function architecture."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google (public communications on ranking)",
+      "publicClaim": "Google uses hundreds of signals in a complex, holistic process. No single factor determines rankings.",
+      "internalSource": "DOJ: Grushetsky UPX0197 + Nayak PXR0357",
+      "internalClaim": "The 'hundreds of signals' feed into three top-level scores (T*/Q*/P*) via a linear weighted formula. VP Grushetsky confirmed NavBoost (P* component) was 'likely more powerful than the rest of ranking combined.' The system is hierarchical and unequally weighted, not holistic."
+    },
+    {
+      "publicSource": "Google (public emphasis on AI/ML in ranking)",
+      "publicClaim": "AI and machine learning have transformed Google Search. Advanced ML models determine how results are ranked.",
+      "internalSource": "DOJ: HJ Kim PXR0356 + Nayak PXR0357",
+      "internalClaim": "Signal combination uses hand-crafted sigmoid functions and linear weighted formulas. Weights are 'tuned by engineers, NOT learned via gradient descent.' Only RankBrain and DeepRank use ML, and they operate on top of the hand-crafted linear combination, not replacing it. The core scoring function is not a neural network."
+    },
+    {
+      "publicSource": "HJ Kim (DOJ deposition, PXR0356)",
+      "publicClaim": "The API leak 'documents don't go into specifics of the curves and thresholds.' Reverse engineering is theoretically possible but requires extensive data.",
+      "internalSource": "Candour Agency exploit + Q* 0.4 threshold confirmation",
+      "internalClaim": "The Q* 0.4 threshold was independently confirmed via a 2TB, 90M-query dataset across 800K domains. While full reverse engineering of all sigmoid curves remains impractical, specific threshold values can be empirically discovered through large-scale data analysis."
+    }
+  ]
+}

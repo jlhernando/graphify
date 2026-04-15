@@ -148,5 +148,19 @@
       "title": "DOJ Trial: queriesForWhichOfficial",
       "desc": "Brand query mapping confirmed in sworn testimony. OfficialPageTwiddler revealed as deliberate brand boost mechanism. DataScaleAdvantage reinforces brand dominance."
     }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google (public statements on ranking fairness)",
+      "publicClaim": "Google does not favor big brands over small sites. Rankings are based on relevance and quality, not brand size.",
+      "internalSource": "API Leak: queriesForWhichOfficial + OfficialPageTwiddler + directFrac",
+      "internalClaim": "The queriesForWhichOfficial signal maps brand queries to official domains. OfficialPageTwiddler applies a significant ranking boost making it 'nearly impossible for non-brand pages to outrank the official site' for navigational queries. directFrac (Chrome type-in traffic) creates a feedback loop: established brands with more direct traffic receive stronger signals, reinforcing their dominance."
+    },
+    {
+      "publicSource": "Google (public guidance on competing with large sites)",
+      "publicClaim": "Small sites can compete with larger ones by creating high-quality, relevant content. Domain size is not a ranking factor.",
+      "internalSource": "Brand search volume as quality proxy + directFrac + Chrome data",
+      "internalClaim": "Brand search volume serves as a quality proxy signal. directFrac measures direct/type-in traffic as a brand authority signal. Chrome data tracks total site visits (chromeInTotal). These signals structurally advantage large brands with established user bases. Small sites creating identical-quality content cannot match these behavioral signals without existing brand recognition."
+    }
   ]
 }

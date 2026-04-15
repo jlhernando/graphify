@@ -206,5 +206,13 @@
       "title": "Candour: 8 Query Semantic Classes Revealed",
       "desc": "Mark Williams-Cook (Candour Agency) endpoint exploit exposed Google's 8 Refined Query Semantic Classes: Short fact, Boolean, Instruction, Definition, Reason, Comparison, Consequence, Other. Most queries fell into 'short fact' or 'Boolean' categories."
     }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google (public documentation on search results)",
+      "publicClaim": "Google provides the same type of results for all queries. We aim to show the most relevant and helpful results regardless of query type.",
+      "internalSource": "8 Refined Semantic Classes + DebunkingQueryClassifier + asteroidBeltIntents",
+      "internalClaim": "Google classifies queries into 8 semantic classes (short fact, boolean, instruction, definition, reason, comparison, consequence, other) and applies fundamentally different ranking behavior per class. DebunkingQueryClassifier forces consensus-only results. Commercial intent classification changes SERP composition entirely. The same page can rank #1 for one query class and not appear for another, because the classification determines which signals are weighted and which SERP features are triggered."
+    }
   ]
 }

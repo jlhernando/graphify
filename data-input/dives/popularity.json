@@ -178,5 +178,13 @@
       "title": "Chrome BR Signal Confirmed (PXR0356)",
       "desc": "HJ Kim confirms Chrome-based popularity (BR) signal as one of the 'other signals' alongside ABC and NavBoost. PageRank described as 'a single signal relating to distance from a known good source,' used as input to Quality score."
     }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google (public statements on ranking factors)",
+      "publicClaim": "Popularity is not a ranking factor. We rank pages based on relevance and quality, not how popular they are.",
+      "internalSource": "DOJ: P* as top-level Ascorer pillar + Grushetsky on NavBoost dominance",
+      "internalClaim": "P* (Popularity) is one of three top-level Ascorer pillars alongside T* and Q*. VP Grushetsky stated NavBoost (P*'s primary input) was 'likely more powerful than the rest of ranking combined.' P* combines NavBoost clicks, Chrome data (chromeInTotal), direct traffic (directFrac), and anchor metrics. Popularity is not merely 'a factor'; it is structurally the most influential pillar in Ascorer's scoring."
+    }
   ]
 }

@@ -63,6 +63,14 @@
   ],
   "calculations": [
     {
+      "name": "Link Velocity Anomaly Detection",
+      "source": "Patent US7346839 (historical link acquisition scoring)",
+      "how": "TeraGoogle's historical archive enables comparing current link acquisition rate against the site's historical baseline. Sudden spikes in link velocity (especially from correlated domains) are detectable against the long-term pattern. Steady organic growth scores positively. Unnatural spikes trigger further investigation via SpamBrain/IndyRank.",
+      "formula": "<span class=\"cf-fn\">LinkVelocity</span>(site, t) =\n  (<span class=\"cf-val\">new_links_month</span>(t) -\n   <span class=\"cf-val\">historical_avg</span>) /\n  <span class=\"cf-val\">historical_stddev</span>\n<span class=\"cf-comment\">// z-score of current link acquisition rate</span>\n<span class=\"cf-comment\">// high positive = unnatural spike (suspicious)</span>\n<span class=\"cf-comment\">// steady around 0 = organic growth (positive)</span>\n<span class=\"cf-comment\">// requires TeraGoogle historical archive</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US7346839\">US7346839</a> (56 claims on historical data scoring)",
+      "affects": "Affected by: link acquisition rate, historical baseline, source domain correlation. Natural link growth rewarded; sudden spikes flagged."
+    },
+    {
       "name": "Historical Data Scoring (US7346839)",
       "source": "Patent",
       "how": "Documents are scored based on multiple types of historical data stored in TeraGoogle. The patent identifies several historical factors: when the document was first indexed, how its content has changed over time, how its link profile has evolved, domain registration and renewal patterns, and anchor text changes. The system generates a score that adjusts the document's ranking based on these temporal patterns.",
@@ -138,6 +146,26 @@
       "type": "doj",
       "title": "DOJ Infrastructure Evidence",
       "desc": "DOJ documents confirm TeraGoogle under Infrastructure/Storage as 'long-term document storage system for maintaining the full web archive.'"
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Search Central (URL removal tool)",
+      "publicClaim": "You can request removal of URLs from Google Search. Removed content will no longer appear in search results.",
+      "internalSource": "DOJ + Leak: TeraGoogle retains 'full web archive'",
+      "internalClaim": "URL removal tools remove content from the serving index (SegIndexer) but TeraGoogle retains the historical archive permanently. Patent US7346839 uses historical data for scoring, meaning removed content's history still influences rankings. Google 'remembers everything, including content you've deleted.'"
+    },
+    {
+      "publicSource": "Google (public guidance on domain purchases)",
+      "publicClaim": "Buying a domain that was previously used by someone else is fine. Google evaluates sites based on their current content.",
+      "internalSource": "Patent US7346839: Historical data scoring + TeraGoogle archive",
+      "internalClaim": "Patent US7346839 explicitly scores documents based on domain registration history, content evolution, link acquisition patterns, and historical quality trajectory. TeraGoogle stores the complete history of every domain ever crawled. Previous penalties, spam associations, and quality scores from prior owners remain accessible and can influence current rankings."
+    },
+    {
+      "publicSource": "Google Search Central (content updates guidance)",
+      "publicClaim": "Updating your content can help it stay relevant. Google looks at the current version of your pages.",
+      "internalSource": "TeraGoogle: Historical content change tracking + US7346839",
+      "internalClaim": "Google compares current content against historical versions stored in TeraGoogle to distinguish meaningful updates from cosmetic changes (date changes, minor rewording). The freshness system uses this delta analysis. Superficial 'updates' that don't materially change content are detectable against the historical record and may not trigger freshness benefits."
     }
   ]
 }

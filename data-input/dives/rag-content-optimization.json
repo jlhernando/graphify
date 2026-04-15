@@ -1,0 +1,211 @@
+{
+  "id": "rag-content-optimization",
+  "route": "/llm/rag-content-optimization",
+  "systems": ["RAGOptimization"],
+  "hero": {
+    "title": "RAG Content Optimization: How to Get Your Content Retrieved and Cited by AI",
+    "subtitle": "RAG (Retrieval-Augmented Generation) is the most actionable influence channel for AI visibility because it operates on your current content, not frozen training data. But being retrieved is not the same as being cited: <a href=\"https://pmc.ncbi.nlm.nih.gov/articles/PMC12191722/\">50-90% of LLM-generated citations don't fully support the claims they're attached to</a>. To win RAG citation, content must survive a multi-stage pipeline: query decomposition, embedding similarity, multi-layer reranking, quality assessment, and constrained generation. Pages with FAQPage schema achieve <a href=\"https://www.frase.io/blog/faq-schema-ai-search-geo-aeo\">41% citation rates vs 15% without (2.7x, Relixir/Frase 2025)</a>. <a href=\"https://thedigitalbloom.com/learn/2025-ai-citation-llm-visibility-report/\">Self-contained sections of 50-150 words get 2.3x more citations</a>. <a href=\"https://growthner.com/ai-citation-optimization/\">Comparison tables generate 47% higher citation rates than prose</a>. <a href=\"https://searchengineland.com/chatgpt-citations-content-study-469483\">Content updated within 30 days gets 3.2x more citations than content older than 90 days</a>. The <a href=\"https://dl.acm.org/doi/10.1145/3637528.3671900\">Princeton GEO study (KDD 2024)</a> showed content optimization can boost AI visibility by up to 40%, with low-ranking sites gaining 115% visibility through source citation alone."
+  },
+  "keyInsight": {
+    "label": "Key Insight",
+    "text": "RAG retrieval is a <strong><a href=\"https://ziptie.dev/blog/how-perplexity-ai-answers-work/\">six-stage pipeline</a></strong>, not a single ranking signal. Your content must: (1) be crawled and indexed by AI bots (OAI-SearchBot, PerplexityBot, Google-Extended), (2) chunk well into 256-512 token self-contained sections, (3) embed strongly against user queries via semantic similarity, (4) survive multi-layer reranking (authority, freshness, quality), (5) contain citable information (statistics, comparisons, direct answers), and (6) be positioned for extraction (answer in first 100 words). Each stage is a filter. <strong>Chunking configuration has as much or more influence on retrieval quality as embedding model choice</strong> (<a href=\"https://weaviate.io/blog/chunking-strategies-for-rag\">Vectara, NAACL 2025</a>). The most common failure: content that is retrieved but not cited because it lacks self-contained, quotable passages."
+  },
+  "pillars": [
+    {
+      "type": "patent",
+      "title": "Chunking & Embedding Mechanics",
+      "items": [
+        "<strong>Optimal chunk size</strong>: 256-512 tokens with 10-25% overlap for factoid queries. Analytical queries need 1024+ tokens. Page-level chunking won <a href=\"https://developer.nvidia.com/blog/finding-the-best-chunking-strategy-for-accurate-ai-responses/\">NVIDIA's 7-strategy benchmark</a> (0.648 accuracy across 5 datasets). Adaptive chunking aligned to topic boundaries hit 87% accuracy vs 13% for fixed-size (MDPI Bioengineering, Nov 2025)",
+        "<strong>Chunking matters more than embedding model</strong>: Vectara tested 25 configurations across 48 embedding models (<a href=\"https://weaviate.io/blog/chunking-strategies-for-rag\">NAACL 2025</a>). Chunking strategy had equal or greater impact on retrieval quality than embedding model choice. Recursive character splitting is the 'safest default.' Semantic chunking scored 91.9% recall but only 54% end-to-end accuracy",
+        "<strong>Embedding models by platform</strong>: <a href=\"https://openai.com/index/new-embedding-models-and-api-updates/\">OpenAI text-embedding-3-large</a> (3,072 dims, MIRACL 54.9%). <a href=\"https://research.perplexity.ai/articles/pplx-embed-state-of-the-art-embedding-models-for-web-scale-retrieval\">Perplexity pplx-embed</a> (0.6B/4B params, Qwen3-based, 69.66% MTEB Multilingual, MIT-licensed). Google Gecko (compact, distilled). Cohere embed-v4.0 (strong multilingual, excels at <512 tokens)",
+        "<strong>What produces better embeddings</strong>: Clear, unambiguous sentences with high entity density. Self-contained paragraphs that don't rely on 'as mentioned above.' Specific terminology over vague language. <a href=\"https://thedigitalbloom.com/learn/2025-ai-citation-llm-visibility-report/\">Self-contained sections of 50-150 words get 2.3x more citations (Digital Bloom 2025)</a>",
+        "<strong>Contextual retrieval</strong>: Prepending title/heading path/short summary to each chunk makes them self-contained even when extracted from longer documents. After each heading, add a brief summary sentence restating the topic. This technique is the single highest-impact structural change for RAG visibility"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "Platform-Specific RAG Pipelines",
+      "items": [
+        "<strong><a href=\"https://ziptie.dev/blog/how-perplexity-ai-answers-work/\">Perplexity (6-stage pipeline)</a></strong>: Query intent parsing → real-time web retrieval (hybrid BM25 + dense embeddings via <a href=\"https://research.perplexity.ai/articles/pplx-embed-state-of-the-art-embedding-models-for-web-scale-retrieval\">pplx-embed</a>) → three-tier ML reranking (L1-L3) → quality/freshness/authority assessment → structured prompt assembly with pre-embedded citations → constrained LLM generation. <a href=\"https://www.perplexity.ai/hub/blog/introducing-deep-research\">92.3% citation accuracy in Deep Research mode</a>. 90% of top citations answer in first 100 words (BLUF). 70% of top citations published within 12-18 months",
+        "<strong><a href=\"https://www.aleydasolis.com/en/ai-search/google-query-fan-out/\">Google AI Overviews (query fan-out)</a></strong>: Gemini 2.5 decomposes one query into 8-12 sub-queries run in parallel. Hits live web, Knowledge Graph, and specialized sources. Prefers 40-70 word text snippets. Optimal passage length: 134-167 words (Wellows, Dec 2025). <a href=\"https://developers.google.com/search/docs/appearance/ai-features\">85% of citations from content published in last 2 years</a>; 44% from current year. Pages cited almost always rank in top 5 organic results",
+        "<strong>ChatGPT Search (Bing-based)</strong>: Uses <a href=\"https://www.seerinteractive.com/insights/87-percent-of-searchgpt-citations-match-bings-top-results\">Bing's index + OAI-SearchBot crawler</a>. GPT-4o-based model reads retrieved pages, ranks by relevance/trust/context. <a href=\"https://searchengineland.com/chatgpt-citations-content-study-469483\">44.2% of citations come from first 30% of content ('ski ramp' pattern). Structured pages get 3-5x more citations. Content updated within 30 days gets 3.2x more citations vs 90+ days</a>. Must be indexed in Bing Webmaster Tools",
+        "<strong>Cross-platform consistency</strong>: <a href=\"https://www.frase.io/blog/faq-schema-ai-search-geo-aeo\">FAQPage schema: 47% vs 28% Top-3 citation rate on Perplexity</a>. Google AI Overviews: question as H3 + immediate answer = highest selection probability. ChatGPT: front-load answers in first 150-300 words. All platforms: self-contained sections, clear headings, direct answers"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "Content Structure That Gets Cited",
+      "items": [
+        "<strong>FAQPage schema impact</strong>: <a href=\"https://www.frase.io/blog/faq-schema-ai-search-geo-aeo\">41% citation rate vs 15% without (2.7x, Relixir/Frase 2025)</a>. 3.2x more likely to appear in Google AI Overviews. FAQ format naturally aligns with RAG's need for self-contained Q&A pairs. Highest citation probability among all schema types",
+        "<strong>Comparison tables</strong>: <a href=\"https://growthner.com/ai-citation-optimization/\">+47% citation rate vs prose (Growthner)</a>. LLMs extract structured comparisons more reliably than narrative descriptions. Feature-by-feature tables with clear headers are ideal. Include pricing, ratings, and key differentiators in table format",
+        "<strong>Statistics and data</strong>: <a href=\"https://dl.acm.org/doi/10.1145/3637528.3671900\">+22% AI visibility for pages with statistics</a>. <a href=\"https://thedigitalbloom.com/learn/2025-ai-citation-llm-visibility-report/\">Pull quotes with key statistics: +37% citation rate (Digital Bloom 2025)</a>. <a href=\"https://dl.acm.org/doi/10.1145/3637528.3671900\">Adding citations to your own content: up to +40% visibility (Princeton GEO)</a>. Content with quantitative claims attributed to named entities gets preferential citation",
+        "<strong>Front-loading answers</strong>: Direct answer in first 40-60 words below H1/H2. 90% of Perplexity's top citations follow BLUF (Bottom Line Up Front). <a href=\"https://searchengineland.com/chatgpt-citations-content-study-469483\">ChatGPT's 'ski ramp' pattern: 44.2% of citations from first 30% of content</a>. Question-based H2/H3 headings are the 'secret sauce' for AI selection",
+        "<strong>Sentence length</strong>: <a href=\"https://thedigitalbloom.com/learn/2025-ai-citation-llm-visibility-report/\">6-20 words cover ~92% of everything cited by LLMs</a>. Short, declarative sentences with clear subjects and predicates. Avoid complex compound sentences that span multiple ideas",
+        "<strong>Content length paradox</strong>: <a href=\"https://thedigitalbloom.com/learn/2025-ai-citation-llm-visibility-report/\">53% of citations go to pages under 1,000 words</a>. BUT long-form content (2,000+ words) earns 3x more citations when well-structured with clear sections. Length has 'almost no connection' to citations; structure is what matters. Optimal: many self-contained sections, each 50-150 words"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "Freshness, Schema & Testing",
+      "items": [
+        "<strong>Freshness signals</strong>: <a href=\"https://www.ekamoira.com/blog/ai-citations-llm-sources\">AI-cited content is 25.7% fresher than traditional organic results. 65% of AI bot traffic targets content published within past year</a>. 79% accesses material updated within 2 years. Content published within 6 months gets preferential treatment. Temporal phrases ('As of 2025...', 'Updated Jan 2025') correlate with higher selection",
+        "<strong>Schema markup</strong>: <a href=\"https://www.frase.io/blog/faq-schema-ai-search-geo-aeo\">FAQPage (2.7x citation rate)</a>, HowTo (maps to AI Overview steps), Speakable (Bing Copilot voice), Article, Organization, Product, Review. Sites with structured data + FAQ blocks: <a href=\"https://www.brightedge.com/\">+44% AI citations (BrightEdge)</a>. <a href=\"https://www.stackmatix.com/blog/structured-data-ai-search\">GPT-4 improves from 16% to 54% correct responses with structured data</a>. Caveat: <a href=\"https://searchengineland.com/schema-markup-ai-search-no-hype-472339\">Search/Atlas Dec 2024 found no correlation</a>; effect may be content structure, not schema per se",
+        "<strong>Crawler access</strong>: Allow OAI-SearchBot (ChatGPT search), PerplexityBot, GoogleOther/Google-Extended in robots.txt. JSON-LD structured data in head section remains accessible even behind paywalls. XML sitemaps with lastmod tags are publicly accessible. Canonical URLs should be clean (no tracking parameters, no .html)",
+        "<strong>Testing and monitoring</strong>: <a href=\"https://otterly.ai/\">Otterly.AI (5,000+ users, Gartner Cool Vendor 2025)</a>: monitors brand across ChatGPT, Perplexity, AI Overviews. Profound: log-level AI crawler data + real-time visibility snapshots. <a href=\"https://www.semrush.com/\">Semrush AI Toolkit</a> ($99/month): how ChatGPT and Google AI perceive brands. Manual: query target terms across all platforms, check citations, test query variations",
+        "<strong>What gets retrieved but NOT cited</strong>: <a href=\"https://pmc.ncbi.nlm.nih.gov/articles/PMC12191722/\">50-90% of LLM citations don't fully support attached claims (Nature Communications, SourceCheckup, Apr 2025)</a>. Retrieval accuracy alone explains only 60% of end-to-end RAG quality (JMLR). Content that lacks self-contained quotable passages gets retrieved for context but not cited. The gap between retrieval and citation is where most optimization effort should focus",
+        "<strong>Trust signals in RAG</strong>: Google's E-E-A-T framework applies to AI Overviews (pages with strong authority signals: <a href=\"https://www.semrush.com/\">+30% chance of ranking top 3, Semrush 2024</a>). Other platforms use different trust models: ChatGPT relies on Bing ranking + training data familiarity, Claude on Brave Search + Constitutional AI filtering, Perplexity on its own ML reranking. Across all platforms, well-known sources are favored because LLMs recognize them from training data. Author bylines, credentials, and organizational affiliation serve as platform-agnostic trust signals"
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "RAG Citation Probability",
+      "source": "Cross-platform citation data (<a href=\"https://www.frase.io/blog/faq-schema-ai-search-geo-aeo\">Relixir/Frase</a>, <a href=\"https://thedigitalbloom.com/learn/2025-ai-citation-llm-visibility-report/\">Digital Bloom</a>, <a href=\"https://searchengineland.com/chatgpt-citations-content-study-469483\">Kevin Indig</a>, <a href=\"https://dl.acm.org/doi/10.1145/3637528.3671900\">Princeton GEO</a>)",
+      "how": "A page's probability of being cited by a RAG-based AI system depends on multiple content characteristics that multiply together. Each factor either passes or filters content at each pipeline stage.",
+      "formula": "<span class=\"cf-fn\">P</span>(citation) =\n  <span class=\"cf-val\">crawl_access</span> *\n  <span class=\"cf-val\">chunk_quality</span> *\n  <span class=\"cf-val\">embedding_similarity</span> *\n  <span class=\"cf-val\">rerank_score</span> *\n  <span class=\"cf-val\">citation_worthiness</span>\n\n<span class=\"cf-comment\">// FAQPage schema: 41% vs 15% baseline (2.7x)</span>\n<span class=\"cf-comment\">// Self-contained sections: 2.3x citation rate</span>\n<span class=\"cf-comment\">// Comparison tables: +47% vs prose</span>\n<span class=\"cf-comment\">// Statistics: +22% visibility</span>\n<span class=\"cf-comment\">// Freshness (<30 days): 3.2x vs >90 days</span>",
+      "patents": "",
+      "affects": "Each factor is multiplicative: a page with perfect chunking but no crawler access gets 0 citations. Optimizing all factors compounds the improvement."
+    },
+    {
+      "name": "Content Position Citation Weight",
+      "source": "<a href=\"https://searchengineland.com/chatgpt-citations-content-study-469483\">Kevin Indig ChatGPT study (3M responses, 30M citations)</a>",
+      "how": "ChatGPT's citation pattern follows a 'ski ramp' distribution: the first 30% of content captures 44.2% of citations, with diminishing returns deeper in the page. This means front-loading key information has outsized impact on citation probability.",
+      "formula": "<span class=\"cf-fn\">CitationWeight</span>(position) =\n  <span class=\"cf-comment\">// First 30% of content: 44.2% of citations</span>\n  <span class=\"cf-comment\">// Middle 30-70%: 31.1% of citations</span>\n  <span class=\"cf-comment\">// Final 30%: 24.7% of citations</span>\n\n  if position < 0.3:\n    <span class=\"cf-val\">weight</span> = 1.47x (44.2/30)\n  elif position < 0.7:\n    <span class=\"cf-val\">weight</span> = 0.78x (31.1/40)\n  else:\n    <span class=\"cf-val\">weight</span> = 0.82x (24.7/30)\n\n<span class=\"cf-comment\">// BLUF: answer in first 40-60 words below heading</span>\n<span class=\"cf-comment\">// 90% of Perplexity top citations follow this pattern</span>",
+      "patents": "",
+      "affects": "Front-loading answers in the first 30% of content produces 1.47x the citation density of random placement. The most impactful structural change for ChatGPT visibility."
+    },
+    {
+      "name": "Freshness Citation Multiplier",
+      "source": "Multi-platform freshness data (<a href=\"https://searchengineland.com/chatgpt-citations-content-study-469483\">ChatGPT</a>, <a href=\"https://ziptie.dev/blog/how-perplexity-ai-answers-work/\">Perplexity</a>, <a href=\"https://developers.google.com/search/docs/appearance/ai-features\">Google AI Overviews</a>)",
+      "how": "Newer content receives systematically higher citation rates across all RAG platforms. The multiplier decays with content age, with a sharp dropoff after 30 days for ChatGPT and 18 months for Perplexity.",
+      "formula": "<span class=\"cf-fn\">FreshnessMultiplier</span>(age) =\n  <span class=\"cf-comment\">// ChatGPT: 3.2x for <30 days vs >90 days</span>\n  <span class=\"cf-comment\">// Perplexity: 70% of top citations <18 months</span>\n  <span class=\"cf-comment\">// AI Overviews: 85% from <2 years, 44% current year</span>\n\n  if age < 30_days: <span class=\"cf-val\">3.2x</span>\n  elif age < 6_months: <span class=\"cf-val\">2.0x</span> (estimated)\n  elif age < 18_months: <span class=\"cf-val\">1.2x</span>\n  elif age < 2_years: <span class=\"cf-val\">0.8x</span>\n  else: <span class=\"cf-val\">0.4x</span>\n\n<span class=\"cf-comment\">// AI-cited content is 25.7% fresher than organic</span>\n<span class=\"cf-comment\">// Temporal phrases boost selection probability</span>",
+      "patents": "",
+      "affects": "Content freshness is a stronger signal in RAG than in traditional SEO. Regular updates (even minor revisions with updated dates) can significantly boost citation rates."
+    },
+    {
+      "name": "Schema Impact on Citation Rate",
+      "source": "<a href=\"https://www.frase.io/blog/faq-schema-ai-search-geo-aeo\">Relixir/Frase 2025</a>, <a href=\"https://www.brightedge.com/\">BrightEdge</a>, <a href=\"https://www.stackmatix.com/blog/structured-data-ai-search\">Stackmatix</a>, <a href=\"https://searchengineland.com/schema-markup-ai-search-no-hype-472339\">Search/Atlas</a>",
+      "how": "Structured data (schema markup) affects citation rates, though the mechanism may be content structure quality rather than schema itself. FAQPage is the most impactful schema type.",
+      "formula": "<span class=\"cf-fn\">SchemaBoost</span>(type) =\n  FAQPage: <span class=\"cf-val\">2.7x</span> (41% vs 15%)\n  HowTo: <span class=\"cf-val\">~1.8x</span> (estimated)\n  Product + Review: <span class=\"cf-val\">~1.5x</span> (estimated)\n  Article: <span class=\"cf-val\">~1.2x</span> (estimated)\n\n<span class=\"cf-comment\">// BrightEdge: +44% AI citations with schema + FAQ</span>\n<span class=\"cf-comment\">// GPT-4: 16% → 54% accuracy with structured data</span>\n<span class=\"cf-comment\">// Caveat: Search/Atlas found no correlation</span>\n<span class=\"cf-comment\">// Effect may be structure, not schema per se</span>",
+      "patents": "",
+      "affects": "FAQPage schema is the single highest-impact markup for AI visibility. But the benefit likely comes from forcing content into a Q&A structure that chunks and embeds well, not from the schema metadata itself."
+    }
+  ],
+  "pipeline": {
+    "title": "RAG Content Optimization Pipeline",
+    "stages": [
+      {
+        "name": "Crawler Access",
+        "detail": "Ensure OAI-SearchBot, PerplexityBot, Google-Extended are allowed in robots.txt. Submit to <a href=\"https://www.seerinteractive.com/insights/87-percent-of-searchgpt-citations-match-bings-top-results\">Bing Webmaster Tools (ChatGPT uses Bing index)</a>. Clean canonical URLs. XML sitemap with lastmod."
+      },
+      {
+        "name": "Content Structure",
+        "detail": "Question-based H2/H3 headings. <a href=\"https://thedigitalbloom.com/learn/2025-ai-citation-llm-visibility-report/\">Self-contained sections of 50-150 words</a>. Direct answer in first 40-60 words below each heading. Comparison tables for product/feature comparisons. <a href=\"https://www.frase.io/blog/faq-schema-ai-search-geo-aeo\">FAQPage schema</a>."
+      },
+      {
+        "name": "Chunk Optimization",
+        "detail": "Write content that chunks naturally at heading boundaries. Each section should be understandable without surrounding context. Add brief summary sentences after headings. Avoid cross-references ('as mentioned above')."
+      },
+      {
+        "name": "Citation Worthiness",
+        "detail": "Include statistics with named sources. Add <a href=\"https://growthner.com/ai-citation-optimization/\">comparison tables (+47%)</a>. <a href=\"https://thedigitalbloom.com/learn/2025-ai-citation-llm-visibility-report/\">Pull quotes with key data (+37%)</a>. <a href=\"https://dl.acm.org/doi/10.1145/3637528.3671900\">Cite your own sources (+40% visibility per GEO study)</a>. <a href=\"https://thedigitalbloom.com/learn/2025-ai-citation-llm-visibility-report/\">Short declarative sentences (6-20 words)</a>."
+      },
+      {
+        "name": "Freshness Maintenance",
+        "detail": "Update content at least every 30 days for <a href=\"https://searchengineland.com/chatgpt-citations-content-study-469483\">ChatGPT (3.2x citation rate)</a>. Add temporal phrases ('As of 2025'). Refresh statistics and data points. Maintain lastmod in sitemap."
+      },
+      {
+        "name": "Monitor & Iterate",
+        "detail": "Track citations across ChatGPT, Perplexity, AI Overviews, Gemini, Copilot. Use <a href=\"https://otterly.ai/\">Otterly.AI</a>, Profound, or <a href=\"https://www.semrush.com/\">Semrush AI Toolkit</a>. Test query variations. Compare citation rates before/after structural changes."
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2020",
+      "type": "event",
+      "title": "RAG Introduced",
+      "desc": "Lewis et al. publish 'Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks.' Establishes the retrieve-then-generate paradigm."
+    },
+    {
+      "year": "2023",
+      "type": "event",
+      "title": "ChatGPT Browsing",
+      "desc": "OpenAI adds web browsing to ChatGPT via <a href=\"https://www.seerinteractive.com/insights/87-percent-of-searchgpt-citations-match-bings-top-results\">Bing index</a>. OAI-SearchBot crawler begins indexing the web. RAG becomes a consumer-facing feature."
+    },
+    {
+      "year": "2024-01",
+      "type": "event",
+      "title": "Perplexity Deep Research",
+      "desc": "Perplexity launches agentic RAG that iterates across dozens of searches and hundreds of sources. <a href=\"https://www.perplexity.ai/hub/blog/introducing-deep-research\">92.3% citation accuracy</a>."
+    },
+    {
+      "year": "2024-05",
+      "type": "event",
+      "title": "Google AI Overviews Launch",
+      "desc": "AI Overviews roll out in US search results using FastSearch (RankEmbed, no NavBoost). <a href=\"https://www.aleydasolis.com/en/ai-search/google-query-fan-out/\">Query fan-out</a> decomposes queries into 8-12 sub-queries."
+    },
+    {
+      "year": "2024-08",
+      "type": "event",
+      "title": "Princeton GEO Study (KDD 2024)",
+      "desc": "First formal framework for RAG content optimization. Demonstrates <a href=\"https://dl.acm.org/doi/10.1145/3637528.3671900\">up to 40% visibility improvement. Low-ranking sites gain 115% with source citation technique</a>."
+    },
+    {
+      "year": "2024-12",
+      "type": "event",
+      "title": "Schema Citation Study",
+      "desc": "<a href=\"https://www.frase.io/blog/faq-schema-ai-search-geo-aeo\">Relixir publishes FAQ schema impact data: 41% citation rate vs 15% without (2.7x)</a>. <a href=\"https://searchengineland.com/schema-markup-ai-search-no-hype-472339\">Search/Atlas publishes contradicting study finding no correlation</a>."
+    },
+    {
+      "year": "2025",
+      "type": "event",
+      "title": "RAG Monitoring Tools Emerge",
+      "desc": "<a href=\"https://otterly.ai/\">Otterly.AI (Gartner Cool Vendor)</a>, Profound, <a href=\"https://www.semrush.com/\">Semrush AI Toolkit</a> launch. First systematic tools for tracking AI citation rates across platforms."
+    },
+    {
+      "year": "2025-02",
+      "type": "event",
+      "title": "Perplexity pplx-embed",
+      "desc": "Perplexity releases <a href=\"https://research.perplexity.ai/articles/pplx-embed-state-of-the-art-embedding-models-for-web-scale-retrieval\">open-weight embedding models (0.6B/4B params). 69.66% MTEB Multilingual</a>, surpassing Google gemini-embedding-001. MIT-licensed."
+    },
+    {
+      "year": "2025-05",
+      "type": "event",
+      "title": "Vectara NAACL Study",
+      "desc": "25 configurations, 48 embedding models: <a href=\"https://weaviate.io/blog/chunking-strategies-for-rag\">chunking strategy has equal or greater impact on retrieval quality than embedding model choice</a>."
+    },
+    {
+      "year": "2025-12",
+      "type": "event",
+      "title": "Kevin Indig Citation Study",
+      "desc": "<a href=\"https://searchengineland.com/chatgpt-citations-content-study-469483\">3M ChatGPT responses, 30M citations: 44.2% of citations come from first 30% of content. Structured pages get 3-5x more citations</a>."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "SEO industry",
+      "publicClaim": "Long-form content (2,000+ words) performs best for AI citations.",
+      "internalSource": "<a href=\"https://thedigitalbloom.com/learn/2025-ai-citation-llm-visibility-report/\">Citation data (Digital Bloom 2025)</a>",
+      "internalClaim": "53% of citations go to pages under 1,000 words. Content length has 'almost no connection' to citations. Structure (self-contained sections, tables, statistics) is what drives citation, not length."
+    },
+    {
+      "publicSource": "Schema markup advocates",
+      "publicClaim": "Adding schema markup directly improves AI citation rates by 2-3x.",
+      "internalSource": "<a href=\"https://searchengineland.com/schema-markup-ai-search-no-hype-472339\">Search/Atlas Dec 2024 study</a>",
+      "internalClaim": "Found no correlation between schema coverage and citation rates. The benefit likely comes from forcing content into structured Q&A format that chunks and embeds well, not from the schema metadata itself."
+    },
+    {
+      "publicSource": "AI platforms",
+      "publicClaim": "RAG systems accurately cite sources to support their claims.",
+      "internalSource": "<a href=\"https://pmc.ncbi.nlm.nih.gov/articles/PMC12191722/\">Nature Communications, SourceCheckup (Apr 2025)</a>",
+      "internalClaim": "50-90% of LLM-generated citations don't fully support the claims they're attached to. Citation accuracy without explicit attribution training averages only 65-70%."
+    },
+    {
+      "publicSource": "Content creators",
+      "publicClaim": "Getting retrieved by RAG means your content will be cited.",
+      "internalSource": "JMLR study + retrieval analysis",
+      "internalClaim": "Retrieval accuracy alone explains only 60% of end-to-end RAG quality. Content that lacks self-contained quotable passages gets retrieved for context but not cited. The retrieval-to-citation gap is where most optimization should focus."
+    }
+  ]
+}

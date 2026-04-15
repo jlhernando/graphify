@@ -1,0 +1,178 @@
+{
+  "id": "click-decay",
+  "route": "/click-decay",
+  "systems": [
+    "NavBoost",
+    "Freshness",
+    "QDF"
+  ],
+  "hero": {
+    "title": "Click Data Decay: How NavBoost Signals Age Over Time",
+    "subtitle": "NavBoost click signals are not permanent. Google retains 13 months of click data (pre-2017: 18 months), segments it into temporal buckets (lastWeekBucket, lastMonthBucket), and interacts with freshness scoring via QDF and FreshnessTwiddler. Judge Mehta ruled that 13 months of Google click data equals over 17.5 years of Bing data, making temporal retention a competitive moat."
+  },
+  "keyInsight": {
+    "label": "Key Insight from DOJ Trial + API Leak",
+    "text": "Click signals have a <strong>half-life</strong>. The API leak confirms <strong>QualityNavboostCrapsAgingData</strong> segments clicks into temporal buckets (lastWeekBucket, lastMonthBucket) for trend analysis, meaning recent clicks carry more weight than older ones. The DOJ trial revealed NavBoost retains <strong>13 months</strong> of data (pre-2017: 18 months), and <strong>InstantGlue</strong> operates on a 24-hour window for trending queries. Patent <a href=\"https://patents.google.com/patent/US8832088\">US8832088</a> formalizes the decay curve: <strong>S'=S*Q^D</strong>, where D incorporates a reverse sigmoid of document age. Your click history is constantly decaying, and only sustained engagement keeps your ranking alive."
+  },
+  "pillars": [
+    {
+      "type": "leak",
+      "title": "API Leak Signals",
+      "items": [
+        "<strong>QualityNavboostCrapsAgingData</strong> - Click data segmented into time-based buckets: lastWeekBucket, lastMonthBucket for temporal trend analysis. Recent clicks weighted more heavily than older clicks within the 13-month window",
+        "<strong>FreshnessTwiddler</strong> - Re-ranking function that boosts fresh documents in the final Lazy Twiddler pipeline stage. Interacts with decayed click signals to determine whether aging content deserves re-ranking",
+        "<strong>freshdocs</strong> - Link value multiplier favoring newer source pages. Links from recently published pages pass more equity than links from stale pages, creating a freshness cascade through the link graph",
+        "<strong>FS</strong> - Freshness Score based on update frequency and publish date. Combined with click decay data to distinguish actively maintained content from abandoned pages",
+        "<strong>lastGoodClick</strong> - Timestamp of last positive engagement. Pages where the last good click was months ago signal declining relevance, even if historical click volume was high",
+        "<strong>lastLongestClicks</strong> - Session's longest click duration, the strongest satisfaction proxy. Temporal recency of long clicks indicates whether content still satisfies current user intent"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "DOJ Evidence",
+      "items": [
+        "<strong>13-month retention window</strong> - NavBoost retains 13 months of click data (Mehta opinion, FOF 96). Pre-2017: 18 months. All click signals older than this window are discarded entirely. This creates a hard cliff where pages lose all click history if they stop receiving engagement",
+        "<strong>17.5 years of Bing data equivalence</strong> - Judge Mehta's opinion: 13 months of Google click data equals over 17.5 years of Bing data due to Google's search volume dominance. This temporal retention window is a competitive moat that competitors cannot replicate regardless of algorithmic quality",
+        "<strong>InstantGlue 24-hour window</strong> - Real-time user signals operating with ~10-minute latency on a 24-hour data window (from navboost.json DOJ evidence). The fastest temporal bucket, used for breaking news and trending queries. Feeds into Tangram for SERP assembly",
+        "<strong>NavBoost beats LLMs on freshness</strong> - Mehta opinion (FOF 103): 'Traditional systems like Navboost can also beat out LLMs in certain aspects of SERP production, like freshness.' Click decay and temporal bucketing give NavBoost a structural advantage over LLMs for time-sensitive queries"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "3 Patents",
+      "items": [
+        "<strong>QDF temporal decay formula</strong> - Patent <a href=\"https://patents.google.com/patent/US8832088\">US8832088</a> (Chen, Zhu, filed 2012): S'=S*Q^D where D incorporates a reverse sigmoid of document age multiplied by provider quality and topicality. As document age increases, D decreases, reducing the freshness boost. Eight freshness signal inputs including query volume spikes, blog/news/social mentions, and click ratios determine Q",
+        "<strong>QDF with demotion dampening</strong> - Patent <a href=\"https://patents.google.com/patent/US9189526\">US9189526</a> (Chen, Zhu, filed 2013): Continuation patent protecting evergreen content from false demotion. When F(age) is negative (old content), J(query, resource) dampening function reduces the penalty. Sigmoidal transformation: S(x)=raise+magnitude/(1+e^(-slope*(x-mid))). Prevents high-quality evergreen pages from being unfairly penalized by temporal decay",
+        "<strong>Document Inception Date Scoring</strong> - Patent <a href=\"https://patents.google.com/patent/US8521749\">US8521749</a> (Haahr, Cutts, Dean, Henzinger, filed 2003): Foundational patent scoring documents by inception date using H=L/log(F+2), where L is link score and F is time since inception. A new page with 10 links in one week outscores an old page with 100 links over 10 years. Also tracks link growth rate, content update frequency, anchor text evolution, and domain registration length"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "Temporal Signal Implications",
+      "items": [
+        "<strong>Click signals expire after 13 months of inactivity</strong>: If your page stops receiving clicks for 13 months, all NavBoost history is purged. Unlike links (which persist), click data has a hard expiration. Pages ranking on historical click momentum alone will eventually lose their position. Sustained organic traffic is required to maintain click-based ranking signals.",
+        "<strong>Recent clicks outweigh historical clicks</strong>: QualityNavboostCrapsAgingData's temporal bucketing (lastWeekBucket, lastMonthBucket) means a page that received 1,000 clicks last week outweighs one that received 10,000 clicks 11 months ago. Recency dominates volume in the aging data structure. Focus on sustaining current engagement rather than relying on past performance.",
+        "<strong>The 24-hour InstantGlue window creates first-mover advantage</strong>: For trending queries, InstantGlue's 24-hour window with ~10-minute latency means the first page to capture clicks on a breaking topic gets an immediate ranking boost. This compounds: early ranking leads to more clicks, which reinforces ranking within the fast decay window.",
+        "<strong>Evergreen content needs the demotion dampener</strong>: Patent US9189526's demotion dampening protects high-quality evergreen pages from temporal decay. To benefit: maintain high provider quality scores, strong topicality alignment, and consistent (not necessarily high-volume) click engagement. The dampener only activates for pages that already demonstrate quality signals.",
+        "<strong>Update cadence resets your freshness clock</strong>: The FS (Freshness Score) combined with significantUpdate tracking means substantive content updates restart the freshness decay curve. Strategic updates to evergreen content every 3-6 months can maintain favorable positioning in the temporal bucketing system without requiring constant new click volume."
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Click Aging Buckets",
+      "source": "API Leak: QualityNavboostCrapsAgingData",
+      "how": "NavBoost segments click data into temporal buckets for trend analysis. The lastWeekBucket and lastMonthBucket enable Google to compare recent click performance against historical baselines. A page whose lastWeekBucket shows declining good clicks relative to lastMonthBucket is trending downward, signaling relevance decay. The aging data structure operates within the 13-month retention window, with InstantGlue providing the fastest 24-hour bucket for trending queries.",
+      "formula": "<span class=\"cf-fn\">AgingData</span>(url, query) = {\n  <span class=\"cf-val\">lastWeekBucket</span>: <span class=\"cf-fn\">aggregate</span>(clicks, window=<span class=\"cf-val\">7d</span>),\n  <span class=\"cf-val\">lastMonthBucket</span>: <span class=\"cf-fn\">aggregate</span>(clicks, window=<span class=\"cf-val\">30d</span>)\n}\n<span class=\"cf-comment\">// trend = lastWeekBucket / lastMonthBucket</span>\n<span class=\"cf-comment\">// trend > 1.0 → rising engagement</span>\n<span class=\"cf-comment\">// trend < 1.0 → decaying engagement</span>\n<span class=\"cf-comment\">// retention: 13 months (pre-2017: 18 months)</span>",
+      "patents": "Related: <a href=\"https://patents.google.com/patent/US8832088\">US8832088</a> (temporal freshness scoring), <a href=\"https://patents.google.com/patent/US8521749\">US8521749</a> (document inception date scoring)",
+      "affects": "Affected by: consistency of user engagement over time. Pages with steady or growing click trends maintain strong aging data profiles. Sudden drops in engagement are visible as bucket divergence."
+    },
+    {
+      "name": "QDF Temporal Decay",
+      "source": "Patent US8832088 + US9189526 (Chen, Zhu)",
+      "how": "The core temporal decay formula. QDF computes a query freshness value Q from 8 signal inputs (volume spikes, blog/news/social mentions, click ratios) and a resource freshness value D from document age, provider quality, and topicality. The boosted score S'=S*Q^D means that as D decreases with document age (reverse sigmoid), the freshness boost diminishes exponentially. The continuation patent US9189526 adds demotion dampening: when F(age) goes negative for older content, the dampening function J(query, resource) divides instead of multiplying, protecting evergreen pages from false demotion.",
+      "formula": "<span class=\"cf-fn\">D</span> = <span class=\"cf-fn\">F</span>(age) &times; <span class=\"cf-fn\">G</span>(provider_quality) &times; <span class=\"cf-fn\">H</span>(query_provider) &times; <span class=\"cf-fn\">I</span>(topicality)\n<span class=\"cf-comment\">// F(age) = reverse sigmoid: high when new, decays with age</span>\n\n<span class=\"cf-kw\">if</span> F(age) &gt; 0:  <span class=\"cf-comment\">// fresh content</span>\n  <span class=\"cf-fn\">S'</span> = <span class=\"cf-val\">S</span> &times; <span class=\"cf-val\">Q</span><sup>D</sup>  <span class=\"cf-comment\">// exponential boost</span>\n<span class=\"cf-kw\">if</span> F(age) &lt; 0:  <span class=\"cf-comment\">// aging content</span>\n  D = F(age) / [G &times; H &times; I]  <span class=\"cf-comment\">// dampened demotion</span>\n  <span class=\"cf-fn\">S'</span> = <span class=\"cf-val\">S</span> &times; <span class=\"cf-val\">Q</span><sup>D</sup>  <span class=\"cf-comment\">// reduced penalty</span>\n\n<span class=\"cf-comment\">// Sigmoidal: S(x)=raise+magnitude/(1+e^(-slope*(x-mid)))</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8832088\">US8832088</a> (QDF, 2012), <a href=\"https://patents.google.com/patent/US9189526\">US9189526</a> (demotion dampening, 2013)",
+      "affects": "Affected by: document age, query freshness signals (volume spikes, news/social mentions), provider quality, topicality. Fresh content on trending queries gets exponential boost. Evergreen content on stable queries protected from false demotion."
+    },
+    {
+      "name": "Document Age Link Scoring",
+      "source": "Patent US8521749 (Haahr, Cutts, Dean, Henzinger)",
+      "how": "Adjusts link-based scores by the age of the document since inception. The formula H=L/log(F+2) means link value is divided by the logarithm of time since inception, so newer documents with rapid link growth score disproportionately higher than old documents with slow link accumulation. Combined with freshdocs multiplier from the API leak, which weights inbound link value by the freshness of the linking page. Creates a double temporal decay: the target document ages, and the links pointing to it age independently.",
+      "formula": "<span class=\"cf-fn\">H</span>(doc) = <span class=\"cf-val\">L</span> / <span class=\"cf-fn\">log</span>(<span class=\"cf-val\">F</span> + 2)\n<span class=\"cf-comment\">// L = link-based score</span>\n<span class=\"cf-comment\">// F = time since inception (days/weeks)</span>\n<span class=\"cf-comment\">// log dampens: 10 links in 1 week >> 100 links in 10 years</span>\n\n<span class=\"cf-fn\">EffectiveLink</span>(link) = <span class=\"cf-val\">link_value</span> &times; <span class=\"cf-val\">freshdocs</span>(source)\n<span class=\"cf-comment\">// freshdocs: newer source pages pass more equity</span>\n<span class=\"cf-comment\">// double decay: document ages + links age independently</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US8521749\">US8521749</a> (Document inception date scoring, 2003)",
+      "affects": "Affected by: link acquisition velocity, age of linking documents, time since document inception. New content with fast natural link growth benefits most. Old content with stale link profiles faces compounding decay."
+    }
+  ],
+  "pipeline": {
+    "title": "Click Data Decay Pipeline",
+    "stages": [
+      {
+        "name": "Real-Time Capture",
+        "detail": "InstantGlue: 24-hour window, ~10-minute latency for trending queries"
+      },
+      {
+        "name": "Temporal Bucketing",
+        "detail": "QualityNavboostCrapsAgingData: lastWeekBucket, lastMonthBucket segmentation"
+      },
+      {
+        "name": "NavBoost Table",
+        "detail": "13-month rolling window of click data, sliced by location/device"
+      },
+      {
+        "name": "Trend Analysis",
+        "detail": "Compare recent buckets vs historical to detect rising or decaying engagement"
+      },
+      {
+        "name": "QDF Scoring",
+        "detail": "S'=S*Q^D: temporal decay via reverse sigmoid of document age"
+      },
+      {
+        "name": "Demotion Dampening",
+        "detail": "US9189526: protect evergreen content from false temporal demotion"
+      },
+      {
+        "name": "FreshnessTwiddler",
+        "detail": "Final re-ranking boost/demotion in Lazy Twiddler pipeline stage"
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2003",
+      "type": "patent",
+      "title": "Document Inception Date Scoring (US8521749)",
+      "desc": "Haahr, Cutts, Dean, Henzinger file foundational freshness patent. H=L/log(F+2) adjusts link scores by document age. Covers inception date inference from first crawl, first link, domain registration, and first external reference."
+    },
+    {
+      "year": "2012",
+      "type": "patent",
+      "title": "QDF Temporal Decay Patented (US8832088)",
+      "desc": "Chen and Zhu patent the QDF boosting formula S'=S*Q^D with reverse sigmoid age decay. Eight freshness signal inputs: query volume spikes, blog/news/social mentions, click ratios."
+    },
+    {
+      "year": "2013",
+      "type": "patent",
+      "title": "Demotion Dampening Added (US9189526)",
+      "desc": "Continuation patent protects evergreen content from false demotion when F(age) goes negative. Sigmoidal dampening function J(query, resource) prevents high-quality old pages from being unfairly penalized."
+    },
+    {
+      "year": "2017",
+      "type": "doj",
+      "title": "Retention Window Shortened",
+      "desc": "NavBoost retention reduced from 18 months to 13 months. All click data older than the window is discarded. The reduction increased temporal decay pressure on all pages."
+    },
+    {
+      "year": "2020",
+      "type": "doj",
+      "title": "DOJ Trial: Click Data Scale Revealed",
+      "desc": "Trial evidence reveals NavBoost processes ~1 billion new behavior examples per day. Judge Mehta rules 13 months of Google click data equals over 17.5 years of Bing data. NavBoost achieves 91% accuracy improvements (Nayak testimony)."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "API Leak: Aging Data Confirmed",
+      "desc": "QualityNavboostCrapsAgingData exposed with lastWeekBucket, lastMonthBucket temporal segmentation. FreshnessTwiddler, freshdocs, FS, lastGoodClick, lastLongestClicks all confirmed as active signals."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Public Statements",
+      "publicClaim": "\"Clicks are noisy and unreliable signals for ranking quality.\"",
+      "internalSource": "DOJ Trial: Nayak Testimony",
+      "internalClaim": "NavBoost achieves 91% accuracy improvements in ranking quality. VP Grushetsky (2019): 'NavBoost alone was likely more powerful than the rest of ranking combined.' Google retains and temporally buckets 13 months of click data for systematic trend analysis."
+    },
+    {
+      "publicSource": "Google Public Statements",
+      "publicClaim": "\"We don't use click data to rank search results.\"",
+      "internalSource": "DOJ Trial: Mehta Opinion",
+      "internalClaim": "Judge Mehta: 13 months of Google click data equals over 17.5 years of Bing data. NavBoost beats LLMs on freshness (FOF 103). 'Navboost remains one of the most powerful ranking components historically.' Click data is the foundation of Google's competitive advantage in search."
+    },
+    {
+      "publicSource": "Google Public Statements",
+      "publicClaim": "\"Old, authoritative content is valued regardless of recent engagement.\"",
+      "internalSource": "API Leak: QualityNavboostCrapsAgingData",
+      "internalClaim": "Click data is segmented into temporal buckets (lastWeekBucket, lastMonthBucket) specifically for trend analysis. Content with declining click trends is visibly decaying in the aging data structure. After 13 months without clicks, all NavBoost history is purged entirely."
+    }
+  ]
+}

@@ -159,5 +159,13 @@
       "title": "AI Overviews Connection",
       "desc": "Passage-level retrieval feeds into AI Overview generation. FastSearch retrieves passages for Gemini grounding."
     }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google (2020 passage ranking announcement)",
+      "publicClaim": "Passage ranking helps us find needle-in-a-haystack information buried deep within long-form content. It helps pages that have a great answer somewhere within them.",
+      "internalSource": "Passage-level scoring + page-level quality interaction",
+      "internalClaim": "Passage ranking enables individual page sections to rank independently from overall page quality. A low-quality page with one excellent passage can rank for that passage's query, bypassing page-level quality signals from Q* and HCU. This creates an exploit vector: sites can embed high-quality answer passages within otherwise thin content, leveraging passage ranking to circumvent site-level quality gates."
+    }
   ]
 }

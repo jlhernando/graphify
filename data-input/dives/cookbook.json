@@ -62,6 +62,14 @@
   ],
   "calculations": [
     {
+      "name": "Training Data Window Impact",
+      "source": "DOJ + Leak",
+      "how": "Cookbook-configured training windows determine model responsiveness. NavBoost models train on 13 months of click data (pre-2017: 18 months), emphasizing sustained patterns. Instant Glue operates on 24-hour windows, making it hyper-responsive to recent changes. The training window creates a fundamental trade-off: short windows react to trends but are noisy; long windows are stable but slow to adapt.",
+      "formula": "<span class=\"cf-fn\">Responsiveness</span>(model) =\n  <span class=\"cf-val\">recent_signal_weight</span> /\n  <span class=\"cf-val\">total_window_weight</span>\n<span class=\"cf-comment\">// Instant Glue (24h): high responsiveness</span>\n<span class=\"cf-comment\">// NavBoost (13 months): low responsiveness</span>\n<span class=\"cf-comment\">// short window = trend-sensitive but noisy</span>\n<span class=\"cf-comment\">// long window = stable but slow to adapt</span>",
+      "patents": "",
+      "affects": "Affected by: window duration, recency weighting, data freshness. Sustained engagement improvements over months have more impact than short-term spikes."
+    },
+    {
       "name": "Model Configuration Management",
       "source": "Leak + Patents",
       "how": "Cookbook manages the full lifecycle of ML ranking models: from training data selection and hyperparameter tuning through evaluation and deployment. Each ranking model (NavBoost, quality classifiers, BERT/MUM, spam detectors) has a Cookbook configuration that defines how it learns and what it optimizes for.",
@@ -131,6 +139,26 @@
       "type": "leak",
       "title": "API Leak: Cookbook Confirmed",
       "desc": "Cookbook referenced in API leak as ML training/configuration system. Connected to Mustang, NavBoost, Glue, SnippetBrain, and SuperRoot systems."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Search Central Blog (algorithm updates)",
+      "publicClaim": "Google makes thousands of improvements to Search every year. We announce major updates like core updates, spam updates, and helpful content updates.",
+      "internalSource": "Cookbook: ML model retraining + configuration management",
+      "internalClaim": "Cookbook enables continuous model retraining and configuration changes without public announcements. A change to NavBoost's training data window, quality classifier thresholds, or BERT fine-tuning parameters can shift rankings significantly. Most Cookbook-driven changes are never announced because they are framed as 'improvements' rather than 'updates.' The distinction between a 'core update' and a Cookbook config change is organizational, not technical."
+    },
+    {
+      "publicSource": "Google (public communications on ranking)",
+      "publicClaim": "Our ranking systems are algorithmic. No human manually adjusts rankings for individual sites or queries.",
+      "internalSource": "Cookbook: Human-configured ML parameters + experiment management",
+      "internalClaim": "While no human manually ranks individual URLs, Cookbook configurations are set by humans: training data selection, hyperparameter tuning, evaluation metric thresholds, and rollout schedules. Google engineers decide what data models train on, what metrics they optimize for, and when to deploy new versions. The 'algorithmic' label obscures the human judgment embedded in every ML configuration decision."
+    },
+    {
+      "publicSource": "Google (public statements on ranking stability)",
+      "publicClaim": "Rankings fluctuate naturally. If you see volatility, it is likely normal algorithmic adjustments.",
+      "internalSource": "Cookbook: A/B experiment deployment + model versioning",
+      "internalClaim": "Cookbook manages thousands of concurrent A/B experiments where different users receive results from different model versions. Ranking 'volatility' may be experiment traffic allocation, not natural fluctuation. When an experiment concludes and a new model version rolls out to 100%, rankings shift suddenly for users who were in the control group. This is engineered volatility, not noise."
     }
   ]
 }

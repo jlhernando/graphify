@@ -162,5 +162,13 @@
       "title": "chard + Thresholds",
       "desc": "DOJ trial reveals chard authority signal for YMYL domains and Q* 0.4 threshold for featured snippet eligibility."
     }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Search Central (YMYL guidelines)",
+      "publicClaim": "YMYL is a concept used in our Search Quality Rater Guidelines. It is not a ranking factor. There is no YMYL score.",
+      "internalSource": "DOJ: ymylHealthScore + ymylNewsScore as separate signals",
+      "internalClaim": "The DOJ trial revealed ymylHealthScore and ymylNewsScore as distinct, quantitative ranking signals. YMYL is not just a rater guideline concept; it is implemented as measurable scores that directly affect ranking. Health and news YMYL topics have separate scoring regimes, meaning Google treats medical misinformation differently from news misinformation at the signal level."
+    }
   ]
 }

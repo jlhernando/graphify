@@ -1,0 +1,192 @@
+{
+  "id": "user-prompting",
+  "route": "/llm/user-prompting",
+  "systems": ["UserPrompting"],
+  "hero": {
+    "title": "How Users Prompt LLMs for Commercial Recommendations",
+    "subtitle": "Users interact with LLMs using conversational, full-sentence queries averaging <a href=\"https://dl.acm.org/doi/10.1145/3637528.3671900\">23 words</a> (vs. 4 words for Google). <a href=\"https://www.semrush.com/blog/ai-mode-comparison-study/\">70% of LLM queries have never been seen on Google</a>, reflecting fundamentally different search behavior. Commercial prompts <a href=\"https://previsible.io/seo-strategy/ai-seo-study-2025/\">trigger web searches 53.5% of the time</a> vs. 18.7% for informational queries. ChatGPT processes <a href=\"https://openai.com/index/chatgpt-shopping-research/\">50 million shopping queries daily</a> (2% of total volume). LLM-referred traffic converts at <a href=\"https://alhena.ai/blog/llm-traffic-ecommerce-conversion-data/\">2.47-13.8% depending on category</a>, outperforming Google Ads (1.82%) and organic (1.76%). The zero-click rate reaches <a href=\"https://sparktoro.com/blog/2024-zero-click-search-study-for-every-1000-us-google-searches-only-374-clicks-go-to-the-open-web-in-the-eu-its-360/\">93% in Google AI Mode</a>, 83% with AI Overviews, and 58.5% in standard search. 37% of consumers now start searches with AI tools instead of Google, and <a href=\"https://www.yext.com/about/news-media/ai-archetypes-study-2025\">47% say AI influences which brands they trust</a>."
+  },
+  "keyInsight": {
+    "label": "Key Insight",
+    "text": "LLM prompting for product research follows a <strong>fundamentally different pattern</strong> than traditional search: (1) <strong>Conversational framing</strong>: users write full sentences (avg. <a href=\"https://dl.acm.org/doi/10.1145/3637528.3671900\">23 words</a>) instead of keyword fragments (avg. 4 words), providing context, constraints, and use cases in a single prompt. (2) <strong>Multi-turn refinement</strong>: sessions last <a href=\"https://www.orbitmedia.com/blog/ai-vs-google/\">~9 minutes</a> (vs. ~5 min on search engines), with users narrowing via follow-up questions rather than reformulating queries. (3) <strong>Delegation of synthesis</strong>: users ask LLMs to compare, rank, and recommend rather than gathering information across multiple pages. (4) <strong>Zero-click finality</strong>: <a href=\"https://sparktoro.com/blog/2024-zero-click-search-study-for-every-1000-us-google-searches-only-374-clicks-go-to-the-open-web-in-the-eu-its-360/\">93% of Google AI Mode sessions end without a click</a>. The critical implication: <strong>prompt structure directly determines which brands surface</strong>. <a href=\"https://arxiv.org/html/2406.04755v1\">Paraphrasing the same question can change brand mention probability by up to 100%</a>."
+  },
+  "pillars": [
+    {
+      "type": "leak",
+      "title": "Query Length and Structure Shift",
+      "items": [
+        "<strong>LLM query length: <a href=\"https://dl.acm.org/doi/10.1145/3637528.3671900\">~23 words</a></strong> (GEO benchmark, Princeton/IIT KDD '24). Google queries average ~4 words. AI Mode queries average <a href=\"https://www.semrush.com/blog/ai-mode-comparison-study/\">7.22 words</a> (Semrush, 69M sessions May-Jul 2025), nearly 2x traditional search",
+        "<strong><a href=\"https://www.semrush.com/blog/ai-mode-comparison-study/\">70% of LLM queries are unique</a></strong>: never seen on Google before, reflecting conversational, context-rich prompting that differs fundamentally from keyword-based search",
+        "<strong>Full-sentence, question-based queries</strong>: 'What are the best noise-cancelling headphones under $200 for open offices?' vs. 'best noise cancelling headphones.' Users include budget, use case, preferences, and constraints in a single prompt",
+        "<strong>Search term evolution</strong>: <a href=\"https://searchengineland.com/keyword-query-length-insights-445376\">7-8 word queries have nearly doubled</a> since ChatGPT launch. Overall, only 10% of keywords exceed 7 words, but the trend is accelerating. Voice search amplifies the conversational shift",
+        "<strong>Commercial queries generate 2x longer responses</strong> from AI Mode vs. informational queries (<a href=\"https://www.semrush.com/blog/ai-mode-comparison-study/\">Semrush study</a>). AI dedicates more tokens to purchase-adjacent content"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "Commercial Query Taxonomy",
+      "items": [
+        "<strong>'Best X' queries</strong>: 'best CRM for startups under 50 people,' 'best oval glasses under $180.' Most common commercial pattern. Triggers product comparison responses with ranked lists. <a href=\"https://previsible.io/seo-strategy/ai-seo-study-2025/\">53.5% of commercial-intent queries trigger web search</a> in ChatGPT",
+        "<strong>'Compare X vs Y' queries</strong>: 'Notion vs Trello for team collaboration.' Triggers sub-queries: pricing differences, integrations, ease of use. Users expect structured comparison tables",
+        "<strong>'Recommend X for [use case]' queries</strong>: 'recommend a vacuum for a small apartment with pets.' ChatGPT asks clarifying questions about budget, floor type, storage. <a href=\"https://openai.com/index/chatgpt-shopping-research/\">3-5 minutes of research before personalized recommendations</a>",
+        "<strong>'What do experts say about X' queries</strong>: Authority-seeking prompts. LLMs surface third-party reviews, 'Best Of' lists, expert endorsements. 64% of Perplexity citations for commercial queries come from authoritative lists",
+        "<strong>Competitor evaluation queries</strong>: 'What HubSpot competitors should I evaluate?' Decision-makers at mid-market and enterprise companies use AI for vendor shortlisting. Commercial queries drive 48x more mentions than informational ones",
+        "<strong>Generative intent (new category)</strong>: 'Write a comparison table for these 3 CRMs.' Users ask LLMs to create artifacts, not just answer questions. Fastest-growing intent category alongside traditional informational, navigational, transactional, and commercial"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "Multi-Turn Patterns and Session Depth",
+      "items": [
+        "<strong><a href=\"https://www.orbitmedia.com/blog/ai-vs-google/\">9-minute average AI sessions</a></strong> vs. ~5 minutes on search engines (60% longer engagement). Users conduct deeper research in fewer sessions",
+        "<strong>Four interaction patterns</strong>: recollection (referencing earlier context), expansion (building on prior topics), refinement (narrowing criteria), follow-up (natural progression). Research from 2024-2025 identifies these as the core multi-turn behaviors",
+        "<strong>60% of US adults used an AI chatbot for product research</strong> in the prior 30 days (2025). Not niche behavior but mainstream adoption",
+        "<strong><a href=\"https://arxiv.org/html/2505.06120v1\">'Lost in Conversation' phenomenon</a></strong>: LLMs show 30-39% performance degradation in multi-turn vs. single-turn interactions. Models make premature assumptions early and lock in, causing final responses to drift from user intent",
+        "<strong><a href=\"https://openai.com/index/chatgpt-shopping-research/\">ChatGPT Shopping sessions</a></strong>: for detail-heavy queries ('quietest cordless vacuum for small apartment'), ChatGPT asks clarifying questions, spends 3-5 min researching, delivers a personalized buyer's guide. Performs best in electronics, beauty, home, kitchen, sports categories",
+        "<strong>50 million daily shopping queries</strong> on ChatGPT alone (~2% of 2.5B total daily prompts). Demonstrates massive commercial query volume even as a fraction of total usage"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "Zero-Click Behavior and Trust",
+      "items": [
+        "<strong><a href=\"https://sparktoro.com/blog/2024-zero-click-search-study-for-every-1000-us-google-searches-only-374-clicks-go-to-the-open-web-in-the-eu-its-360/\">93% zero-click in Google AI Mode</a></strong> (SparkToro/Datos 2025). 83% zero-click when AI Overviews are present. 58.5% zero-click for standard US Google searches. Zero-click is accelerating toward 70%+ overall by 2026",
+        "<strong>CTR collapse with AI Overviews</strong>: #1 result CTR dropped from <a href=\"https://ahrefs.com/blog/ai-overviews-ctr/\">7.3% (Mar 2024) to 2.6% (Mar 2025)</a>, a 34.5% decrease. Overall CTR drops to 8% when AI Overviews present vs. 15% without",
+        "<strong>37% start searches with AI</strong>: more than one-third of consumers begin with AI tools instead of traditional search engines. But Google usage has not declined in absolute terms",
+        "<strong><a href=\"https://www.pewresearch.org/short-reads/2025/10/01/americans-have-mixed-feelings-about-ai-summaries-in-search-results/\">40% trust AI results equally</a></strong> to traditional search. 25% trust search engines more, 25% lean toward AI, 7% trust neither. Trust is split but growing for AI",
+        "<strong>47% say AI influences brand trust</strong>: nearly half of consumers report AI changes which brands they trust. <a href=\"https://www.yext.com/about/news-media/ai-archetypes-study-2025\">62% trust AI to guide brand decisions</a>, putting it on par with traditional search at key decision moments",
+        "<strong>57% still prefer traditional search</strong> for personal, medical, or financial topics (YMYL). AI trust highest for product research and lower-stakes decisions",
+        "<strong>Verification gap</strong>: <a href=\"https://www.hbs.edu/ris/Publication%20Files/25-001_8ebbe0cb-2a19-453c-9014-1e301e8dd2fb.pdf\">users follow AI recommendations even when they contradict available information</a>. Explanations paradoxically reduce critical engagement by providing persuasive rationales users adopt instead of independently verifying. Only 59% accurate at detecting AI-generated misinformation"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "Platform Differences: ChatGPT vs. Perplexity vs. Google",
+      "items": [
+        "<strong>ChatGPT dominates AI referrals</strong>: <a href=\"https://seranking.com/blog/ai-traffic-research-study/\">77.97% of all AI referral visits</a> (84.2% of sessions per Previsible). 36% of users use it regularly. Core use case: 'search without the search results.' Processes queries as conversations, not keyword lookups",
+        "<strong>Perplexity: citation-forward hybrid</strong>: 15.10% of AI referral visits. 780M queries in May 2025, 129M monthly visits, 20%+ month-over-month growth. Shows source citations for each sentence, encouraging click-throughs. <a href=\"https://seranking.com/blog/ai-traffic-research-study/\">523% session growth</a>, fastest percentage increase",
+        "<strong>Google AI Mode / Overviews</strong>: triggers on 13-20% of all queries (doubled from 6.49% Jan 2025). Handles 14B+ daily searches. AI Overviews generate <a href=\"https://sparktoro.com/blog/2024-zero-click-search-study-for-every-1000-us-google-searches-only-374-clicks-go-to-the-open-web-in-the-eu-its-360/\">93% zero-click</a>. Uses FastSearch (RankEmbed, no NavBoost)",
+        "<strong>Gemini growing</strong>: 6.40% of AI referral visits but regular usage grew from 29% to 33%. Copilot (25.2x growth) and Claude (12.8x growth) show explosive expansion through embedded workplace tools",
+        "<strong>Gen Z behavior shift</strong>: using Google less, turning to TikTok, Instagram, and ChatGPT for product and information discovery. Platform fragmentation accelerating",
+        "<strong>55% use AI Chat as primary research tool</strong> (2026). But 'usually use AI Chat' dropped from 35% to 28% year-over-year while 'usually use Search' grew from 22% to 29%. Novelty wearing off slightly, usage stabilizing"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "Prompt Structure Impact on Brand Mentions",
+      "items": [
+        "<strong><a href=\"https://arxiv.org/html/2406.04755v1\">Paraphrasing changes brand probability by up to 100%</a></strong>: two semantically equivalent prompts can produce completely different brand recommendations. Small phrasing changes lead to radically different outputs across models",
+        "<strong><a href=\"https://arxiv.org/html/2502.01349v2\">Socio-economic bias in recommendations</a></strong>: LLMs recommend luxury brands 88-100% of the time for high-income country prompts, non-luxury brands 84-98% for low-income country prompts. Geographic and economic context in prompts shapes recommendations",
+        "<strong><a href=\"https://dl.acm.org/doi/10.1145/3715275.3732038\">Position bias in system prompts</a></strong>: placement of information in system directives shapes which brands surface. ACM FAccT 2025 research confirms position is power in LLM responses",
+        "<strong>Temperature determines consistency</strong>: at temperature=0, highest-probability brand always wins. At temperature>0, proportional sampling introduces variation. Default settings of different platforms change recommendation consistency",
+        "<strong>Prompt engineering cannot override source preferences</strong>: attempts to prompt LLMs to disregard inherent source preferences were largely unsuccessful. Training data associations are persistent",
+        "<strong>'Sales Whisperer' attack</strong> (2024 paper): demonstrated human-inconspicuous content modifications that bias LLM brand recommendations. Optimized web content can shift LLM outputs without obvious manipulation"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "Conversion and Attribution",
+      "items": [
+        "<strong>LLM traffic conversion rates</strong>: <a href=\"https://alhena.ai/blog/llm-traffic-ecommerce-conversion-data/\">ChatGPT referrals convert at 15.9%</a>, Perplexity at 10.5%, Claude at 5%, Gemini at 3%. Google organic: 1.76%. LLM traffic outperforms across the board",
+        "<strong>Cross-study range</strong>: 2.47% (329 brands, vs. Google Ads 1.82%), 4.87% (vs. organic 4.60%), 9.84% (with on-site AI assistance, 4x channel average), 13.8% (50 Seer clients, vs. 9.3% organic). Variance reflects methodology differences but direction is consistent",
+        "<strong><a href=\"https://seranking.com/blog/ai-traffic-research-study/\">AI-driven conversion growth: +9,718%</a></strong> year-over-year vs. +121% for organic. AI-driven sessions grew +333% vs. +3.9% for organic. Small base but explosive trajectory",
+        "<strong><a href=\"https://seranking.com/blog/ai-traffic-research-study/\">70.6% of AI traffic is invisible in GA4</a></strong>: creating massive measurement gaps. 69.4% of transactions have no specific last-click attribution. Most enterprises are underreporting AI-influenced conversions",
+        "<strong>LLM attribution up 5.4x</strong> from January to April 2025. ChatGPT owns 84.2% of AI referrals, growing 3.26x year-over-year",
+        "<strong>41% of LLM sessions land on product pages</strong> (<a href=\"https://previsible.io/seo-strategy/ai-seo-study-2025/\">Previsible</a>, 1.96M sessions). AI users land disproportionately on evaluation and decision-making pages. High commercial intent confirmed",
+        "<strong>AI = 0.13% of total traffic</strong> (~1 in 769 sessions), but growing rapidly and converting at higher rates. YMYL industries lead: legal (11.9x), finance (2.9x), health (2.9x) above site averages"
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Query Complexity Ratio",
+      "source": "<a href=\"https://dl.acm.org/doi/10.1145/3637528.3671900\">GEO benchmark (Princeton/IIT KDD '24)</a> + <a href=\"https://www.semrush.com/blog/ai-mode-comparison-study/\">Semrush AI Mode study (69M sessions)</a>",
+      "how": "LLM queries carry 5-6x more context than traditional search queries. This additional context includes use case, budget constraints, preferences, and comparison criteria. The complexity ratio determines how much filtering and synthesis the LLM performs that users previously did manually across multiple search results pages.",
+      "formula": "<span class=\"cf-fn\">QueryComplexity</span>(platform) = {\n  <span class=\"cf-val\">LLM conversational</span>: <span class=\"cf-val\">~23 words</span> (<a href=\"https://dl.acm.org/doi/10.1145/3637528.3671900\">GEO benchmark</a>)\n  <span class=\"cf-val\">Google AI Mode</span>:    <span class=\"cf-val\">7.22 words</span> (<a href=\"https://www.semrush.com/blog/ai-mode-comparison-study/\">Semrush</a>, 69M sessions)\n  <span class=\"cf-val\">Traditional Google</span>: <span class=\"cf-val\">~4 words</span>\n}\n<span class=\"cf-fn\">ComplexityRatio</span> = LLM / Traditional\n  = 23 / 4 = <span class=\"cf-val\">5.75x</span>\n<span class=\"cf-comment\">// <a href=\"https://www.semrush.com/blog/ai-mode-comparison-study/\">70% of LLM queries never seen on Google</a></span>\n<span class=\"cf-comment\">// <a href=\"https://searchengineland.com/keyword-query-length-insights-445376\">7-8 word queries nearly doubled post-ChatGPT</a></span>",
+      "patents": "",
+      "affects": "Content strategy must shift from keyword targeting to answering complex, multi-constraint queries. Pages optimized for 4-word queries miss the 23-word conversational prompts that drive LLM recommendations."
+    },
+    {
+      "name": "Zero-Click Escalation by AI Layer",
+      "source": "<a href=\"https://sparktoro.com/blog/2024-zero-click-search-study-for-every-1000-us-google-searches-only-374-clicks-go-to-the-open-web-in-the-eu-its-360/\">SparkToro/Datos 2025</a>, <a href=\"https://www.semrush.com/blog/ai-mode-comparison-study/\">Semrush AI Overviews study</a>",
+      "how": "Each layer of AI integration increases zero-click rates. Standard Google search: 58.5%. AI Overviews present: 83%. Full AI Mode: 93%. The escalation follows a predictable pattern as more answer synthesis moves into the search interface itself.",
+      "formula": "<span class=\"cf-fn\">ZeroClickRate</span>(layer) = {\n  <span class=\"cf-val\">Standard Google</span>:  <span class=\"cf-val\">58.5%</span> (US, Semrush 2025)\n  <span class=\"cf-val\">AI Overviews</span>:     <span class=\"cf-val\">83%</span>\n  <span class=\"cf-val\">Google AI Mode</span>:   <span class=\"cf-val\"><a href=\"https://sparktoro.com/blog/2024-zero-click-search-study-for-every-1000-us-google-searches-only-374-clicks-go-to-the-open-web-in-the-eu-its-360/\">93%</a></span>\n  <span class=\"cf-val\">ChatGPT/Perplexity</span>: <span class=\"cf-val\">~95%+</span> (estimated, citation-only)\n}\n<span class=\"cf-fn\">CTR_Impact</span>(#1 position) = {\n  <span class=\"cf-val\">Mar 2024</span>: <span class=\"cf-val\">7.3%</span>\n  <span class=\"cf-val\">Mar 2025</span>: <span class=\"cf-val\"><a href=\"https://ahrefs.com/blog/ai-overviews-ctr/\">2.6%</a></span> (-34.5%)\n}\n<span class=\"cf-comment\">// Each AI layer adds ~15-20pp to zero-click</span>\n<span class=\"cf-comment\">// Trend: 70%+ overall by 2026</span>",
+      "patents": "",
+      "affects": "Traditional SEO KPIs (rankings, CTR, traffic) become less relevant with each AI layer. Brands must measure 'reference rates' (how often they are mentioned in AI responses) as the primary visibility metric."
+    },
+    {
+      "name": "Commercial Prompt Trigger Rate",
+      "source": "<a href=\"https://www.semrush.com/blog/ai-mode-comparison-study/\">Semrush ChatGPT search study</a> + <a href=\"https://openai.com/index/chatgpt-shopping-research/\">ChatGPT Shopping data</a>",
+      "how": "Commercial intent queries trigger fundamentally different LLM behavior than informational ones. Over half of commercial prompts activate web search (RAG), while less than a fifth of informational queries do. This means commercial queries are disproportionately influenced by current web content and traditional SEO signals.",
+      "formula": "<span class=\"cf-fn\">WebSearchTrigger</span>(intent) = {\n  <span class=\"cf-val\">Commercial</span>:     <span class=\"cf-val\"><a href=\"https://previsible.io/seo-strategy/ai-seo-study-2025/\">53.5%</a></span> trigger web search\n  <span class=\"cf-val\">Informational</span>:  <span class=\"cf-val\">18.7%</span> trigger web search\n}\n<span class=\"cf-fn\">CommercialAmplifier</span> = 53.5 / 18.7 = <span class=\"cf-val\">2.86x</span>\n<span class=\"cf-comment\">// Commercial = 48x more brand mentions</span>\n<span class=\"cf-comment\">// Trigger terms: 'reviews,' 'free,' 'features,' 'comparison'</span>\n<span class=\"cf-comment\">// <a href=\"https://openai.com/index/chatgpt-shopping-research/\">50M daily shopping queries on ChatGPT</a></span>",
+      "patents": "",
+      "affects": "Commercial content is 2.86x more likely to be fetched via RAG for product queries. SEO for commercial pages directly impacts AI recommendations. Traditional ranking still matters for the RAG retrieval layer."
+    },
+    {
+      "name": "LLM Conversion Premium",
+      "source": "<a href=\"https://alhena.ai/blog/llm-traffic-ecommerce-conversion-data/\">Alhena (329 brands)</a>, Seer Interactive (50 clients), <a href=\"https://seranking.com/blog/ai-traffic-research-study/\">SE Ranking</a>, <a href=\"https://previsible.io/seo-strategy/ai-seo-study-2025/\">Previsible (1.96M sessions)</a>",
+      "how": "LLM-referred visitors convert at significantly higher rates than organic or paid traffic. This premium exists because LLM users arrive with pre-synthesized intent, having already received personalized recommendations, comparisons, and context. They land on pages ready to act, not to research.",
+      "formula": "<span class=\"cf-fn\">ConversionRate</span>(source) = {\n  <span class=\"cf-val\">ChatGPT referral</span>:  <span class=\"cf-val\"><a href=\"https://alhena.ai/blog/llm-traffic-ecommerce-conversion-data/\">15.9%</a></span>\n  <span class=\"cf-val\">Perplexity referral</span>: <span class=\"cf-val\">10.5%</span>\n  <span class=\"cf-val\">Claude referral</span>:    <span class=\"cf-val\">5.0%</span>\n  <span class=\"cf-val\">Gemini referral</span>:    <span class=\"cf-val\">3.0%</span>\n  <span class=\"cf-val\">Google Ads</span>:          <span class=\"cf-val\">1.82%</span>\n  <span class=\"cf-val\">Google organic</span>:      <span class=\"cf-val\">1.76%</span>\n}\n<span class=\"cf-fn\">LLM_Premium</span> = ChatGPT / Organic\n  = 15.9 / 1.76 = <span class=\"cf-val\">9.03x</span>\n<span class=\"cf-comment\">// <a href=\"https://previsible.io/seo-strategy/ai-seo-study-2025/\">41% of LLM sessions land on product pages</a></span>\n<span class=\"cf-comment\">// <a href=\"https://seranking.com/blog/ai-traffic-research-study/\">AI conversion growth: +9,718% YoY</a></span>\n<span class=\"cf-comment\">// <a href=\"https://seranking.com/blog/ai-traffic-research-study/\">70.6% of AI traffic invisible in GA4</a></span>",
+      "patents": "",
+      "affects": "LLM referral traffic is 9x more valuable per session than organic. But 70.6% is invisible in GA4, meaning most enterprises massively undervalue AI-driven conversions. Attribution infrastructure must be updated."
+    },
+    {
+      "name": "Prompt Phrasing Brand Variance",
+      "source": "Sales Whisperer (2024), LLM Whisperer (CMU 2025), <a href=\"https://dl.acm.org/doi/10.1145/3715275.3732038\">ACM FAccT 2025</a>",
+      "how": "Semantically equivalent prompts produce drastically different brand recommendations. The variance is driven by token probability distributions, training data associations, and positional bias. This means brand visibility in AI is not deterministic but probabilistic, and sensitive to prompt construction.",
+      "formula": "<span class=\"cf-fn\">BrandVariance</span>(prompt_pair) = {\n  <span class=\"cf-val\">max_probability_change</span>: <span class=\"cf-val\"><a href=\"https://arxiv.org/html/2406.04755v1\">100%</a></span>\n  <span class=\"cf-comment\">// same semantic meaning, different phrasing</span>\n}\n<span class=\"cf-fn\">SocioEconomicBias</span> = {\n  <span class=\"cf-val\">High-income context</span>: luxury brands <span class=\"cf-val\"><a href=\"https://arxiv.org/html/2502.01349v2\">88-100%</a></span>\n  <span class=\"cf-val\">Low-income context</span>:  non-luxury <span class=\"cf-val\">84-98%</span>\n}\n<span class=\"cf-comment\">// <a href=\"https://dl.acm.org/doi/10.1145/3715275.3732038\">Position in system prompt shapes output</a></span>\n<span class=\"cf-comment\">// Prompt engineering cannot override source prefs</span>\n<span class=\"cf-comment\">// Temperature=0: highest P always wins</span>",
+      "patents": "",
+      "affects": "Brand optimization must account for prompt diversity. Testing visibility across multiple phrasings of the same query is essential. Socio-economic and geographic context in prompts creates systematic bias in recommendations."
+    }
+  ],
+  "pipeline": {
+    "title": "User Prompting to Purchase Pipeline",
+    "stages": [
+      {"name": "Query Formulation", "detail": "User writes conversational prompt (<a href=\"https://dl.acm.org/doi/10.1145/3637528.3671900\">~23 words</a>) with context, constraints, and intent. 'Best X for Y under $Z' pattern. Fundamentally different from 4-word keyword search."},
+      {"name": "Intent Classification", "detail": "LLM classifies intent: informational, commercial, transactional, navigational, or generative. Commercial intent <a href=\"https://previsible.io/seo-strategy/ai-seo-study-2025/\">triggers web search 53.5% of the time</a> (2.86x more than informational)."},
+      {"name": "RAG Retrieval (Commercial)", "detail": "For 53.5% of commercial queries, LLM searches the web. Traditional SEO ranking determines what is retrieved. 'Reviews,' 'free,' 'features,' 'comparison' are trigger terms."},
+      {"name": "Synthesis and Recommendation", "detail": "LLM synthesizes training data + RAG results into ranked recommendations. Brand token probability determines mention order. <a href=\"https://arxiv.org/html/2406.04755v1\">Prompt phrasing can shift probability by up to 100%</a>."},
+      {"name": "Multi-Turn Refinement", "detail": "User asks follow-ups for <a href=\"https://www.orbitmedia.com/blog/ai-vs-google/\">~9 minutes</a> (60% longer than search). Recollection, expansion, refinement, follow-up patterns. LLMs <a href=\"https://arxiv.org/html/2505.06120v1\">degrade 30-39% in multi-turn accuracy</a>."},
+      {"name": "Decision (Zero-Click)", "detail": "<a href=\"https://sparktoro.com/blog/2024-zero-click-search-study-for-every-1000-us-google-searches-only-374-clicks-go-to-the-open-web-in-the-eu-its-360/\">93% of AI Mode sessions end without a click</a>. User trusts AI synthesis. <a href=\"https://www.yext.com/about/news-media/ai-archetypes-study-2025\">47% say AI influences brand trust</a>. <a href=\"https://www.hbs.edu/ris/Publication%20Files/25-001_8ebbe0cb-2a19-453c-9014-1e301e8dd2fb.pdf\">Verification behavior is low</a>."},
+      {"name": "Conversion (High-Intent)", "detail": "When users do click, they convert at <a href=\"https://alhena.ai/blog/llm-traffic-ecommerce-conversion-data/\">2.47-15.9%</a> (vs. 1.76% organic). <a href=\"https://previsible.io/seo-strategy/ai-seo-study-2025/\">41% land on product pages</a>. Pre-synthesized intent drives 9x conversion premium."}
+    ]
+  },
+  "timeline": [
+    {"year": "2022", "type": "event", "title": "ChatGPT Launch", "desc": "OpenAI releases ChatGPT (Nov 2022). Users begin prompting AI with natural language questions instead of keyword searches. Query length norms begin shifting."},
+    {"year": "2023", "type": "event", "title": "Conversational Search Emerges", "desc": "Bing Chat, Perplexity launch. Users adopt multi-turn conversations for product research. 'Best X for Y' queries become common LLM patterns."},
+    {"year": "2024", "type": "patent", "title": "GEO Paper (Princeton/IIT KDD '24)", "desc": "<a href=\"https://dl.acm.org/doi/10.1145/3637528.3671900\">Generative Engine Optimization</a> establishes query benchmark: LLM queries average ~23 words vs. ~4 for Google. Cite Sources = +40% visibility boost."},
+    {"year": "2024", "type": "event", "title": "Google AI Overviews Scale", "desc": "AI Overviews deployed widely. Zero-click rate hits 83% with AIO present. <a href=\"https://ahrefs.com/blog/ai-overviews-ctr/\">#1 result CTR begins collapse from 7.3% to 2.6%</a>."},
+    {"year": "2024", "type": "patent", "title": "Sales Whisperer / LLM Bias Research", "desc": "Academic papers demonstrate <a href=\"https://arxiv.org/html/2406.04755v1\">prompt phrasing changes brand mention probability by up to 100%</a>. <a href=\"https://arxiv.org/html/2502.01349v2\">Socio-economic bias documented (88-100% luxury for high-income contexts)</a>."},
+    {"year": "2025", "type": "event", "title": "Google AI Mode + 93% Zero-Click", "desc": "Google AI Mode launches May 2025. <a href=\"https://sparktoro.com/blog/2024-zero-click-search-study-for-every-1000-us-google-searches-only-374-clicks-go-to-the-open-web-in-the-eu-its-360/\">SparkToro/Datos study: 93% of AI Mode sessions end without a click</a>. <a href=\"https://www.semrush.com/blog/ai-mode-comparison-study/\">Semrush analyzes 69M sessions, finds queries average 7.22 words</a>."},
+    {"year": "2025", "type": "event", "title": "ChatGPT Shopping at Scale", "desc": "<a href=\"https://openai.com/index/chatgpt-shopping-research/\">ChatGPT processes 50M daily shopping queries</a>. OpenAI launches Shopping Research feature. <a href=\"https://previsible.io/seo-strategy/ai-seo-study-2025/\">Commercial queries trigger web search 53.5% of the time</a>."},
+    {"year": "2025", "type": "event", "title": "LLM Conversion Data Emerges", "desc": "Multiple studies confirm LLM traffic converts 2-9x higher than organic. <a href=\"https://alhena.ai/blog/llm-traffic-ecommerce-conversion-data/\">ChatGPT referrals: 15.9% conversion rate</a>. But <a href=\"https://seranking.com/blog/ai-traffic-research-study/\">70.6% of AI traffic invisible in GA4</a>."},
+    {"year": "2025", "type": "event", "title": "Previsible 1.96M Session Study", "desc": "<a href=\"https://previsible.io/seo-strategy/ai-seo-study-2025/\">Analysis of 1.96M LLM sessions</a> shows ChatGPT controls 84.2% of AI referrals. 41% of sessions land on product pages. YMYL industries lead AI adoption."},
+    {"year": "2025", "type": "event", "title": "AI Trust Reaches Parity", "desc": "<a href=\"https://www.yext.com/about/news-media/ai-archetypes-study-2025\">62% of consumers trust AI to guide brand decisions</a>. 37% start searches with AI instead of Google. But 57% still prefer traditional search for YMYL topics."}
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Traditional search marketing",
+      "publicClaim": "Users search with short keywords (3-4 words). Optimize for head terms and long-tail keywords with traditional keyword research tools.",
+      "internalSource": "<a href=\"https://dl.acm.org/doi/10.1145/3637528.3671900\">GEO benchmark</a> + <a href=\"https://www.semrush.com/blog/ai-mode-comparison-study/\">Semrush 69M sessions study</a>",
+      "internalClaim": "LLM queries average <a href=\"https://dl.acm.org/doi/10.1145/3637528.3671900\">23 words</a> with full context, constraints, and use cases. <a href=\"https://www.semrush.com/blog/ai-mode-comparison-study/\">70% of LLM queries have never been seen on Google</a>. AI Mode queries average 7.22 words (2x traditional). Keyword research tools cannot capture conversational query patterns. Content must answer complex, multi-constraint prompts, not match keyword fragments."
+    },
+    {
+      "publicSource": "SEO industry (CTR optimization)",
+      "publicClaim": "Optimize title tags and meta descriptions for click-through rate. Rankings and clicks drive business results.",
+      "internalSource": "<a href=\"https://sparktoro.com/blog/2024-zero-click-search-study-for-every-1000-us-google-searches-only-374-clicks-go-to-the-open-web-in-the-eu-its-360/\">SparkToro/Datos 2025</a> + conversion data",
+      "internalClaim": "<a href=\"https://sparktoro.com/blog/2024-zero-click-search-study-for-every-1000-us-google-searches-only-374-clicks-go-to-the-open-web-in-the-eu-its-360/\">93% of Google AI Mode sessions end without a click</a>. <a href=\"https://ahrefs.com/blog/ai-overviews-ctr/\">#1 position CTR collapsed from 7.3% to 2.6%</a> in one year. But when LLM users do click, they convert at 9x the rate of organic traffic (<a href=\"https://alhena.ai/blog/llm-traffic-ecommerce-conversion-data/\">15.9% vs. 1.76%</a>). The metric that matters is no longer 'how many clicks' but 'whether you are mentioned in the AI response' and 'what happens when the rare click occurs.'"
+    },
+    {
+      "publicSource": "Conversion optimization (traffic volume focus)",
+      "publicClaim": "More traffic equals more conversions. Scale traffic acquisition across channels to grow revenue.",
+      "internalSource": "<a href=\"https://alhena.ai/blog/llm-traffic-ecommerce-conversion-data/\">Alhena</a>, Seer Interactive, <a href=\"https://previsible.io/seo-strategy/ai-seo-study-2025/\">Previsible</a> conversion studies",
+      "internalClaim": "AI traffic is only 0.13% of total traffic (~1 in 769 sessions) but converts at <a href=\"https://alhena.ai/blog/llm-traffic-ecommerce-conversion-data/\">2.47-15.9%</a> vs. 1.76% organic. <a href=\"https://seranking.com/blog/ai-traffic-research-study/\">AI-driven conversions grew +9,718% year-over-year</a> vs. +121% for organic. <a href=\"https://seranking.com/blog/ai-traffic-research-study/\">70.6% of AI traffic is invisible in GA4</a>. Enterprises are likely underreporting AI-influenced revenue by 3-5x. A small volume of high-intent AI referrals can outperform large volumes of low-intent organic traffic."
+    },
+    {
+      "publicSource": "Brand consistency in marketing",
+      "publicClaim": "Consistent messaging ensures predictable brand perception. The same brand story should produce the same results across channels.",
+      "internalSource": "Sales Whisperer (2024), CMU LLM Whisperer (2025)",
+      "internalClaim": "<a href=\"https://arxiv.org/html/2406.04755v1\">Paraphrasing the same query changes brand mention probability by up to 100%</a>. LLMs exhibit <a href=\"https://arxiv.org/html/2502.01349v2\">88-100% luxury brand bias for high-income contexts and 84-98% non-luxury bias for low-income contexts</a>. Brand visibility in AI is probabilistic, not deterministic. The same brand can appear or disappear based on prompt phrasing, user context, temperature settings, and which platform is queried."
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "id": "inference-sampling",
+  "route": "/llm/inference-sampling",
+  "systems": ["Inference"],
+  "hero": {
+    "title": "Inference & Sampling: How LLMs Generate Text Token by Token",
+    "subtitle": "LLMs generate text one token at a time by predicting probability distributions over the vocabulary. Temperature controls randomness (0 = deterministic, 1 = creative). Top-p (nucleus sampling) restricts to the smallest set of tokens whose cumulative probability exceeds p. Top-k restricts to the k most likely tokens. These parameters determine whether the model gives consistent, predictable answers or varied, creative ones. System prompts (hidden developer instructions) shape behavior before the user's message. Understanding inference mechanics reveals why the same query produces different answers across sessions and how prompting strategies influence outputs."
+  },
+  "keyInsight": {
+    "label": "Key Insight for LLM Influence",
+    "text": "At inference time, the model produces a <strong>probability distribution over ~128K tokens</strong> at each step. The token with highest probability is not always selected; <strong>sampling parameters</strong> introduce controlled randomness. <strong>Temperature=0</strong> always picks the highest-probability token (greedy, deterministic). <strong>Temperature=1</strong> samples proportionally to probabilities (creative, varied). <strong>Top-p=0.9</strong> restricts sampling to the top tokens covering 90% of probability mass. For brand influence, the key insight is: <strong>if your brand has high probability in the model's vocabulary for a given context, it will be mentioned more often</strong>, especially at low temperatures. High token probability comes from (1) frequency in training data, (2) association with positive SFT/RLHF signals, and (3) relevance to the prompt context."
+  },
+  "pillars": [
+    {
+      "type": "patent",
+      "title": "Sampling Methods",
+      "items": [
+        "<strong>Greedy decoding (temperature=0)</strong>: Always selects the highest-probability token. Deterministic: same input always produces same output. Used for factual queries, code generation, structured output. Maximizes consistency but can be repetitive and miss diverse valid answers",
+        "<strong>Temperature scaling</strong>: Divides logits by temperature T before softmax. T<1 sharpens distribution (more confident, less random). T>1 flattens distribution (more random, more creative). T=0 is greedy. T=1 is standard sampling. Most APIs default to T=0.7-1.0",
+        "<strong>Top-p (nucleus sampling)</strong>: Holtzman et al., 2020. Sample from the smallest set of tokens whose cumulative probability >= p. p=0.9 means only consider tokens covering 90% of probability mass, discard the long tail. Adapts vocabulary size per step (sometimes 5 tokens, sometimes 500)",
+        "<strong>Top-k sampling</strong>: Only consider the k most likely tokens. k=50 is common. Simpler than top-p but doesn't adapt to distribution shape. Low-entropy steps (confident predictions) still sample from k tokens unnecessarily",
+        "<strong>Beam search</strong>: Maintain B candidate sequences (beams), expanding each by top tokens at each step. Select highest-scoring complete sequence. Used for translation, structured generation. Not common in chat (too repetitive/generic)",
+        "<strong>Repetition penalty</strong>: Reduce probability of recently generated tokens. Prevents loops and repetitive text. Applied as a multiplicative penalty on logits of recently seen tokens"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "System Prompts & Context",
+      "items": [
+        "<strong>System prompt</strong>: Hidden instruction prepended to every conversation. Set by the developer, not visible to users. Defines personality, constraints, tools, behavior. Examples: 'You are a helpful assistant that recommends [brand] products' or 'Always cite sources'",
+        "<strong>Context window management</strong>: LLMs have finite context (4K-200K tokens). System prompt + conversation history + RAG content must fit. Older messages are truncated or summarized. The beginning and end of context receive more attention than the middle",
+        "<strong>KV cache</strong>: Key-Value cache stores attention computations from previous tokens. Enables efficient autoregressive generation (only compute new token's attention, not entire sequence). KV cache size limits practical context length and concurrent users",
+        "<strong>Prompt engineering</strong>: The wording of prompts significantly affects outputs. Chain-of-thought ('think step by step'), few-shot examples, role-playing ('you are an expert in X'), and structured output instructions all shape generation. Prompt design is a direct influence vector"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Inference Parameters Affect Brand Mentions",
+      "items": [
+        "<strong>Low temperature favors dominant brands</strong>: At temperature=0, the model always picks the highest-probability completion. If 'the best CRM is Salesforce' has higher probability than 'the best CRM is HubSpot,' Salesforce always wins at T=0. At higher temperatures, less dominant brands have a chance of being mentioned",
+        "<strong>Token probability reflects training frequency</strong>: Brands mentioned more frequently in training data (especially in positive/recommendation contexts) have higher token probability. This is the fundamental mechanism by which training data presence translates to LLM recommendations",
+        "<strong>System prompts are the most direct influence</strong>: Developers can include brand preferences in system prompts. An app built on GPT-4 with system prompt 'recommend [brand] for [category]' will consistently do so. B2B partnerships with AI app developers are a direct distribution channel",
+        "<strong>Prompt structure affects retrieval</strong>: In RAG systems, how the user phrases their query affects which content is retrieved. If users ask 'what's the best X?' vs 'compare X options,' different content may be retrieved and cited. Understanding prompt patterns helps optimize content for retrieval",
+        "<strong>Repetition penalty prevents monopoly</strong>: Repetition penalties reduce the probability of recently mentioned tokens. If a model mentions your brand once, the penalty makes it less likely to mention it again immediately. Competitors may appear in later parts of a response even if your brand dominates the initial mention"
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Temperature-Scaled Softmax",
+      "source": "Standard LLM inference",
+      "how": "The model produces logits (raw scores) for each vocabulary token. Logits are divided by temperature T, then softmax converts to probabilities. Low T sharpens (high-probability tokens dominate). High T flattens (more tokens become viable).",
+      "formula": "<span class=\"cf-fn\">P</span>(token_i) =\n  <span class=\"cf-fn\">exp</span>(<span class=\"cf-val\">logit_i</span> / <span class=\"cf-val\">T</span>) /\n  <span class=\"cf-fn\">sum</span>(<span class=\"cf-fn\">exp</span>(<span class=\"cf-val\">logit_j</span> / <span class=\"cf-val\">T</span>))\n<span class=\"cf-comment\">// T=0: greedy (argmax)</span>\n<span class=\"cf-comment\">// T=0.7: slightly creative (common default)</span>\n<span class=\"cf-comment\">// T=1.0: standard sampling</span>\n<span class=\"cf-comment\">// T>1.0: more random, creative</span>",
+      "patents": "",
+      "affects": "Controls output diversity. Low temperature = brand leader always mentioned. High temperature = more varied recommendations."
+    },
+    {
+      "name": "Top-p (Nucleus) Sampling",
+      "source": "Holtzman et al., 2020",
+      "how": "Sort tokens by probability. Include tokens from highest probability down until cumulative probability reaches threshold p. Sample from this reduced set. Adapts the effective vocabulary size per step.",
+      "formula": "<span class=\"cf-fn\">nucleus</span>(p) = <span class=\"cf-fn\">min</span> set S <span class=\"cf-kw\">where</span>\n  <span class=\"cf-fn\">sum</span>(P(token) <span class=\"cf-kw\">for</span> token <span class=\"cf-kw\">in</span> S) >= p\n<span class=\"cf-comment\">// p=0.9: top tokens covering 90% mass</span>\n<span class=\"cf-comment\">// confident step: maybe 3 tokens in nucleus</span>\n<span class=\"cf-comment\">// uncertain step: maybe 500 tokens</span>\n<span class=\"cf-comment\">// adapts vocabulary per generation step</span>",
+      "patents": "",
+      "affects": "Controls how many alternative tokens are considered. Low p = more deterministic. High p = more diverse. Affects whether niche brands appear in outputs."
+    }
+  ],
+  "pipeline": {
+    "title": "LLM Inference Pipeline",
+    "stages": [
+      {"name": "Input Assembly", "detail": "System prompt + conversation history + user message + RAG content (if applicable) assembled into the context window. Tokenized into token IDs."},
+      {"name": "Prefill Phase", "detail": "All input tokens processed in parallel through the Transformer. KV cache populated for each layer. Compute-intensive but parallelizable."},
+      {"name": "Token Generation (Autoregressive)", "detail": "One new token generated per step. Attention computed over KV cache (efficient). Logits produced for entire vocabulary (~128K tokens)."},
+      {"name": "Sampling", "detail": "Logits divided by temperature. Top-p and/or top-k filtering applied. Token sampled from resulting distribution. Repetition penalty applied."},
+      {"name": "Stopping Criteria", "detail": "Generation continues until: end-of-sequence token produced, maximum length reached, or stop sequence encountered."},
+      {"name": "Output Delivery", "detail": "Tokens decoded back to text. Streamed to user token-by-token (server-sent events) or returned as complete response."}
+    ]
+  },
+  "timeline": [
+    {"year": "2019", "type": "patent", "title": "Nucleus Sampling (Holtzman et al.)", "desc": "Top-p sampling proposed. Adapts vocabulary per step. Becomes standard for LLM text generation."},
+    {"year": "2022", "type": "event", "title": "ChatGPT: Streaming Output", "desc": "Token-by-token streaming becomes the standard UX for chat LLMs. Users see text appear word by word."},
+    {"year": "2023", "type": "event", "title": "KV Cache Optimization", "desc": "PagedAttention (vLLM), continuous batching enable serving hundreds of concurrent users. KV cache management becomes critical infrastructure."},
+    {"year": "2024", "type": "event", "title": "Speculative Decoding", "desc": "Small model drafts tokens, large model verifies. 2-3x speedup with no quality loss. Adopted by major providers."},
+    {"year": "2025", "type": "event", "title": "Extended Thinking / Chain-of-Thought", "desc": "Models generate internal reasoning tokens before the visible response. Reasoning tokens consume context but improve answer quality. OpenAI o1/o3, Claude Extended Thinking."}
+  ],
+  "contradictions": [
+    {
+      "publicSource": "AI companies (consistency claims)",
+      "publicClaim": "Our AI provides accurate, consistent answers. You can rely on its responses.",
+      "internalSource": "Sampling randomness + temperature settings",
+      "internalClaim": "At temperature > 0, every response involves random sampling. The same query produces different answers across sessions. Different API providers use different default temperatures. 'Consistency' requires temperature=0 (greedy), which most providers don't default to. Users receive probabilistically varied responses without knowing it."
+    },
+    {
+      "publicSource": "AI companies (objectivity claims)",
+      "publicClaim": "Our AI assistant provides unbiased recommendations based on the best available information.",
+      "internalSource": "Token probability from training data + system prompts",
+      "internalClaim": "Recommendations are determined by token probability, which reflects training data frequency and RLHF preferences. Brands with more training data presence have higher token probability and are recommended more often, especially at low temperatures. System prompts can override default behavior entirely. 'Best available information' means 'highest probability completion given training data and prompt.'"
+    }
+  ]
+}

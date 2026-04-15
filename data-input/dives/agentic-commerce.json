@@ -1,0 +1,204 @@
+{
+  "id": "agentic-commerce",
+  "route": "/llm/agentic-commerce",
+  "systems": ["AgenticCommerce"],
+  "hero": {
+    "title": "Agentic Commerce: When AI Agents Buy, Not Just Recommend",
+    "subtitle": "AI agents are shifting from recommending products to purchasing them autonomously. <a href=\"https://openai.com/index/introducing-operator/\">OpenAI's Operator</a> (Jan 2025, deprecated Aug 2025) gave way to <a href=\"https://openai.com/index/buy-it-in-chatgpt/\">ChatGPT Instant Checkout</a> with Stripe (4% fee, 1M+ <a href=\"https://www.shopify.com/news/ai-commerce-at-scale\">Shopify merchants</a>). Google's Shopping AI Mode uses the Shopping Graph (50B product listings, refreshed 2B times/hour) with agentic checkout via <a href=\"https://developers.googleblog.com/under-the-hood-universal-commerce-protocol-ucp/\">Universal Commerce Protocol (UCP)</a>, backed by <a href=\"https://blog.google/products/ads-commerce/agentic-commerce-ai-tools-protocol-retailers-platforms/\">20+ partners</a> including Visa, Mastercard, Shopify, Walmart, and Target. <a href=\"https://www.aboutamazon.com/news/retail/amazon-rufus\">Amazon Rufus</a> reaches 100M+ US customers but is <a href=\"https://retailtechinnovationhub.com/home/2026/1/5/rufus-and-the-ai-shopping-war-why-amazons-assistant-reveals-the-battle-for-customer-intent\">83% self-serving and only 32% accurate</a>. The <a href=\"https://arxiv.org/html/2508.02630v3\">ACES framework</a> (Columbia/Yale, 2025) reveals AI agents collapse demand onto 'modal products,' exhibit model-dependent market shares that shift dramatically between versions, and show position biases that vary by model. <a href=\"https://www.digitalcommerce360.com/2025/10/20/mckinsey-forecast-5-trillion-agentic-commerce-sales-2030/\">McKinsey projects $3-5 trillion</a> in agentic commerce by 2030. When an AI agent selects a vendor, the recommendation becomes a transaction, and brand visibility strategies must evolve from citation optimization to transactional readiness."
+  },
+  "keyInsight": {
+    "label": "Key Insight",
+    "text": "AI shopping agents create <strong>choice homogeneity</strong>: they collapse demand onto a limited set of 'modal products,' bypassing the browsing, comparison, and impulse-buying behaviors that traditional ecommerce relies on. The <a href=\"https://arxiv.org/html/2508.02630v3\">ACES study</a> (Columbia/Yale) found that <strong>market shares differ dramatically by model</strong>: Claude Opus 4.5 selected Fitbit Inspire 77% of the time while GPT-5.1 selected it only 6%. Model updates function as <strong>demand shocks</strong>, inverting position biases and reshuffling market shares overnight. Brands must now optimize for machine-readable product data, structured feeds, and real-time APIs, not just human-readable web content. The shift from 'recommend' to 'transact' means <strong>AI visibility directly equals revenue</strong>, not just awareness."
+  },
+  "pillars": [
+    {
+      "type": "patent",
+      "title": "Agent Platforms & Infrastructure",
+      "items": [
+        "<strong>OpenAI shopping evolution</strong>: <a href=\"https://openai.com/index/introducing-operator/\">Operator</a> (Jan 2025, CUA model with GPT-4o vision + RL) deprecated Aug 2025. Replaced by <a href=\"https://openai.com/index/buy-it-in-chatgpt/\">Instant Checkout</a> via Agentic Commerce Protocol with Stripe. 1M+ <a href=\"https://www.shopify.com/news/ai-commerce-at-scale\">Shopify merchants</a> (Glossier, SKIMS, Spanx, Vuori). Struggled with merchant onboarding, inaccurate product data, no multi-item carts. Pivoted to shopping research (product discovery) + retailer-specific apps that reroute to merchant sites",
+        "<strong>Google Shopping AI Mode</strong>: Gemini + Shopping Graph (50B product listings, refreshed 2B times/hour). <a href=\"https://blog.google/products/ads-commerce/agentic-commerce-ai-tools-protocol-retailers-platforms/\">Agentic checkout</a> sets size, color, budget, adds to cart on merchant's site, completes via Google Pay. <a href=\"https://developers.googleblog.com/under-the-hood-universal-commerce-protocol-ucp/\">Universal Commerce Protocol (UCP)</a> launched Jan 2026 at NRF with Shopify. 20+ partners: Adyen, American Express, Best Buy, Flipkart, Macy's, Mastercard, Stripe, Target, Visa, Walmart, Zalando. Works via API, <a href=\"https://modelcontextprotocol.io/specification/2025-11-25\">MCP</a>, or A2A transport",
+        "<strong><a href=\"https://www.perplexity.ai/hub/blog/shop-like-a-pro\">Perplexity Shopping</a></strong>: Expanded from research to purchase assistance. PayPal partnership (May 2025) for in-app checkout. Free product listing, 100% revenue retention for merchants. Claims organic results (no paid placement). Shoppers spend 57% more per order than from other AI platforms",
+        "<strong><a href=\"https://www.aboutamazon.com/news/retail/amazon-rufus\">Amazon Rufus</a></strong>: Generative AI assistant, 100M+ US customers. Recommendations <a href=\"https://retailtechinnovationhub.com/home/2026/1/5/rufus-and-the-ai-shopping-war-why-amazons-assistant-reveals-the-battle-for-customer-intent\">83% self-serving, only 32% accurate</a>. Suggests non-cheapest products when asked for cheapest. Estimated $285M operating loss (2024), projected $700M+ profit by 2025 via advertising integration",
+        "<strong>Payment protocols</strong>: <a href=\"https://investor.visa.com/news/news-details/2025/Visa-and-Partners-Complete-Secure-AI-Transactions-Setting-the-Stage-for-Mainstream-Adoption-in-2026/default.aspx\">Visa Trusted Agent Protocol</a> (Oct 2025) distinguishes legitimate AI agents from bots. <a href=\"https://www.mastercard.com/us/en/news-and-trends/stories/2025/agentic-commerce-explainer.html\">Mastercard Agent Pay</a> (Apr 2025) uses tokenized credentials. Both require AI agent verification before payments. Visa reports 450% surge in dark-web posts discussing AI agent fraud tools"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "ACES Framework: How AI Agents Choose Products",
+      "items": [
+        "<strong>Choice homogeneity</strong>: AI agents collapse demand onto a limited set of 'modal products.' In stapler categories, Amazon Basics dominated while Arrow was never selected. The long tail of products becomes invisible to AI shoppers (<a href=\"https://arxiv.org/html/2508.02630v3\">ACES study</a>)",
+        "<strong>Model-dependent market shares</strong>: Fitness watches: Claude Sonnet 4 selected Fitbit Inspire 45% vs GPT-4.1 at ~25%. Claude Opus 4.5 jumped to 77%, GPT-5.1 dropped to 6%. iPhone covers: GPT-4.1 favored Mikeke at 62.6%, GPT-5.1 selected ESR 95%. Market shares are model-specific, not universal (<a href=\"https://arxiv.org/html/2508.02630v3\">ACES study</a>)",
+        "<strong>Position bias</strong>: All models favor top-row products. Horizontal preferences diverge: GPT-4.1 favors column 1, Claude Sonnet 4 prefers middle columns, Gemini 2.5 Flash tilts rightward. GPT-4.1 and GPT-5.1 exhibit 'almost opposite' position biases (<a href=\"https://arxiv.org/html/2508.02630v3\">ACES study</a>)",
+        "<strong>Badge effects</strong>: Sponsored tags penalized across all models (10% baseline to 7.9-8.9%). 'Overall Pick' endorsement strongly rewarded (10% to 19.9-42.6%). Rating +0.1 increase lifts selection probability 15.4-20.3%. Doubling review count yields 17-37% price increase tolerance (<a href=\"https://arxiv.org/html/2508.02630v3\">ACES study</a>)",
+        "<strong>AI-optimized descriptions</strong>: Statistically significant market share gains in 33% of experiments: Claude +3.66pp, GPT-4.1 +8.37pp, Gemini 2.5 Flash +14.79pp. Office lamps showed gains from +7.1 to +80.4 percentage points (<a href=\"https://arxiv.org/html/2508.02630v3\">ACES study</a>)",
+        "<strong>Model updates as demand shocks</strong>: Gemini 2.5 Flash finalization inverted position bias from bottom-row to top-row preference. Each model update reshuffles which products win. Source: <a href=\"https://arxiv.org/html/2508.02630v3\">Columbia/Yale ACES study</a> (Aug-Dec 2025)"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "Market Impact & Consumer Behavior",
+      "items": [
+        "<strong>Traffic explosion</strong>: AI-referred traffic to US retail sites increased <a href=\"https://www.bcg.com/publications/2025/agentic-commerce-redefining-retail-how-to-respond\">4,700% YoY</a> (Jul 2025). These users spend 32% more time on site, browse 10% more pages, 27% lower bounce rate. <a href=\"https://www.shopify.com/news/ai-commerce-at-scale\">AI-referred traffic to Shopify grew 7x</a> (Jan 2025 to early 2026)",
+        "<strong>Consumer readiness</strong>: <a href=\"https://www.emarketer.com/content/faq-on-agentic-commerce-how-brands-should-act-now-compete-ai-driven-landscape\">39% of US consumers aged 18-34</a> use AI as primary product research tool (ahead of traditional search). 50%+ anticipate using AI shopping assistants by end 2025 (Adobe). Cyber Week 2025: 20% of all global orders influenced by AI agents",
+        "<strong>Trust barriers</strong>: <a href=\"https://www.euroshop-tradefair.com/en/media-news/euroshopmag/retail-technology/how-retailers-and-brands-stay-relevant-when-AI-agents-do-the-shopping\">PwC 2025: 64% of consumers</a> need at least one safeguard (money-back guarantee) to let AI purchase for them. <a href=\"https://hbr.org/2026/02/how-brands-can-adapt-when-ai-agents-do-the-shopping\">HBR identifies 5 trust-breakers</a>: misunderstanding products, acting beyond authorization, mishandling sensitive data, losing brand representation, no recovery path",
+        "<strong>LLM-to-LLM bias</strong>: <a href=\"https://www.pnas.org/doi/10.1073/pnas.2415697122\">PNAS study</a> finds LLM assistants in purchasing roles implicitly favor LLM-based agents and LLM-assisted humans over ordinary humans as trade partners. Systemic preference for AI-mediated transactions",
+        "<strong>93% zero-click</strong>: Google AI Mode sessions end without a click. When AI agents complete the transaction, there is no click at all. In-agent visibility replaces CTR as the conversion metric"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "Brand Optimization for Agentic Commerce",
+      "items": [
+        "<strong>Machine-readable product data</strong>: Structured feeds with universal taxonomies, real-time inventory/pricing APIs, machine-verifiable trust signals. If an AI agent can't parse your product data, you don't exist in agentic commerce (<a href=\"https://www.deloitte.com/us/en/Industries/consumer/articles/agentic-commerce-ai-shopping-agents-guide.html\">Deloitte</a>)",
+        "<strong>MCP/UCP integration</strong>: <a href=\"https://www.shopify.com/news/ai-commerce-at-scale\">Shopify Hydrogen 2026.1.4</a> has built-in MCP proxy at /api/mcp with zero custom setup. Every Hydrogen storefront can expose structured product data to AI agents. <a href=\"https://modelcontextprotocol.io/specification/2025-11-25\">MCP spec</a> standardizes the interface. Early adopters get indexed first",
+        "<strong>Review and rating optimization</strong>: Rating +0.1 = 15-20% higher selection probability. Doubling review count = 17-37% price premium tolerance. 'Overall Pick' badges = 2-4x selection rate. Sponsored tags are penalized (<a href=\"https://arxiv.org/html/2508.02630v3\">ACES study</a>)",
+        "<strong>Multi-model optimization</strong>: Market shares differ by model (<a href=\"https://arxiv.org/html/2508.02630v3\">ACES study</a>). Test your product visibility across ChatGPT, Claude, Gemini, and Perplexity separately. A strategy that works on GPT may fail on Claude. Model updates require re-testing",
+        "<strong>AI-optimized product descriptions</strong>: <a href=\"https://arxiv.org/html/2508.02630v3\">ACES</a> found statistically significant gains in 33% of experiments. Focus on clear, structured, factual descriptions. Avoid marketing hyperbole that models may discount. Include specifications, use cases, and comparison points",
+        "<strong>Agentic observability</strong>: Monitor how AI describes your products in real time. Build dashboards tracking brand mentions, recommendation position, and selection rates across AI platforms (<a href=\"https://www.metarouter.io/post/agentic-commerce-trends-statistics\">MetaRouter</a>). The brand that can't measure agentic visibility can't optimize it"
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Agent Selection Probability",
+      "source": "<a href=\"https://arxiv.org/html/2508.02630v3\">ACES framework</a> (Columbia/Yale, 2025)",
+      "how": "An AI agent's probability of selecting a product is a function of position on the page, badge effects, rating/review signals, price elasticity, and description quality. Each factor has model-specific weights that change between versions.",
+      "formula": "<span class=\"cf-fn\">P</span>(select | product, model) =\n  <span class=\"cf-fn\">f</span>(\n    <span class=\"cf-val\">position_bias</span>(model),\n    <span class=\"cf-val\">badge_effect</span>: sponsored=-2.1%, pick=+9.9-32.6%,\n    <span class=\"cf-val\">rating</span>: +0.1 = +15.4-20.3%,\n    <span class=\"cf-val\">review_count</span>: 2x = +17-37% price tolerance,\n    <span class=\"cf-val\">price_elasticity</span>: -1.6 to -2.2,\n    <span class=\"cf-val\">description_quality</span>: +3.66 to +14.79pp\n  )\n<span class=\"cf-comment\">// Model updates reshuffle ALL weights</span>\n<span class=\"cf-comment\">// Position bias direction varies by model</span>",
+      "patents": "",
+      "affects": "Determines which product an AI agent selects for purchase. Unlike search rankings, agent selection is binary: selected or invisible."
+    },
+    {
+      "name": "Agentic Commerce Market Projection",
+      "source": "<a href=\"https://www.digitalcommerce360.com/2025/10/20/mckinsey-forecast-5-trillion-agentic-commerce-sales-2030/\">McKinsey</a> (Oct 2025), Morgan Stanley, Bain, Gartner",
+      "how": "Multiple analyst projections converge on agentic commerce reaching significant share of ecommerce by 2030. The range reflects uncertainty about adoption curves, trust barriers, and regulatory frameworks.",
+      "formula": "<span class=\"cf-fn\">MarketSize</span>(2030) =\n  McKinsey: <span class=\"cf-val\">$3-5T globally</span> (US B2C: $900B-$1T)\n  Morgan Stanley: <span class=\"cf-val\">~50% of shoppers</span>, ~25% of spending\n  Bain: <span class=\"cf-val\">25% of US ecommerce</span>\n  Gartner: <span class=\"cf-val\">25% of enterprise SW purchases</span> by 2026\n<span class=\"cf-comment\">// Current (2025): $547M (<a href=\"https://sanbi.ai/blog/agentic-shopping-market-trends\">Sanbi AI</a>)</span>\n<span class=\"cf-comment\">// 20% of Cyber Week 2025 orders AI-influenced</span>",
+      "patents": "",
+      "affects": "The scale of the opportunity. Brands not optimized for agentic commerce by 2028 risk losing access to 25-50% of the ecommerce market."
+    },
+    {
+      "name": "Model-Specific Market Share Variance",
+      "source": "<a href=\"https://arxiv.org/html/2508.02630v3\">ACES study</a> product selection data",
+      "how": "Measures how much a product's market share varies across different AI models. High variance means the product's success is model-dependent rather than universally strong. Brands must optimize across models, not just one.",
+      "formula": "<span class=\"cf-fn\">Variance</span>(brand) =\n  <span class=\"cf-fn\">max</span>(share_across_models) -\n  <span class=\"cf-fn\">min</span>(share_across_models)\n<span class=\"cf-comment\">// Fitbit Inspire: 77% (Claude) - 6% (GPT-5.1) = 71pp variance</span>\n<span class=\"cf-comment\">// ESR iPhone cover: 95% (GPT-5.1) - ~10% (others) = ~85pp variance</span>\n<span class=\"cf-comment\">// High variance = model-dependent brand, needs multi-model strategy</span>",
+      "patents": "",
+      "affects": "A brand dominating on one model may be invisible on another. Multi-model testing and optimization is essential for consistent agentic commerce performance."
+    }
+  ],
+  "pipeline": {
+    "title": "Agentic Commerce Evolution Pipeline",
+    "stages": [
+      {
+        "name": "Research Phase (2024)",
+        "detail": "AI assists product discovery. <a href=\"https://www.aboutamazon.com/news/retail/amazon-rufus\">Amazon Rufus</a> (Feb 2024) reaches 100M+ users. ChatGPT browsing helps users compare products. No direct purchasing capability."
+      },
+      {
+        "name": "Operator Phase (Jan-Aug 2025)",
+        "detail": "<a href=\"https://openai.com/index/introducing-operator/\">OpenAI Operator</a> uses CUA model (GPT-4o vision + RL) to navigate websites and complete purchases. Partnerships with DoorDash, Instacart, OpenTable. User confirms payment. Deprecated Aug 2025."
+      },
+      {
+        "name": "Checkout Phase (Late 2025)",
+        "detail": "<a href=\"https://openai.com/index/buy-it-in-chatgpt/\">ChatGPT Instant Checkout</a> via Stripe (4% fee). 1M+ <a href=\"https://www.shopify.com/news/ai-commerce-at-scale\">Shopify merchants</a>. Google launches Shopping AI Mode with agentic checkout. <a href=\"https://www.perplexity.ai/hub/blog/shop-like-a-pro\">Perplexity</a> adds PayPal checkout. <a href=\"https://investor.visa.com/news/news-details/2025/Visa-and-Partners-Complete-Secure-AI-Transactions-Setting-the-Stage-for-Mainstream-Adoption-in-2026/default.aspx\">Visa</a> and <a href=\"https://www.mastercard.com/us/en/news-and-trends/stories/2025/agentic-commerce-explainer.html\">Mastercard</a> launch agent payment protocols."
+      },
+      {
+        "name": "Protocol Phase (Jan 2026)",
+        "detail": "Google launches <a href=\"https://developers.googleblog.com/under-the-hood-universal-commerce-protocol-ucp/\">Universal Commerce Protocol (UCP)</a> at NRF with 20+ partners. <a href=\"https://www.shopify.com/news/ai-commerce-at-scale\">Shopify adds MCP proxy</a> to Hydrogen. Standardized APIs replace screen-scraping. Machine-readable product data becomes essential."
+      },
+      {
+        "name": "Optimization Phase (2026)",
+        "detail": "<a href=\"https://arxiv.org/html/2508.02630v3\">ACES research</a> reveals model-specific biases and selection patterns. Brands begin multi-model testing. AI-optimized product descriptions show measurable market share gains. Agentic observability tools emerge."
+      },
+      {
+        "name": "Scale Phase (2027-2030)",
+        "detail": "<a href=\"https://www.digitalcommerce360.com/2025/10/20/mckinsey-forecast-5-trillion-agentic-commerce-sales-2030/\">McKinsey projects $3-5T</a> by 2030. Morgan Stanley: ~50% of shoppers use AI agents. Brands without agentic commerce readiness lose access to 25-50% of ecommerce market. AI agent selection becomes the primary purchase funnel."
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2024-02",
+      "type": "event",
+      "title": "Amazon Rufus Launch",
+      "desc": "Generative AI shopping assistant rolls out to 100M+ US customers. <a href=\"https://retailtechinnovationhub.com/home/2026/1/5/rufus-and-the-ai-shopping-war-why-amazons-assistant-reveals-the-battle-for-customer-intent\">83% self-serving recommendations, only 32% accurate</a>."
+    },
+    {
+      "year": "2025-01",
+      "type": "event",
+      "title": "OpenAI Operator",
+      "desc": "<a href=\"https://openai.com/index/introducing-operator/\">CUA model</a> (GPT-4o vision + RL) navigates websites to complete purchases. Partners: DoorDash, Instacart, OpenTable, Priceline, StubHub."
+    },
+    {
+      "year": "2025-04",
+      "type": "event",
+      "title": "Mastercard Agent Pay",
+      "desc": "<a href=\"https://www.mastercard.com/us/en/news-and-trends/stories/2025/agentic-commerce-explainer.html\">Tokenized credential system</a> for AI agent payments. Requires agent verification before initiating transactions."
+    },
+    {
+      "year": "2025-05",
+      "type": "event",
+      "title": "Perplexity + PayPal",
+      "desc": "<a href=\"https://www.perplexity.ai/hub/blog/shop-like-a-pro\">In-app checkout partnership</a>. 57% higher order values than other AI platforms. Free product listing with 100% merchant revenue retention."
+    },
+    {
+      "year": "2025-08",
+      "type": "event",
+      "title": "ACES Study Published",
+      "desc": "<a href=\"https://arxiv.org/html/2508.02630v3\">Columbia/Yale research</a> reveals AI agents collapse demand onto modal products, exhibit model-dependent market shares, and show position biases."
+    },
+    {
+      "year": "2025-10",
+      "type": "event",
+      "title": "Visa Trusted Agent Protocol",
+      "desc": "<a href=\"https://investor.visa.com/news/news-details/2025/Visa-and-Partners-Complete-Secure-AI-Transactions-Setting-the-Stage-for-Mainstream-Adoption-in-2026/default.aspx\">Open framework</a> distinguishing legitimate AI agents from bots. Reports 450% surge in dark-web AI agent fraud discussion."
+    },
+    {
+      "year": "2025-11",
+      "type": "event",
+      "title": "ChatGPT Instant Checkout",
+      "desc": "<a href=\"https://openai.com/index/buy-it-in-chatgpt/\">Agentic Commerce Protocol</a> with Stripe. 4% transaction fee. 1M+ Shopify merchants. Later pivots to shopping research + retailer apps."
+    },
+    {
+      "year": "2025-12",
+      "type": "event",
+      "title": "Cyber Week 2025",
+      "desc": "20% of all global orders influenced by AI agents/shopping assistants. <a href=\"https://www.bcg.com/publications/2025/agentic-commerce-redefining-retail-how-to-respond\">AI-referred retail traffic up 4,700% YoY</a>."
+    },
+    {
+      "year": "2026-01",
+      "type": "event",
+      "title": "Google UCP Launch",
+      "desc": "<a href=\"https://developers.googleblog.com/under-the-hood-universal-commerce-protocol-ucp/\">Universal Commerce Protocol</a> launched at NRF with <a href=\"https://www.shopify.com/news/ai-commerce-at-scale\">Shopify</a> and <a href=\"https://blog.google/products/ads-commerce/agentic-commerce-ai-tools-protocol-retailers-platforms/\">20+ partners</a>. Standardizes discovery, cart, checkout, post-purchase for AI agents."
+    },
+    {
+      "year": "2030",
+      "type": "event",
+      "title": "McKinsey Projection",
+      "desc": "Agentic commerce <a href=\"https://www.digitalcommerce360.com/2025/10/20/mckinsey-forecast-5-trillion-agentic-commerce-sales-2030/\">projected at $3-5T globally</a>. 50% of online shoppers using AI agents. 25% of US ecommerce sales AI-mediated."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Amazon",
+      "publicClaim": "<a href=\"https://www.aboutamazon.com/news/retail/amazon-rufus\">Rufus</a> helps customers find the best products through unbiased AI-powered recommendations.",
+      "internalSource": "Independent analysis",
+      "internalClaim": "Rufus recommendations are <a href=\"https://retailtechinnovationhub.com/home/2026/1/5/rufus-and-the-ai-shopping-war-why-amazons-assistant-reveals-the-battle-for-customer-intent\">83% self-serving and only 32% accurate</a>. Suggests non-cheapest products when asked for cheapest options."
+    },
+    {
+      "publicSource": "Perplexity",
+      "publicClaim": "<a href=\"https://www.perplexity.ai/hub/blog/shop-like-a-pro\">Product listings are organic</a>. Brands cannot pay for placement.",
+      "internalSource": "Business model",
+      "internalClaim": "Previously experimented with sponsored answers (launched Nov 2024, partners included Indeed, Whole Foods). Abandoned advertising Feb 2026 after head of ad sales departed."
+    },
+    {
+      "publicSource": "OpenAI",
+      "publicClaim": "<a href=\"https://openai.com/index/buy-it-in-chatgpt/\">Instant Checkout</a> enables seamless AI-powered purchasing across 1M+ merchants.",
+      "internalSource": "Operational reality",
+      "internalClaim": "Struggled with merchant onboarding, inaccurate product data, no multi-item carts or loyalty integration. Pivoted to shopping research and retailer-specific apps that reroute to merchant sites."
+    },
+    {
+      "publicSource": "AI Industry",
+      "publicClaim": "AI shopping agents provide unbiased, consumer-first product recommendations.",
+      "internalSource": "<a href=\"https://arxiv.org/html/2508.02630v3\">ACES study</a> + <a href=\"https://www.pnas.org/doi/10.1073/pnas.2415697122\">PNAS research</a>",
+      "internalClaim": "AI agents exhibit model-specific position biases, collapse demand onto modal products, and LLMs in purchasing roles implicitly favor LLM-assisted partners over ordinary humans."
+    }
+  ]
+}

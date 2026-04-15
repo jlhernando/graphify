@@ -102,7 +102,7 @@
       },
       {
         "name": "Neural Scoring",
-        "detail": "Feed-forward neural network computes query-document relevance for top candidates"
+        "detail": "Feed-forward neural network computes query-document relevance. RankBrain is cheap enough to score all ~10K Ascorer candidates (runs on ALL queries). DeepRank (Transformer-based) only scores the top 200-300. Both adjust Ascorer scores; they do not replace them"
       },
       {
         "name": "Score Combination",
@@ -140,6 +140,26 @@
       "type": "doj",
       "title": "DOJ Confirms Active",
       "desc": "Nayak testifies RankBrain still active. 'DeepRank is taking on more of that capability' but RankBrain remains for efficiency."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google (2015 announcement + public communications)",
+      "publicClaim": "RankBrain is the third most important ranking factor. AI is transforming how Google understands queries.",
+      "internalSource": "DOJ: Nayak testimony (PXR0357) + HJ Kim (PXR0356)",
+      "internalClaim": "RankBrain is a feed-forward neural network using Word2Vec, not a modern Transformer or LLM. Only 2 ML systems exist in core ranking (RankBrain + DeepRank, per DOJ). The '100+ signals' composing Ascorer's score are mostly hand-crafted. The 'AI transformation' narrative overstates the role of ML in ranking: NavBoost ('just a big table') was called 'more powerful than the rest of ranking combined.'"
+    },
+    {
+      "publicSource": "Google (public emphasis post-2019)",
+      "publicClaim": "BERT represents a major leap in understanding language for search. AI-powered understanding is core to how Google works.",
+      "internalSource": "DOJ: Nayak testimony on DeepRank scope",
+      "internalClaim": "DeepRank (BERT-based) only scores the final 20-30 documents, not the full candidate set. RankBrain (feed-forward NN) handles all queries but produces modest re-ranking adjustments. The vast majority of ranking is determined by Ascorer's non-ML combination of T*/Q*/P* before any neural system touches the results."
+    },
+    {
+      "publicSource": "Google (stopped discussing RankBrain after BERT launch)",
+      "publicClaim": "Implicit message: BERT/MUM superseded RankBrain. Modern AI has replaced older approaches.",
+      "internalSource": "DOJ: Nayak testimony 2023",
+      "internalClaim": "Nayak confirmed RankBrain is 'still active' in 2023. It runs on ALL queries because it is cheap (feed-forward NN). DeepRank is 'taking on more of that capability' but has not replaced it. Google stopped promoting RankBrain not because it was replaced, but because the narrative shifted to newer, more impressive-sounding systems."
     }
   ]
 }

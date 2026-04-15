@@ -1,0 +1,293 @@
+{
+  "id": "craps",
+  "route": "/craps",
+  "systems": [
+    "CRAPS",
+    "NavBoost",
+    "Glue",
+    "InstantGlue"
+  ],
+  "hero": {
+    "title": "CRAPS: Chrome Realtime Aggregated Page Signals",
+    "subtitle": "CRAPS is Google's real-time behavioral signal processing system that transforms raw Chrome browser data and click interactions into structured ranking signals. The API leak exposed six protobuf models (CrapsClickSignals, CrapsData, CrapsDevice, FeatureCrapsData, StatsWithWeightsProto, GlueVoterTokenBitmapMessage) with 50+ attributes. CRAPS operates at three hierarchy levels (URL, host, domain), segments signals by device, geography, and browser tier, and feeds both NavBoost's lookup table and the RealTimeBoost twiddler with ~10-minute latency."
+  },
+  "keyInsight": {
+    "label": "Key Insight from API Leak + DOJ Trial",
+    "text": "CRAPS is not a standalone ranking system. It is the <strong>data processing layer</strong> between raw user behavior (Chrome visits, clicks, scrolls, purchases) and the ranking signals that Ascorer consumes. The DOJ confirmed it as a <strong>core system</strong> within NavBoost (QualityNavboostCrapsCrapsData module). The API leak revealed CRAPS operates at three <strong>patternLevels</strong>: Level 0 (exact URL), Level 1 (host), Level 2 (domain), meaning click signals propagate upward from individual pages to entire domains. The <strong>StatsWithWeightsProto</strong> model (15 statistical attributes) measures click quality <strong>consistency</strong> across all URLs in a domain, not just averages. A domain with high mean engagement but high variance scores worse than one with moderate but consistent engagement."
+  },
+  "pillars": [
+    {
+      "type": "doj",
+      "title": "Signals, Core",
+      "items": [
+        "<strong>doj:craps</strong> - Click and Results Prediction System. Processes aggregated click data into ranking adjustments and demotions. Core integration point for weighted user signals within NavBoost. Module: QualityNavboostCrapsCrapsData. Confirmed as core system (PXR0357, Nayak interview; UPX0197, Grushetsky)",
+        "<strong>crapsNewUrlSignals</strong> - Encoded URL-level click and impression data within the CRAPS system for per-page behavioral scoring. Solves the cold-start problem: fresh URLs without historical NavBoost data receive immediate engagement metrics from Chrome visits (DOJ: doj:hobo-mapping-updates)",
+        "<strong>crapsNewHostSignals</strong> - Encoded host-level click and impression data within the CRAPS system for domain-level behavioral scoring. Aggregates Chrome browsing behavior across an entire domain (DOJ: doj:hobo-mapping-updates)",
+        "<strong>Chrome data feeds ranking</strong> - Form submissions (chromeFormSubmissions), scrolling intensity (chromeScrollingIntensity), purchase activity (chromePurchaseActivity), unique views (uniqueChromeViews), total Chrome integration (chromeInTotal), and transition clicks (chrome_trans_clicks) all feed the CRAPS processing pipeline",
+        "<strong>CRAPS predictions listed as core popularity signal</strong> - Infrastructure documentation confirms CRAPS predictions as a primary component of the popularity signal pipeline alongside NavBoost click aggregation"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "CrapsClickSignals (10 Attributes)",
+      "items": [
+        "<strong>squashedClicks / unsquashedClicks</strong> - Click counts with and without squashing (deduplication/capping per user). Squashing prevents a single user's repeated clicks from inflating a URL's score",
+        "<strong>squashedImpressions / unsquashedImpressions</strong> - Impression counts (SERP appearances) with and without user-level squashing. The denominator for CTR-derived signals",
+        "<strong>goodClicks</strong> - Positive engagement clicks (long dwell time, task completion). The primary positive signal in click classification",
+        "<strong>badClicks</strong> - Negative signals (quick bounces, pogo-sticking back to SERP). Pogo-sticking is the strongest negative signal",
+        "<strong>lastLongestClicks</strong> - Session's longest click duration. Strongest individual satisfaction proxy: the final result a user spent significant time on before ending their session",
+        "<strong>clickDissatisfaction</strong> - Penalty metric for users who continue searching after clicking a result. Quantifies the gap between expected and actual satisfaction"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "CrapsData (22 Attributes)",
+      "items": [
+        "<strong>patternLevel</strong> - URL abstraction hierarchy for signal inheritance. Level 0: full URL (exact page). Level 1: host pattern (p://example.com). Level 2: domain pattern (p://def.ghi). Click signals propagate from pages up to domain level",
+        "<strong>sliceTag</strong> - Flexible segmentation key for ad-hoc signal slicing by device, country, locale, or custom dimensions. Enables arbitrary experimental signal cuts",
+        "<strong>mobileSignals</strong> - Separate CrapsClickSignals instance from tier 1/2 mobile interfaces in QSessions. Not just device slicing but independent mobile click signal computation",
+        "<strong>CrapsDevice.uxTier</strong> - Browser capability tier: 1 = modern browsers, 2 = middle tier, 3 = very old browsers. Disproportionate low-tier clicks may flag automated manipulation (bots use outdated user agents)",
+        "<strong>CrapsDevice.os</strong> - Operating system tracked per click session, enabling OS-level signal segmentation",
+        "<strong>packedIpAddress</strong> - Network byte order IP string used by CrapsIpPrior system (references internal craps-ip-prior.h). Enables IP-level reputation scoring",
+        "<strong>unscaledIpPriorBadFraction</strong> - IP-level reputation score before linear scaling/offset/min-max transformation (references craps-penalty.cc). IP block reputation may explain shared hosting ranking disadvantages"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "StatsWithWeightsProto (15 Attributes)",
+      "items": [
+        "<strong>StatsWithWeightsProto</strong> - Statistical distribution model measuring click quality consistency across all URLs within a patternLevel (domain/host/URL). Fields: n (sample size), weightedN, mean, median, stddev, variance, varOfMean, stdError, hi, lo, pc10, pc25, pc75, pc90, kind",
+        "<strong>Consistency over spikes</strong> - A domain with median good-click ratio 0.6 and tight standard deviation signals consistently strong quality. Same mean but massive standard deviation signals inconsistent quality, likely triggering site-wide demotion",
+        "<strong>Percentile breakpoints</strong> - pc10 (10th percentile) captures worst-performing pages. A domain's weakest pages drag down the entire profile. Best-performing pages alone are insufficient if the bottom 10% performs poorly",
+        "<strong>patternSccStats</strong> - Links StatsWithWeightsProto to CrapsData, analyzing the distribution of click quality across URLs within each pattern level"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "Anti-Manipulation Signals",
+      "items": [
+        "<strong>voterTokenCount</strong> - Number of distinct voter tokens (lower bound on distinct users). 500 clicks from 3 tokens = red flag; 500 clicks from 480 tokens = healthy organic. Suppressed below minimum user threshold for privacy",
+        "<strong>GlueVoterTokenBitmapMessage</strong> - Bitmap-based voter deduplication structure with two attributes. Enables compact representation of unique user identifiers for anti-fraud detection",
+        "<strong>CrapsIpPrior</strong> - IP-level reputation scoring within NavBoost's CRAPS system. packedIpAddress maps to unscaledIpPriorBadFraction, assigning bad-click probability to IP ranges before scaling. Shared hosting on low-reputation IP blocks = ranking drag",
+        "<strong>uxTier manipulation detection</strong> - Browser capability tier 3 (very old browsers) correlates with bot traffic. Disproportionate tier-3 clicks on a URL triggers scrutiny"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "Real-Time CRAPS Signals",
+      "items": [
+        "<strong>crapsNewUrlSignals</strong> - Chrome Realtime Aggregated Page Signals for new/fresh URLs. Immediate engagement metrics for recently discovered pages that lack historical NavBoost data",
+        "<strong>crapsAbsoluteHostSignals</strong> - Chrome Realtime Aggregated Page Signals at host level. Real-time site-level quality signals influencing all pages on that host",
+        "<strong>crapsNewNsrSignal</strong> - Site-level NSR (Normalized Site Rank) recomputed using CRAPS data in near-real-time. Site quality scores update rapidly when Chrome engagement patterns shift",
+        "<strong>RealTimeBoost</strong> - Re-ranking twiddler incorporating real-time signals including incoming Chrome visits. Applied as post-retrieval boost for content receiving sudden engagement spikes before the full NavBoost pipeline processes the data. Latency: ~10 minutes via InstantGlue",
+        "<strong>QualityNavboostCrapsAgingData</strong> - Click data segmented into time-based buckets: lastWeekBucket, lastMonthBucket for trend analysis. Enables temporal decay and freshness detection within CRAPS"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "10 Patents",
+      "items": [
+        "Click-based ranking: ranking documents based on aggregated click data patterns over time (<a href=\"https://patents.google.com/patent/US8661029\">US8661029</a>)",
+        "Behavioral ranking modification: modifying search result ranking based on implicit user feedback signals including view duration and click patterns (<a href=\"https://patents.google.com/patent/US8874555\">US8874555</a>)",
+        "Rapid behavior-based index updates: propagating user behavior signals to index in near-real-time rather than batch processing (<a href=\"https://patents.google.com/patent/US8244701\">US8244701</a>)",
+        "User behavior feature ranking: ranking using click probability models trained on combined user behavior and document feature data (<a href=\"https://patents.google.com/patent/US7716225\">US7716225</a>)",
+        "Implicit feedback ranking: long clicks vs short clicks as relevance signals, modifying ranking based on view duration (<a href=\"https://patents.google.com/patent/US11816114\">US11816114</a>)",
+        "Site quality via dwell time: measuring pogo-sticking and dwell time patterns for site-level quality assessment (<a href=\"https://patents.google.com/patent/US9195944\">US9195944</a>)",
+        "Category-normalized dwell time: evaluating dwell time relative to content category peers, not globally. Direct URL inputs get a 1.5x duration boost (<a href=\"https://patents.google.com/patent/US9514194\">US9514194</a>)",
+        "Automated satisfaction measurement: systematic evaluation of user satisfaction from search result interactions (<a href=\"https://patents.google.com/patent/US7937340\">US7937340</a>)",
+        "Click prediction unification: Eric Lehman's 'Predictionosaurus Clickus' system for predicting which results users will click and boosting those results (<a href=\"https://patents.google.com/patent/US9684697\">US9684697</a>)",
+        "Document classification from user inputs: classifying documents based on aggregated user interaction patterns rather than content analysis alone (<a href=\"https://patents.google.com/patent/US7769751\">US7769751</a>)"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "Signal Hierarchy and Propagation",
+      "items": [
+        "<strong>Three-level signal propagation</strong>: CRAPS computes signals at URL level (patternLevel 0), then aggregates to host level (1), then domain level (2). A strong page lifts its host; a weak page drags down its domain. This is how a few low-quality pages can demote an entire site",
+        "<strong>Consistency beats spikes</strong>: StatsWithWeightsProto measures variance, not just mean. A domain where 90% of pages have strong engagement but 10% have high bounce rates will score worse than a domain with uniformly moderate engagement. The pc10 (10th percentile) is the most dangerous metric: your worst pages define your floor",
+        "<strong>IP reputation as hidden factor</strong>: CrapsIpPrior assigns a bad-click fraction to IP ranges. Sites on shared hosting with low-reputation IP neighbors inherit a ranking penalty. This explains why dedicated hosting or CDN migration sometimes produces unexplained ranking improvements",
+        "<strong>Mobile signals are independently computed</strong>: mobileSignals in CrapsData is a separate CrapsClickSignals instance, not a filter on desktop data. Mobile and desktop ranking signals diverge at the CRAPS level, confirming that mobile-first indexing uses genuinely different behavioral data",
+        "<strong>Bot detection via browser tier</strong>: CrapsDevice.uxTier classifies browsers into 3 tiers. Click manipulation using outdated browser signatures (tier 3) is trivially detectable. Sophisticated click manipulation must use modern browser fingerprints (tier 1) and diverse voterTokens"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "Cold-Start and Freshness",
+      "items": [
+        "<strong>Fresh content bypasses NavBoost via CRAPS</strong>: crapsNewUrlSignals provides immediate engagement metrics for pages without historical NavBoost data. Combined with RealTimeBoost twiddler (~10 min latency via InstantGlue), fresh content from high-engagement domains can rank within minutes of publishing",
+        "<strong>NSR updates in near-real-time</strong>: crapsNewNsrSignal recomputes Normalized Site Rank using live CRAPS data. A viral article can temporarily boost an entire domain's quality score before the batch NSR recomputation runs",
+        "<strong>Aging buckets create decay curves</strong>: QualityNavboostCrapsAgingData segments clicks into lastWeekBucket and lastMonthBucket. Recent engagement is weighted more heavily than older data, creating a natural decay that requires sustained traffic to maintain rankings",
+        "<strong>Chrome visits as the fastest signal path</strong>: Direct Chrome browser visits feed CRAPS before any search interaction occurs. A page going viral on social media generates Chrome visit signals that can influence rankings before users even search for related queries"
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "CRAPS Signal Transform",
+      "source": "DOJ + API Leak: Core signal processing",
+      "how": "Transforms raw click data from Glue into structured ranking signals at three hierarchy levels. URL-level signals (patternLevel 0) are aggregated to host (1) and domain (2). Each level computes CrapsClickSignals (goodClicks, badClicks, lastLongestClicks, clickDissatisfaction) plus statistical distributions via StatsWithWeightsProto.",
+      "formula": "<span class=\"cf-fn\">CRAPS</span>(url) = <span class=\"cf-fn\">transform</span>(\n  <span class=\"cf-val\">goodClicks</span>, <span class=\"cf-val\">badClicks</span>,\n  <span class=\"cf-val\">lastLongestClicks</span>, <span class=\"cf-val\">clickDissatisfaction</span>\n) &rarr; ranking_modifier\n<span class=\"cf-comment\">// patternLevel 0: URL, 1: host, 2: domain</span>\n<span class=\"cf-comment\">// signals propagate upward: URL → host → domain</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8661029\">US8661029</a> (click-based ranking), <a href=\"https://patents.google.com/patent/US8874555\">US8874555</a> (behavioral ranking modification), <a href=\"https://patents.google.com/patent/US11816114\">US11816114</a> (implicit feedback)",
+      "affects": "Affected by: all user engagement signals. Click quality, dwell time, pogo-sticking, and session behavior directly determine the ranking modifier applied."
+    },
+    {
+      "name": "StatsWithWeightsProto Consistency Score",
+      "source": "API Leak: Domain quality consistency",
+      "how": "Computes 15 statistical measures across all URLs within a patternLevel to assess engagement consistency. Domains with tight standard deviation (consistent quality across pages) score better than domains with high variance even at the same mean. The pc10 (10th percentile) captures worst-performing pages.",
+      "formula": "<span class=\"cf-fn\">ConsistencyScore</span>(domain) = {\n  n, weightedN, mean, median,\n  stddev, variance, varOfMean, stdError,\n  hi, lo, pc10, pc25, pc75, pc90\n}\n<span class=\"cf-comment\">// pc10 = floor score: worst pages define domain quality</span>\n<span class=\"cf-comment\">// low variance + high median = strongest signal</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US9195944\">US9195944</a> (site quality scoring via dwell time)",
+      "affects": "Affected by: page-level quality variance. Pruning low-performing pages improves domain-wide consistency scores."
+    },
+    {
+      "name": "CrapsIpPrior",
+      "source": "API Leak: IP reputation scoring",
+      "how": "Assigns a bad-click fraction to IP ranges using packedIpAddress. The unscaledIpPriorBadFraction score undergoes linear scaling, offset, and min-max transformation (craps-penalty.cc) before being applied as a ranking modifier. Sites on IP ranges with historically high bad-click ratios inherit a penalty.",
+      "formula": "<span class=\"cf-fn\">IpPrior</span>(ip) = <span class=\"cf-fn\">scale</span>(\n  <span class=\"cf-val\">unscaledIpPriorBadFraction</span>(ip)\n)  <span class=\"cf-comment\">// via craps-penalty.cc</span>\n<span class=\"cf-comment\">// shared hosting penalty: neighbors' bad clicks affect you</span>",
+      "patents": "",
+      "affects": "Affected by: hosting environment. Dedicated IP or CDN avoids penalty inheritance from bad neighbors."
+    },
+    {
+      "name": "RealTimeBoost",
+      "source": "API Leak: Real-time re-ranking twiddler",
+      "how": "Post-retrieval re-ranking twiddler that applies real-time Chrome visit data and CRAPS signals before the full NavBoost batch pipeline processes. Operates via InstantGlue with ~10 minute latency. Uses crapsNewUrlSignals (URL-level), crapsAbsoluteHostSignals (host-level), and crapsNewNsrSignal (site-level NSR recomputation).",
+      "formula": "<span class=\"cf-fn\">RealTimeBoost</span>(url) = <span class=\"cf-fn\">twiddler</span>(\n  <span class=\"cf-val\">crapsNewUrlSignals</span>,\n  <span class=\"cf-val\">crapsAbsoluteHostSignals</span>,\n  <span class=\"cf-val\">crapsNewNsrSignal</span>\n)  <span class=\"cf-comment\">// latency: ~10 min via InstantGlue</span>\n<span class=\"cf-comment\">// solves cold-start: fresh URLs get immediate signals</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US8244701\">US8244701</a> (rapid behavior-based index updates)",
+      "affects": "Affected by: real-time engagement velocity. Sudden Chrome visit spikes trigger immediate ranking boosts before batch NavBoost catches up."
+    },
+    {
+      "name": "Click Squashing",
+      "source": "API Leak: Anti-manipulation normalization",
+      "how": "Normalizes click counts by applying per-user deduplication (squashing). squashedClicks caps the influence of any single user's repeated interactions, while unsquashedClicks retains raw counts for statistical analysis. The ratio squashedClicks/unsquashedClicks itself is an anti-manipulation signal: a low ratio indicates concentrated click sources.",
+      "formula": "<span class=\"cf-fn\">squashedClicks</span>(url) = <span class=\"cf-fn\">cap</span>(\n  clicks_per_user, <span class=\"cf-val\">max_per_voter</span>\n)\n<span class=\"cf-fn\">manipulation_signal</span> = <span class=\"cf-val\">squashedClicks</span> / <span class=\"cf-val\">unsquashedClicks</span>\n<span class=\"cf-comment\">// low ratio = concentrated sources = suspicious</span>\n<span class=\"cf-comment\">// voterTokenCount cross-validates diversity</span>",
+      "patents": "Patents: <a href=\"https://patents.google.com/patent/US7937340\">US7937340</a> (automated satisfaction measurement)",
+      "affects": "Affected by: user diversity. Organic traffic from diverse users produces healthy squash ratios. Manipulation attempts concentrate clicks from few voters."
+    }
+  ],
+  "pipeline": {
+    "title": "CRAPS in the Ranking Pipeline",
+    "stages": [
+      {
+        "name": "1. Raw Data Collection (Glue)",
+        "detail": "Glue logs every SERP interaction: query text, location, device, layout, clicks, hovers, scrolls, swipes, dwell time. Chrome browser independently reports visits, form submissions, scrolling intensity, purchase activity. All data tagged with voterTokens and CrapsDevice metadata (uxTier, OS, IP)."
+      },
+      {
+        "name": "2. CRAPS Signal Processing",
+        "detail": "Raw Glue data is transformed into CrapsClickSignals (goodClicks, badClicks, lastLongestClicks, clickDissatisfaction, squashed/unsquashed counts). Signals computed at three patternLevels: URL (0), host (1), domain (2). Segmented by sliceTag (device, country, locale). Mobile signals computed independently."
+      },
+      {
+        "name": "3. Statistical Aggregation (StatsWithWeightsProto)",
+        "detail": "For each patternLevel, CRAPS computes a 15-attribute statistical distribution across all child URLs. Measures mean, median, standard deviation, variance, and percentile breakpoints (pc10 through pc90). This consistency score determines whether a domain's quality is uniform or variable."
+      },
+      {
+        "name": "4. Anti-Manipulation Filtering",
+        "detail": "voterTokenCount validates user diversity. CrapsIpPrior applies IP-level reputation scoring via craps-ip-prior.h and craps-penalty.cc. CrapsDevice.uxTier flags suspicious browser tier distributions. GlueVoterTokenBitmapMessage provides compact user deduplication. Click squashing caps per-user influence."
+      },
+      {
+        "name": "5. Real-Time Path (InstantGlue → RealTimeBoost)",
+        "detail": "For high-priority content, InstantGlue delivers engagement data with ~10-minute latency. RealTimeBoost twiddler applies crapsNewUrlSignals, crapsAbsoluteHostSignals, and crapsNewNsrSignal as post-retrieval re-ranking before the batch NavBoost pipeline runs. Solves cold-start for fresh URLs."
+      },
+      {
+        "name": "6. Batch Path (NavBoost Table)",
+        "detail": "CRAPS signals feed into the main NavBoost lookup table. Updated on a rolling 13-month window (pre-2017: 18 months). QualityNavboostCrapsAgingData segments into temporal buckets (lastWeekBucket, lastMonthBucket) for trend analysis and decay. This is the primary path for established content."
+      },
+      {
+        "name": "7. Ranking Integration (Ascorer)",
+        "detail": "CRAPS-derived signals are consumed by Ascorer as part of the ABC framework (Authority-Body-Clicks). Click signals (C component) combine with topicality (T*), quality (Q*), and authority to produce final IR scores. CRAPS predictions are listed as a core popularity signal in the infrastructure pipeline."
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2003",
+      "type": "patent",
+      "title": "Early Click Ranking Patents",
+      "desc": "US7716225 filed: ranking documents using click probability models trained on user behavior and feature data. Foundation for behavioral ranking at Google."
+    },
+    {
+      "year": "2005",
+      "type": "event",
+      "title": "NavBoost Created by HJ Kim",
+      "desc": "NavBoost created as HJ Kim's second signal project (PXR0356). Initially a simple click aggregation table that would grow to become 'more powerful than the rest of ranking combined' (Grushetsky, UPX0197)."
+    },
+    {
+      "year": "2008",
+      "type": "patent",
+      "title": "Click-Based Ranking Formalized",
+      "desc": "US8661029 filed: ranking based on aggregated click data patterns over time. US7937340 granted: automated satisfaction measurement for web search."
+    },
+    {
+      "year": "2010",
+      "type": "patent",
+      "title": "Rapid Behavior Updates",
+      "desc": "US8244701: rapid behavior-based index updates enabling near-real-time signal propagation. Foundation for the InstantGlue and RealTimeBoost pipeline."
+    },
+    {
+      "year": "2014",
+      "type": "doj",
+      "title": "Mobile NavBoost Launched",
+      "desc": "Separate mobile click signal system launched Q1 2014 producing a 'huge LE win' (UPX1087, Ranking Newsletter Aug 2014). Confirmed mobile and desktop search intents diverge, leading to independent CRAPS mobile signal computation."
+    },
+    {
+      "year": "2016",
+      "type": "doj",
+      "title": "Click Data Scale Revealed",
+      "desc": "Eric Lehman (UPX0192): ~1 billion new user behavior examples per day. Training corpus: ~100 billion clicks vs ~1 million IS rater scores. Multiple click prediction systems nicknamed 'Predictionosaurus Clickus'."
+    },
+    {
+      "year": "2019",
+      "type": "doj",
+      "title": "NavBoost Dominance Acknowledged",
+      "desc": "VP Grushetsky (UPX0197): 'NavBoost alone was likely more powerful than the rest of ranking combined.' Engineers outside NavBoost team resented its dominance and the fact it was 'stealing wins'."
+    },
+    {
+      "year": "2023",
+      "type": "doj",
+      "title": "DOJ Trial Confirms CRAPS as Core System",
+      "desc": "Pandu Nayak testimony (PXR0357) confirms NavBoost/CRAPS as core ranking system. Judge Mehta rules: 13 months of Google data = 17.5 years of Bing data. NavBoost beats LLMs on freshness (FOF 103). CRAPS confirmed in QualityNavboostCrapsCrapsData module."
+    },
+    {
+      "year": "2024",
+      "type": "leak",
+      "title": "API Leak Exposes CRAPS Architecture",
+      "desc": "API leak reveals six NavBoost protobuf models: CrapsClickSignals (10 attrs), CrapsData (22 attrs), CrapsDevice, FeatureCrapsData, StatsWithWeightsProto (15 attrs), GlueVoterTokenBitmapMessage. Full CRAPS data architecture exposed including patternLevel hierarchy, IP reputation, and anti-manipulation systems."
+    },
+    {
+      "year": "2024",
+      "type": "exploit",
+      "title": "Click Probability Confirmed via Bounty",
+      "desc": "Candour exploit: 2TB data across 90M queries confirmed per-result click probability exists for every organic result. Confirmed via $13,337 Google Vulnerability Reward Program bounty to Mark Williams-Cook (Candour Agency, Dec 2024)."
+    },
+    {
+      "year": "2024",
+      "type": "doj",
+      "title": "NavBoost Feeds LLM Pre-Training",
+      "desc": "PXR0095 (Gemini v3): 'Append anonymized NavBoost Queries for selected documents' as pre-training input for Search-dedicated Gemini model. CRAPS/NavBoost data now feeds both traditional ranking AND LLM quality improvement."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google Search Central Documentation",
+      "publicClaim": "Google does not use Chrome data for ranking web search results.",
+      "internalSource": "API Leak: CRAPS signals (crapsNewUrlSignals, crapsAbsoluteHostSignals, chromeInTotal, uniqueChromeViews, chromeFormSubmissions, chromeScrollingIntensity, chromePurchaseActivity)",
+      "internalClaim": "Six distinct Chrome-derived signals feed directly into CRAPS for ranking. Chrome visits are the fastest signal path (~10 min via InstantGlue). The 'Chrome Realtime Aggregated Page Signals' name explicitly confirms Chrome as a data source for ranking."
+    },
+    {
+      "publicSource": "Google Public Statements",
+      "publicClaim": "Click-through rate is not used as a ranking signal because it is too noisy and easily manipulated.",
+      "internalSource": "DOJ: Lehman UPX0192 + Nayak PXR0357 + Grushetsky UPX0197",
+      "internalClaim": "CRAPS processes click data achieving 91% accuracy improvements. Multiple anti-manipulation systems (voterTokenCount, click squashing, CrapsIpPrior, uxTier detection) address noise and manipulation. Google's own VP called it 'more powerful than the rest of ranking combined.'"
+    },
+    {
+      "publicSource": "Google Search Central",
+      "publicClaim": "All pages are evaluated independently based on their own content quality and relevance.",
+      "internalSource": "API Leak: patternLevel hierarchy + StatsWithWeightsProto",
+      "internalClaim": "CRAPS propagates click signals from URL level (0) to host level (1) to domain level (2). StatsWithWeightsProto computes domain-wide statistical distributions. A domain's pc10 (worst 10% of pages) drags down the entire site's ranking profile. Pages are not evaluated independently."
+    },
+    {
+      "publicSource": "Google on Hosting",
+      "publicClaim": "Hosting provider does not affect search rankings.",
+      "internalSource": "API Leak: CrapsIpPrior (packedIpAddress, unscaledIpPriorBadFraction, craps-penalty.cc)",
+      "internalClaim": "CrapsIpPrior assigns bad-click fractions to IP ranges. Sites on shared hosting with low-reputation IP neighbors inherit a ranking penalty applied via craps-penalty.cc. Hosting environment directly affects ranking through IP reputation inheritance."
+    }
+  ]
+}

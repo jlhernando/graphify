@@ -1,0 +1,193 @@
+{
+  "id": "key-people-orgs",
+  "route": "/llm/key-people-orgs",
+  "systems": ["TransformerOrigins", "AILabLeadership"],
+  "hero": {
+    "title": "Key People & Organizations: The Transformer Diaspora",
+    "subtitle": "Eight researchers authored 'Attention Is All You Need' (2017) at Google Brain. By 2026, all eight have left Google to found or lead competing AI companies collectively valued at over $20B. This diaspora created the organizational landscape of modern AI: Cohere ($5.5B), Character.AI (acquired by Google for $2.7B), Essential AI, Sakana AI, Inceptive, and NEAR Protocol. Meanwhile, former OpenAI leaders founded Anthropic ($60B+) and Safe Superintelligence ($5B). Understanding who built what, where they went, and what they control reveals the power structure behind the models that increasingly mediate search, recommendations, and brand visibility."
+  },
+  "keyInsight": {
+    "label": "Key Insight",
+    "text": "The <strong>eight Transformer co-authors</strong> dispersed from Google to build competing AI companies, creating a unique situation: the inventors of the foundational architecture now lead rival organizations training models on each other's research. <strong>Noam Shazeer</strong> returned to Google (via Character.AI acquisition) to lead Gemini. <strong>Lukasz Kaiser</strong> leads GPT-4/5 development at OpenAI. <strong>Aidan Gomez</strong> runs Cohere ($5.5B). The remaining five founded startups across AI, biotech, crypto, and nature-inspired computing. Meanwhile, <strong>Dario Amodei</strong> (ex-OpenAI VP Research) and <strong>Ilya Sutskever</strong> (ex-OpenAI Chief Scientist) each founded safety-focused competitors. The talent graph is the org chart of AI."
+  },
+  "pillars": [
+    {
+      "type": "patent",
+      "title": "The Eight Transformer Authors (2017)",
+      "items": [
+        "<strong>Ashish Vaswani</strong> (first author): Co-founder & CEO of Essential AI. Left Google to build enterprise AI infrastructure. Led the core Transformer design including multi-head self-attention",
+        "<strong>Noam Shazeer</strong>: Co-founded Character.AI (2021), acquired by Google for $2.7B (Aug 2024). Now leads Gemini development at Google DeepMind. Also co-invented Switch Transformer (Mixture of Experts). Most commercially impactful of the eight",
+        "<strong>Niki Parmar</strong>: Joined Anthropic (Dec 2024) after stints at Adept AI and Essential AI. Contributed to Claude 3.7 Sonnet development",
+        "<strong>Jakob Uszkoreit</strong>: Co-founder & CEO of Inceptive. Pivoted from AI to biotech, applying ML to RNA drug design",
+        "<strong>Llion Jones</strong>: Co-founder & CTO of Sakana AI (Tokyo). Focus on nature-inspired AI and evolutionary algorithms",
+        "<strong>Aidan Gomez</strong>: Co-founder & CEO of Cohere, valued at $5.5B. Was an intern during the Transformer paper. Now competes directly with Google in enterprise AI",
+        "<strong>Lukasz Kaiser</strong>: Member of Technical Staff at OpenAI. Led core R&D for GPT-4, GPT-5, o1, and o3. Directly building on the architecture he co-invented",
+        "<strong>Illia Polosukhin</strong>: Co-founder of NEAR Protocol, a decentralized AI and blockchain platform. Left Google in 2017 immediately after the paper"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "AI Lab Leaders & Power Brokers",
+      "items": [
+        "<strong>Jeff Dean</strong> (Google Chief Scientist): Designed MapReduce, BigTable, Spanner, TensorFlow, TPUs, BERT, PaLM, Gemini. 200+ papers. Most impactful individual engineer at Google. Controls the infrastructure Transformer models run on",
+        "<strong>Dario Amodei</strong> (Anthropic CEO): Former VP Research at OpenAI, led GPT-2 and GPT-3 development. Left over safety disagreements. PhD in computational neuroscience from Princeton. Anthropic valued at $60B+",
+        "<strong>Daniela Amodei</strong> (Anthropic President): Former VP Operations at OpenAI. Led Anthropic fundraising ($7.6B+). Background at Stripe and US Congress. Manages business operations while Dario leads research",
+        "<strong>Ilya Sutskever</strong>: Co-founder and Chief Scientist of OpenAI (2015-2024). Co-authored AlexNet (2012). Left June 2024, co-founded Safe Superintelligence Inc. (SSI), valued at $5B with $1B raised. Pivoted entirely to alignment research",
+        "<strong>Andrej Karpathy</strong>: Built GPT training infrastructure at OpenAI. Former Director of AI at Tesla (Autopilot). Created nanoGPT, minbpe, llm.c. Founded Eureka Labs (2024) for AI education. PhD from Stanford under Fei-Fei Li. Most influential AI educator",
+        "<strong>Pandu Nayak</strong> (Google VP Search): Testified extensively during DOJ antitrust trial on RankBrain, DeepRank, MUM, and quality metrics. Key figure connecting Transformer research to Google Search ranking systems"
+      ]
+    },
+    {
+      "type": "doj",
+      "title": "Talent Movements & Acquisitions",
+      "items": [
+        "<strong>Character.AI to Google ($2.7B, Aug 2024)</strong>: Google reacquired Noam Shazeer via licensing deal. Shazeer now leads Gemini. Pattern: Google loses Transformer talent, then buys companies to get them back",
+        "<strong>OpenAI exodus to Anthropic (2021)</strong>: Dario Amodei, Daniela Amodei, and ~10 researchers left over safety concerns and commercialization direction. Took GPT-scaling expertise to build Claude",
+        "<strong>Sutskever's departure (Jun 2024)</strong>: After the board crisis (Nov 2023) and Sam Altman's reinstatement, Sutskever left to found SSI. Signal: even OpenAI's chief scientist felt alignment was being deprioritized",
+        "<strong>Meta's open-source strategy</strong>: Hugo Touvron led LLaMA development, releasing open weights. Created the open-source LLM ecosystem (Llama 2, Llama 3). Forced competitive pressure on closed-source labs",
+        "<strong>DeepSeek emergence (Hangzhou)</strong>: Released V3 and R1 models competitive with frontier Western labs. Demonstrated that Transformer scaling works globally, not just in US/UK labs",
+        "<strong>Mistral (Paris, founded May 2023)</strong>: Ex-Meta and DeepMind researchers. European alternative to US-dominated AI labs. Rapidly reached competitive model quality"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "Organization Map & Strategic Implications",
+      "items": [
+        "<strong>Frontier model labs</strong>: OpenAI (GPT), Anthropic (Claude), Google DeepMind (Gemini), Meta (Llama), DeepSeek (V3/R1), Mistral. Each shapes which brands, sources, and knowledge get embedded in their models' training data",
+        "<strong>Open-source ecosystem</strong>: EleutherAI (The Pile dataset), AI2/Allen Institute (OLMo), Alibaba DAMO (Qwen), TII Abu Dhabi (Falcon). These orgs determine what enters the open training data commons",
+        "<strong>Infrastructure & tooling</strong>: HuggingFace (model hosting, TRL framework), Scale AI and Surge AI (human labeling for SFT/RLHF), Pinecone and Weaviate (vector DBs), LangChain and LlamaIndex (RAG frameworks). The picks-and-shovels layer",
+        "<strong>RAG-first search</strong>: Perplexity (RAG-based search), Google AI Overviews, Bing Chat/Copilot. These systems determine which sources get cited in AI-generated answers. Traditional SEO signals feed RAG retrieval",
+        "<strong>Key implication for SEO</strong>: Brand visibility now depends on decisions made by ~50 people across 6-8 organizations. Training data curation, RLHF preferences, and RAG retrieval logic are controlled by a small talent pool, many of whom worked together at Google or OpenAI"
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Talent Concentration Index",
+      "source": "Organizational analysis of Transformer author career paths",
+      "how": "Measures how concentrated AI decision-making power is among a small group of interconnected researchers. The eight Transformer authors plus ~10 key leaders control or heavily influence model development at organizations representing >80% of frontier AI compute.",
+      "formula": "<span class=\"cf-fn\">TCI</span> =\n  <span class=\"cf-val\">key_decision_makers</span> /\n  <span class=\"cf-val\">total_frontier_orgs</span>\n<span class=\"cf-comment\">// ~18 people across 8 orgs control frontier AI</span>\n<span class=\"cf-comment\">// Most share Google Brain or OpenAI lineage</span>\n<span class=\"cf-comment\">// Shared training = shared biases in model design</span>",
+      "patents": "",
+      "affects": "Understanding who controls model training reveals whose preferences shape AI outputs. Brand visibility strategies must account for this concentration."
+    },
+    {
+      "name": "Transformer Diaspora Commercial Value",
+      "source": "Public valuations and acquisition data (2024-2025)",
+      "how": "Aggregate market value created by the eight Transformer co-authors through their post-Google ventures. Demonstrates the economic impact of a single paper and the talent premium in AI.",
+      "formula": "<span class=\"cf-fn\">DiasporaValue</span> =\n  <span class=\"cf-fn\">sum</span>(\n    <span class=\"cf-val\">Cohere</span>: $5.5B,\n    <span class=\"cf-val\">Character.AI</span>: $2.7B (acquired),\n    <span class=\"cf-val\">Essential AI</span>: undisclosed,\n    <span class=\"cf-val\">Sakana AI</span>: undisclosed,\n    <span class=\"cf-val\">Inceptive</span>: undisclosed,\n    <span class=\"cf-val\">NEAR Protocol</span>: ~$1B+\n  )\n<span class=\"cf-comment\">// Known total: $9.2B+ from 3 of 6 ventures</span>\n<span class=\"cf-comment\">// Excludes value created at Google/OpenAI</span>",
+      "patents": "",
+      "affects": "The commercial value created by Transformer authors validates the architecture's dominance and explains why all major search/recommendation systems now use Transformer variants."
+    }
+  ],
+  "pipeline": {
+    "title": "Transformer Talent Flow Pipeline",
+    "stages": [
+      {
+        "name": "Google Brain (2017)",
+        "detail": "Eight researchers publish 'Attention Is All You Need.' All employed at Google. Architecture initially applied to machine translation."
+      },
+      {
+        "name": "Internal Application (2018-2020)",
+        "detail": "Google applies Transformers to Search: BERT (2018), MUM (2019), DeepRank. RankBrain team (Strohmann, Nayak) integrates neural ranking. OpenAI scales GPT."
+      },
+      {
+        "name": "Diaspora Begins (2020-2022)",
+        "detail": "Authors leave Google: Polosukhin (NEAR), Gomez (Cohere), Shazeer (Character.AI), Uszkoreit (Inceptive). Amodei siblings leave OpenAI for Anthropic (2021)."
+      },
+      {
+        "name": "Competition Intensifies (2023-2024)",
+        "detail": "ChatGPT launch (Nov 2022) triggers AI race. Mistral founded. Meta releases LLaMA. DeepSeek emerges. Sutskever leaves OpenAI for SSI. Kaiser leads GPT-4/5."
+      },
+      {
+        "name": "Reconsolidation (2024-2025)",
+        "detail": "Google reacquires Shazeer via Character.AI deal ($2.7B). Parmar joins Anthropic. Talent clusters reform around 6-8 frontier labs. Training data and RLHF decisions concentrated among ~18 people."
+      },
+      {
+        "name": "SEO Implications (2025+)",
+        "detail": "Brand visibility depends on AI model outputs. The small talent pool controlling model training, fine-tuning, and RAG design shapes which brands get recommended. Traditional SEO gives way to GEO (Generative Engine Optimization)."
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2012",
+      "type": "event",
+      "title": "AlexNet",
+      "desc": "Sutskever co-authors AlexNet with Krizhevsky and Hinton, launching the deep learning era that makes Transformers possible."
+    },
+    {
+      "year": "2017",
+      "type": "event",
+      "title": "Attention Is All You Need",
+      "desc": "Vaswani, Shazeer, Parmar, Uszkoreit, Jones, Gomez, Kaiser, and Polosukhin publish the Transformer paper at Google Brain. Cited 130,000+ times."
+    },
+    {
+      "year": "2018",
+      "type": "event",
+      "title": "BERT & GPT-1",
+      "desc": "Google applies Transformers to Search via BERT. OpenAI releases GPT-1. The Transformer becomes the dominant architecture for NLP."
+    },
+    {
+      "year": "2020",
+      "type": "event",
+      "title": "GPT-3 & Scaling Laws",
+      "desc": "OpenAI releases GPT-3 (175B params). Kaplan et al. publish scaling laws. Dario Amodei leads the effort as VP Research."
+    },
+    {
+      "year": "2021",
+      "type": "event",
+      "title": "Anthropic Founded & Character.AI",
+      "desc": "Dario and Daniela Amodei leave OpenAI, found Anthropic. Shazeer co-founds Character.AI. The exodus from Google and OpenAI accelerates."
+    },
+    {
+      "year": "2022",
+      "type": "event",
+      "title": "ChatGPT Launch",
+      "desc": "OpenAI releases ChatGPT (Nov 30). Fastest-growing consumer app ever. Triggers the AI arms race among all frontier labs."
+    },
+    {
+      "year": "2023",
+      "type": "event",
+      "title": "Open-Source Explosion",
+      "desc": "Meta releases LLaMA/Llama 2. Mistral founded (Paris). DeepSeek begins competing from China. AI lab count multiplies globally."
+    },
+    {
+      "year": "2024",
+      "type": "event",
+      "title": "Reconsolidation & DOJ Trial",
+      "desc": "Google acquires Character.AI ($2.7B), gets Shazeer back for Gemini. Sutskever leaves OpenAI, founds SSI. Parmar joins Anthropic. DOJ antitrust trial exposes Google Search internals."
+    },
+    {
+      "year": "2025",
+      "type": "event",
+      "title": "GEO Era Begins",
+      "desc": "AI Overviews, Perplexity, and ChatGPT Search reshape brand visibility. ~18 people across 8 orgs control which brands get recommended. SEO evolves into GEO."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google",
+      "publicClaim": "We democratize AI through open research and publications.",
+      "internalSource": "Talent acquisitions",
+      "internalClaim": "Google spent $2.7B to reacquire a single Transformer co-author (Shazeer) via Character.AI deal, concentrating rather than distributing AI talent."
+    },
+    {
+      "publicSource": "OpenAI",
+      "publicClaim": "Our mission is to ensure AGI benefits all of humanity.",
+      "internalSource": "Researcher departures",
+      "internalClaim": "Chief Scientist Sutskever and VP Research Amodei both left citing safety and commercialization concerns, founding competing safety-focused organizations."
+    },
+    {
+      "publicSource": "AI Industry",
+      "publicClaim": "AI development is broadly distributed across many organizations globally.",
+      "internalSource": "Talent analysis",
+      "internalClaim": "Approximately 18 people with shared Google Brain or OpenAI lineage control frontier model development at organizations representing >80% of AI compute."
+    },
+    {
+      "publicSource": "Meta",
+      "publicClaim": "Open-source AI benefits the entire ecosystem equally.",
+      "internalSource": "Strategic analysis",
+      "internalClaim": "Open-sourcing LLaMA was primarily a competitive strategy to commoditize the model layer where rivals (OpenAI, Anthropic) have advantages, while Meta retains advantages in distribution (3B+ users)."
+    }
+  ]
+}

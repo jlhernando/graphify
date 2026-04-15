@@ -1,0 +1,170 @@
+{
+  "id": "autocomplete",
+  "route": "/autocomplete",
+  "systems": [
+    "Autocomplete",
+    "QUS",
+    "QueryUnderstanding"
+  ],
+  "hero": {
+    "title": "Autocomplete: How Google Predicts Your Search Before You Finish Typing",
+    "subtitle": "Google's autocomplete system predicts and suggests queries as users type, shaping what people search for before they even finish their query. The DOJ trial confirmed that 'spelling, synonyms, and autocomplete use query data to improve' (Gomes testimony). With 10+ patents dating from 2005, autocomplete considers query frequency, user history, device type, language, location, social connections, and privacy thresholds. Autocomplete is not just convenience; it actively steers search behavior, creating a feedback loop where popular queries become more popular and niche queries become harder to discover."
+  },
+  "keyInsight": {
+    "label": "Key Insight from DOJ Trial + Patents",
+    "text": "Autocomplete is a <strong>pre-search ranking system</strong> that determines which queries users actually submit. Patent <a href=\"https://patents.google.com/patent/US7487145\">US7487145</a> reveals suggestions are <strong>ranked by query frequency from the community of users</strong>, with privacy controls ensuring queries are only shown when submitted by a minimum number of unique users. Patent <a href=\"https://patents.google.com/patent/US7725485\">US7725485</a> (Sahami, Heilman) uses <strong>search result content</strong> to generate query suggestion vectors. The DOJ trial confirmed autocomplete uses <strong>user search history</strong> for personalized predictions (Gomes, UPX1044). Autocomplete creates a <strong>rich-get-richer dynamic</strong>: popular queries appear as suggestions, driving more searches for those terms, generating more click data, which reinforces their rankings."
+  },
+  "pillars": [
+    {
+      "type": "doj",
+      "title": "DOJ Trial Evidence",
+      "items": [
+        "<strong>Gomes testimony</strong> (Mehta opinion, line 2004): 'Spelling, synonyms, and autocomplete use query data to improve.' Confirms autocomplete is data-driven and continuously improving from user behavior",
+        "<strong>Giannandrea testimony</strong> (2273:3-15): Query reformulation improvements improve spell check and autocomplete. Connected to the same query understanding pipeline",
+        "<strong>Personalized autocomplete</strong> (UPX1044, Gomes): 'History might automatically be used by autocomplete to predict relevant popular search topics like Spain travel that you might be about to type next.' Confirms session-based and history-based personalization of suggestions",
+        "<strong>Scale advantage</strong>: Google's 8.3B daily queries (vs Bing's ~1.4B) provide a massive advantage in autocomplete quality. More query data = better predictions = better user experience = more users. This feedback loop was central to the DOJ's monopoly argument"
+      ]
+    },
+    {
+      "type": "patent",
+      "title": "7 Patents",
+      "items": [
+        "<strong>Ranked autocompletion</strong> (<a href=\"https://patents.google.com/patent/US7487145\">US7487145</a>): Ordered predicted completion strings ranked by query frequency from community of users. Fingerprint-to-table maps for fast lookup. Privacy: queries only shown when submitted by minimum number of unique requestors",
+        "<strong>Contextual query suggestions</strong> (<a href=\"https://patents.google.com/patent/US7725485\">US7725485</a>, Sahami, Heilman, 2005): Uses matching content from search results to generate query vectors. Creates 'centroids' from previous term collections to identify candidate suggestions",
+        "<strong>Previously submitted query data</strong> (<a href=\"https://patents.google.com/patent/US9740780\">US9740780</a>): Receives portion of query from searcher, obtains predicted queries based on portion and search requestor behavior",
+        "<strong>Query log autocomplete</strong> (<a href=\"https://patents.google.com/patent/US20080065617\">US20080065617</a>): Autocompletes based on entries in search history query log. Displays selection of autocompletion options from stored queries",
+        "<strong>Social network suggestions</strong> (US20100114887): Suggests words from social network connections. Analyzes word usage from friends' social media to personalize dictionary and search suggestions",
+        "<strong>Related questions</strong> (<a href=\"https://patents.google.com/patent/US9213748\">US9213748</a>): Generating related questions for search queries. Connected to 'People Also Ask' feature generation",
+        "<strong>Optimized query suggestions</strong> (US20090171929, Microsoft): Query string frequency algorithm, query log session algorithm, search result content algorithm. Clustering suggestions into categories"
+      ]
+    },
+    {
+      "type": "leak",
+      "title": "Connected Signals",
+      "items": [
+        "<strong>referenceQueries</strong> - Previously submitted queries referring to a resource. Feeds autocomplete's knowledge of popular queries per topic",
+        "<strong>queryTermEmbedding</strong> - Per-query-term embedding vectors. Enables semantic similarity matching for suggestion generation",
+        "<strong>nluAnnotation</strong> - Natural language understanding annotations. Helps autocomplete parse partial queries for intent detection",
+        "<strong>QSessions</strong> - Session tracking enables in-session autocomplete personalization. Previous queries in the session influence suggestions for the next query",
+        "<strong>novelQueryClassification</strong> - Identifies novel queries. Novel queries may receive different autocomplete treatment (fewer historical suggestions available)"
+      ]
+    },
+    {
+      "type": "exploit",
+      "title": "How Autocomplete Affects SEO Strategy",
+      "items": [
+        "<strong>Autocomplete steers search volume</strong>: Users select from suggested queries rather than typing their own. If your target keyword appears in autocomplete, you receive diverted traffic. If a competitor's brand appears in autocomplete for your category, they capture demand before users finish typing",
+        "<strong>Rich-get-richer feedback loop</strong>: Popular queries appear as suggestions, driving more searches, reinforcing their popularity. New or niche terms struggle to appear in autocomplete, limiting their discoverability. Established brands benefit from this feedback loop",
+        "<strong>Privacy threshold creates a minimum volume floor</strong>: Queries must be submitted by a minimum number of unique users before appearing as suggestions (US7487145). Very niche, long-tail queries may never appear in autocomplete, reducing their traffic potential",
+        "<strong>Personalized suggestions affect repeat visitors</strong>: Users who have visited your site before may see your brand in personalized autocomplete suggestions for related queries. Building brand recognition creates autocomplete advantages",
+        "<strong>Device-specific suggestions</strong>: Mobile autocomplete is more aggressive (users type less on mobile). Mobile-optimized, shorter query variants may be more important for mobile traffic capture",
+        "<strong>In-session context shapes suggestions</strong>: After searching 'travel,' suggestions for 'Spain' may include travel-related completions. Content that targets multi-query journeys benefits from session-based autocomplete steering"
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "name": "Suggestion Ranking",
+      "source": "Patent US7487145",
+      "how": "Autocomplete suggestions are ranked primarily by query frequency from the community of users, filtered by privacy thresholds (minimum unique submitters). Fingerprint-to-table maps enable fast lookup. Personalization factors (user history, session context, location, device) adjust ranking for individual users.",
+      "formula": "<span class=\"cf-fn\">SuggestRank</span>(partial, user) =\n  <span class=\"cf-fn\">frequency</span>(<span class=\"cf-val\">matching_queries</span>) *\n  <span class=\"cf-fn\">recency</span>(<span class=\"cf-val\">query_trend</span>) *\n  <span class=\"cf-fn\">personalization</span>(\n    <span class=\"cf-val\">user.history</span>,\n    <span class=\"cf-val\">user.session</span>,\n    <span class=\"cf-val\">user.location</span>\n  )\n<span class=\"cf-kw\">where</span> unique_submitters &gt; <span class=\"cf-val\">privacy_threshold</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US7487145\">US7487145</a> (ranked autocompletion)",
+      "affects": "Affected by: query popularity, trend velocity, user history, session context, location, device type, privacy threshold."
+    },
+    {
+      "name": "Content-Based Suggestion Generation",
+      "source": "Patent US7725485 (Sahami, Heilman)",
+      "how": "Uses search result content to generate query suggestions. Extracts terms from matching documents, creates query vectors, compares against centroids of previous term collections. This means the content of top-ranking pages influences what suggestions appear, creating a feedback loop between rankings and autocomplete.",
+      "formula": "<span class=\"cf-fn\">ContentSuggest</span>(partial) =\n  <span class=\"cf-fn\">extract_terms</span>(\n    <span class=\"cf-fn\">search_results</span>(partial)\n  )\n  &rarr; <span class=\"cf-fn\">query_vector</span>(terms)\n  &rarr; <span class=\"cf-fn\">match_centroids</span>(\n    <span class=\"cf-val\">previous_collections</span>\n  )\n  &rarr; <span class=\"cf-val\">candidate_suggestions</span>\n<span class=\"cf-comment\">// ranking page content influences suggestions</span>\n<span class=\"cf-comment\">// creates ranking ↔ autocomplete feedback loop</span>",
+      "patents": "Patent: <a href=\"https://patents.google.com/patent/US7725485\">US7725485</a>",
+      "affects": "Affected by: content of top-ranking pages, term frequency in results, historical query-document associations."
+    }
+  ],
+  "pipeline": {
+    "title": "Autocomplete Pipeline",
+    "stages": [
+      {
+        "name": "Keystroke Input",
+        "detail": "User begins typing. Each keystroke triggers a suggestion request to Google's autocomplete system."
+      },
+      {
+        "name": "Candidate Generation",
+        "detail": "Matching queries retrieved from query logs using fingerprint-to-table maps. Content-based suggestions generated from search result terms (US7725485)."
+      },
+      {
+        "name": "Privacy Filtering",
+        "detail": "Queries below minimum unique submitter threshold removed. Inappropriate or policy-violating suggestions filtered."
+      },
+      {
+        "name": "Personalization",
+        "detail": "User history, session context, location, device type applied to adjust suggestion ranking. Previous queries in session influence completions."
+      },
+      {
+        "name": "Ranking and Display",
+        "detail": "Suggestions ranked by frequency * recency * personalization. Top suggestions displayed as user types. Mobile shows fewer, more aggressive suggestions."
+      },
+      {
+        "name": "Feedback Loop",
+        "detail": "Selected suggestions become queries, generating click data that feeds NavBoost, which influences rankings, which influences content-based suggestion generation."
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "year": "2004",
+      "type": "event",
+      "title": "Google Suggest Launched",
+      "desc": "Google Suggest (later Autocomplete) launched as a Google Labs experiment. Initial version based on query frequency data."
+    },
+    {
+      "year": "2005",
+      "type": "patent",
+      "title": "Contextual Suggestions (US7725485)",
+      "desc": "Sahami and Heilman patent content-based suggestion generation using search result terms and query vectors."
+    },
+    {
+      "year": "2008",
+      "type": "patent",
+      "title": "Query Log Autocomplete (US20080065617)",
+      "desc": "Patent for autocompleting queries based on search history query logs. Foundation for personalized suggestions."
+    },
+    {
+      "year": "2010",
+      "type": "event",
+      "title": "Default in Search Box",
+      "desc": "Autocomplete becomes default behavior in Google Search. Suggestions appear as users type without requiring activation."
+    },
+    {
+      "year": "2010",
+      "type": "patent",
+      "title": "Social Network Suggestions",
+      "desc": "US20100114887: Google patents word suggestions from social network connections for personalized autocomplete."
+    },
+    {
+      "year": "2023",
+      "type": "doj",
+      "title": "DOJ Trial: Scale Advantage",
+      "desc": "Google's 8.3B daily queries vs Bing's ~1.4B shown as massive autocomplete quality advantage. Data scale creates feedback loop: better suggestions → more users → more data."
+    }
+  ],
+  "contradictions": [
+    {
+      "publicSource": "Google (autocomplete help documentation)",
+      "publicClaim": "Autocomplete predictions are based on real searches. They reflect what people are searching for. Google does not create or curate these predictions.",
+      "internalSource": "Patent US7725485 + Policy filtering + Privacy thresholds",
+      "internalClaim": "Suggestions are actively generated from search result content (US7725485), not just passively reflecting user queries. Policy filters remove 'inappropriate' suggestions. Privacy thresholds gate which queries appear. Google actively shapes what appears in autocomplete through content-based generation, filtering, and threshold decisions."
+    },
+    {
+      "publicSource": "Google (public statements on search neutrality)",
+      "publicClaim": "Google does not manually curate search suggestions. Autocomplete is algorithmic.",
+      "internalSource": "Google autocomplete policies + removal processes",
+      "internalClaim": "Google maintains explicit content policies for autocomplete that remove predictions related to violence, hate speech, explicit content, and other categories. Removal requests are processed manually. The algorithm is shaped by policy decisions about what should and should not appear, which is a form of curation."
+    },
+    {
+      "publicSource": "Google (public guidance on SEO)",
+      "publicClaim": "You cannot optimize for or influence autocomplete suggestions. They reflect real user behavior.",
+      "internalSource": "Rich-get-richer feedback loop + content-based generation (US7725485)",
+      "internalClaim": "Autocomplete creates a self-reinforcing feedback loop: popular queries appear as suggestions, driving more searches for those terms. Brand awareness campaigns that increase branded searches directly influence autocomplete. Content-based suggestion generation (US7725485) means top-ranking content influences suggestions. While direct manipulation is blocked, indirect influence through brand building and content ranking is structurally embedded."
+    }
+  ]
+}
