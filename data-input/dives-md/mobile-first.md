@@ -1,0 +1,55 @@
+# Mobile-First Indexing: The Great Index Split
+
+## Key Insight
+Mobile and desktop are not the same index with different layouts. They are divergent ranking systems. The API leak reveals dedicated mobileFriendlyScore and mobileInterstitials penalty signals. DOJ exhibit UPX1087 confirms mobile and desktop ranking diverge, and MobileNavBoost (launched Q1 2014) is a separate mobile click signal system that produced a 'huge LE win.' Mobile users exhibit higher abandonment, fewer result examinations, and skew toward head and local queries.
+
+### API Leak Signals (leak)
+- mobileFriendlyScore - Mobile-friendliness assessment score used in mobile-first indexing evaluation
+- mobileInterstitials - Mobile popup and interstitial detection, triggers ranking penalty when intrusive overlays block content on mobile devices
+- desktopInterstitials - Desktop popup detection signal, separate from mobile interstitial penalties
+
+### DOJ Evidence (doj)
+- Mobile vs Desktop Ranking Diverge (UPX1087) - Confirms mobile and desktop search results use different ranking pipelines. Mobile ranking incorporates mobile-specific signals that desktop does not, leading to meaningfully different SERPs for the same query
+- MobileNavBoost - Separate mobile click signal system launched Q1 2014 producing a 'huge LE win' (UPX1087, Ranking Newsletter Aug 2014). Confirmed mobile and desktop search intents diverge. Mobile users: higher abandonment, fewer result examinations, skew toward head and local queries
+
+### Patents (patent)
+- US8645362: Resource load times as a ranking signal. Measures page speed and resource delivery performance, critical for mobile where network conditions vary significantly
+- US8635106: System for targeting data to users on mobile devices. Framework for delivering and evaluating content specifically for mobile contexts
+
+### Mobile-First Implications (exploit)
+- Your mobile version IS your primary version: Since mobile-first indexing, Google crawls and indexes the mobile version of your site first. If your mobile version has less content, fewer internal links, or missing structured data compared to desktop, that is what Google sees. Ensure content parity between mobile and desktop, or better yet, use responsive design so there is only one version.
+- mobileFriendlyScore is not binary: The API leak reveals a scored signal, not a simple pass/fail. Partially optimized pages receive partial credit. Optimize viewport meta tags, font sizes (16px+ base), tap targets (48px+ spacing), and eliminate horizontal scrolling. Test on mid-range Android devices, not just flagship phones.
+- Mobile interstitials carry a dedicated penalty: mobileInterstitials is a separate penalty signal from general page experience. Avoid full-screen popups, app install interstitials that cover content, and cookie consent overlays that require dismissal before content is visible. Legal interstitials (age verification, login walls for gated content) are exempt per Google's public guidance, but minimize their intrusiveness.
+- Mobile click signals are tracked independently: MobileNavBoost is a separate system from desktop NavBoost. Mobile users behave differently: shorter sessions, higher abandonment, preference for quick answers. Optimize for mobile-specific intent patterns. A page that satisfies desktop searchers may fail mobile users who need faster, more concise answers.
+- Page speed matters more on mobile: Patent US8645362 establishes resource load times as a ranking factor. On mobile networks with higher latency and lower bandwidth, slow pages are penalized more severely. Target sub-3-second load times on 4G connections. Prioritize above-the-fold content delivery, compress images aggressively, and defer non-critical JavaScript.
+
+### Calculations
+- mobileFriendlyScore: Scores mobile-friendliness of a page based on responsive design, tap target sizing, text readability, and viewport configuration. Used as a primary signal in mobile-first indexing. Affects: Affected by: responsive design, viewport meta tags, readable text sizes, adequate tap targets. Directly gates mobile-first index inclusion quality.
+- mobileInterstitials Penalty: Detects intrusive popups and interstitials on mobile pages. Triggers ranking demotion when overlays block content access. Separate from desktopInterstitials. Affects: Affected by: removing intrusive mobile popups, avoiding full-screen interstitials, minimizing app install banners that cover content.
+- Mobile Resource Load Time: Measures page resource delivery speed, weighted more heavily in mobile context due to variable network conditions. Feeds into mobile ranking alongside mobileFriendlyScore. Affects: Affected by: server response time, image compression, JavaScript deferral, above-the-fold content prioritization. Critical on mobile networks.
+
+### Mobile-First Indexing Pipeline
+- Mobile Crawl: Googlebot smartphone crawls mobile version first (primary index source)
+- Mobile Rendering: WRS renders mobile page, evaluates responsive design and viewport
+- mobileFriendlyScore: Scored assessment of mobile optimization (viewport, tap targets, text size)
+- Interstitial Detection: mobileInterstitials and desktopInterstitials penalty evaluation
+- Mobile Load Time: Resource load time measurement weighted for mobile network conditions (US8645362)
+- MobileNavBoost: Separate mobile click signals: abandonment, dwell time, mobile-specific intent patterns
+- Mobile Ranking Assembly: Mobile-specific signals combined with core ranking for final mobile SERP
+
+### Timeline
+- 2012 (patent): Mobile Targeting Patent - US8635106 granted: system for targeting data to users on mobile devices. Establishes framework for mobile-specific content evaluation.
+- 2012 (patent): Resource Load Times Patent - US8645362 granted: resource load times as a ranking signal. Foundational patent for speed-based ranking, especially impactful on mobile.
+- 2014 (doj): MobileNavBoost Launched - Separate mobile click signal system launched Q1 2014, producing a 'huge LE win' (UPX1087, Ranking Newsletter Aug 2014). Mobile and desktop search intents confirmed to diverge.
+- 2015 (event): Mobilegeddon - Google rolls out mobile-friendly ranking update. Pages not optimized for mobile demoted in mobile search results. mobileFriendlyScore becomes a gating signal.
+- 2018 (event): Mobile-First Indexing Rollout - Google begins migrating sites to mobile-first indexing. Mobile version becomes the primary crawl and index source. Desktop version becomes secondary.
+- 2024 (leak): API Leak: Mobile Signals Confirmed - mobileFriendlyScore, mobileInterstitials, and desktopInterstitials confirmed as distinct ranking signals in the API leak. Mobile interstitials carry a dedicated penalty separate from general page experience.
+- 2024 (doj): DOJ: Mobile vs Desktop Divergence - UPX1087 confirms mobile and desktop ranking use different pipelines. MobileNavBoost operates as a separate click signal system with mobile-specific behavioral patterns.
+
+### Contradictions
+- Public (Google Public): Mobile-first indexing simply means we crawl the mobile version first. Rankings work the same way. vs Internal (DOJ (UPX1087)): Mobile and desktop ranking diverge. MobileNavBoost is a separate click signal system with different behavioral patterns. Mobile users show higher abandonment and skew toward head/local queries, producing fundamentally different ranking outcomes.
+- Public (Google Public): Mobile-friendliness is a binary ranking factor: your page is either mobile-friendly or it is not. vs Internal (API Leak): mobileFriendlyScore is a scored signal, not binary. Partially optimized pages receive partial credit, creating a gradient of mobile optimization rather than a simple threshold.
+- Public (Google Public): We only penalize the most intrusive interstitials. Small banners and legal requirements are fine. vs Internal (API Leak): mobileInterstitials and desktopInterstitials are tracked as separate dedicated penalty signals, suggesting a more granular interstitial evaluation than the public binary framing implies.
+
+### Overview
+Google's transition from desktop-primary to mobile-first indexing fundamentally changed how pages are crawled, rendered, and ranked. The API leak confirmed mobile-specific signals including mobileFriendlyScore and interstitial penalties, while DOJ exhibit UPX1087 proved mobile and desktop ranking diverge with separate click signal systems.
